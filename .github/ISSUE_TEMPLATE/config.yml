@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Flujo de colaboración
+    url: https://github.com/Om4r28xz/Dev_Path/blob/develop/docs/FLUJO_GITHUB.md
+    about: Consulta ramas, revisiones, releases y recuperación antes de abrir una issue.

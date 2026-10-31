@@ -29,4 +29,4 @@ El autor de un PR no cuenta como su propio aprobador. Ninguna IA suplanta una id
 
 ## Uso en GitHub
 
-GOV-02 debe configurar `CODEOWNERS` solo con cuentas o equipos de GitHub que estén realmente disponibles. Si todavía no existen cuentas distintas para P1–P5, la matriz de roles sigue siendo la fuente de responsabilidad y las revisiones se solicitan manualmente en cada PR. No se inventan usuarios ni se simulan aprobaciones.
+La matriz de roles es la fuente de responsabilidad. Cada issue y PR declara su rol autor y los roles revisores requeridos; no se exige registrar nombres ni cuentas. Las aprobaciones se solicitan y registran en el PR correspondiente sin simular revisiones.

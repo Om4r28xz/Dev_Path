@@ -1,0 +1,50 @@
+# Dependencies and package-manager state
+node_modules/
+.pnpm-store/
+
+# Generated application output
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# Test and browser artifacts
+test-results/
+playwright-report/
+blob-report/
+.vitest/
+
+# Runtime files and logs
+*.log
+logs/
+*.pid
+tmp/
+.tmp/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local databases, uploads and container volumes
+infra/.data/
+.local-data/
+uploads/
+*.sqlite
+*.sqlite3
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Local worktrees
+.worktrees/
