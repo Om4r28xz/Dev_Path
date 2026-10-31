@@ -1,0 +1,12 @@
+{
+  "requiredSkillIds": ["git", "javascript", "react"],
+  "matchedSkillIds": ["javascript", "react"],
+  "missingSkillIds": ["git"],
+  "matchPercentage": 67,
+  "evidence": [
+    { "skillId": "javascript", "matches": [{ "text": "JavaScript", "start": 9, "end": 19 }] },
+    { "skillId": "react", "matches": [{ "text": "React", "start": 21, "end": 26 }] },
+    { "skillId": "git", "matches": [{ "text": "Git", "start": 29, "end": 32 }] }
+  ],
+  "versions": { "catalog": "1.0.0", "extractor": "1.0.0", "scoring": "1.0.0" }
+}

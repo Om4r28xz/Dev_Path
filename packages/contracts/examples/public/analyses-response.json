@@ -1,0 +1,12 @@
+{
+  "items": [
+    {
+      "id": "5e9220ea-e5b7-42bb-8a88-adf08763837f",
+      "source": { "type": "text", "title": "Frontend junior" },
+      "compatibilityPercentage": 67,
+      "skillsOutdated": false,
+      "createdAt": "2026-10-31T13:00:00Z"
+    }
+  ],
+  "nextCursor": "MjAyNi0xMC0zMVQxMzowMDowMFp8NWU5MjIwZWE"
+}

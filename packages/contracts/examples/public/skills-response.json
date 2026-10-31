@@ -1,0 +1,8 @@
+{
+  "catalogVersion": "1.0.0",
+  "items": [
+    { "id": "javascript", "name": "JavaScript", "category": "language" },
+    { "id": "react", "name": "React", "category": "library" }
+  ],
+  "nextCursor": null
+}

@@ -2,150 +2,81 @@
 
 ## Estado real
 
-| Tarea | Estado | Evidencia | Condición de continuación |
-| --- | --- | --- | --- |
-| GOV-01 | Integrada. | PR #2 fusionado en `develop` mediante `ebe5940`; contiene `72c1956` y la actualización `cda9ff6`. | Sin pendientes técnicos; las revisiones humanas quedan representadas por el merge autorizado. |
-| GOV-02 | Integrada. | PR #3 fusionado en `develop` mediante `fef802c`; contiene el commit `9d9a3d7`. | Sin pendientes técnicos. |
-| FND-01 | Implementada sin merge. | Workspace pnpm, configuración común, tres apps compilables y lockfile preparados en `chore/fnd-01-workspace`. | Push, PR, revisión P1 y merge humano a `develop`. |
-| CTR-01 | Bloqueada. | Depende de GOV-01 y del workspace real de FND-01. | Integrar GOV-01 y FND-01; crear `docs/ctr-01-mvp-contracts`. |
-| CAT-01 | Bloqueada. | Depende de GOV-01 y del validador/esquema aportado por FND-01. | Integrar GOV-01 y FND-01; crear `data/cat-01-technology-catalog`. |
+| Tarea  | Estado                  | Evidencia                                                                                                                           | Siguiente acción                                                |
+| ------ | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| GOV-01 | Integrada.              | PR #2 fusionado en `develop` mediante `ebe5940`; decisiones y roles operativos P1–P5 documentados.                                  | Ninguna técnica.                                                |
+| GOV-02 | Integrada.              | PR #3 fusionado en `develop` mediante `fef802c`; flujo, exclusiones y plantillas documentados.                                      | Ninguna técnica.                                                |
+| FND-01 | Integrada.              | PR #4 fusionado en `develop` mediante `3282e62`; contiene `2f16327`.                                                                | Ninguna técnica.                                                |
+| CTR-01 | Implementada sin merge. | OpenAPI público/interno, 17 ejemplos, tipos generados, guía de errores y validación automática en `feat/ctr-01-cat-01-foundations`. | Push, PR, revisión P1/P2 y merge humano a `develop`.            |
+| CAT-01 | Implementada sin merge. | Catálogo `1.0.0` con 10 tecnologías, 18 alias justificados y validador de estructura/colisiones en la misma rama combinada.         | Incluir en el mismo PR, revisión P2 y merge humano a `develop`. |
 
-## Decisiones preparadas
+La combinación de CTR-01 y CAT-01 en una rama/PR es una instrucción explícita del usuario para acelerar los siguientes trabajos. Los entregables y sus validaciones permanecen separados.
 
-- M0–M4 y ejecución local quedan documentados sin presentar funciones como implementadas.
-- Matching inicial determinista y catálogo versionado; sin IA generativa.
-- API y Skill Engine deben ejecutarse como procesos separados por requisito confirmado de evaluación.
-- Auth permanece como módulo propuesto dentro de la API; no se requiere un tercer proceso.
-- OpenAPI será la fuente de verdad para las fronteras HTTP; CTR-01 automatizará generación o comprobación sobre el workspace de FND-01.
-- P1–P5 son roles operativos suficientes por decisión explícita; nombres y usernames no son requisitos. El integrador se asigna en cada PR de release.
+## Decisiones y límites consumidos
 
-## Git y evidencia observada
+- OpenAPI 3.1 es la única fuente de verdad para las fronteras HTTP. Los cambios comienzan en `openapi/public.yaml` o `openapi/engine.yaml`; los tipos TypeScript se regeneran, no se editan a mano.
+- El contrato público usa `/api/v1`; el interno usa `/internal/v1/analyze` con una credencial de servicio distinta del JWT de usuario.
+- La respuesta de sesión contiene `accessToken`, `tokenType`, `expiresIn` y `user`. El refresh opaco solo viaja en cookie HttpOnly y nunca en JSON.
+- El access token dura 900 segundos. La cookie HTTPS es `__Secure-devpath_refresh`, `HttpOnly`, `Secure`, `SameSite=Lax`, `Path=/api/v1/auth`, sin `Domain` y con expiración absoluta máxima de siete días. El modo HTTP local usa nombre sin prefijo Secure y `Secure=false` únicamente de forma explícita.
+- Listas: `limit` predeterminado 20, máximo 50 y cursor opaco base64url. Análisis: `Idempotency-Key` UUID por propietario/operación; mismo cuerpo devuelve 200 y resultado existente, cuerpo diferente devuelve 409.
+- El engine recibe solo `jobText`, `candidateSkillIds` y `catalogVersion`; no recibe identidad ni PII. `matched` y `missing` particionan `required`; el porcentaje es redondeado y vale `null` sin requisitos.
+- El catálogo `1.0.0` mantiene IDs textuales estables y separa Java/JavaScript, React/React Native, C#/C++. Los alias incluyen una justificación revisable.
+- P1–P5 son roles operativos. No se requieren nombres personales, usernames ni CODEOWNERS.
 
-- Base de GOV-01: `develop` en `a4215356ab9d208519fb2922151eab5e77e94af1`.
-- STR-01: integrado por el merge `a421535` desde `chore/str-01-project-structure`.
-- `main` y `origin/main`: `135a1a7fea9bea0ae6d8d4087c8bf032efda8a91`; el historial conserva `c338a21`.
-- Remoto verificado: `https://github.com/Om4r28xz/Dev_Path.git`.
-- Rama actual de la tarea: `docs/gov-01-decisions`.
-- Commit de GOV-01: `72c19567cc8f562f96eec1efaf8d21a7853fa0ce` (`docs(governance): record scope, topology and stack decisions`).
-- Push verificado: la rama local y `origin/docs/gov-01-decisions` apuntan al mismo commit `72c1956`.
-- PR #2: merge verificado en `origin/develop` mediante `ebe5940498f3453cbc23899bc72306bbdba3d410`.
-- GOV-01 está integrada. No se hizo tag ni cambio remoto de protección durante esta actualización.
+## Entrega CTR-01
 
-## Validación GOV-01
+### Archivos principales
 
-- Revisión de estructura documental, estados confirmado/propuesto, contexto y consecuencias.
-- Comprobación pendiente: revisión humana P1/P2.
-- No aplican pruebas de código.
+- `packages/contracts/openapi/public.yaml`: auth, perfil, catálogo, habilidades y análisis M1.
+- `packages/contracts/openapi/engine.yaml`: análisis interno determinista y errores internos.
+- `packages/contracts/examples/`: requests, respuestas, fallos, idempotencia y caso sin requisitos.
+- `packages/contracts/src/{public,internal}/generated.ts`: tipos producidos desde OpenAPI.
+- `packages/contracts/scripts/generate-contracts.mjs`: generación reproducible y huella de las fuentes.
+- `packages/contracts/scripts/validate-contracts.mjs`: parseo, esquemas, ejemplos, ausencia de refresh JSON/PII e invariantes de matching.
+- `packages/contracts/ERRORS.md`: semántica estable de estados y códigos.
 
-## Entrega GOV-02
+### Contrato fijado
 
-### Archivos cambiados
+- Auth: `POST /auth/register`, `/auth/login`, `/auth/refresh`, `/auth/logout`.
+- Perfil y skills: `GET/PATCH /me`, `GET /skills`, `GET/PUT /me/skills`.
+- Análisis: `POST/GET /analyses`, `GET/DELETE /analyses/{analysisId}`.
+- Engine: `POST /internal/v1/analyze`.
+- Límites: nombre 100, email 254, contraseña de registro 12–128, título 120, texto de vacante 20 000, perfil headline 160, location 120, máximo 100 skills.
+- Errores públicos e internos usan un sobre estable con `code`, `message` y `requestId`; `fields` es opcional.
 
-- `README.md`: estado real, arquitectura, colaboración y alternativa manual cuando GitHub no permita rulesets.
-- `.gitignore` y `.gitattributes`: exclusión de dependencias, secretos, resultados, uploads y volúmenes; finales de línea reproducibles.
-- `.github/ISSUE_TEMPLATE/task.yml`, `bug.yml` y `config.yml`: intake verificable de tareas y defectos.
-- `.github/pull_request_template.md`: alcance, contrato, validación, seguridad, revisores y pendientes.
-- `docs/handoffs/lote-01.md`: evidencia del merge de GOV-01 y estado de GOV-02.
+## Entrega CAT-01
 
-### Contrato y límites consumidos
+### Archivos y esquema
 
-- Flujo de ramas y releases de `docs/FLUJO_GITHUB.md`.
-- Responsabilidades por rol de `docs/RESPONSABILIDADES.md`.
-- GOV-02 no añade lógica de negocio, dependencias, manifiestos de workspace ni workflows de CI.
-- No se modificaron reglas remotas. El README documenta el control manual obligatorio si el plan o los permisos de GitHub no ofrecen protección automática.
+- `packages/catalog/technologies.json`: versión `1.0.0`, arreglo `technologies` y entradas con `id`, `name`, `category`, `aliases[{value,reason}]`.
+- `packages/catalog/README.md`: contrato del esquema, categorías y reglas de normalización.
+- `packages/catalog/scripts/validate-catalog.mjs`: semver fijado, forma, categorías, IDs obligatorios, unicidad global de IDs/nombres/alias y longitud de justificaciones.
 
-### Validaciones ejecutadas
+Incluye Java, JavaScript, React, React Native, Node.js, Git, Docker, SQL, C# y C++. La normalización de colisiones ignora mayúsculas y separadores comunes, pero conserva `#` y `+` porque distinguen tecnologías.
 
-- Todos los archivos requeridos existen y no están vacíos.
-- `develop` local coincide con `origin/develop` en `ebe5940` y desciende de `main`.
-- `docs/gov-02-collaboration` parte del `develop` actualizado.
-- `git check-ignore` confirma exclusión de `.env`, `node_modules`, `infra/.data` y `uploads`; `.env.example` permanece versionable.
-- Búsqueda de patrones de secretos sin hallazgos.
-- `git diff --check` sin errores.
+## Validación
 
-### Estado Git
+- `pnpm install --frozen-lockfile`: correcto; instalación reproducible desde el lockfile.
+- `pnpm --filter @devpath/contracts generate`: correcto; generó ambos artefactos TypeScript desde OpenAPI.
+- `pnpm --filter @devpath/contracts test`: correcto; validó 2 especificaciones y 17 ejemplos JSON, además de las invariantes de matching y seguridad.
+- `pnpm --filter @devpath/contracts typecheck`: correcto; tipos generados compilables.
+- `pnpm --filter @devpath/catalog test`: correcto; 10 tecnologías y 18 alias únicos válidos.
+- `pnpm format:check`, `pnpm lint`, `pnpm typecheck`, `pnpm test` y `pnpm build`: correctos en todo el workspace.
 
-- Base: `develop` en `ebe5940498f3453cbc23899bc72306bbdba3d410`.
-- Rama: `docs/gov-02-collaboration`.
-- Commit: el commit que contiene este handoff y la entrega GOV-02.
-- Push y PR: pendientes.
-- Los roles P1–P5 y sus revisiones están definidos sin depender de nombres ni cuentas registradas en el repositorio.
+## Git y PR propuesto
 
-### PR propuesto para GOV-02
-
-- Título: `docs(collaboration): establish repository contribution workflow`
-- Base: `develop`
-- Rama: `docs/gov-02-collaboration`
-
-#### Cuerpo propuesto
-
-Establece la entrada del repositorio, exclusiones seguras, atributos de texto y plantillas de issues/PR. Conserva P1–P5 como roles de autoría y revisión sin requerir usernames. Documenta el flujo `develop`/`main` y la alternativa obligatoria cuando GitHub no permita reglas automáticas.
-
-Validación: archivos presentes; ascendencia y base verificadas; exclusiones sensibles comprobadas con `git check-ignore`; búsqueda de secretos y `git diff --check` satisfactorios. Pendientes: revisión P1/P2 y verificación de permisos/reglas en GitHub.
-
-## PR propuesto para GOV-01
-
-- Título: `docs(governance): record scope, topology and stack decisions`
-- Base: `develop`
-- Rama: `docs/gov-01-decisions`
+- Base: `develop` en `3282e62` (merge de FND-01).
+- Rama combinada: `feat/ctr-01-cat-01-foundations`.
+- Commit: este commit, con mensaje `feat(contracts): define M1 APIs and technology catalog`.
+- Push/PR/merge: pendientes y a cargo del usuario.
+- Título: `feat(contracts): define M1 APIs and curated technology catalog`.
 
 ### Cuerpo propuesto
 
-Registra el alcance M0–M4, el matching determinista, la topología local y el stack propuesto. Confirma API y Skill Engine como procesos separados y mantiene auth como módulo de la API. Añade la matriz de responsabilidad y revisión basada en los roles operativos P1–P5.
+Define los contratos OpenAPI 3.1 públicos e internos de M1, fija límites, cookie, cursor, idempotencia y errores, y genera tipos TypeScript desde una única fuente de verdad. Añade ejemplos válidos y de fallo comprobados automáticamente, incluidas las invariantes del matching y el caso sin requisitos. Entrega además el catálogo curado `1.0.0` con IDs estables, alias justificados y validación de colisiones.
 
-Validación: revisión documental local. Pendientes antes del merge: aprobaciones P1/P2.
+Validación: instalación congelada; generación de tipos; parseo de 2 contratos y validación de 17 ejemplos; catálogo de 10 tecnologías/18 alias; formato, lint, typecheck, tests y build del workspace. Pendientes: revisión técnica P1/P2, push, PR y merge humano.
 
-## Próxima acción
+## Continuación
 
-Publicar GOV-02, abrir su PR hacia `develop` y completar el merge humano. Después, crear FND-01 desde el `develop` actualizado. CTR-01 y CAT-01 siguen esperando la integración de FND-01.
-
-## Entrega FND-01
-
-### Archivos y contrato del workspace
-
-- Manifiestos raíz: `package.json`, `pnpm-workspace.yaml` y `pnpm-lock.yaml`.
-- Configuración común: `tsconfig.base.json`, `eslint.config.mjs`, `.prettierrc.json` y `.prettierignore`.
-- Paquetes estables: `@devpath/web`, `@devpath/api`, `@devpath/skill-engine`, `@devpath/contracts`, `@devpath/catalog`, `@devpath/db` y `@devpath/test-support`.
-- Comandos raíz estables: `lint`, `format:check`, `typecheck`, `test`, `build`, `dev:web`, `dev:api` y `dev:engine`.
-- Web React/Vite con shell M0; API y Skill Engine Express con `app` separado de `server`, validación explícita de `PORT` y `/health`.
-- ESLint prohíbe importar `@devpath/db` desde web y Skill Engine.
-- Se retiraron únicamente los `.gitkeep` sustituidos por contenido real.
-
-### Versiones fijadas
-
-- Node.js: `>=22.16.0 <23`; pnpm: `>=11.22.0 <12` y `packageManager: pnpm@11.22.0`.
-- TypeScript `6.0.3`, ESLint `10.14.0`, Prettier `3.9.10`, Vitest `5.0.5`.
-- React/React DOM `19.3.1`, Vite `8.3.5`, plugin React `6.1.2`.
-- Express `5.3.0` y `tsx` `4.23.15`.
-- TypeScript 7 no se seleccionó porque `typescript-eslint 8.72.1` declara soporte `<6.1.0`.
-- `allowBuilds` autoriza de forma explícita el postinstall requerido por `esbuild`.
-
-### Validación ejecutada
-
-- `pnpm install --frozen-lockfile --force`: correcto, 8 proyectos del workspace y lockfile reproducible.
-- `pnpm lint`: correcto.
-- `pnpm format:check`: correcto sobre archivos gobernados por el workspace.
-- `pnpm typecheck`: correcto en web, API y engine.
-- `pnpm test`: correcto; 4 pruebas unitarias aprobadas y web sin pruebas todavía.
-- `pnpm build`: correcto; las tres aplicaciones compilan.
-- Runtime real: API `GET /health` devolvió `200 {"service":"api","status":"ok"}`; engine devolvió `200 {"service":"skill-engine","status":"ok"}`; preview web devolvió HTTP 200 con título `DevPath`.
-- Cierre de los tres procesos comprobado después de los probes.
-
-### Estado Git y PR propuesto
-
-- Base: `develop` en `fef802c6ce9a306f8f9913e291e5d30518883662`.
-- Rama: `chore/fnd-01-workspace`.
-- Commit: el commit que contiene este handoff y la entrega FND-01.
-- Push y PR: pendientes.
-- Título: `chore(workspace): add reproducible TypeScript foundations`.
-- Base del PR: `develop`.
-
-#### Cuerpo propuesto
-
-Crea el workspace pnpm reproducible de DevPath con versiones fijadas, configuración TypeScript/ESLint/Prettier y comandos raíz estables. Añade un shell web M0 y esqueletos Express comprobables para API y Skill Engine, separados en `app`/`server`, sin implementar negocio. Prohíbe importaciones de DB desde web/engine y documenta los comandos locales.
-
-Validación: instalación congelada, lint, formato, typecheck, 4 pruebas, build de tres apps y probes HTTP reales satisfactorios. Pendiente: revisión P1 de fronteras y merge humano.
-
-## Próxima acción actualizada
-
-Publicar e integrar FND-01. Solo después crear CTR-01 y CAT-01 desde el `develop` que contenga el merge de FND-01.
+Después del merge a `develop`, las tareas siguientes compatibles pueden prepararse juntas en una misma rama por instrucción del usuario, sin mezclar sus criterios ni afirmar integraciones antes del merge humano.
