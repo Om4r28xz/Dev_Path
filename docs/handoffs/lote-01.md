@@ -4,7 +4,7 @@
 
 | Tarea | Estado | Evidencia | Condición de continuación |
 | --- | --- | --- | --- |
-| GOV-01 | Implementada sin merge. | ADR 0001–0003 y matriz de responsabilidades preparados en `docs/gov-01-decisions`; P1–P5 aceptados como roles operativos. | P1/P2 revisan; luego commit, PR y merge humano a `develop`. |
+| GOV-01 | Implementada y publicada, sin merge. | ADR 0001–0003 y matriz de responsabilidades en el commit `72c1956`, publicado como `origin/docs/gov-01-decisions`; P1–P5 aceptados como roles operativos. | Abrir o verificar el PR, obtener revisión P1/P2 y hacer merge humano a `develop`. |
 | GOV-02 | Bloqueada. | `develop` y `origin/develop` ya existen y STR-01 está integrado en `a421535`, pero GOV-01 aún no está integrada. | Merge humano de GOV-01; crear `docs/gov-02-collaboration` desde `develop` actualizado. |
 | FND-01 | Bloqueada. | STR-01 sí está integrado en `develop` mediante `a421535`; GOV-02 no está integrada. | Integrar GOV-02; crear `chore/fnd-01-workspace` desde `develop` actualizado. |
 | CTR-01 | Bloqueada. | Depende de GOV-01 y del workspace real de FND-01. | Integrar GOV-01 y FND-01; crear `docs/ctr-01-mvp-contracts`. |
@@ -26,7 +26,10 @@
 - `main` y `origin/main`: `135a1a7fea9bea0ae6d8d4087c8bf032efda8a91`; el historial conserva `c338a21`.
 - Remoto verificado: `https://github.com/Om4r28xz/Dev_Path.git`.
 - Rama actual de la tarea: `docs/gov-01-decisions`.
-- No se hizo commit, push, PR, merge, tag ni cambio remoto de protección.
+- Commit de GOV-01: `72c19567cc8f562f96eec1efaf8d21a7853fa0ce` (`docs(governance): record scope, topology and stack decisions`).
+- Push verificado: la rama local y `origin/docs/gov-01-decisions` apuntan al mismo commit `72c1956`.
+- PR: no verificado desde el repositorio local.
+- No se hizo merge, tag ni cambio remoto de protección durante esta actualización.
 
 ## Validación GOV-01
 
@@ -48,4 +51,4 @@ Validación: revisión documental local. Pendientes antes del merge: aprobacione
 
 ## Próxima acción
 
-Obtener revisión P1/P2 y hacer el merge humano de GOV-01. No iniciar GOV-02 en esta rama ni encadenar FND-01/CTR-01/CAT-01 antes de que sus dependencias estén integradas.
+Abrir o verificar el PR hacia `develop`, obtener revisión P1/P2 y hacer el merge humano de GOV-01. No iniciar GOV-02 en esta rama ni encadenar FND-01/CTR-01/CAT-01 antes de que sus dependencias estén integradas.
