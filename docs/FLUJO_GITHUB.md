@@ -106,7 +106,7 @@ git pull --ff-only origin develop
 git switch -c feature/auth-04-auth-screens
 ```
 
-El responsable implementa y valida. Una vez que existan los scripts de FND-01, ejecuta los controles aplicables; los filtros por paquete se documentarán con sus nombres reales.
+El responsable implementa y valida. Una vez que existan los scripts de FND-01, ejecuta los controles aplicables; los filtros por paquete se documentarán con sus nombres definitivos.
 
 ```powershell
 pnpm lint

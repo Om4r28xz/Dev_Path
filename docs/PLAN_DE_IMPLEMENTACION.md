@@ -68,7 +68,7 @@ Fuera de estas entregas: portales de empleadores, solicitudes de empleo dentro d
 
 ## 3. Personas, responsabilidades y contribuciones
 
-Los identificadores P1–P5 se sustituyen por los nombres y usuarios reales al crear las issues.
+Los identificadores P1–P5 son roles operativos estables. Las issues y los PR asignan uno de estos roles sin exigir nombres personales ni usernames.
 
 | Persona | Responsabilidad principal | Ejemplos de contribuciones reales |
 | --- | --- | --- |
@@ -183,7 +183,6 @@ docs/
   workflows/
   ISSUE_TEMPLATE/
   pull_request_template.md
-  CODEOWNERS
 ```
 
 El usuario solicita ahora una IA dedicada al árbol completo. STR-01 / lote 00 reserva desde el inicio las carpetas de M0–M4, con `.gitkeep` en hojas vacías y README de responsabilidad. Las carpetas futuras no contienen implementación ficticia. FND-01 añade después manifiestos, herramientas y arranque real de M0 sobre ese árbol. El prompt de estructura es [00-estructura-completa.md](prompts/lotes/00-estructura-completa.md); preparar el prompt no equivale a haber ejecutado su creación de carpetas.
