@@ -1,0 +1,10 @@
+{
+  "name": "@devpath/catalog",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "pnpm test",
+    "test": "node scripts/validate-catalog.mjs"
+  }
+}

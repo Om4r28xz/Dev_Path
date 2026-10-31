@@ -1,0 +1,7 @@
+{
+  "error": {
+    "code": "IDEMPOTENCY_KEY_REUSED",
+    "message": "La clave de idempotencia ya se usó con otros datos.",
+    "requestId": "7bfb5328-6b03-4ff8-91e8-a285f31add47"
+  }
+}

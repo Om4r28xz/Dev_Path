@@ -1,0 +1,625 @@
+openapi: 3.1.0
+info:
+  title: DevPath Public API
+  version: 1.0.0
+  description: |
+    Canonical M1 browser-to-API contract. OpenAPI is the source of truth;
+    TypeScript consumers are generated from this document.
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Local development
+tags:
+  - name: Auth
+  - name: Profile
+  - name: Skills
+  - name: Analyses
+paths:
+  /auth/register:
+    post:
+      tags: [Auth]
+      operationId: register
+      summary: Create an account, profile, and refresh session
+      parameters:
+        - $ref: '#/components/parameters/ClientHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/RegisterRequest' }
+            examples:
+              valid:
+                externalValue: ../examples/public/register-request.json
+      responses:
+        '201':
+          description: Account and session created
+          headers:
+            Set-Cookie: { $ref: '#/components/headers/RefreshCookie' }
+            X-Request-Id: { $ref: '#/components/headers/RequestId' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SessionResponse' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '409': { $ref: '#/components/responses/EmailConflict' }
+        '413': { $ref: '#/components/responses/PayloadTooLarge' }
+        '415': { $ref: '#/components/responses/UnsupportedMediaType' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /auth/login:
+    post:
+      tags: [Auth]
+      operationId: login
+      summary: Create a session with generic credential failure
+      parameters:
+        - $ref: '#/components/parameters/ClientHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/LoginRequest' }
+      responses:
+        '200':
+          description: Session created
+          headers:
+            Set-Cookie: { $ref: '#/components/headers/RefreshCookie' }
+            X-Request-Id: { $ref: '#/components/headers/RequestId' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SessionResponse' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/InvalidCredentials' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+  /auth/refresh:
+    post:
+      tags: [Auth]
+      operationId: refreshSession
+      summary: Rotate the refresh cookie and issue a new in-memory access token
+      description: The opaque refresh token is accepted and returned only as an HttpOnly cookie, never in JSON.
+      parameters:
+        - $ref: '#/components/parameters/ClientHeader'
+        - $ref: '#/components/parameters/RefreshCookie'
+      responses:
+        '200':
+          description: Session rotated
+          headers:
+            Set-Cookie: { $ref: '#/components/headers/RefreshCookie' }
+            X-Request-Id: { $ref: '#/components/headers/RequestId' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SessionResponse' }
+        '401': { $ref: '#/components/responses/InvalidRefreshSession' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+        '503': { $ref: '#/components/responses/DependencyUnavailable' }
+  /auth/logout:
+    post:
+      tags: [Auth]
+      operationId: logout
+      summary: Revoke the current refresh family and clear its cookie
+      parameters:
+        - $ref: '#/components/parameters/ClientHeader'
+        - $ref: '#/components/parameters/RefreshCookie'
+      responses:
+        '204':
+          description: Session family revoked; cookie expires immediately
+          headers:
+            Set-Cookie: { $ref: '#/components/headers/ClearedRefreshCookie' }
+            X-Request-Id: { $ref: '#/components/headers/RequestId' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '503': { $ref: '#/components/responses/DependencyUnavailable' }
+  /me:
+    get:
+      tags: [Profile]
+      operationId: getMe
+      summary: Read the authenticated account and profile
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200':
+          description: Current profile
+          headers:
+            X-Request-Id: { $ref: '#/components/headers/RequestId' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/UserProfile' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+        '503': { $ref: '#/components/responses/DependencyUnavailable' }
+    patch:
+      tags: [Profile]
+      operationId: updateMe
+      summary: Update allowed profile fields; email cannot be changed here
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/UpdateMeRequest' }
+      responses:
+        '200':
+          description: Updated profile
+          headers:
+            X-Request-Id: { $ref: '#/components/headers/RequestId' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/UserProfile' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+        '413': { $ref: '#/components/responses/PayloadTooLarge' }
+  /skills:
+    get:
+      tags: [Skills]
+      operationId: listSkills
+      summary: Search the versioned technology catalog
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - $ref: '#/components/parameters/SearchQuery'
+        - $ref: '#/components/parameters/Cursor'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Catalog page ordered by stable textual ID
+          headers:
+            X-Request-Id: { $ref: '#/components/headers/RequestId' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/SkillListResponse' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+  /me/skills:
+    get:
+      tags: [Skills]
+      operationId: getMySkills
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200':
+          description: Current stable skill IDs and profile revision
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/UserSkillsResponse' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+    put:
+      tags: [Skills]
+      operationId: replaceMySkills
+      summary: Atomically replace all selected skills
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ReplaceUserSkillsRequest' }
+      responses:
+        '200':
+          description: Replacement committed and revision incremented
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/UserSkillsResponse' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+        '413': { $ref: '#/components/responses/PayloadTooLarge' }
+  /analyses:
+    post:
+      tags: [Analyses]
+      operationId: createAnalysis
+      summary: Analyze manual job text using the authenticated user's current skills
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CreateAnalysisRequest' }
+      responses:
+        '201':
+          description: New analysis persisted
+          headers:
+            X-Request-Id: { $ref: '#/components/headers/RequestId' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Analysis' }
+        '200':
+          description: Existing analysis returned for an identical idempotent replay
+          headers:
+            X-Request-Id: { $ref: '#/components/headers/RequestId' }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Analysis' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+        '409': { $ref: '#/components/responses/IdempotencyConflict' }
+        '413': { $ref: '#/components/responses/PayloadTooLarge' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+        '503': { $ref: '#/components/responses/DependencyUnavailable' }
+        '504': { $ref: '#/components/responses/DependencyTimeout' }
+    get:
+      tags: [Analyses]
+      operationId: listAnalyses
+      summary: List only the authenticated user's analyses, newest first
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - $ref: '#/components/parameters/Cursor'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Stable page ordered by createdAt descending then id descending
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AnalysisListResponse' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+  /analyses/{analysisId}:
+    parameters:
+      - $ref: '#/components/parameters/AnalysisId'
+    get:
+      tags: [Analyses]
+      operationId: getAnalysis
+      summary: Read an owned analysis; non-owned IDs return 404
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200':
+          description: Analysis detail
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Analysis' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    delete:
+      tags: [Analyses]
+      operationId: deleteAnalysis
+      summary: Delete an owned analysis; non-owned IDs return 404
+      security: [{ bearerAuth: [] }]
+      responses:
+        '204': { description: Analysis deleted }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/Unauthenticated' }
+        '404': { $ref: '#/components/responses/NotFound' }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Short-lived access JWT stored only in browser memory.
+  headers:
+    RequestId:
+      description: API-generated request correlation UUID.
+      schema: { type: string, format: uuid }
+    RefreshCookie:
+      description: >-
+        HTTPS uses __Secure-devpath_refresh; HttpOnly; Secure; SameSite=Lax;
+        Path=/api/v1/auth; no Domain; Max-Age no later than the seven-day absolute session expiry.
+        Explicit local HTTP mode uses devpath_refresh with Secure=false.
+      schema: { type: string }
+    ClearedRefreshCookie:
+      description: Same cookie attributes as refresh, with Max-Age=0.
+      schema: { type: string }
+  parameters:
+    ClientHeader:
+      name: X-DevPath-Client
+      in: header
+      required: true
+      description: Custom CSRF signal; must equal web and accompany an allowed exact Origin.
+      schema: { type: string, const: web }
+    RefreshCookie:
+      name: Cookie
+      in: header
+      required: true
+      description: HttpOnly refresh cookie supplied by the user agent.
+      schema: { type: string, minLength: 1 }
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      description: UUID scoped to authenticated owner and operation. Reuse with a different body returns 409.
+      schema: { type: string, format: uuid }
+    Cursor:
+      name: cursor
+      in: query
+      required: false
+      description: Opaque base64url cursor encoding the server's stable sort boundary; clients must not construct it.
+      schema: { type: string, minLength: 16, maxLength: 512, pattern: '^[A-Za-z0-9_-]+$' }
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema: { type: integer, minimum: 1, maximum: 50, default: 20 }
+    SearchQuery:
+      name: q
+      in: query
+      required: false
+      schema: { type: string, minLength: 1, maxLength: 80 }
+    AnalysisId:
+      name: analysisId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+  responses:
+    ValidationError:
+      description: Request validation failed
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    InvalidCredentials:
+      description: Email or password did not match; the response does not reveal which value failed
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+          examples:
+            generic:
+              externalValue: ../examples/public/invalid-credentials-error.json
+    InvalidRefreshSession:
+      description: Refresh session is missing, expired, consumed, reused, or revoked
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    Unauthenticated:
+      description: Missing or invalid access token
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    Forbidden:
+      description: Authenticated request is not allowed
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    NotFound:
+      description: Resource does not exist or is not owned by this user
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    EmailConflict:
+      description: Normalized email is already registered
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    IdempotencyConflict:
+      description: Idempotency key was already used with a different command
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    PayloadTooLarge:
+      description: Request exceeds the configured JSON or field limit
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    UnsupportedMediaType:
+      description: Auth commands require application/json
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    RateLimited:
+      description: Local abuse limit exceeded
+      headers:
+        Retry-After:
+          schema: { type: integer, minimum: 1 }
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    DependencyUnavailable:
+      description: Required internal dependency is unavailable or returned an invalid result
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+    DependencyTimeout:
+      description: Required internal dependency exceeded its deadline
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/ErrorResponse' }
+  schemas:
+    RegisterRequest:
+      type: object
+      additionalProperties: false
+      required: [name, email, password]
+      properties:
+        name: { type: string, minLength: 1, maxLength: 100 }
+        email: { type: string, format: email, maxLength: 254 }
+        password: { type: string, minLength: 12, maxLength: 128 }
+    LoginRequest:
+      type: object
+      additionalProperties: false
+      required: [email, password]
+      properties:
+        email: { type: string, format: email, maxLength: 254 }
+        password: { type: string, minLength: 1, maxLength: 128 }
+    SessionResponse:
+      type: object
+      additionalProperties: false
+      required: [accessToken, tokenType, expiresIn, user]
+      properties:
+        accessToken:
+          {
+            type: string,
+            minLength: 1,
+            description: Short-lived JWT; the browser keeps it only in memory.,
+          }
+        tokenType: { type: string, const: Bearer }
+        expiresIn: { type: integer, const: 900, description: Access token lifetime in seconds. }
+        user: { $ref: '#/components/schemas/SessionUser' }
+    SessionUser:
+      type: object
+      additionalProperties: false
+      required: [id, name, email]
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string, minLength: 1, maxLength: 100 }
+        email: { type: string, format: email, maxLength: 254 }
+    UserProfile:
+      type: object
+      additionalProperties: false
+      required: [id, name, email, headline, location, skillsRevision, createdAt, updatedAt]
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string, minLength: 1, maxLength: 100 }
+        email: { type: string, format: email, maxLength: 254 }
+        headline: { type: [string, 'null'], minLength: 1, maxLength: 160 }
+        location: { type: [string, 'null'], minLength: 1, maxLength: 120 }
+        skillsRevision: { type: integer, minimum: 0 }
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+    UpdateMeRequest:
+      type: object
+      additionalProperties: false
+      minProperties: 1
+      properties:
+        name: { type: string, minLength: 1, maxLength: 100 }
+        headline: { type: [string, 'null'], minLength: 1, maxLength: 160 }
+        location: { type: [string, 'null'], minLength: 1, maxLength: 120 }
+    Skill:
+      type: object
+      additionalProperties: false
+      required: [id, name, category]
+      properties:
+        id: { $ref: '#/components/schemas/SkillId' }
+        name: { type: string, minLength: 1, maxLength: 100 }
+        category: { type: string, enum: [language, library, framework, runtime, tool, platform] }
+    SkillListResponse:
+      type: object
+      additionalProperties: false
+      required: [catalogVersion, items, nextCursor]
+      properties:
+        catalogVersion: { type: string, const: 1.0.0 }
+        items: { type: array, maxItems: 50, items: { $ref: '#/components/schemas/Skill' } }
+        nextCursor: { type: [string, 'null'], minLength: 16, maxLength: 512 }
+    ReplaceUserSkillsRequest:
+      type: object
+      additionalProperties: false
+      required: [skillIds]
+      properties:
+        skillIds:
+          type: array
+          uniqueItems: true
+          maxItems: 100
+          items: { $ref: '#/components/schemas/SkillId' }
+    UserSkillsResponse:
+      type: object
+      additionalProperties: false
+      required: [skillIds, revision]
+      properties:
+        skillIds:
+          type: array
+          uniqueItems: true
+          maxItems: 100
+          items: { $ref: '#/components/schemas/SkillId' }
+        revision: { type: integer, minimum: 0 }
+    CreateAnalysisRequest:
+      type: object
+      additionalProperties: false
+      required: [source]
+      properties:
+        source: { $ref: '#/components/schemas/TextAnalysisSourceInput' }
+    TextAnalysisSourceInput:
+      type: object
+      additionalProperties: false
+      required: [type, text]
+      properties:
+        type: { type: string, const: text }
+        title: { type: string, minLength: 1, maxLength: 120 }
+        text: { type: string, minLength: 1, maxLength: 20000 }
+    Analysis:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - source
+        - candidateSkillsRevision
+        - requiredSkillIds
+        - matchedSkillIds
+        - missingSkillIds
+        - compatibilityPercentage
+        - versions
+        - warnings
+        - skillsOutdated
+        - createdAt
+      properties:
+        id: { type: string, format: uuid }
+        source: { $ref: '#/components/schemas/AnalysisSourceSummary' }
+        candidateSkillsRevision: { type: integer, minimum: 0 }
+        requiredSkillIds: { $ref: '#/components/schemas/UniqueSkillIds' }
+        matchedSkillIds: { $ref: '#/components/schemas/UniqueSkillIds' }
+        missingSkillIds: { $ref: '#/components/schemas/UniqueSkillIds' }
+        compatibilityPercentage: { type: [integer, 'null'], minimum: 0, maximum: 100 }
+        versions: { $ref: '#/components/schemas/AnalysisVersions' }
+        warnings:
+          type: array
+          maxItems: 20
+          items: { type: string, minLength: 1, maxLength: 200 }
+        skillsOutdated: { type: boolean }
+        createdAt: { type: string, format: date-time }
+    AnalysisSummary:
+      type: object
+      additionalProperties: false
+      required: [id, source, compatibilityPercentage, skillsOutdated, createdAt]
+      properties:
+        id: { type: string, format: uuid }
+        source: { $ref: '#/components/schemas/AnalysisSourceSummary' }
+        compatibilityPercentage: { type: [integer, 'null'], minimum: 0, maximum: 100 }
+        skillsOutdated: { type: boolean }
+        createdAt: { type: string, format: date-time }
+    AnalysisListResponse:
+      type: object
+      additionalProperties: false
+      required: [items, nextCursor]
+      properties:
+        items:
+          { type: array, maxItems: 50, items: { $ref: '#/components/schemas/AnalysisSummary' } }
+        nextCursor: { type: [string, 'null'], minLength: 16, maxLength: 512 }
+    AnalysisSourceSummary:
+      type: object
+      additionalProperties: false
+      required: [type, title]
+      properties:
+        type: { type: string, const: text }
+        title: { type: [string, 'null'], minLength: 1, maxLength: 120 }
+    AnalysisVersions:
+      type: object
+      additionalProperties: false
+      required: [catalog, extractor, scoring]
+      properties:
+        catalog: { type: string, pattern: '^\d+\.\d+\.\d+$' }
+        extractor: { type: string, pattern: '^\d+\.\d+\.\d+$' }
+        scoring: { type: string, pattern: '^\d+\.\d+\.\d+$' }
+    SkillId:
+      type: string
+      minLength: 1
+      maxLength: 64
+      pattern: '^[a-z][a-z0-9-]*$'
+    UniqueSkillIds:
+      type: array
+      uniqueItems: true
+      maxItems: 100
+      items: { $ref: '#/components/schemas/SkillId' }
+    ErrorResponse:
+      type: object
+      additionalProperties: false
+      required: [error]
+      properties:
+        error:
+          type: object
+          additionalProperties: false
+          required: [code, message, requestId]
+          properties:
+            code:
+              type: string
+              enum:
+                - VALIDATION_ERROR
+                - INVALID_CREDENTIALS
+                - INVALID_REFRESH_SESSION
+                - EMAIL_ALREADY_REGISTERED
+                - UNAUTHENTICATED
+                - FORBIDDEN
+                - NOT_FOUND
+                - IDEMPOTENCY_KEY_REUSED
+                - SKILL_IDS_UNKNOWN
+                - CONFLICT
+                - PAYLOAD_TOO_LARGE
+                - UNSUPPORTED_MEDIA_TYPE
+                - RATE_LIMITED
+                - INTERNAL_ERROR
+                - DEPENDENCY_UNAVAILABLE
+                - DEPENDENCY_TIMEOUT
+            message: { type: string, minLength: 1, maxLength: 300 }
+            requestId: { type: string, format: uuid }
+            fields:
+              type: object
+              additionalProperties:
+                type: array
+                minItems: 1
+                items: { type: string, minLength: 1, maxLength: 200 }

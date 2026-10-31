@@ -1,0 +1,7 @@
+{
+  "error": {
+    "code": "CATALOG_VERSION_MISMATCH",
+    "message": "La versión del catálogo no está disponible.",
+    "requestId": "7bfb5328-6b03-4ff8-91e8-a285f31add47"
+  }
+}

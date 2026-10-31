@@ -56,11 +56,11 @@ No marques el lote completo si faltan merges, aceptación o publicación humana 
 
 Objetivo de este lote: acordar decisiones mínimas, formalizar develop, entregar workspace ejecutable, fijar contratos M1 y catálogo inicial. La estructura completa se prepara con el lote 00; su integración formal STR-01 debe quedar antes de FND-01.
 Orden: GOV-01 → GOV-02 → integrar STR-01 del lote 00 → FND-01 → CTR-01 → CAT-01. No repitas el commit inicial: ya existe un historial de planificación. GOV-02 verifica refs/origin y crea develop desde la main válida cuando falte, además de colaboración/plantillas; los cambios documentales normales usan PR a develop.
-Archivos del lote: docs/adr/0001-scope.md, 0002-topology.md, 0003-stack.md; README raíz, .gitignore, .gitattributes, .github/ISSUE_TEMPLATE, pull_request_template.md y CODEOWNERS con usuarios verificados; package.json, pnpm-workspace.yaml, pnpm-lock.yaml, configuración TS/lint y manifiestos apps/paquetes; packages/contracts/openapi/{public,engine}.yaml, src y examples; packages/catalog/technologies.json.
+Archivos del lote: docs/adr/0001-scope.md, 0002-topology.md, 0003-stack.md; README raíz, .gitignore, .gitattributes, .github/ISSUE_TEMPLATE y pull_request_template.md; package.json, pnpm-workspace.yaml, pnpm-lock.yaml, configuración TS/lint y manifiestos apps/paquetes; packages/contracts/openapi/{public,engine}.yaml, src y examples; packages/catalog/technologies.json.
 FND-01 aprovecha carpetas/README/.gitkeep de STR-01: no borra ni vuelve a crear el árbol, retira solo el .gitkeep que deja de ser necesario. Crea únicamente código/config real de arranque M0; las carpetas M2–M4 siguen reservadas.
 Contratos a fijar: POST auth/register {name,email,password} → 201 sesión; login {email,password} → 200; refresh vía cookie → token; logout → 204; GET/PATCH me; GET skills; GET/PUT me/skills; POST/GET/DELETE analyses; POST interno /internal/v1/analyze. Ejemplos y errores exactos están en el plan. Auth response incluye accessToken,tokenType,expiresIn,user; refresh nunca en JSON.
 Decide una sola dirección de generación OpenAPI/esquemas y automatiza validación de ejemplos con ayuda P1/P2. No mantengas DTOs divergentes escritos a mano.
-Catálogo inicial versionado: IDs textuales estables; Java/JavaScript y React/React Native separados; incluir signos de C++ y C#. No inventar nombres de personas ni compromisos académicos: registrar supuestos y mantener P1–P5 hasta conocer nombres.
+Catálogo inicial versionado: IDs textuales estables; Java/JavaScript y React/React Native separados; incluir signos de C++ y C#. P1–P5 permanecen como roles operativos; no recopilar nombres personales ni compromisos académicos.
 Validación final: instalar con lockfile; lint/typecheck/build de esqueletos; contratos parseables/ejemplos válidos; IDs/alias sin duplicados. No afirmar que login o matching ya funcionan.
 
 ## Tareas exactas y criterios de aceptación
@@ -71,7 +71,7 @@ Validación final: instalar con lockfile; lint/typecheck/build de esqueletos; co
 - **Dependencias:** ninguna.
 - **Rama:** inicialmente contenido preparado para GOV-02; una vez existente develop, `docs/gov-01-decisions`.
 - **Archivos:** `docs/adr/0001-scope.md`, `0002-topology.md`, `0003-stack.md`, matriz de responsables.
-- **Encargo:** registrar el alcance por etapas, ejecución local, matching determinista, propuesta auth como módulo y engine separado. Sustituir P1–P5 por personas reales y asignar un integrador de release. Confirmar si la evaluación exige procesos separados.
+- **Encargo:** registrar el alcance por etapas, ejecución local, matching determinista, propuesta auth como módulo y engine separado. Mantener P1–P5 como roles y asignar el rol de integrador en cada release. Confirmar si la evaluación exige procesos separados.
 - **Aceptación:** cada decisión indica confirmado/propuesto, contexto y consecuencia; no se presentan features como implementadas; todos saben qué PR revisar.
 - **Validación:** revisión documental por ambos programadores; no se requieren pruebas de código.
 
@@ -80,9 +80,9 @@ Validación final: instalar con lockfile; lint/typecheck/build de esqueletos; co
 - **Entrega / responsable:** M0, P4; P1/P2 verifican.
 - **Dependencias:** GOV-01.
 - **Rama:** reutilizar `main` existente y establecer `develop` cuando falte; cambios normales en `docs/gov-02-collaboration` → develop. Bootstrap directo a main únicamente si se verifica un repositorio sin historial.
-- **Archivos:** descripción original, planes, README inicial, `.gitignore`, `.gitattributes`, plantilla de PR e issue, CODEOWNERS con usuarios reales.
+- **Archivos:** descripción original, planes, README inicial, `.gitignore`, `.gitattributes` y plantillas de PR e issue.
 - **Encargo:** comprobar refs y remoto sin sobrescribir historial. Ya se observó el commit `c338a21` en main/origin/main; conservarlo y no repetir bootstrap. Establecer develop, documentación de colaboración y protección de ramas. No añadir secretos ni desarrollo de negocio en main.
-- **Aceptación:** existe historial y develop comparte ancestro con main; los cinco miembros pueden contribuir; está definido qué hacer si GitHub no ofrece reglas por el plan/visibilidad.
+- **Aceptación:** existe historial y develop comparte ancestro con main; los roles P1–P5 tienen un flujo de contribución y revisión definido; está definido qué hacer si GitHub no ofrece reglas por el plan/visibilidad.
 - **Validación:** clonar o consultar refs, revisar el primer diff y confirmar exclusión de env/claves/volúmenes. No hace falta crear PR ficticio para el primer commit.
 
 ### FND-01 — Crear workspace y herramientas comunes

@@ -5,7 +5,7 @@ Este documento convierte el [plan técnico](PLAN_DE_IMPLEMENTACION.md) en encarg
 ## 1. Reglas de uso del backlog
 
 - P1 y P2 implementan código; P3 entrega catálogo/contenido; P4 documentación/contratos; P5 aceptación/evidencias.
-- Los nombres son marcadores para asignar a las cinco personas reales.
+- P1–P5 son roles operativos; no requieren nombres personales ni usernames para ejecutar el backlog.
 - Un lote es un encargo de hasta cinco tareas para una IA; no cambia la granularidad de ramas y revisiones. Puede pausarse y retomarse al integrar dependencias.
 - Toda tarea tiene una issue, un responsable y un PR propio. Una IA es una herramienta del responsable, no un aprobador humano.
 - Salvo bootstrap y releases, todas las ramas indicadas nacen del último `origin/develop` y su PR apunta a `develop`.
@@ -47,7 +47,7 @@ La disponibilidad exacta la determina el DAG de cada tarea; la tabla no autoriza
 - **Dependencias:** ninguna.
 - **Rama:** inicialmente contenido preparado para GOV-02; una vez existente develop, `docs/gov-01-decisions`.
 - **Archivos:** `docs/adr/0001-scope.md`, `0002-topology.md`, `0003-stack.md`, matriz de responsables.
-- **Encargo:** registrar el alcance por etapas, ejecución local, matching determinista, propuesta auth como módulo y engine separado. Sustituir P1–P5 por personas reales y asignar un integrador de release. Confirmar si la evaluación exige procesos separados.
+- **Encargo:** registrar el alcance por etapas, ejecución local, matching determinista, propuesta auth como módulo y engine separado. Mantener P1–P5 como roles y asignar el rol de integrador de release en cada release. Confirmar si la evaluación exige procesos separados.
 - **Aceptación:** cada decisión indica confirmado/propuesto, contexto y consecuencia; no se presentan features como implementadas; todos saben qué PR revisar.
 - **Validación:** revisión documental por ambos programadores; no se requieren pruebas de código.
 
@@ -56,9 +56,9 @@ La disponibilidad exacta la determina el DAG de cada tarea; la tabla no autoriza
 - **Entrega / responsable:** M0, P4; P1/P2 verifican.
 - **Dependencias:** GOV-01.
 - **Rama:** reutilizar `main` existente y establecer `develop` cuando falte; cambios normales en `docs/gov-02-collaboration` → develop. Bootstrap directo a main únicamente si se verifica un repositorio sin historial.
-- **Archivos:** descripción original, planes, README inicial, `.gitignore`, `.gitattributes`, plantilla de PR e issue, CODEOWNERS con usuarios reales.
+- **Archivos:** descripción original, planes, README inicial, `.gitignore`, `.gitattributes` y plantillas de PR e issue.
 - **Encargo:** comprobar refs y remoto sin sobrescribir historial. Ya se observó el commit `c338a21` en main/origin/main; conservarlo y no repetir bootstrap. Establecer develop, documentación de colaboración y protección de ramas. No añadir secretos ni desarrollo de negocio en main.
-- **Aceptación:** existe historial y develop comparte ancestro con main; los cinco miembros pueden contribuir; está definido qué hacer si GitHub no ofrece reglas por el plan/visibilidad.
+- **Aceptación:** existe historial y develop comparte ancestro con main; los roles P1–P5 tienen un flujo de contribución y revisión definido; está definido qué hacer si GitHub no ofrece reglas por el plan/visibilidad.
 - **Validación:** clonar o consultar refs, revisar el primer diff y confirmar exclusión de env/claves/volúmenes. No hace falta crear PR ficticio para el primer commit.
 
 ### STR-01 — Preparar la estructura completa con una IA dedicada

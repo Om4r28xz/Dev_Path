@@ -1,0 +1,1110 @@
+{
+  "schemaVersion": 1,
+  "directories": [
+    {
+      "path": "apps",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Contenedor de aplicaciones ejecutables previstas."
+    },
+    {
+      "path": "apps/web",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, componentes, librerías o pruebas del cliente web; implementación pendiente."
+    },
+    {
+      "path": "apps/web/public",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, componentes, librerías o pruebas del cliente web; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, componentes, librerías o pruebas del cliente web; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/app",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, componentes, librerías o pruebas del cliente web; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/components",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, componentes, librerías o pruebas del cliente web; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/components/ui",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, componentes, librerías o pruebas del cliente web; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/components/forms",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, componentes, librerías o pruebas del cliente web; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/components/feedback",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, componentes, librerías o pruebas del cliente web; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/components/layout",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, componentes, librerías o pruebas del cliente web; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/lib",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, componentes, librerías o pruebas del cliente web; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/lib/http",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, componentes, librerías o pruebas del cliente web; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/lib/session",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, componentes, librerías o pruebas del cliente web; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/lib/query",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, componentes, librerías o pruebas del cliente web; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/styles",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, componentes, librerías o pruebas del cliente web; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/auth",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "Módulo de auth; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/auth/components",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "componentes de auth; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/auth/pages",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "páginas de auth; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/auth/api",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "cliente API de auth; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/auth/hooks",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "hooks de auth; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/profile",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "Módulo de profile; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/profile/components",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "componentes de profile; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/profile/pages",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "páginas de profile; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/profile/api",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "cliente API de profile; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/profile/hooks",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "hooks de profile; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/skills",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "Módulo de skills; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/skills/components",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "componentes de skills; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/skills/pages",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "páginas de skills; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/skills/api",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "cliente API de skills; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/skills/hooks",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "hooks de skills; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/analyses",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "Módulo de analyses; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/analyses/components",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "componentes de analyses; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/analyses/pages",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "páginas de analyses; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/analyses/api",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "cliente API de analyses; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/analyses/hooks",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "hooks de analyses; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/projects",
+      "stage": "M2",
+      "owner": "P2",
+      "purpose": "Módulo de projects; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/projects/components",
+      "stage": "M2",
+      "owner": "P2",
+      "purpose": "componentes de projects; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/projects/pages",
+      "stage": "M2",
+      "owner": "P2",
+      "purpose": "páginas de projects; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/projects/api",
+      "stage": "M2",
+      "owner": "P2",
+      "purpose": "cliente API de projects; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/projects/hooks",
+      "stage": "M2",
+      "owner": "P2",
+      "purpose": "hooks de projects; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/cv",
+      "stage": "M2",
+      "owner": "P2",
+      "purpose": "Módulo de cv; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/cv/components",
+      "stage": "M2",
+      "owner": "P2",
+      "purpose": "componentes de cv; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/cv/pages",
+      "stage": "M2",
+      "owner": "P2",
+      "purpose": "páginas de cv; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/cv/api",
+      "stage": "M2",
+      "owner": "P2",
+      "purpose": "cliente API de cv; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/cv/hooks",
+      "stage": "M2",
+      "owner": "P2",
+      "purpose": "hooks de cv; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/jobs",
+      "stage": "M3",
+      "owner": "P2",
+      "purpose": "Módulo de jobs; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/jobs/components",
+      "stage": "M3",
+      "owner": "P2",
+      "purpose": "componentes de jobs; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/jobs/pages",
+      "stage": "M3",
+      "owner": "P2",
+      "purpose": "páginas de jobs; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/jobs/api",
+      "stage": "M3",
+      "owner": "P2",
+      "purpose": "cliente API de jobs; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/jobs/hooks",
+      "stage": "M3",
+      "owner": "P2",
+      "purpose": "hooks de jobs; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/learning-paths",
+      "stage": "M4",
+      "owner": "P2",
+      "purpose": "Módulo de learning-paths; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/learning-paths/components",
+      "stage": "M4",
+      "owner": "P2",
+      "purpose": "componentes de learning-paths; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/learning-paths/pages",
+      "stage": "M4",
+      "owner": "P2",
+      "purpose": "páginas de learning-paths; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/learning-paths/api",
+      "stage": "M4",
+      "owner": "P2",
+      "purpose": "cliente API de learning-paths; implementación pendiente."
+    },
+    {
+      "path": "apps/web/src/features/learning-paths/hooks",
+      "stage": "M4",
+      "owner": "P2",
+      "purpose": "hooks de learning-paths; implementación pendiente."
+    },
+    {
+      "path": "apps/web/tests",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, componentes, librerías o pruebas del cliente web; implementación pendiente."
+    },
+    {
+      "path": "apps/web/tests/unit",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, componentes, librerías o pruebas del cliente web; implementación pendiente."
+    },
+    {
+      "path": "apps/web/tests/integration",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, componentes, librerías o pruebas del cliente web; implementación pendiente."
+    },
+    {
+      "path": "apps/api",
+      "stage": "M0",
+      "owner": "P1",
+      "purpose": "Base, plataforma o pruebas de la API principal; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src",
+      "stage": "M0",
+      "owner": "P1",
+      "purpose": "Base, plataforma o pruebas de la API principal; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules",
+      "stage": "M0",
+      "owner": "P1",
+      "purpose": "Base, plataforma o pruebas de la API principal; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/auth",
+      "stage": "M1",
+      "owner": "P1",
+      "purpose": "Módulo de auth; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/auth/http",
+      "stage": "M1",
+      "owner": "P1",
+      "purpose": "adaptadores HTTP de auth; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/auth/services",
+      "stage": "M1",
+      "owner": "P1",
+      "purpose": "servicios de auth; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/auth/repositories",
+      "stage": "M1",
+      "owner": "P1",
+      "purpose": "repositorios de auth; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/auth/schemas",
+      "stage": "M1",
+      "owner": "P1",
+      "purpose": "esquemas de auth; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/profile",
+      "stage": "M1",
+      "owner": "P1",
+      "purpose": "Módulo de profile; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/profile/http",
+      "stage": "M1",
+      "owner": "P1",
+      "purpose": "adaptadores HTTP de profile; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/profile/services",
+      "stage": "M1",
+      "owner": "P1",
+      "purpose": "servicios de profile; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/profile/repositories",
+      "stage": "M1",
+      "owner": "P1",
+      "purpose": "repositorios de profile; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/profile/schemas",
+      "stage": "M1",
+      "owner": "P1",
+      "purpose": "esquemas de profile; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/skills",
+      "stage": "M1",
+      "owner": "P1",
+      "purpose": "Módulo de skills; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/skills/http",
+      "stage": "M1",
+      "owner": "P1",
+      "purpose": "adaptadores HTTP de skills; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/skills/services",
+      "stage": "M1",
+      "owner": "P1",
+      "purpose": "servicios de skills; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/skills/repositories",
+      "stage": "M1",
+      "owner": "P1",
+      "purpose": "repositorios de skills; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/skills/schemas",
+      "stage": "M1",
+      "owner": "P1",
+      "purpose": "esquemas de skills; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/analyses",
+      "stage": "M1",
+      "owner": "P1",
+      "purpose": "Módulo de analyses; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/analyses/http",
+      "stage": "M1",
+      "owner": "P1",
+      "purpose": "adaptadores HTTP de analyses; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/analyses/services",
+      "stage": "M1",
+      "owner": "P1",
+      "purpose": "servicios de analyses; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/analyses/repositories",
+      "stage": "M1",
+      "owner": "P1",
+      "purpose": "repositorios de analyses; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/analyses/schemas",
+      "stage": "M1",
+      "owner": "P1",
+      "purpose": "esquemas de analyses; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/projects",
+      "stage": "M2",
+      "owner": "P1",
+      "purpose": "Módulo de projects; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/projects/http",
+      "stage": "M2",
+      "owner": "P1",
+      "purpose": "adaptadores HTTP de projects; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/projects/services",
+      "stage": "M2",
+      "owner": "P1",
+      "purpose": "servicios de projects; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/projects/repositories",
+      "stage": "M2",
+      "owner": "P1",
+      "purpose": "repositorios de projects; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/projects/schemas",
+      "stage": "M2",
+      "owner": "P1",
+      "purpose": "esquemas de projects; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/cv",
+      "stage": "M2",
+      "owner": "P1",
+      "purpose": "Módulo de cv; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/cv/http",
+      "stage": "M2",
+      "owner": "P1",
+      "purpose": "adaptadores HTTP de cv; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/cv/services",
+      "stage": "M2",
+      "owner": "P1",
+      "purpose": "servicios de cv; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/cv/repositories",
+      "stage": "M2",
+      "owner": "P1",
+      "purpose": "repositorios de cv; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/cv/schemas",
+      "stage": "M2",
+      "owner": "P1",
+      "purpose": "esquemas de cv; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/jobs",
+      "stage": "M3",
+      "owner": "P1",
+      "purpose": "Módulo de jobs; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/jobs/http",
+      "stage": "M3",
+      "owner": "P1",
+      "purpose": "adaptadores HTTP de jobs; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/jobs/services",
+      "stage": "M3",
+      "owner": "P1",
+      "purpose": "servicios de jobs; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/jobs/repositories",
+      "stage": "M3",
+      "owner": "P1",
+      "purpose": "repositorios de jobs; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/jobs/schemas",
+      "stage": "M3",
+      "owner": "P1",
+      "purpose": "esquemas de jobs; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/learning-paths",
+      "stage": "M4",
+      "owner": "P1",
+      "purpose": "Módulo de learning-paths; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/learning-paths/http",
+      "stage": "M4",
+      "owner": "P1",
+      "purpose": "adaptadores HTTP de learning-paths; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/learning-paths/services",
+      "stage": "M4",
+      "owner": "P1",
+      "purpose": "servicios de learning-paths; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/learning-paths/repositories",
+      "stage": "M4",
+      "owner": "P1",
+      "purpose": "repositorios de learning-paths; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/modules/learning-paths/schemas",
+      "stage": "M4",
+      "owner": "P1",
+      "purpose": "esquemas de learning-paths; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/platform",
+      "stage": "M0",
+      "owner": "P1",
+      "purpose": "Base, plataforma o pruebas de la API principal; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/platform/config",
+      "stage": "M0",
+      "owner": "P1",
+      "purpose": "Base, plataforma o pruebas de la API principal; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/platform/db",
+      "stage": "M0",
+      "owner": "P1",
+      "purpose": "Base, plataforma o pruebas de la API principal; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/platform/errors",
+      "stage": "M0",
+      "owner": "P1",
+      "purpose": "Base, plataforma o pruebas de la API principal; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/platform/http",
+      "stage": "M0",
+      "owner": "P1",
+      "purpose": "Base, plataforma o pruebas de la API principal; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/platform/logging",
+      "stage": "M0",
+      "owner": "P1",
+      "purpose": "Base, plataforma o pruebas de la API principal; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/platform/middleware",
+      "stage": "M0",
+      "owner": "P1",
+      "purpose": "Base, plataforma o pruebas de la API principal; implementación pendiente."
+    },
+    {
+      "path": "apps/api/src/platform/storage",
+      "stage": "M0",
+      "owner": "P1",
+      "purpose": "Base, plataforma o pruebas de la API principal; implementación pendiente."
+    },
+    {
+      "path": "apps/api/tests",
+      "stage": "M0",
+      "owner": "P1",
+      "purpose": "Base, plataforma o pruebas de la API principal; implementación pendiente."
+    },
+    {
+      "path": "apps/api/tests/unit",
+      "stage": "M0",
+      "owner": "P1",
+      "purpose": "Base, plataforma o pruebas de la API principal; implementación pendiente."
+    },
+    {
+      "path": "apps/api/tests/integration",
+      "stage": "M0",
+      "owner": "P1",
+      "purpose": "Base, plataforma o pruebas de la API principal; implementación pendiente."
+    },
+    {
+      "path": "apps/api/tests/fixtures",
+      "stage": "M0",
+      "owner": "P1",
+      "purpose": "Base, plataforma o pruebas de la API principal; implementación pendiente."
+    },
+    {
+      "path": "apps/skill-engine",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, plataforma o pruebas del Skill Engine interno; implementación pendiente."
+    },
+    {
+      "path": "apps/skill-engine/src",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, plataforma o pruebas del Skill Engine interno; implementación pendiente."
+    },
+    {
+      "path": "apps/skill-engine/src/modules",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, plataforma o pruebas del Skill Engine interno; implementación pendiente."
+    },
+    {
+      "path": "apps/skill-engine/src/modules/analysis",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "Extracción, matching y esquemas del análisis determinista; implementación pendiente."
+    },
+    {
+      "path": "apps/skill-engine/src/modules/analysis/extraction",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "Extracción, matching y esquemas del análisis determinista; implementación pendiente."
+    },
+    {
+      "path": "apps/skill-engine/src/modules/analysis/matching",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "Extracción, matching y esquemas del análisis determinista; implementación pendiente."
+    },
+    {
+      "path": "apps/skill-engine/src/modules/analysis/schemas",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "Extracción, matching y esquemas del análisis determinista; implementación pendiente."
+    },
+    {
+      "path": "apps/skill-engine/src/platform",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, plataforma o pruebas del Skill Engine interno; implementación pendiente."
+    },
+    {
+      "path": "apps/skill-engine/src/platform/config",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, plataforma o pruebas del Skill Engine interno; implementación pendiente."
+    },
+    {
+      "path": "apps/skill-engine/src/platform/errors",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, plataforma o pruebas del Skill Engine interno; implementación pendiente."
+    },
+    {
+      "path": "apps/skill-engine/src/platform/http",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, plataforma o pruebas del Skill Engine interno; implementación pendiente."
+    },
+    {
+      "path": "apps/skill-engine/src/platform/logging",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, plataforma o pruebas del Skill Engine interno; implementación pendiente."
+    },
+    {
+      "path": "apps/skill-engine/src/platform/middleware",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, plataforma o pruebas del Skill Engine interno; implementación pendiente."
+    },
+    {
+      "path": "apps/skill-engine/tests",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, plataforma o pruebas del Skill Engine interno; implementación pendiente."
+    },
+    {
+      "path": "apps/skill-engine/tests/unit",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, plataforma o pruebas del Skill Engine interno; implementación pendiente."
+    },
+    {
+      "path": "apps/skill-engine/tests/integration",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, plataforma o pruebas del Skill Engine interno; implementación pendiente."
+    },
+    {
+      "path": "apps/skill-engine/tests/fixtures",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Base, plataforma o pruebas del Skill Engine interno; implementación pendiente."
+    },
+    {
+      "path": "packages",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Contenedor de paquetes compartidos con propietarios específicos."
+    },
+    {
+      "path": "packages/contracts",
+      "stage": "M0",
+      "owner": "P4",
+      "purpose": "Contratos públicos/internos y ejemplos, con revisión P1/P2; contenido pendiente."
+    },
+    {
+      "path": "packages/contracts/openapi",
+      "stage": "M0",
+      "owner": "P4",
+      "purpose": "Contratos públicos/internos y ejemplos, con revisión P1/P2; contenido pendiente."
+    },
+    {
+      "path": "packages/contracts/src",
+      "stage": "M0",
+      "owner": "P4",
+      "purpose": "Contratos públicos/internos y ejemplos, con revisión P1/P2; contenido pendiente."
+    },
+    {
+      "path": "packages/contracts/src/public",
+      "stage": "M0",
+      "owner": "P4",
+      "purpose": "Contratos públicos/internos y ejemplos, con revisión P1/P2; contenido pendiente."
+    },
+    {
+      "path": "packages/contracts/src/internal",
+      "stage": "M0",
+      "owner": "P4",
+      "purpose": "Contratos públicos/internos y ejemplos, con revisión P1/P2; contenido pendiente."
+    },
+    {
+      "path": "packages/contracts/examples",
+      "stage": "M0",
+      "owner": "P4",
+      "purpose": "Contratos públicos/internos y ejemplos, con revisión P1/P2; contenido pendiente."
+    },
+    {
+      "path": "packages/contracts/examples/public",
+      "stage": "M0",
+      "owner": "P4",
+      "purpose": "Contratos públicos/internos y ejemplos, con revisión P1/P2; contenido pendiente."
+    },
+    {
+      "path": "packages/contracts/examples/internal",
+      "stage": "M0",
+      "owner": "P4",
+      "purpose": "Contratos públicos/internos y ejemplos, con revisión P1/P2; contenido pendiente."
+    },
+    {
+      "path": "packages/catalog",
+      "stage": "M0",
+      "owner": "P3",
+      "purpose": "Catálogo y documentación de contenido versionado; contenido pendiente."
+    },
+    {
+      "path": "packages/catalog/fixtures",
+      "stage": "M1",
+      "owner": "P3",
+      "purpose": "Corpus sintético etiquetado para matching; contenido pendiente."
+    },
+    {
+      "path": "packages/catalog/docs",
+      "stage": "M0",
+      "owner": "P3",
+      "purpose": "Catálogo y documentación de contenido versionado; contenido pendiente."
+    },
+    {
+      "path": "packages/db",
+      "stage": "M0",
+      "owner": "P1",
+      "purpose": "Esquemas, migraciones o semillas PostgreSQL; implementación pendiente."
+    },
+    {
+      "path": "packages/db/schema",
+      "stage": "M0",
+      "owner": "P1",
+      "purpose": "Esquemas, migraciones o semillas PostgreSQL; implementación pendiente."
+    },
+    {
+      "path": "packages/db/migrations",
+      "stage": "M0",
+      "owner": "P1",
+      "purpose": "Esquemas, migraciones o semillas PostgreSQL; implementación pendiente."
+    },
+    {
+      "path": "packages/db/seeds",
+      "stage": "M0",
+      "owner": "P1",
+      "purpose": "Esquemas, migraciones o semillas PostgreSQL; implementación pendiente."
+    },
+    {
+      "path": "packages/test-support",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Factorías y ayudas compartidas solo para pruebas; implementación pendiente."
+    },
+    {
+      "path": "packages/test-support/src",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Factorías y ayudas compartidas solo para pruebas; implementación pendiente."
+    },
+    {
+      "path": "packages/test-support/src/factories",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Factorías y ayudas compartidas solo para pruebas; implementación pendiente."
+    },
+    {
+      "path": "packages/test-support/src/helpers",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Factorías y ayudas compartidas solo para pruebas; implementación pendiente."
+    },
+    {
+      "path": "infra",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Infraestructura local, proxy o Dockerfiles, con revisión P1; implementación pendiente."
+    },
+    {
+      "path": "infra/proxy",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Infraestructura local, proxy o Dockerfiles, con revisión P1; implementación pendiente."
+    },
+    {
+      "path": "infra/docker",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Infraestructura local, proxy o Dockerfiles, con revisión P1; implementación pendiente."
+    },
+    {
+      "path": "scripts",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Automatización verificable del workspace; scripts pendientes."
+    },
+    {
+      "path": "tests",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "Contenedor de pruebas de extremo a extremo; implementación pendiente."
+    },
+    {
+      "path": "tests/e2e",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "Fixtures y flujos E2E del recorrido M1, ampliables por etapa; implementación pendiente."
+    },
+    {
+      "path": "tests/e2e/fixtures",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "Fixtures y flujos E2E del recorrido M1, ampliables por etapa; implementación pendiente."
+    },
+    {
+      "path": "tests/e2e/flows",
+      "stage": "M1",
+      "owner": "P2",
+      "purpose": "Fixtures y flujos E2E del recorrido M1, ampliables por etapa; implementación pendiente."
+    },
+    {
+      "path": "docs",
+      "stage": "M0",
+      "owner": "P4",
+      "purpose": "Decisiones, planificación, prompts y handoffs del proyecto."
+    },
+    {
+      "path": "docs/adr",
+      "stage": "M0",
+      "owner": "P4",
+      "purpose": "Decisiones, planificación, prompts y handoffs del proyecto."
+    },
+    {
+      "path": "docs/acceptance",
+      "stage": "M0",
+      "owner": "P5",
+      "purpose": "Casos y evidencias de aceptación manual; contenido pendiente."
+    },
+    {
+      "path": "docs/provider",
+      "stage": "M3",
+      "owner": "P4",
+      "purpose": "Investigación y permisos del proveedor JSearch; contenido pendiente."
+    },
+    {
+      "path": "docs/handoffs",
+      "stage": "M0",
+      "owner": "P4",
+      "purpose": "Decisiones, planificación, prompts y handoffs del proyecto."
+    },
+    {
+      "path": "docs/prompts",
+      "stage": "M0",
+      "owner": "P4",
+      "purpose": "Decisiones, planificación, prompts y handoffs del proyecto."
+    },
+    {
+      "path": "docs/prompts/lotes",
+      "stage": "M0",
+      "owner": "P4",
+      "purpose": "Decisiones, planificación, prompts y handoffs del proyecto."
+    },
+    {
+      "path": ".github",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Automatización y plantillas de colaboración del repositorio."
+    },
+    {
+      "path": ".github/workflows",
+      "stage": "M0",
+      "owner": "P2",
+      "purpose": "Workflows de CI; implementación pendiente y revisión P1."
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE",
+      "stage": "M0",
+      "owner": "P4",
+      "purpose": "Plantillas de colaboración; contenido pendiente."
+    }
+  ],
+  "anticipatedFiles": [
+    {
+      "path": "package.json",
+      "status": "pending",
+      "createdByScaffolding": false
+    },
+    {
+      "path": "pnpm-workspace.yaml",
+      "status": "pending",
+      "createdByScaffolding": false
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "status": "pending",
+      "createdByScaffolding": false
+    },
+    {
+      "path": "apps/web/package.json",
+      "status": "pending",
+      "createdByScaffolding": false
+    },
+    {
+      "path": "apps/api/package.json",
+      "status": "pending",
+      "createdByScaffolding": false
+    },
+    {
+      "path": "apps/skill-engine/package.json",
+      "status": "pending",
+      "createdByScaffolding": false
+    },
+    {
+      "path": "packages/contracts/package.json",
+      "status": "pending",
+      "createdByScaffolding": false
+    },
+    {
+      "path": "packages/catalog/package.json",
+      "status": "pending",
+      "createdByScaffolding": false
+    },
+    {
+      "path": "packages/db/package.json",
+      "status": "pending",
+      "createdByScaffolding": false
+    },
+    {
+      "path": "packages/test-support/package.json",
+      "status": "pending",
+      "createdByScaffolding": false
+    },
+    {
+      "path": "apps/api/src/app.ts",
+      "status": "pending",
+      "createdByScaffolding": false
+    },
+    {
+      "path": "apps/api/src/server.ts",
+      "status": "pending",
+      "createdByScaffolding": false
+    },
+    {
+      "path": "apps/skill-engine/src/app.ts",
+      "status": "pending",
+      "createdByScaffolding": false
+    },
+    {
+      "path": "apps/skill-engine/src/server.ts",
+      "status": "pending",
+      "createdByScaffolding": false
+    },
+    {
+      "path": "packages/contracts/openapi/public.yaml",
+      "status": "pending",
+      "createdByScaffolding": false
+    },
+    {
+      "path": "packages/contracts/openapi/engine.yaml",
+      "status": "pending",
+      "createdByScaffolding": false
+    },
+    {
+      "path": "packages/catalog/technologies.json",
+      "status": "pending",
+      "createdByScaffolding": false
+    },
+    {
+      "path": "packages/catalog/learning-templates.json",
+      "status": "pending",
+      "createdByScaffolding": false
+    },
+    {
+      "path": "infra/compose.yaml",
+      "status": "pending",
+      "createdByScaffolding": false
+    }
+  ]
+}

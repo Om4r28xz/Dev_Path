@@ -1,0 +1,10 @@
+{
+  "accessToken": "eyJhbGciOiJSUzI1NiJ9.synthetic-demo-signature",
+  "tokenType": "Bearer",
+  "expiresIn": 900,
+  "user": {
+    "id": "53d84641-126d-46d6-98bd-daa00be18a78",
+    "name": "Alex Demo",
+    "email": "alex@example.test"
+  }
+}

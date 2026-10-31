@@ -1,0 +1,57 @@
+{
+  "examples": [
+    { "document": "public", "schema": "RegisterRequest", "file": "public/register-request.json" },
+    { "document": "public", "schema": "SessionResponse", "file": "public/session-response.json" },
+    {
+      "document": "public",
+      "schema": "ErrorResponse",
+      "file": "public/invalid-credentials-error.json"
+    },
+    { "document": "public", "schema": "UserProfile", "file": "public/me-response.json" },
+    { "document": "public", "schema": "SkillListResponse", "file": "public/skills-response.json" },
+    {
+      "document": "public",
+      "schema": "ReplaceUserSkillsRequest",
+      "file": "public/replace-user-skills-request.json"
+    },
+    {
+      "document": "public",
+      "schema": "UserSkillsResponse",
+      "file": "public/user-skills-response.json"
+    },
+    {
+      "document": "public",
+      "schema": "CreateAnalysisRequest",
+      "file": "public/create-analysis-request.json"
+    },
+    { "document": "public", "schema": "Analysis", "file": "public/analysis-response.json" },
+    {
+      "document": "public",
+      "schema": "AnalysisListResponse",
+      "file": "public/analyses-response.json"
+    },
+    { "document": "public", "schema": "ErrorResponse", "file": "public/validation-error.json" },
+    {
+      "document": "public",
+      "schema": "ErrorResponse",
+      "file": "public/idempotency-conflict-error.json"
+    },
+    {
+      "document": "public",
+      "schema": "ErrorResponse",
+      "file": "public/dependency-unavailable-error.json"
+    },
+    { "document": "engine", "schema": "AnalyzeRequest", "file": "internal/analyze-request.json" },
+    { "document": "engine", "schema": "AnalyzeResponse", "file": "internal/analyze-response.json" },
+    {
+      "document": "engine",
+      "schema": "AnalyzeResponse",
+      "file": "internal/analyze-no-requirements-response.json"
+    },
+    {
+      "document": "engine",
+      "schema": "InternalErrorResponse",
+      "file": "internal/catalog-version-error.json"
+    }
+  ]
+}
