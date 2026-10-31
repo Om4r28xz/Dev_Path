@@ -1,0 +1,169 @@
+openapi: 3.1.0
+info:
+  title: DevPath Skill Engine Internal API
+  version: 1.0.0
+  description: Internal deterministic M1 matching contract. It accepts no user identity or other personal data.
+servers:
+  - url: http://localhost:3001/internal/v1
+    description: Local internal network only
+paths:
+  /analyze:
+    post:
+      operationId: analyzeSkills
+      summary: Extract required skills and compare them with a candidate skill snapshot
+      security: [{ serviceBearer: [] }]
+      parameters:
+        - $ref: '#/components/parameters/RequestId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/AnalyzeRequest' }
+            examples:
+              valid:
+                externalValue: ../examples/internal/analyze-request.json
+      responses:
+        '200':
+          description: Deterministic extraction and scoring result
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/AnalyzeResponse' }
+        '400': { $ref: '#/components/responses/ValidationError' }
+        '401': { $ref: '#/components/responses/InvalidServiceCredential' }
+        '409': { $ref: '#/components/responses/CatalogVersionMismatch' }
+        '413': { $ref: '#/components/responses/PayloadTooLarge' }
+        '500': { $ref: '#/components/responses/InternalError' }
+components:
+  securitySchemes:
+    serviceBearer:
+      type: http
+      scheme: bearer
+      description: Service credential identifying the API process; it is not a user JWT.
+  parameters:
+    RequestId:
+      name: X-Request-Id
+      in: header
+      required: true
+      schema: { type: string, format: uuid }
+  responses:
+    ValidationError:
+      description: Invalid body or correlation ID
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/InternalErrorResponse' }
+    InvalidServiceCredential:
+      description: Missing or invalid API-to-engine service credential
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/InternalErrorResponse' }
+    CatalogVersionMismatch:
+      description: Requested catalog version is not loaded by this engine
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/InternalErrorResponse' }
+          examples:
+            mismatch:
+              externalValue: ../examples/internal/catalog-version-error.json
+    PayloadTooLarge:
+      description: Job text or JSON body exceeds the internal limit
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/InternalErrorResponse' }
+    InternalError:
+      description: Engine failed without exposing stack or input text
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/InternalErrorResponse' }
+  schemas:
+    AnalyzeRequest:
+      type: object
+      additionalProperties: false
+      required: [catalogVersion, jobText, candidateSkillIds]
+      properties:
+        catalogVersion: { type: string, pattern: '^\d+\.\d+\.\d+$' }
+        jobText: { type: string, minLength: 1, maxLength: 20000 }
+        candidateSkillIds:
+          type: array
+          uniqueItems: true
+          maxItems: 100
+          items: { $ref: '#/components/schemas/SkillId' }
+    AnalyzeResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - requiredSkillIds
+        - matchedSkillIds
+        - missingSkillIds
+        - matchPercentage
+        - evidence
+        - versions
+      properties:
+        requiredSkillIds: { $ref: '#/components/schemas/UniqueSkillIds' }
+        matchedSkillIds: { $ref: '#/components/schemas/UniqueSkillIds' }
+        missingSkillIds: { $ref: '#/components/schemas/UniqueSkillIds' }
+        matchPercentage:
+          type: [integer, 'null']
+          minimum: 0
+          maximum: 100
+          description: round(100 * matched / required), or null when there are no required skills.
+        evidence:
+          type: array
+          maxItems: 100
+          items: { $ref: '#/components/schemas/SkillEvidence' }
+        versions: { $ref: '#/components/schemas/EngineVersions' }
+    SkillEvidence:
+      type: object
+      additionalProperties: false
+      required: [skillId, matches]
+      properties:
+        skillId: { $ref: '#/components/schemas/SkillId' }
+        matches:
+          type: array
+          minItems: 1
+          maxItems: 20
+          items:
+            type: object
+            additionalProperties: false
+            required: [text, start, end]
+            properties:
+              text: { type: string, minLength: 1, maxLength: 100 }
+              start: { type: integer, minimum: 0 }
+              end: { type: integer, minimum: 1 }
+    EngineVersions:
+      type: object
+      additionalProperties: false
+      required: [catalog, extractor, scoring]
+      properties:
+        catalog: { type: string, pattern: '^\d+\.\d+\.\d+$' }
+        extractor: { type: string, pattern: '^\d+\.\d+\.\d+$' }
+        scoring: { type: string, pattern: '^\d+\.\d+\.\d+$' }
+    SkillId:
+      type: string
+      minLength: 1
+      maxLength: 64
+      pattern: '^[a-z][a-z0-9-]*$'
+    UniqueSkillIds:
+      type: array
+      uniqueItems: true
+      maxItems: 100
+      items: { $ref: '#/components/schemas/SkillId' }
+    InternalErrorResponse:
+      type: object
+      additionalProperties: false
+      required: [error]
+      properties:
+        error:
+          type: object
+          additionalProperties: false
+          required: [code, message, requestId]
+          properties:
+            code:
+              type: string
+              enum:
+                - VALIDATION_ERROR
+                - INVALID_SERVICE_CREDENTIAL
+                - CATALOG_VERSION_MISMATCH
+                - PAYLOAD_TOO_LARGE
+                - INTERNAL_ERROR
+            message: { type: string, minLength: 1, maxLength: 300 }
+            requestId: { type: string, format: uuid }

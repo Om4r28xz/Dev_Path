@@ -1,0 +1,8 @@
+{
+  "requiredSkillIds": [],
+  "matchedSkillIds": [],
+  "missingSkillIds": [],
+  "matchPercentage": null,
+  "evidence": [],
+  "versions": { "catalog": "1.0.0", "extractor": "1.0.0", "scoring": "1.0.0" }
+}

@@ -1,0 +1,147 @@
+{
+  "version": "1.0.0",
+  "technologies": [
+    {
+      "id": "cplusplus",
+      "name": "C++",
+      "category": "language",
+      "aliases": [
+        {
+          "value": "C++",
+          "reason": "Nombre canónico con signos conservados para distinguirlo de C y C#."
+        },
+        {
+          "value": "cpp",
+          "reason": "Extensión y abreviatura ampliamente usada que identifica únicamente a C++."
+        }
+      ]
+    },
+    {
+      "id": "csharp",
+      "name": "C#",
+      "category": "language",
+      "aliases": [
+        {
+          "value": "C#",
+          "reason": "Nombre canónico con el signo necesario para no confundirlo con C o C++."
+        },
+        {
+          "value": "csharp",
+          "reason": "Forma textual común y no ambigua del nombre C# en búsquedas y URLs."
+        }
+      ]
+    },
+    {
+      "id": "docker",
+      "name": "Docker",
+      "category": "platform",
+      "aliases": [
+        {
+          "value": "Docker",
+          "reason": "Marca canónica usada para la plataforma de contenedores, sin abreviaturas ambiguas."
+        }
+      ]
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "category": "tool",
+      "aliases": [
+        {
+          "value": "Git",
+          "reason": "Nombre canónico del sistema de control de versiones, distinto de GitHub y GitLab."
+        }
+      ]
+    },
+    {
+      "id": "java",
+      "name": "Java",
+      "category": "language",
+      "aliases": [
+        {
+          "value": "Java",
+          "reason": "Nombre canónico del lenguaje; se mantiene separado explícitamente de JavaScript."
+        }
+      ]
+    },
+    {
+      "id": "javascript",
+      "name": "JavaScript",
+      "category": "language",
+      "aliases": [
+        {
+          "value": "JavaScript",
+          "reason": "Nombre canónico del lenguaje; nunca se reduce al alias ambiguo Java."
+        },
+        {
+          "value": "JS",
+          "reason": "Abreviatura industrial ampliamente reconocida y específica de JavaScript en vacantes."
+        }
+      ]
+    },
+    {
+      "id": "nodejs",
+      "name": "Node.js",
+      "category": "runtime",
+      "aliases": [
+        {
+          "value": "Node.js",
+          "reason": "Nombre canónico del runtime, con puntuación conservada para presentación."
+        },
+        {
+          "value": "NodeJS",
+          "reason": "Variante ortográfica común que sigue identificando de forma inequívoca al runtime."
+        },
+        {
+          "value": "Node",
+          "reason": "En contexto tecnológico de vacantes se usa convencionalmente para el runtime Node.js."
+        }
+      ]
+    },
+    {
+      "id": "react",
+      "name": "React",
+      "category": "library",
+      "aliases": [
+        {
+          "value": "React",
+          "reason": "Nombre canónico de la biblioteca web, separado del framework React Native."
+        },
+        {
+          "value": "React.js",
+          "reason": "Variante usada para precisar la biblioteca web y no la plataforma React Native."
+        }
+      ]
+    },
+    {
+      "id": "react-native",
+      "name": "React Native",
+      "category": "framework",
+      "aliases": [
+        {
+          "value": "React Native",
+          "reason": "Nombre canónico completo que evita mezclarlo con la biblioteca web React."
+        },
+        {
+          "value": "ReactNative",
+          "reason": "Variante sin espacio frecuente en texto técnico y específica del framework móvil."
+        }
+      ]
+    },
+    {
+      "id": "sql",
+      "name": "SQL",
+      "category": "language",
+      "aliases": [
+        {
+          "value": "SQL",
+          "reason": "Nombre canónico del lenguaje de consulta; no se usa como alias de una base concreta."
+        },
+        {
+          "value": "Structured Query Language",
+          "reason": "Nombre expandido inequívoco del estándar SQL, útil en descripciones formales."
+        }
+      ]
+    }
+  ]
+}

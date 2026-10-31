@@ -1,0 +1,10 @@
+{
+  "id": "53d84641-126d-46d6-98bd-daa00be18a78",
+  "name": "Alex Demo",
+  "email": "alex@example.test",
+  "headline": "Frontend junior",
+  "location": "Ciudad de México",
+  "skillsRevision": 3,
+  "createdAt": "2026-10-31T12:00:00Z",
+  "updatedAt": "2026-10-31T12:30:00Z"
+}
