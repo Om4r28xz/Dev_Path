@@ -5,8 +5,8 @@
 | Tarea | Estado | Evidencia | Condición de continuación |
 | --- | --- | --- | --- |
 | GOV-01 | Integrada. | PR #2 fusionado en `develop` mediante `ebe5940`; contiene `72c1956` y la actualización `cda9ff6`. | Sin pendientes técnicos; las revisiones humanas quedan representadas por el merge autorizado. |
-| GOV-02 | Implementada sin merge. | Rama `docs/gov-02-collaboration` creada desde `develop` actualizado en `ebe5940`; README, ignores, atributos y plantillas validados localmente. | Push, PR, revisión P1/P2 y merge humano a `develop`. |
-| FND-01 | Bloqueada. | STR-01 sí está integrado en `develop` mediante `a421535`; GOV-02 no está integrada. | Integrar GOV-02; crear `chore/fnd-01-workspace` desde `develop` actualizado. |
+| GOV-02 | Integrada. | PR #3 fusionado en `develop` mediante `fef802c`; contiene el commit `9d9a3d7`. | Sin pendientes técnicos. |
+| FND-01 | Implementada sin merge. | Workspace pnpm, configuración común, tres apps compilables y lockfile preparados en `chore/fnd-01-workspace`. | Push, PR, revisión P1 y merge humano a `develop`. |
 | CTR-01 | Bloqueada. | Depende de GOV-01 y del workspace real de FND-01. | Integrar GOV-01 y FND-01; crear `docs/ctr-01-mvp-contracts`. |
 | CAT-01 | Bloqueada. | Depende de GOV-01 y del validador/esquema aportado por FND-01. | Integrar GOV-01 y FND-01; crear `data/cat-01-technology-catalog`. |
 
@@ -98,3 +98,54 @@ Validación: revisión documental local. Pendientes antes del merge: aprobacione
 ## Próxima acción
 
 Publicar GOV-02, abrir su PR hacia `develop` y completar el merge humano. Después, crear FND-01 desde el `develop` actualizado. CTR-01 y CAT-01 siguen esperando la integración de FND-01.
+
+## Entrega FND-01
+
+### Archivos y contrato del workspace
+
+- Manifiestos raíz: `package.json`, `pnpm-workspace.yaml` y `pnpm-lock.yaml`.
+- Configuración común: `tsconfig.base.json`, `eslint.config.mjs`, `.prettierrc.json` y `.prettierignore`.
+- Paquetes estables: `@devpath/web`, `@devpath/api`, `@devpath/skill-engine`, `@devpath/contracts`, `@devpath/catalog`, `@devpath/db` y `@devpath/test-support`.
+- Comandos raíz estables: `lint`, `format:check`, `typecheck`, `test`, `build`, `dev:web`, `dev:api` y `dev:engine`.
+- Web React/Vite con shell M0; API y Skill Engine Express con `app` separado de `server`, validación explícita de `PORT` y `/health`.
+- ESLint prohíbe importar `@devpath/db` desde web y Skill Engine.
+- Se retiraron únicamente los `.gitkeep` sustituidos por contenido real.
+
+### Versiones fijadas
+
+- Node.js: `>=22.16.0 <23`; pnpm: `>=11.22.0 <12` y `packageManager: pnpm@11.22.0`.
+- TypeScript `6.0.3`, ESLint `10.14.0`, Prettier `3.9.10`, Vitest `5.0.5`.
+- React/React DOM `19.3.1`, Vite `8.3.5`, plugin React `6.1.2`.
+- Express `5.3.0` y `tsx` `4.23.15`.
+- TypeScript 7 no se seleccionó porque `typescript-eslint 8.72.1` declara soporte `<6.1.0`.
+- `allowBuilds` autoriza de forma explícita el postinstall requerido por `esbuild`.
+
+### Validación ejecutada
+
+- `pnpm install --frozen-lockfile --force`: correcto, 8 proyectos del workspace y lockfile reproducible.
+- `pnpm lint`: correcto.
+- `pnpm format:check`: correcto sobre archivos gobernados por el workspace.
+- `pnpm typecheck`: correcto en web, API y engine.
+- `pnpm test`: correcto; 4 pruebas unitarias aprobadas y web sin pruebas todavía.
+- `pnpm build`: correcto; las tres aplicaciones compilan.
+- Runtime real: API `GET /health` devolvió `200 {"service":"api","status":"ok"}`; engine devolvió `200 {"service":"skill-engine","status":"ok"}`; preview web devolvió HTTP 200 con título `DevPath`.
+- Cierre de los tres procesos comprobado después de los probes.
+
+### Estado Git y PR propuesto
+
+- Base: `develop` en `fef802c6ce9a306f8f9913e291e5d30518883662`.
+- Rama: `chore/fnd-01-workspace`.
+- Commit: el commit que contiene este handoff y la entrega FND-01.
+- Push y PR: pendientes.
+- Título: `chore(workspace): add reproducible TypeScript foundations`.
+- Base del PR: `develop`.
+
+#### Cuerpo propuesto
+
+Crea el workspace pnpm reproducible de DevPath con versiones fijadas, configuración TypeScript/ESLint/Prettier y comandos raíz estables. Añade un shell web M0 y esqueletos Express comprobables para API y Skill Engine, separados en `app`/`server`, sin implementar negocio. Prohíbe importaciones de DB desde web/engine y documenta los comandos locales.
+
+Validación: instalación congelada, lint, formato, typecheck, 4 pruebas, build de tres apps y probes HTTP reales satisfactorios. Pendiente: revisión P1 de fronteras y merge humano.
+
+## Próxima acción actualizada
+
+Publicar e integrar FND-01. Solo después crear CTR-01 y CAT-01 desde el `develop` que contenga el merge de FND-01.

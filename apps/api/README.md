@@ -1,7 +1,10 @@
 # API
 
-API principal Express/TypeScript con autenticación integrada. Es el único servicio que accede a PostgreSQL y al proveedor JSearch, y coordina las llamadas internas al Skill Engine.
+API principal Express/TypeScript. La base M0 separa `app` de `server`, valida el puerto y expone únicamente `/health`. Auth, dominios M1–M4 y acceso PostgreSQL siguen pendientes.
 
-- Responsable humano: P1.
+- Responsable: P1.
 - Etapas: base M0; funcionalidades M1–M4 según cada módulo.
-- Estado: Pendiente de implementación.
+- Desarrollo: `pnpm --filter @devpath/api dev`.
+- Build: `pnpm --filter @devpath/api build`.
+- Puerto predeterminado: `127.0.0.1:3000`.
+- Estado: base técnica M0 implementada; sin funciones de negocio.

@@ -27,9 +27,31 @@ Las decisiones completas están en [ADR](docs/adr/), el plan en [PLAN_DE_IMPLEME
 
 ## Ejecución local
 
-FND-01 añadirá los manifiestos, versiones fijadas, lockfile y comandos reproducibles. Hasta que esa tarea se integre, este repositorio no se presenta como un workspace instalable ni ejecutable.
+Requisitos fijados por FND-01:
 
-No agregues comandos provisionales ni manifiestos vacíos. La futura guía de instalación documentará instalación con lockfile, lint, typecheck, pruebas, build y los modos locales de ejecución.
+- Node.js 22.16 o una versión posterior de Node 22.
+- pnpm 11.22.
+
+Instala exactamente lo registrado en el lockfile y ejecuta los controles comunes:
+
+```powershell
+pnpm install --frozen-lockfile
+pnpm lint
+pnpm format:check
+pnpm typecheck
+pnpm test
+pnpm build
+```
+
+Los tres procesos de desarrollo se levantan por separado:
+
+```powershell
+pnpm dev:web
+pnpm dev:api
+pnpm dev:engine
+```
+
+La web escucha en `127.0.0.1:5173`, la API en `127.0.0.1:3000` y el Skill Engine en `127.0.0.1:3001`. En esta etapa solo existen el shell M0 y endpoints de salud; autenticación y matching continúan pendientes.
 
 ## Colaboración
 

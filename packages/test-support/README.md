@@ -4,4 +4,4 @@ Factorías y utilidades reutilizables exclusivamente para pruebas. No contiene l
 
 - Responsable humano: P2.
 - Etapa: M0, ampliable junto con las pruebas M1–M4.
-- Estado: Pendiente de implementación.
+- Estado: paquete reservado por FND-01; helpers concretos se añadirán con sus pruebas consumidoras.
