@@ -1,0 +1,246 @@
+{
+  "schemaVersion": "1.0.0",
+  "catalogVersion": "1.0.0",
+  "cases": [
+    {
+      "id": "CAT-02-001",
+      "language": "es",
+      "jobText": "Buscamos desarrollo backend con Java.",
+      "requiredSkillIds": ["java"],
+      "tags": ["similar"],
+      "rationale": "Java independiente."
+    },
+    {
+      "id": "CAT-02-002",
+      "language": "en",
+      "jobText": "Hiring a JavaScript developer.",
+      "requiredSkillIds": ["javascript"],
+      "tags": ["similar"],
+      "rationale": "JavaScript no implica Java."
+    },
+    {
+      "id": "CAT-02-003",
+      "language": "es",
+      "jobText": "Vacante full stack: Java y JavaScript.",
+      "requiredSkillIds": ["java", "javascript"],
+      "tags": ["similar"],
+      "rationale": "Ambos nombres independientes."
+    },
+    {
+      "id": "CAT-02-004",
+      "language": "es",
+      "jobText": "Desarrollador móvil con React Native.",
+      "requiredSkillIds": ["react-native"],
+      "tags": ["similar"],
+      "rationale": "El nombre específico no implica React web."
+    },
+    {
+      "id": "CAT-02-005",
+      "language": "en",
+      "jobText": "Build web interfaces with React.",
+      "requiredSkillIds": ["react"],
+      "tags": ["canonical"],
+      "rationale": "React web explícito."
+    },
+    {
+      "id": "CAT-02-006",
+      "language": "en",
+      "jobText": "Build apps with React and React Native.",
+      "requiredSkillIds": ["react", "react-native"],
+      "tags": ["similar"],
+      "rationale": "Dos tecnologías explícitas."
+    },
+    {
+      "id": "CAT-02-007",
+      "language": "es",
+      "jobText": "Buscamos experiencia con JS y NodeJS.",
+      "requiredSkillIds": ["javascript", "nodejs"],
+      "tags": ["alias"],
+      "rationale": "Alias del catálogo."
+    },
+    {
+      "id": "CAT-02-008",
+      "language": "en",
+      "jobText": "Hiring: React.js and Node.js developer.",
+      "requiredSkillIds": ["nodejs", "react"],
+      "tags": ["punctuation"],
+      "rationale": "Puntos internos conservados."
+    },
+    {
+      "id": "CAT-02-009",
+      "language": "es",
+      "jobText": "Vacante de sistemas: C++, C#; SQL.",
+      "requiredSkillIds": ["cplusplus", "csharp", "sql"],
+      "tags": ["punctuation"],
+      "rationale": "Signos semánticos conservados."
+    },
+    {
+      "id": "CAT-02-010",
+      "language": "en",
+      "jobText": "Required: (Git), [Docker], SQL!",
+      "requiredSkillIds": ["docker", "git", "sql"],
+      "tags": ["punctuation"],
+      "rationale": "Delimitadores externos."
+    },
+    {
+      "id": "CAT-02-011",
+      "language": "es",
+      "jobText": "Solicitamos Java, JAVA y java.",
+      "requiredSkillIds": ["java"],
+      "tags": ["repetition"],
+      "rationale": "Un ID para tres menciones."
+    },
+    {
+      "id": "CAT-02-012",
+      "language": "en",
+      "jobText": "Use JS, JavaScript and js in this role.",
+      "requiredSkillIds": ["javascript"],
+      "tags": ["repetition"],
+      "rationale": "Alias deduplicados."
+    },
+    {
+      "id": "CAT-02-013",
+      "language": "es",
+      "jobText": "Desarrollo con cpp y csharp.",
+      "requiredSkillIds": ["cplusplus", "csharp"],
+      "tags": ["alias"],
+      "rationale": "Alias textuales de C++ y C#."
+    },
+    {
+      "id": "CAT-02-014",
+      "language": "en",
+      "jobText": "Mobile developer using ReactNative.",
+      "requiredSkillIds": ["react-native"],
+      "tags": ["alias"],
+      "rationale": "Alias sin espacio."
+    },
+    {
+      "id": "CAT-02-015",
+      "language": "es",
+      "jobText": "Buscamos backend con Node.",
+      "requiredSkillIds": ["nodejs"],
+      "tags": ["alias"],
+      "rationale": "Node en contexto tecnológico."
+    },
+    {
+      "id": "CAT-02-016",
+      "language": "en",
+      "jobText": "Data role requiring Structured Query Language.",
+      "requiredSkillIds": ["sql"],
+      "tags": ["alias"],
+      "rationale": "Nombre expandido."
+    },
+    {
+      "id": "CAT-02-017",
+      "language": "es",
+      "jobText": "Buscamos Java. No se requiere Docker.",
+      "requiredSkillIds": ["java"],
+      "tags": ["negation"],
+      "rationale": "Excluir Docker por negación explícita."
+    },
+    {
+      "id": "CAT-02-018",
+      "language": "en",
+      "jobText": "SQL is required. Git is not required.",
+      "requiredSkillIds": ["sql"],
+      "tags": ["negation"],
+      "rationale": "Excluir Git por negación explícita."
+    },
+    {
+      "id": "CAT-02-019",
+      "language": "es",
+      "jobText": "No se requiere Java ni JavaScript.",
+      "requiredSkillIds": [],
+      "tags": ["negation"],
+      "rationale": "Negación coordinada de ambas."
+    },
+    {
+      "id": "CAT-02-020",
+      "language": "en",
+      "jobText": "No experience with React Native is required. Use Docker daily.",
+      "requiredSkillIds": ["docker"],
+      "tags": ["negation"],
+      "rationale": "Negación limitada a React Native."
+    },
+    {
+      "id": "CAT-02-021",
+      "language": "es",
+      "jobText": "Buscamos atención al cliente y comunicación clara.",
+      "requiredSkillIds": [],
+      "tags": ["no-technologies"],
+      "rationale": "Sin términos del catálogo."
+    },
+    {
+      "id": "CAT-02-022",
+      "language": "en",
+      "jobText": "Hiring an office assistant with strong teamwork skills.",
+      "requiredSkillIds": [],
+      "tags": ["no-technologies"],
+      "rationale": "Sin tecnologías."
+    },
+    {
+      "id": "CAT-02-023",
+      "language": "es",
+      "jobText": "",
+      "requiredSkillIds": [],
+      "tags": ["empty"],
+      "rationale": "Límite de extractor; HTTP rechaza longitud cero."
+    },
+    {
+      "id": "CAT-02-024",
+      "language": "en",
+      "jobText": "   \n\t",
+      "requiredSkillIds": [],
+      "tags": ["empty"],
+      "rationale": "Solo espacios; vacante no utilizable."
+    },
+    {
+      "id": "CAT-02-025",
+      "language": "es",
+      "jobText": "Vacante de soporte para GitHub y GitLab.",
+      "requiredSkillIds": [],
+      "tags": ["boundaries"],
+      "rationale": "No son alias de Git."
+    },
+    {
+      "id": "CAT-02-026",
+      "language": "en",
+      "jobText": "Hiring a PostgreSQL and MySQL administrator.",
+      "requiredSkillIds": [],
+      "tags": ["boundaries"],
+      "rationale": "Productos no son alias de SQL."
+    },
+    {
+      "id": "CAT-02-027",
+      "language": "es",
+      "jobText": "Desarrollo con Python y Ruby.",
+      "requiredSkillIds": [],
+      "tags": ["unknown"],
+      "rationale": "Fuera del catálogo 1.0.0."
+    },
+    {
+      "id": "CAT-02-028",
+      "language": "en",
+      "jobText": "Required: jAvAsCrIpT, dOcKeR and gIt.",
+      "requiredSkillIds": ["docker", "git", "javascript"],
+      "tags": ["case"],
+      "rationale": "Mayúsculas mixtas."
+    },
+    {
+      "id": "CAT-02-029",
+      "language": "es",
+      "jobText": "Frontend: React/JavaScript; backend: Node.js.",
+      "requiredSkillIds": ["javascript", "nodejs", "react"],
+      "tags": ["punctuation"],
+      "rationale": "Separadores entre tecnologías."
+    },
+    {
+      "id": "CAT-02-030",
+      "language": "en",
+      "jobText": "C developer wanted; no other language specified.",
+      "requiredSkillIds": [],
+      "tags": ["similar"],
+      "rationale": "C no es C++ ni C#."
+    }
+  ]
+}

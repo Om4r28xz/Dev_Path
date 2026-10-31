@@ -5,6 +5,6 @@
   "type": "module",
   "scripts": {
     "build": "pnpm test",
-    "test": "node scripts/validate-catalog.mjs"
+    "test": "node scripts/validate-catalog.mjs && node scripts/validate-corpus.mjs"
   }
 }
