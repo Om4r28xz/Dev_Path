@@ -4,4 +4,4 @@ Contenido versionado de tecnologías, corpus sintético y futuras plantillas de 
 
 - Responsable humano: P3.
 - Etapas: catálogo base M0, corpus M1 y plantillas M4.
-- Estado: Pendiente de implementación.
+- Estado: paquete reservado por FND-01; catálogo inicial pendiente de CAT-01.
