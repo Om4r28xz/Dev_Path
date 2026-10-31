@@ -1,25 +1,30 @@
 import { createApp } from './app.js';
-import { readPort } from './platform/config/port.js';
+import { loadConfig } from './platform/config/env.js';
+import { installGracefulShutdown } from './platform/lifecycle/graceful-shutdown.js';
+import { createLogger } from './platform/logging/logger.js';
+import { loadCatalog } from './modules/analysis/catalog.js';
 
-const port = readPort(process.env.PORT, 3001);
-const app = createApp();
-
-const server = app.listen(port, '127.0.0.1', () => {
-  console.info(`Skill Engine escuchando en http://127.0.0.1:${port}`);
+const config = loadConfig();
+const logger = createLogger({
+  service: 'skill-engine',
+  environment: config.environment,
+  includeErrorStack: config.environment !== 'production',
 });
 
-function shutdown(signal: string) {
-  console.info(`Skill Engine recibió ${signal}; cerrando servidor.`);
-  server.close((error) => {
-    if (error !== undefined) {
-      console.error('No fue posible cerrar Skill Engine de forma ordenada.', error);
-      process.exitCode = 1;
-      return;
-    }
+const catalog = loadCatalog();
+logger.info('Catalog loaded.', { version: catalog.version, entries: catalog.entries.length });
 
-    process.exitCode = 0;
+const app = createApp({ config, logger, catalog });
+
+const server = app.listen(config.server.port, config.server.host, () => {
+  logger.info('Skill-engine is listening.', {
+    host: config.server.host,
+    port: config.server.port,
   });
-}
+});
 
-process.once('SIGINT', () => shutdown('SIGINT'));
-process.once('SIGTERM', () => shutdown('SIGTERM'));
+installGracefulShutdown(server, {
+  logger,
+  timeoutMs: config.server.shutdownTimeoutMs,
+  resources: [],
+});
