@@ -2,7 +2,7 @@
 
 Este flujo es una propuesta concreta basada en la preferencia del equipo: cada feature nace de `develop`, se revisa y vuelve a `develop`. Está adaptado a dos personas programando, tres contribuyendo contenido/documentación/aceptación y una aplicación local sin despliegue obligatorio.
 
-Ver [plan técnico](PLAN_DE_IMPLEMENTACION.md) y [backlog de 49 tareas](TAREAS_PARA_IAS.md). Los comandos son instrucciones para la implementación futura; redactar este plan no crea ramas, commits, PRs ni configuraciones remotas.
+Ver [plan técnico](PLAN_DE_IMPLEMENTACION.md), [backlog de 50 tareas](TAREAS_PARA_IAS.md) e [índice de lotes con prompts](LOTES_PARA_IAS.md). Los comandos son instrucciones para la implementación futura; redactar este plan no crea ramas, commits, PRs ni configuraciones remotas.
 
 ## 1. Ramas y significado
 
@@ -42,11 +42,11 @@ flowchart TD
 
 Una release no crea una nueva línea de features; es un corte estable del trabajo ya integrado. Mientras se estabiliza, se congela el merge de nuevas features en develop para simplificar la operación del equipo.
 
-## 3. Bootstrap: el repositorio todavía no tiene commits
+## 3. Arranque: reutilizar el historial existente
 
 ### 3.1 Inspección antes de escribir historial
 
-En la inspección del proyecto no se encontró historial local. La referencia `origin/main [gone]` no demuestra que el repositorio remoto esté vacío: puede no haberse descargado.
+La inspección inicial del 30 de octubre no encontró historial; la revisión del 31 de octubre sí observa `c338a21` (`FIRTS STEPS`) en main y la referencia local origin/main. No se encontró develop local. GOV-02 reutiliza ese commit y verifica remoto/refs antes de establecer develop. No repetir un primer commit ni reinicializar este repositorio.
 
 GOV-02 debe comprobar, desde el repositorio correcto:
 
@@ -60,7 +60,11 @@ Si origin no existe o no apunta al repositorio del equipo, configurarlo con la U
 
 Si el remoto ya tiene commits, traerlo y reconciliar la base antes de continuar. No crear un historial incompatible ni usar force push para sobrescribirlo. La receta siguiente solo corresponde al caso de repositorio remoto sin historial que se confirme.
 
-### 3.2 Primer commit y creación de develop
+### 3.2 Caso actual: crear develop sin repetir el primer commit
+
+Si después de verificar el remoto develop no existe y main es la base válida, crear develop desde esa main y publicarla mediante la cuenta autorizada. Si ya existe en remoto, descargarla y seguirla. El resto de GOV-02 se entrega por PR normal; STR-01 preparado por el lote 00 se integra por su propio PR antes de FND-01. Conservar cambios locales sin incluirlos accidentalmente en otra tarea.
+
+### 3.3 Receta histórica: solo para un repositorio sin commits
 
 P4 prepara los archivos de GOV-01/GOV-02, revisados por P1/P2: README, descripción, planes, decisiones, ignores, atributos y plantillas. Antes de hacer commit, verificar que no se hayan incluido env, llaves, archivos personales, node_modules ni volúmenes.
 
@@ -430,3 +434,13 @@ Antes de cerrar release:
 - Merge commit a main y tag sobre el commit correcto.
 - Merge commit de main a develop y smoke test.
 - Ningún despliegue o gasto requerido para considerar estable la entrega local.
+
+## 13. Ejecución mediante lotes de IA
+
+El [índice de lotes](LOTES_PARA_IAS.md) organiza STR-01 en un lote 00 y las 49 tareas originales en diez lotes: nueve de cinco y uno de cuatro. La misma IA puede retomar un lote después de los merges humanos necesarios.
+
+Un lote no es una rama ni un PR de cinco features. Cada tarea conserva su rama y revisor. Después de cada merge, actualizar develop antes de la siguiente tarea. Si el merge aún no existe, registrar handoff y continuar únicamente otra tarea Ready independiente del mismo lote.
+
+Si varias personas participan en un lote, cada una aporta y revisa su parte real con su cuenta; no cambiar el autor de commits para atribuir trabajo ficticio. Las IAs no aprueban PRs en nombre de personas ni publican tags automáticamente.
+
+El lote 00 prepara la estructura completa, incluso carpetas reservadas de etapas futuras. No crea manifiestos o configuraciones vacías que aparenten un workspace funcional: FND-01 implementa esa parte tras el PR de STR-01.

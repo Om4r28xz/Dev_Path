@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 1,
+  "updated": "2026-10-31",
+  "maxTasksPerBatch": 5,
+  "taskCount": 50,
+  "originalTaskCount": 49,
+  "structureTaskId": "STR-01",
+  "taskBranchesRemainSeparate": true,
+  "batches": [
+    {
+      "id": "L00",
+      "name": "Estructura completa",
+      "prompt": "prompts/lotes/00-estructura-completa.md",
+      "taskIds": [
+        "STR-01"
+      ],
+      "optionalTaskIds": [],
+      "externalDependencies": [],
+      "integrationGate": [
+        "GOV-02"
+      ],
+      "status": "prompt_prepared_not_executed"
+    },
+    {
+      "id": "L01",
+      "name": "Base del repositorio, workspace y contratos",
+      "prompt": "prompts/lotes/01-base-y-contratos.md",
+      "taskIds": [
+        "GOV-01",
+        "GOV-02",
+        "FND-01",
+        "CTR-01",
+        "CAT-01"
+      ],
+      "optionalTaskIds": [],
+      "externalDependencies": [
+        "STR-01"
+      ],
+      "integrationGate": [],
+      "status": "prompt_prepared_not_executed"
+    },
+    {
+      "id": "L02",
+      "name": "Infraestructura de API, datos, web, engine y CI",
+      "prompt": "prompts/lotes/02-infraestructura-tecnica.md",
+      "taskIds": [
+        "API-01",
+        "DAT-01",
+        "WEB-01",
+        "ENG-01",
+        "CI-01"
+      ],
+      "optionalTaskIds": [],
+      "externalDependencies": [
+        "FND-01",
+        "CTR-01",
+        "CAT-01"
+      ],
+      "integrationGate": [],
+      "status": "prompt_prepared_not_executed"
+    },
+    {
+      "id": "L03",
+      "name": "Corpus, aceptación inicial, ejecución local y registro",
+      "prompt": "prompts/lotes/03-datos-entorno-y-registro.md",
+      "taskIds": [
+        "CAT-02",
+        "QA-01",
+        "OPS-01",
+        "DOC-01",
+        "AUTH-01"
+      ],
+      "optionalTaskIds": [],
+      "externalDependencies": [
+        "CAT-01",
+        "CTR-01",
+        "API-01",
+        "DAT-01",
+        "WEB-01",
+        "ENG-01",
+        "CI-01"
+      ],
+      "integrationGate": [],
+      "status": "prompt_prepared_not_executed"
+    },
+    {
+      "id": "L04",
+      "name": "Sesión, habilidades y matching real",
+      "prompt": "prompts/lotes/04-sesion-skills-y-matching.md",
+      "taskIds": [
+        "AUTH-02",
+        "PRO-01",
+        "ENG-02",
+        "AUTH-03",
+        "AUTH-04"
+      ],
+      "optionalTaskIds": [],
+      "externalDependencies": [
+        "AUTH-01",
+        "DAT-01",
+        "CAT-01",
+        "ENG-01",
+        "CAT-02",
+        "WEB-01"
+      ],
+      "integrationGate": [],
+      "status": "prompt_prepared_not_executed"
+    },
+    {
+      "id": "L05",
+      "name": "Integración vertical de perfil y análisis manual",
+      "prompt": "prompts/lotes/05-integracion-perfil-y-analisis.md",
+      "taskIds": [
+        "PRO-02",
+        "ANL-01",
+        "ANL-03",
+        "ANL-02",
+        "ANL-04"
+      ],
+      "optionalTaskIds": [],
+      "externalDependencies": [
+        "PRO-01",
+        "AUTH-04",
+        "ENG-02",
+        "AUTH-02"
+      ],
+      "integrationGate": [],
+      "status": "prompt_prepared_not_executed"
+    },
+    {
+      "id": "L06",
+      "name": "Pruebas, aceptación, release M1 y contratos M2",
+      "prompt": "prompts/lotes/06-validacion-release-m1.md",
+      "taskIds": [
+        "QAA-01",
+        "QA-02",
+        "DOC-02",
+        "REL-01",
+        "CTR-02"
+      ],
+      "optionalTaskIds": [],
+      "externalDependencies": [
+        "ANL-04",
+        "AUTH-03",
+        "OPS-01",
+        "CI-01",
+        "AUTH-02",
+        "ENG-02",
+        "DOC-01"
+      ],
+      "integrationGate": [],
+      "status": "prompt_prepared_not_executed"
+    },
+    {
+      "id": "L07",
+      "name": "Proyectos y CV privado",
+      "prompt": "prompts/lotes/07-proyectos-y-cv.md",
+      "taskIds": [
+        "PRJ-01",
+        "PRJ-02",
+        "CV-01",
+        "CV-02",
+        "QA-03"
+      ],
+      "optionalTaskIds": [],
+      "externalDependencies": [
+        "CTR-02",
+        "REL-01",
+        "AUTH-03"
+      ],
+      "integrationGate": [],
+      "status": "prompt_prepared_not_executed"
+    },
+    {
+      "id": "L08",
+      "name": "Release M2 e integración JSearch",
+      "prompt": "prompts/lotes/08-release-m2-y-jsearch.md",
+      "taskIds": [
+        "REL-02",
+        "JSR-01",
+        "JSR-02",
+        "JSR-03",
+        "JSR-04"
+      ],
+      "optionalTaskIds": [],
+      "externalDependencies": [
+        "QA-03",
+        "REL-01",
+        "CTR-02",
+        "ANL-01",
+        "ANL-02"
+      ],
+      "integrationGate": [],
+      "status": "prompt_prepared_not_executed"
+    },
+    {
+      "id": "L09",
+      "name": "Aceptación del proveedor y backend de aprendizaje",
+      "prompt": "prompts/lotes/09-proveedor-y-aprendizaje-api.md",
+      "taskIds": [
+        "QA-04",
+        "REL-03",
+        "LRN-01",
+        "LRN-02",
+        "LRN-03"
+      ],
+      "optionalTaskIds": [],
+      "externalDependencies": [
+        "JSR-04",
+        "CAT-01",
+        "PRJ-02",
+        "CTR-02",
+        "REL-02",
+        "PRJ-01"
+      ],
+      "integrationGate": [],
+      "status": "prompt_prepared_not_executed"
+    },
+    {
+      "id": "L10",
+      "name": "Interfaz de rutas, aceptación final y opción de hosting",
+      "prompt": "prompts/lotes/10-rutas-y-cierre.md",
+      "taskIds": [
+        "LRN-04",
+        "QA-05",
+        "REL-04",
+        "DEP-01"
+      ],
+      "optionalTaskIds": [
+        "DEP-01"
+      ],
+      "externalDependencies": [
+        "LRN-03",
+        "ANL-02",
+        "REL-01"
+      ],
+      "integrationGate": [],
+      "status": "prompt_prepared_not_executed"
+    }
+  ]
+}
+

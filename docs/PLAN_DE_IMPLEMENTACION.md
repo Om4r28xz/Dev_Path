@@ -1,11 +1,12 @@
 # DevPath: plan de implementación y conexión de componentes
 
-Fecha de referencia: 30 de octubre de 2026. Estado: planificación; no hay aplicación implementada.
+Fecha de referencia: 30 de octubre de 2026. Actualización de lotes y estado Git: 31 de octubre de 2026. Estado: planificación; no hay aplicación implementada.
 
 Este plan se basa en [la descripción del proyecto](../DevPath_Project_Description.md), en la inspección del repositorio y en las respuestas del equipo. El documento original se conserva como fuente; sus ejemplos y su sección de instrucciones para otra IA se tratan como contexto, no como decisiones ya aprobadas.
 
 Documentos de trabajo:
 
+- [Lotes de hasta cinco tareas y prompts listos para copiar](LOTES_PARA_IAS.md).
 - [Tareas delegables, responsables y dependencias](TAREAS_PARA_IAS.md).
 - [Ramas, commits, pull requests y releases](FLUJO_GITHUB.md).
 
@@ -47,9 +48,9 @@ Referencias de las herramientas propuestas: [pnpm workspaces](https://pnpm.io/wo
 
 ### 1.3 Estado real del repositorio
 
-La inspección encontró únicamente `DevPath_Project_Description.md`, sin commits locales ni ramas con historial. Git muestra `main` sin commit inicial y una referencia configurada a `origin/main` que no está disponible localmente. No se verificó el estado remoto ni la existencia del tag `e3-microservice`.
+La inspección inicial del 30 de octubre encontró solo la descripción y ningún commit. La revisión del 31 de octubre ya encuentra el commit `c338a21` (`FIRTS STEPS`), con `main` y la referencia local `origin/main` apuntando a él, además de los tres documentos de planificación. No se encontró una rama `develop` local ni su referencia remota descargada. Esto no verifica por sí solo el estado actual del servidor remoto. No se verificó el tag `e3-microservice`.
 
-Por tanto, el primer trabajo es establecer el historial y las ramas. Los comandos habituales de crear features desde `develop` solo se aplican después del bootstrap explicado en el flujo GitHub.
+GOV-02 debe reutilizar ese historial, comprobar las refs y establecer `develop` cuando falte. No repetir el primer commit ni reinicializar el repositorio. La receta sin historial del flujo Git solo corresponde a un repositorio realmente nuevo.
 
 ## 2. Entregas y límites de alcance
 
@@ -185,7 +186,7 @@ docs/
   CODEOWNERS
 ```
 
-Los archivos aún no existen salvo los documentos de planificación que acompañan este plan. El scaffold debe crear únicamente lo requerido por la entrega activa; no rellenar carpetas futuras con implementaciones simuladas.
+El usuario solicita ahora una IA dedicada al árbol completo. STR-01 / lote 00 reserva desde el inicio las carpetas de M0–M4, con `.gitkeep` en hojas vacías y README de responsabilidad. Las carpetas futuras no contienen implementación ficticia. FND-01 añade después manifiestos, herramientas y arranque real de M0 sobre ese árbol. El prompt de estructura es [00-estructura-completa.md](prompts/lotes/00-estructura-completa.md); preparar el prompt no equivale a haber ejecutado su creación de carpetas.
 
 Reglas de importación:
 
@@ -636,7 +637,7 @@ Las pruebas crecen con las entregas. No se exige un porcentaje de cobertura arbi
 
 ## 12. Orden de trabajo y puertas de integración
 
-1. **M0:** GOV-01/GOV-02 establecen decisiones e historial; FND-01 y CTR-01 fijan estructura y contratos; CAT-01 entrega contenido inicial.
+1. **M0:** STR-01 / lote 00 prepara el árbol completo; GOV-01/GOV-02 fijan decisiones y ramas reutilizando el historial actual. Integrar STR-01 en develop antes de FND-01. FND-01 y CTR-01 fijan herramientas y contratos; CAT-01 entrega contenido inicial.
 2. Con esas bases integradas, P1 avanza DB/auth y P2 shell/engine. P3 amplía corpus, P4 documenta setup/contratos, P5 prepara aceptación.
 3. Primer corte vertical: registro + GET /me desde navegador con DB real. No esperar a terminar todas las pantallas.
 4. Segundo corte: guardar skills + análisis manual con engine real.
@@ -706,4 +707,4 @@ Al iniciar cada entrega, registrar una decisión breve con contexto, opciones, e
 
 ## 16. Siguiente acción recomendada
 
-Comenzar con GOV-01 y GOV-02. Después integrar FND-01, CTR-01 y CAT-01. A partir de ahí, P1 y P2 pueden implementar módulos independientes mientras P3/P4/P5 aportan contenido, documentación y aceptación mediante sus propias ramas. El [backlog](TAREAS_PARA_IAS.md) contiene los encargos listos para adaptar a otra IA y el [flujo GitHub](FLUJO_GITHUB.md) define su recorrido hasta merge.
+Usar el [índice de lotes](LOTES_PARA_IAS.md). El lote 00 prepara las carpetas y el lote 01 organiza GOV-01/GOV-02; integrar STR-01 cuando exista develop. Después integrar FND-01, CTR-01 y CAT-01. A partir de ahí, P1 y P2 pueden implementar módulos independientes mientras P3/P4/P5 aportan contenido, documentación y aceptación mediante sus propias ramas. El [backlog](TAREAS_PARA_IAS.md) contiene los encargos listos para adaptar a otra IA y el [flujo GitHub](FLUJO_GITHUB.md) define su recorrido hasta merge.

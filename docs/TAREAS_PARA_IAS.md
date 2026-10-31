@@ -1,11 +1,12 @@
 # DevPath: backlog para cinco personas y tareas delegables a IAs
 
-Este documento convierte el [plan técnico](PLAN_DE_IMPLEMENTACION.md) en encargos con entregables comprobables. Se ejecuta por entregas, sin fechas. El [flujo GitHub](FLUJO_GITHUB.md) explica cómo crear, revisar e integrar las ramas.
+Este documento convierte el [plan técnico](PLAN_DE_IMPLEMENTACION.md) en encargos con entregables comprobables. Se ejecuta por entregas, sin fechas. El [índice de lotes](LOTES_PARA_IAS.md) contiene once prompts completos: uno de estructura y diez de hasta cinco tareas. El [flujo GitHub](FLUJO_GITHUB.md) explica cómo crear, revisar e integrar las ramas.
 
 ## 1. Reglas de uso del backlog
 
 - P1 y P2 implementan código; P3 entrega catálogo/contenido; P4 documentación/contratos; P5 aceptación/evidencias.
 - Los nombres son marcadores para asignar a las cinco personas reales.
+- Un lote es un encargo de hasta cinco tareas para una IA; no cambia la granularidad de ramas y revisiones. Puede pausarse y retomarse al integrar dependencias.
 - Toda tarea tiene una issue, un responsable y un PR propio. Una IA es una herramienta del responsable, no un aprobador humano.
 - Salvo bootstrap y releases, todas las ramas indicadas nacen del último `origin/develop` y su PR apunta a `develop`.
 - Una dependencia está disponible al estar integrada en `develop`. Tener código sin merge en otra rama no satisface la dependencia.
@@ -17,7 +18,7 @@ Este documento convierte el [plan técnico](PLAN_DE_IMPLEMENTACION.md) en encarg
 
 ## 2. Dependencias y reparto por olas
 
-Las olas son orden de disponibilidad, no sprints ni fechas. Cada fila admite trabajo paralelo solo cuando sus dependencias ya están integradas.
+La asignación operativa se encuentra en [LOTES_PARA_IAS.md](LOTES_PARA_IAS.md); usar allí los prompts completos, responsables y puntos de continuación. Las olas siguientes son una vista conceptual de disponibilidad, no sprints ni fechas. Cada fila admite trabajo paralelo solo cuando sus dependencias ya están integradas.
 
 | Ola | P1: backend | P2: frontend/integración | P3: datos/contenido | P4: documentación | P5: aceptación |
 | --- | --- | --- | --- | --- | --- |
@@ -54,19 +55,30 @@ La disponibilidad exacta la determina el DAG de cada tarea; la tabla no autoriza
 
 - **Entrega / responsable:** M0, P4; P1/P2 verifican.
 - **Dependencias:** GOV-01.
-- **Rama:** bootstrap excepcional de `main`; luego crear `develop`. Detalle en FLUJO_GITHUB.
+- **Rama:** reutilizar `main` existente y establecer `develop` cuando falte; cambios normales en `docs/gov-02-collaboration` → develop. Bootstrap directo a main únicamente si se verifica un repositorio sin historial.
 - **Archivos:** descripción original, planes, README inicial, `.gitignore`, `.gitattributes`, plantilla de PR e issue, CODEOWNERS con usuarios reales.
-- **Encargo:** comprobar el remoto sin sobrescribir historial, hacer primer commit mínimo, establecer main/develop y documentar protección de ramas. No añadir secretos ni desarrollo de negocio en main.
+- **Encargo:** comprobar refs y remoto sin sobrescribir historial. Ya se observó el commit `c338a21` en main/origin/main; conservarlo y no repetir bootstrap. Establecer develop, documentación de colaboración y protección de ramas. No añadir secretos ni desarrollo de negocio en main.
 - **Aceptación:** existe historial y develop comparte ancestro con main; los cinco miembros pueden contribuir; está definido qué hacer si GitHub no ofrece reglas por el plan/visibilidad.
 - **Validación:** clonar o consultar refs, revisar el primer diff y confirmar exclusión de env/claves/volúmenes. No hace falta crear PR ficticio para el primer commit.
+
+### STR-01 — Preparar la estructura completa con una IA dedicada
+
+- **Entrega / responsable:** M0, IA del lote 00; P2 responsable técnico, revisión P1/P4.
+- **Dependencias:** ninguna para preparar archivos localmente.
+- **Puerta de integración:** GOV-02 debe haber establecido develop antes del PR; la preparación local no marca la tarea como integrada.
+- **Rama:** `chore/str-01-project-structure` desde develop cuando exista; PR → develop.
+- **Archivos:** carpetas de apps, paquetes, infra, scripts, tests, .github y docs, README de área, .gitkeep, `docs/ESTRUCTURA_DEL_PROYECTO.md` y `docs/project-structure.json`.
+- **Encargo:** ejecutar el [prompt completo del lote 00](prompts/lotes/00-estructura-completa.md). Reservar carpetas M0–M4 sin instalar dependencias ni implementar servicios; preservar archivos existentes y documentar responsabilidad/etapa.
+- **Aceptación:** manifiesto coincide con directorios reales; .gitkeep solo en hojas vacías; ninguna carpeta futura se presenta como feature terminada. No crear app.ts, server.ts, YAML, SQL o manifiestos vacíos.
+- **Validación:** comprobar todas las rutas declaradas, diff acotado e integridad de archivos preexistentes. FND-01 reutiliza el árbol cuando STR-01 esté integrado.
 
 ### FND-01 — Crear workspace y herramientas comunes
 
 - **Entrega / responsable:** M0, P2.
-- **Dependencias:** GOV-02.
+- **Dependencias:** GOV-02, STR-01.
 - **Rama:** `chore/fnd-01-workspace`.
 - **Archivos:** manifiestos raíz, pnpm workspace, TS/lint/format, apps/web, apps/api, apps/skill-engine y paquetes mínimos.
-- **Encargo:** fijar versiones compatibles y lockfile; scripts documentados para lint, typecheck, test y build. Separar app de server para pruebas. Prohibir importaciones de DB en web/engine.
+- **Encargo:** reutilizar árbol y responsabilidades de STR-01, retirando .gitkeep solo al añadir contenido real; fijar versiones compatibles y lockfile; scripts documentados para lint, typecheck, test y build. Separar app de server para pruebas. Prohibir importaciones de DB en web/engine.
 - **Contrato:** nombres de paquetes y comandos raíz estables; no implementar negocio.
 - **Aceptación:** instalación reproducible con lockfile, tres apps compilables y errores de configuración claros.
 - **Validación:** instalación limpia, lint, typecheck y build. P1 revisa límites de importación.
@@ -606,4 +618,4 @@ Una tarea pasa a Ready cuando tiene contrato suficiente y dependencias integrada
 
 Registrar por issue: ID, entrega, responsable, revisor, rama, dependencias, criterio, enlaces a PR/evidencia y estado. Avance se mide por criterios aceptados y recorridos funcionales, no por cantidad de commits o líneas.
 
-Este documento define 49 tareas, incluida la evaluación opcional de despliegue. GOV-01 prepara decisiones antes del bootstrap; los fixes descubiertos se convierten en issues adicionales del hito afectado, no se esconden dentro de tareas no relacionadas.
+Este documento define 50 tareas: las 49 originales y STR-01 para estructura, incluida la evaluación opcional de despliegue. Se distribuyen en el lote 00 dedicado y diez lotes de hasta cinco tareas. GOV-01 prepara decisiones antes del bootstrap; los fixes descubiertos se convierten en issues adicionales del hito afectado, no se esconden dentro de tareas no relacionadas.
