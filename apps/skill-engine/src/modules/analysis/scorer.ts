@@ -1,4 +1,4 @@
-export const SCORING_VERSION = '1.0.0';
+export const SCORING_VERSION = '1.1.0';
 
 export interface ScoreResult {
   readonly matchedSkillIds: string[];
@@ -10,12 +10,12 @@ export function scoreAnalysis(
   requiredSkillIds: string[],
   candidateSkillIds: string[],
 ): ScoreResult {
-  const matchedSkillIds = requiredSkillIds.filter((id) => candidateSkillIds.includes(id));
-  const missingSkillIds = requiredSkillIds.filter((id) => !candidateSkillIds.includes(id));
+  const required = [...new Set(requiredSkillIds)];
+  const candidate = new Set(candidateSkillIds);
+  const matchedSkillIds = required.filter((id) => candidate.has(id));
+  const missingSkillIds = required.filter((id) => !candidate.has(id));
   const matchPercentage =
-    requiredSkillIds.length === 0
-      ? null
-      : Math.round((100 * matchedSkillIds.length) / requiredSkillIds.length);
+    required.length === 0 ? null : Math.round((100 * matchedSkillIds.length) / required.length);
 
   return { matchedSkillIds, missingSkillIds, matchPercentage };
 }
