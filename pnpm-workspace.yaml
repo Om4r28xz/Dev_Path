@@ -9,3 +9,4 @@ strictPeerDependencies: true
 
 allowBuilds:
   esbuild: true
+  argon2: true

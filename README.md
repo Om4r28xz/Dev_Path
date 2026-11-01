@@ -4,7 +4,7 @@ DevPath es una aplicación local para que estudiantes y desarrolladores junior c
 
 ## Estado del proyecto
 
-El proyecto se encuentra en M0, preparando repositorio, workspace, contratos y catálogo. Las carpetas reservadas y los documentos de diseño no significan que autenticación, análisis o matching ya estén implementados.
+La base técnica y el corpus CAT-02 están integrados. El lote 03 prepara aceptación, infraestructura local y registro/login del servidor; su estado de validación está en [el handoff](docs/handoffs/lote-03.md). M1 completo requiere tareas posteriores.
 
 Las entregas previstas son:
 
@@ -26,6 +26,8 @@ La API y el Skill Engine se ejecutan como procesos separados. Auth es un módulo
 Las decisiones completas están en [ADR](docs/adr/), el plan en [PLAN_DE_IMPLEMENTACION.md](docs/PLAN_DE_IMPLEMENTACION.md) y las responsabilidades en [RESPONSABILIDADES.md](docs/RESPONSABILIDADES.md).
 
 ## Ejecución local
+
+Guía completa de claves, variables, migraciones, seed y Compose: [SETUP_LOCAL.md](docs/SETUP_LOCAL.md). Consultar antes de iniciar procesos.
 
 Requisitos fijados por FND-01:
 
@@ -51,7 +53,7 @@ pnpm dev:api
 pnpm dev:engine
 ```
 
-La web escucha en `127.0.0.1:5173`, la API en `127.0.0.1:3000` y el Skill Engine en `127.0.0.1:3001`. En esta etapa solo existen el shell M0 y endpoints de salud; autenticación y matching continúan pendientes.
+La web escucha en `127.0.0.1:5173`, la API en `127.0.0.1:3000` y el Skill Engine en `127.0.0.1:3001`. La web conserva pantallas base; los endpoints de registro/login no se conectan a la UI hasta AUTH-03/04. El extractor conserva diferencias conocidas del corpus CAT-02. Health no certifica matching.
 
 ## Colaboración
 

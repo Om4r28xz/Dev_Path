@@ -158,6 +158,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Migrate isolated test database
+        env:
+          DATABASE_URL: ${{ env.TEST_DATABASE_URL }}
+        run: pnpm --filter @devpath/db migrate
+
       - name: Run tests
         run: pnpm test
 
