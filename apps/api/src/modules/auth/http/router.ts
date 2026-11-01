@@ -2,7 +2,11 @@ import { Router } from 'express';
 import { HttpError } from '../../../platform/errors/http-error.js';
 import { loginSchema, registerSchema } from '../schemas/commands.js';
 import type { AuthService } from '../services/auth-service.js';
-export function authRouter(service: AuthService, origins: readonly string[], localHttp: boolean) {
+export function authRouter(
+  service: AuthService,
+  origins: readonly string[],
+  localHttp: boolean,
+): Router {
   if (
     localHttp &&
     origins.some((origin) => {
