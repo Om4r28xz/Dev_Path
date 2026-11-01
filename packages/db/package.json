@@ -2,5 +2,27 @@
   "name": "@devpath/db",
   "version": "0.0.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./pool": "./src/pool.ts",
+    "./schema": "./src/schema/index.ts",
+    "./migrate": "./src/migrate.ts"
+  },
+  "scripts": {
+    "generate": "drizzle-kit generate",
+    "migrate": "tsx src/migrate.ts",
+    "seed": "tsx src/seeds/seed.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "drizzle-orm": "0.43.1",
+    "pg": "8.16.0",
+    "zod": "3.25.67"
+  },
+  "devDependencies": {
+    "@types/pg": "8.11.14",
+    "drizzle-kit": "0.31.1",
+    "tsx": "4.23.15"
+  }
 }

@@ -1,59 +1,239 @@
-:root {
-  color: #2f2028;
-  background: #fff7fa;
-  font-family:
-    Inter,
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    sans-serif;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+/* ─────────────────────────────────────────────
+   Layout: AppLayout header & nav
+───────────────────────────────────────────── */
+
+.layout-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 2px solid #f4adc5;
+  background-color: #fff0f5;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-.shell {
-  display: grid;
-  min-height: 100vh;
-  place-items: center;
-  padding: 2rem;
-}
-
-.card {
-  width: min(100%, 42rem);
-  padding: clamp(2rem, 6vw, 4rem);
-  border: 1px solid #f2ccd9;
-  border-radius: 1.5rem;
-  background: #ffffff;
-  box-shadow: 0 1.5rem 4rem rgb(91 40 62 / 10%);
-}
-
-.eyebrow {
-  margin: 0 0 0.75rem;
-  color: #9a4768;
-  font-size: 0.8rem;
+.layout-header__brand {
   font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 1.25rem;
+  color: #9a4768;
+  text-decoration: none;
 }
 
-h1 {
-  margin: 0 0 1rem;
-  font-size: clamp(2rem, 7vw, 3.5rem);
-  line-height: 1;
+.layout-header__brand:focus-visible {
+  outline: 2px solid #9a4768;
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
-p {
-  line-height: 1.65;
+.layout-nav {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.layout-nav a {
+  color: #7a3456;
+  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9375rem;
+  transition: background-color 0.15s ease;
+}
+
+.layout-nav a:hover {
+  background-color: #fce4ef;
+}
+
+.layout-nav a.active {
+  font-weight: 600;
+  color: #9a4768;
+  background-color: #fce4ef;
+}
+
+.layout-nav a:focus-visible {
+  outline: 2px solid #9a4768;
+  outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────────────
+   Layout: main content area
+───────────────────────────────────────────── */
+
+.layout-main {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* ─────────────────────────────────────────────
+   Button
+───────────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn:focus-visible {
+  outline: 2px solid #9a4768;
+  outline-offset: 2px;
+}
+
+.btn--primary {
+  background-color: #9a4768;
+  color: #ffffff;
+  border-color: #9a4768;
+}
+
+.btn--primary:hover:not(:disabled) {
+  background-color: #7a3456;
+  border-color: #7a3456;
+}
+
+.btn--secondary {
+  background-color: transparent;
+  color: #9a4768;
+  border-color: #9a4768;
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background-color: #fce4ef;
+}
+
+.btn--danger {
+  background-color: #c0392b;
+  color: #ffffff;
+  border-color: #c0392b;
+}
+
+.btn--danger:hover:not(:disabled) {
+  background-color: #a93226;
+  border-color: #a93226;
+}
+
+/* ─────────────────────────────────────────────
+   Form field
+───────────────────────────────────────────── */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.field__label {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #3b1f2b;
+}
+
+.field__required {
+  color: #c0392b;
+}
+
+.field__input {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border: 1.5px solid #c9a0b4;
+  border-radius: 6px;
+  background-color: #fffafa;
+  color: #1a0a12;
+  transition: border-color 0.15s ease;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.field__input:focus {
+  outline: none;
+  border-color: #9a4768;
+}
+
+.field__input:focus-visible {
+  outline: 2px solid #9a4768;
+  outline-offset: 2px;
+}
+
+.field__input[aria-invalid='true'] {
+  border-color: #c0392b;
+}
+
+.field__error {
+  font-size: 0.875rem;
+  color: #a93226;
+  font-weight: 500;
+}
+
+.field__hint {
+  font-size: 0.8125rem;
+  color: #7a5668;
+  text-align: right;
+}
+
+/* ─────────────────────────────────────────────
+   Alert
+───────────────────────────────────────────── */
+
+.alert {
+  padding: 0.875rem 1.125rem;
+  border-radius: 6px;
+  border-left: 4px solid transparent;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.alert--info {
+  background-color: #e8f4fc;
+  border-color: #3498db;
+  color: #1a3a4f;
+}
+
+.alert--success {
+  background-color: #eafaf1;
+  border-color: #27ae60;
+  color: #1a4028;
+}
+
+.alert--warning {
+  background-color: #fef9e7;
+  border-color: #f39c12;
+  color: #4d3800;
+}
+
+.alert--error {
+  background-color: #fdf0ef;
+  border-color: #c0392b;
+  color: #6b1a14;
+}
+
+/* ─────────────────────────────────────────────
+   Page form layout
+───────────────────────────────────────────── */
+
+.page-form {
+  max-width: 28rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.page-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }

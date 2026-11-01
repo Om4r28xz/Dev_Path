@@ -1,14 +1,17 @@
-export function App() {
+import React from 'react';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { SessionProvider } from '../features/auth/SessionProvider.js';
+import { queryClient } from '../lib/session/session.js';
+import { AppRouter } from './router.js';
+
+export const App: React.FC = () => {
   return (
-    <main className="shell">
-      <section className="card" aria-labelledby="devpath-title">
-        <p className="eyebrow">DevPath · M0</p>
-        <h1 id="devpath-title">Base técnica preparada</h1>
-        <p>
-          El workspace local está listo para recibir los contratos y las funciones de las siguientes
-          tareas. Autenticación y matching todavía no están implementados.
-        </p>
-      </section>
-    </main>
+    <QueryClientProvider client={queryClient}>
+      <SessionProvider>
+        <AppRouter />
+      </SessionProvider>
+    </QueryClientProvider>
   );
-}
+};
+
+export default App;
