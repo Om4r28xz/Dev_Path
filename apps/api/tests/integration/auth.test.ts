@@ -6,12 +6,16 @@ import path from 'node:path';
 import type { AddressInfo } from 'node:net';
 import pg from 'pg';
 import * as argon2 from 'argon2';
-import { importSPKI, jwtVerify } from 'jose';
+import { importPKCS8, importSPKI, jwtVerify, SignJWT } from 'jose';
 import { beforeAll, afterAll, describe, expect, it } from 'vitest';
 import { createApp } from '../../src/app.js';
 import { loadConfig } from '../../src/platform/config/env.js';
 import { authRouter } from '../../src/modules/auth/http/router.js';
 import { createAuthService } from '../../src/modules/auth/services/auth-service.js';
+import {
+  accessTokenMiddleware,
+  authenticatedUserId,
+} from '../../src/modules/auth/http/access-token.js';
 
 const url = process.env.TEST_DATABASE_URL;
 const headers = {
@@ -27,6 +31,8 @@ describe.skipIf(!url)('AUTH-01 real PostgreSQL and HTTP', () => {
   let server: ReturnType<ReturnType<typeof createApp>['listen']>;
   let directory: string;
   let publicPem: string;
+  let privatePem: string;
+  let privatePath: string;
   let service: Awaited<ReturnType<typeof createAuthService>>;
   const email = () => {
     const value = `qa-${randomUUID()}@example.test`;
@@ -39,6 +45,12 @@ describe.skipIf(!url)('AUTH-01 real PostgreSQL and HTTP', () => {
       headers: customHeaders,
       body: JSON.stringify(body),
     });
+  const cookieOf = (response: Response) => response.headers.get('set-cookie')!.split(';')[0]!;
+  const postCookie = (route: string, cookie: string, customHeaders = headers) =>
+    fetch(base + '/api/v1/auth/' + route, {
+      method: 'POST',
+      headers: { ...customHeaders, Cookie: cookie },
+    });
   beforeAll(async () => {
     // Caller supplies a migrated, isolated TEST_DATABASE_URL; never truncate shared tables.
     await pool.query('SELECT 1 FROM auth.users LIMIT 1');
@@ -49,14 +61,19 @@ describe.skipIf(!url)('AUTH-01 real PostgreSQL and HTTP', () => {
       publicKeyEncoding: { type: 'spki', format: 'pem' },
     });
     publicPem = pair.publicKey;
-    const privatePath = path.join(directory, 'private.pem');
+    privatePem = pair.privateKey;
+    privatePath = path.join(directory, 'private.pem');
     await writeFile(privatePath, pair.privateKey, { mode: 0o600 });
     service = await createAuthService(pool, { privateKeyFile: privatePath, localHttp: true });
     const config = loadConfig({ NODE_ENV: 'test', RATE_LIMIT_MAX_REQUESTS: '1000' });
     server = createApp({
       config,
-      configureRoutes: (app) =>
-        app.use('/api/v1/auth', authRouter(service, config.http.allowedOrigins, true)),
+      configureRoutes: (app) => {
+        app.use('/api/v1/auth', authRouter(service, config.http.allowedOrigins, true));
+        app.get('/api/v1/test-protected', accessTokenMiddleware(service), (_req, res) =>
+          res.json({ userId: authenticatedUserId(res) }),
+        );
+      },
     }).listen(0, '127.0.0.1');
     await once(server, 'listening');
     base = `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
@@ -236,5 +253,158 @@ describe.skipIf(!url)('AUTH-01 real PostgreSQL and HTTP', () => {
     } finally {
       await new Promise<void>((resolve) => extra.close(() => resolve()));
     }
+  });
+  it('rotates once, keeps the original seven-day expiry and revokes on reuse', async () => {
+    const registered = await post('register', { name: 'Rotate', email: email(), password });
+    const oldCookie = cookieOf(registered);
+    const firstHash = createHash('sha256').update(oldCookie.split('=')[1]!).digest('hex');
+    const rotated = await postCookie('refresh', oldCookie);
+    expect(rotated.status).toBe(200);
+    const nextCookie = cookieOf(rotated);
+    expect(nextCookie).not.toBe(oldCookie);
+    const session = await rotated.json();
+    expect(session.user.id).toBe((await registered.json()).user.id);
+    const tokenRows = await pool.query(
+      'SELECT t.expires_at,t.used_at,f.revoked_at FROM auth.refresh_tokens t JOIN auth.session_families f ON f.id=t.family_id WHERE t.family_id=(SELECT family_id FROM auth.refresh_tokens WHERE token_hash=$1) ORDER BY t.created_at',
+      [firstHash],
+    );
+    expect(tokenRows.rows).toHaveLength(2);
+    expect(tokenRows.rows[0].used_at).not.toBeNull();
+    expect(tokenRows.rows[0].expires_at.getTime()).toBe(tokenRows.rows[1].expires_at.getTime());
+    expect((await postCookie('refresh', oldCookie)).status).toBe(401);
+    expect((await postCookie('refresh', nextCookie)).status).toBe(401);
+    expect(
+      (
+        await pool.query(
+          'SELECT revoked_at FROM auth.session_families WHERE id=(SELECT family_id FROM auth.refresh_tokens WHERE token_hash=$1)',
+          [firstHash],
+        )
+      ).rows[0].revoked_at,
+    ).not.toBeNull();
+  });
+  it('serializes concurrent refresh attempts and revokes the family on replay', async () => {
+    const registered = await post('register', { name: 'Race', email: email(), password });
+    const cookie = cookieOf(registered);
+    const replies = await Promise.all([
+      postCookie('refresh', cookie),
+      postCookie('refresh', cookie),
+    ]);
+    expect(replies.map((reply) => reply.status).sort()).toEqual([200, 401]);
+    const winner = replies.find((reply) => reply.status === 200)!;
+    expect((await postCookie('refresh', cookieOf(winner))).status).toBe(401);
+  });
+  it('revokes on logout and rejects malicious auth origins', async () => {
+    const registered = await post('register', { name: 'Logout', email: email(), password });
+    const cookie = cookieOf(registered);
+    expect(
+      (await postCookie('refresh', cookie, { ...headers, Origin: 'https://evil.example' })).status,
+    ).toBe(403);
+    const logout = await postCookie('logout', cookie);
+    expect(logout.status).toBe(204);
+    expect(logout.headers.get('set-cookie')).toContain('Max-Age=0');
+    expect((await postCookie('refresh', cookie)).status).toBe(401);
+  });
+  it('serializes logout against refresh so no later token survives', async () => {
+    const registered = await post('register', { name: 'Concurrent', email: email(), password });
+    const cookie = cookieOf(registered);
+    const [refresh, logout] = await Promise.all([
+      postCookie('refresh', cookie),
+      postCookie('logout', cookie),
+    ]);
+    expect(logout.status).toBe(204);
+    expect([200, 401]).toContain(refresh.status);
+    if (refresh.status === 200)
+      expect((await postCookie('refresh', cookieOf(refresh))).status).toBe(401);
+    else expect((await postCookie('refresh', cookie)).status).toBe(401);
+  });
+  it('does not report logout or refresh success when the database is unavailable', async () => {
+    const registered = await post('register', { name: 'Offline', email: email(), password });
+    const offlinePool = new pg.Pool({
+      connectionString: 'postgres://devpath_auth02@127.0.0.1:55453/devpath_auth02',
+      connectionTimeoutMillis: 250,
+    });
+    const offlineService = await createAuthService(offlinePool, {
+      privateKeyFile: privatePath,
+      localHttp: true,
+    });
+    const config = loadConfig({ NODE_ENV: 'test' });
+    const offlineApp = createApp({
+      config,
+      configureRoutes: (app) =>
+        app.use('/api/v1/auth', authRouter(offlineService, config.http.allowedOrigins, true)),
+    });
+    const offlineServer = offlineApp.listen(0, '127.0.0.1');
+    await once(offlineServer, 'listening');
+    try {
+      const offlineBase = `http://127.0.0.1:${(offlineServer.address() as AddressInfo).port}`;
+      for (const route of ['refresh', 'logout']) {
+        const response = await fetch(`${offlineBase}/api/v1/auth/${route}`, {
+          method: 'POST',
+          headers: { ...headers, Cookie: cookieOf(registered) },
+        });
+        expect(response.status).toBe(503);
+        expect(response.headers.get('set-cookie')).toBeNull();
+      }
+    } finally {
+      await new Promise<void>((resolve) => offlineServer.close(() => resolve()));
+      await offlinePool.end();
+    }
+  });
+  it('accepts only a fully verified access JWT for protected routes', async () => {
+    const registered = await post('register', { name: 'Bearer', email: email(), password });
+    const body = await registered.json();
+    const protectedGet = (token: string) =>
+      fetch(base + '/api/v1/test-protected', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    expect((await protectedGet(body.accessToken)).status).toBe(200);
+    const tokenParts = (body.accessToken as string).split('.');
+    const signature = tokenParts[2]!;
+    expect(
+      (
+        await protectedGet(
+          `${tokenParts[0]}.${tokenParts[1]}.${signature[0] === 'x' ? 'y' : 'x'}${signature.slice(1)}`,
+        )
+      ).status,
+    ).toBe(401);
+    const key = await importPKCS8(privatePem, 'RS256');
+    const mint = (overrides: {
+      issuer?: string;
+      audience?: string;
+      role?: string;
+      expiry?: number;
+      typ?: string;
+    }) =>
+      new SignJWT({ role: overrides.role ?? 'candidate' })
+        .setProtectedHeader({ alg: 'RS256', typ: overrides.typ ?? 'at+jwt' })
+        .setSubject(body.user.id)
+        .setIssuer(overrides.issuer ?? 'urn:devpath:auth')
+        .setAudience(overrides.audience ?? 'devpath-api')
+        .setIssuedAt()
+        .setExpirationTime(overrides.expiry ?? Math.floor(Date.now() / 1000) + 900)
+        .setJti(randomUUID())
+        .sign(key);
+    for (const overrides of [
+      { issuer: 'wrong' },
+      { audience: 'wrong' },
+      { role: 'admin' },
+      { expiry: Math.floor(Date.now() / 1000) - 1 },
+      { typ: 'JWT' },
+    ])
+      expect((await protectedGet(await mint(overrides))).status).toBe(401);
+    const hsToken = await new SignJWT({ role: 'candidate' })
+      .setProtectedHeader({ alg: 'HS256', typ: 'at+jwt' })
+      .setSubject(body.user.id)
+      .setIssuer('urn:devpath:auth')
+      .setAudience('devpath-api')
+      .setIssuedAt()
+      .setExpirationTime('15m')
+      .setJti(randomUUID())
+      .sign(new TextEncoder().encode('synthetic-test-key'));
+    expect((await protectedGet(hsToken)).status).toBe(401);
+    expect(
+      (await fetch(base + '/api/v1/test-protected', { headers: { Cookie: cookieOf(registered) } }))
+        .status,
+    ).toBe(401);
   });
 });
