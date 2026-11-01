@@ -122,3 +122,8 @@ Entrega una tabla con las tareas PRO-02, ANL-01, ANL-03, ANL-02, ANL-04 y su est
 
 La siguiente IA puede usar el prompt del lote 06 cuando las dependencias de su tarea estén integradas, sin necesidad de repetir este encargo.
 
+## Precisión contractual ANL-01/03/02/04: evidence opcional
+
+Contrato público1.1.0/ADR0004: creación/replay/detalle pueden incluir grupos de menciones literales validadas, sin source completo; offsets UTF-16, end exclusivo. Campo ausente no invalida histórico; [] solo sin required. Mantener score/listas/versiones e idempotencia; no llamar engine al consultar/repetir un resultado guardado. Lista permanece AnalysisSummary sin evidence.
+
+ANL-02 debe validar la respuesta opcional y mostrar fragmentos como texto seguro, con fallback de no disponible distinto de no tecnologías y0%. Esta adaptación se realiza después del merge de la extensión; el trabajo y ZIP de Karen siguen provisionales. ANL-04 reutiliza detalle y no requiere evidencia en cada fila. Agregar estas comprobaciones a la validación de las tareas, sin marcar criterios anteriores como aprobados ni implementar todavía ANL-04/lote06.

@@ -207,6 +207,9 @@ describe.skipIf(!databaseUrl)('ANL-01 real HTTP + engine + PostgreSQL', () => {
     expect(row.candidate_skill_ids).toEqual(['javascript', 'react']);
     expect(row.job_text).toBe(source.text);
     expect(row.evidence).toHaveLength(3);
+    expect(result.evidence).toEqual(row.evidence);
+    expect(result).not.toHaveProperty('job_text');
+    expect(result).not.toHaveProperty('candidate_skill_ids');
     expect(row.request_hash).toMatch(/^[a-f0-9]{64}$/);
     expect(Object.keys(result).sort()).toEqual(
       [
@@ -221,6 +224,7 @@ describe.skipIf(!databaseUrl)('ANL-01 real HTTP + engine + PostgreSQL', () => {
         'warnings',
         'skillsOutdated',
         'createdAt',
+        'evidence',
       ].sort(),
     );
     spy.mockRestore();
@@ -235,6 +239,26 @@ describe.skipIf(!databaseUrl)('ANL-01 real HTTP + engine + PostgreSQL', () => {
     expect(replay.status).toBe(200);
     expect(await replay.json()).toMatchObject({ ...first, skillsOutdated: true });
     expect(await rowCount(idempotency)).toBe(1);
+  });
+
+  it('replays a legacy snapshot without evidence or recalculating it', async () => {
+    const idempotency = key();
+    const original = await (await analyze(idempotency)).json();
+    await pool.query('UPDATE app.analyses SET evidence=$1::jsonb WHERE id=$2', ['[]', original.id]);
+    const before = (await pool.query('SELECT * FROM app.analyses WHERE id=$1', [original.id]))
+      .rows[0];
+    const spy = vi.spyOn(engine, 'analyze');
+    const response = await analyze(idempotency);
+    expect(response.status).toBe(200);
+    const replay = await response.json();
+    const { evidence: omitted, ...baseSnapshot } = original;
+    expect(omitted).toHaveLength(3);
+    expect(replay).toEqual(baseSnapshot);
+    expect(spy).not.toHaveBeenCalled();
+    spy.mockRestore();
+    expect(
+      (await pool.query('SELECT * FROM app.analyses WHERE id=$1', [original.id])).rows[0],
+    ).toEqual(before);
   });
   it('uses one row for a concurrent identical command and conflicts on a different body', async () => {
     const idempotency = key();
@@ -271,6 +295,7 @@ describe.skipIf(!databaseUrl)('ANL-01 real HTTP + engine + PostgreSQL', () => {
       compatibilityPercentage: null,
       requiredSkillIds: [],
       warnings: ['NO_TECHNOLOGIES_DETECTED'],
+      evidence: [],
     });
     const noSkills = await analyze(key(), { source }, 1);
     expect((await noSkills.json()).compatibilityPercentage).toBe(0);

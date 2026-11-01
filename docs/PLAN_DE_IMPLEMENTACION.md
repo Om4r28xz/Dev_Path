@@ -707,3 +707,32 @@ Al iniciar cada entrega, registrar una decisión breve con contexto, opciones, e
 ## 16. Siguiente acción recomendada
 
 Usar el [índice de lotes](LOTES_PARA_IAS.md). El lote 00 prepara las carpetas y el lote 01 organiza GOV-01/GOV-02; integrar STR-01 cuando exista develop. Después integrar FND-01, CTR-01 y CAT-01. A partir de ahí, P1 y P2 pueden implementar módulos independientes mientras P3/P4/P5 aportan contenido, documentación y aceptación mediante sus propias ramas. El [backlog](TAREAS_PARA_IAS.md) contiene los encargos listos para adaptar a otra IA y el [flujo GitHub](FLUJO_GITHUB.md) define su recorrido hasta merge.
+
+## Analysis público y evidencia (extensión M1)
+
+La implementación autorizada de evidence se documenta en ADR0004. Aclara §6/§7.4: POST y GET detalle proyectan menciones validadas del snapshot; lista continúa con resúmenes. §8.2: evidencia significa alias literal con posiciones UTF-16, no frases ni requisitos semánticamente obligatorios. §9.1: las columnas reales job_text/evidence JSONB ya existen; no hay migración/backfill nuevo. §10: falta de evidencia se presenta aparte de null/0% y no impide mostrar el resultado base. §11.2 añade regresión presente/ausente/histórico/incorrecto/excesivo y aislamiento. No cambia scoring, catálogo ni versiones del engine.
+
+Flujo concreto (precisa la secuencia de §7.4 sin cambiar topología):
+
+```mermaid
+sequenceDiagram
+    participant W as React
+    participant A as Express
+    participant D as PostgreSQL
+    participant E as Skill Engine
+    W->>A: POST analyses con JWT y key
+    A->>E: Texto y snapshot de habilidades
+    E-->>A: Resultado y menciones
+    A->>A: Validar resultado interno
+    A->>D: Guardar snapshots y evidence
+    D-->>A: Fila persistida
+    A->>A: Proyectar evidence validada y acotada
+    A-->>W: Analysis con evidence opcional
+    W->>A: GET detalle propio
+    A->>D: Leer snapshot por propietario
+    D-->>A: Snapshot guardado
+    A->>A: Validar proyección sin recalcular
+    A-->>W: Analysis con evidence opcional
+```
+
+Lectores antiguos estrictos requieren actualización coordinada; ausencia permanece válida. La interfaz local ANL-02 y E2E de lote06 no se declaran implementados por este cambio.

@@ -233,3 +233,18 @@ Usar DB de prueba aislada, dos contextos de navegador A/B y datos sintéticos. N
 - [ ] P1/P2 revisan ejecutabilidad; P5 registra observados por caso y enlaces de evidencia.
 
 Ninguna casilla está aprobada por redactar la matriz. Los resultados automatizados de AUTH-01/infra se documentarán en el handoff y no se trasladan automáticamente a estos recorridos manuales.
+
+## Casos adicionales: evidencia pública opcional (esperados, no observados)
+
+Contrato1.1.0; revisar ADR0004. No altera ni da por ejecutados casos anteriores. Registrar commit/entorno/ejecutor/evidencia real al ejecutar.
+
+| Caso    | Precondiciones/entrada/pasos                                                            | Esperado                                                                                                               | Observado                |
+| ------- | --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| EVID-01 | A conJS+React, textoJS+React+Git; POST yGET propio/reload                               | 67%, matches/missing y menciones literales/offsets guardados iguales; sin vacante completa ni datos internos           | No ejecutado manualmente |
+| EVID-02 | DB aislada, snapshot antiguo con required y evidence[]; GET y replay con misma key/body | Sin propiedad evidence; mismo ID/score/versiones/fila, sin motor/recalcular                                            | No ejecutado manualmente |
+| EVID-03 | Sin tecnologías; POST/GET                                                               | null y warning, required[]/evidence[], nunca0% engañoso                                                                | No ejecutado manualmente |
+| EVID-04 | DB aislada: JSONB inválido, texto no-alias, duplicados/rangos/arrays excesivos; GET     | Omite opcional sin romper base/histórico ni loguear fragmentos; POST interno inválido sigue rechazándose sin persistir | No ejecutado manualmente |
+| EVID-05 | A guarda análisis; B intenta detalle/lista/delete y cambia sesión                       | 404 ajeno, lista sin evidencia, sin datos deA en cacheB                                                                | No ejecutado manualmente |
+| EVID-06 | UI futura: texto conHTML/script; teclado/lector; motor detenido después de guardar      | Texto inerte y fallback accesible; GET funciona sin engine; revisar conP5 tras adaptarANL-02                           | Pendiente de UI          |
+| EVID-07 | Cliente estricto anterior y actual contra fixtures viejo/nuevo                          | Viejo DTO válido en nuevo; cliente antiguo cerrado rechaza campo nuevo; coordinar lectores antes de emisión            | No ejecutado manualmente |
+| EVID-08 | DTO sintético de frontera128KiB y variante mayor/multibyte                              | Evidencia completa solo dentro del presupuesto; exceso se omite, no se trunca                                          | No ejecutado manualmente |
