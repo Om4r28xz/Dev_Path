@@ -210,6 +210,7 @@ export const analyses = appSchema.table(
   (t) => [
     uniqueIndex('analyses_user_idempotency_idx').on(t.userId, t.idempotencyKey),
     index('analyses_user_created_idx').on(t.userId, t.createdAt),
+    index('analyses_user_created_id_idx').on(t.userId, t.createdAt.desc(), t.id.desc()),
   ],
 );
 
