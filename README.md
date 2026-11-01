@@ -1,14 +1,83 @@
 # DevPath
 
-Monorepo local React/Vite + Express + Skill Engine + PostgreSQL. Node 22.23.4 y pnpm 11.22.0.
+DevPath es una aplicación local para que estudiantes y desarrolladores junior comparen sus habilidades con las tecnologías mencionadas en una vacante. El resultado inicial será determinista, explicable y basado en un catálogo versionado; no usa IA generativa.
 
-Consulta [instalación y ejecución en PowerShell](docs/SETUP_LOCAL.md), [matriz de aceptación M1](docs/acceptance/M1-cases.md) y [estado del lote 03](docs/handoffs/lote-03.md).
+## Estado del proyecto
+
+La base técnica y el corpus CAT-02 están integrados. El lote 03 prepara aceptación, infraestructura local y registro/login del servidor; su estado de validación está en [el handoff](docs/handoffs/lote-03.md). M1 completo requiere tareas posteriores.
+
+Las entregas previstas son:
+
+- M0: base técnica y contratos.
+- M1: autenticación, perfil, habilidades y análisis manual.
+- M2: proyectos y CV privado.
+- M3: integración de vacantes mediante JSearch.
+- M4: rutas de aprendizaje deterministas.
+
+## Arquitectura acordada
+
+```text
+Navegador → React/Vite → /api/v1 → API Express → PostgreSQL
+                                      └───────→ Skill Engine REST interno
+```
+
+La API y el Skill Engine se ejecutan como procesos separados. Auth es un módulo de la API. El navegador nunca accede directamente a PostgreSQL, al engine ni a proveedores externos.
+
+Las decisiones completas están en [ADR](docs/adr/), el plan en [PLAN_DE_IMPLEMENTACION.md](docs/PLAN_DE_IMPLEMENTACION.md) y las responsabilidades en [RESPONSABILIDADES.md](docs/RESPONSABILIDADES.md).
+
+## Ejecución local
+
+Guía completa de claves, variables, migraciones, seed y Compose: [SETUP_LOCAL.md](docs/SETUP_LOCAL.md). Consultar antes de iniciar procesos.
+
+Requisitos fijados por FND-01:
+
+- Node.js 22.16 o una versión posterior de Node 22.
+- pnpm 11.22.
+
+Instala exactamente lo registrado en el lockfile y ejecuta los controles comunes:
 
 ```powershell
 pnpm install --frozen-lockfile
-node scripts/setup-local.mjs
+pnpm lint
+pnpm format:check
+pnpm typecheck
+pnpm test
+pnpm build
 ```
 
-La guía contiene migraciones/seed, modo desarrollo 5173, demo Compose 8080, configuración de auth y comprobaciones reales. Las pantallas base y health no equivalen a M1 completo. Las contribuciones se revisan por PR a develop; Omar realiza la integración.
+Los tres procesos de desarrollo se levantan por separado:
 
-Plan: [PLAN_DE_IMPLEMENTACION](docs/PLAN_DE_IMPLEMENTACION.md). Flujo: [FLUJO_GITHUB](docs/FLUJO_GITHUB.md).
+```powershell
+pnpm dev:web
+pnpm dev:api
+pnpm dev:engine
+```
+
+La web escucha en `127.0.0.1:5173`, la API en `127.0.0.1:3000` y el Skill Engine en `127.0.0.1:3001`. La web conserva pantallas base; los endpoints de registro/login no se conectan a la UI hasta AUTH-03/04. El extractor conserva diferencias conocidas del corpus CAT-02. Health no certifica matching.
+
+## Colaboración
+
+El trabajo normal nace de `develop` y vuelve a `develop` mediante pull request. `main` contiene entregas estables y recibe únicamente PR de release o hotfix según [FLUJO_GITHUB.md](docs/FLUJO_GITHUB.md).
+
+1. Actualiza `develop` y crea la rama exacta indicada por la tarea.
+2. Limita el diff al alcance de esa tarea.
+3. Ejecuta y documenta los controles aplicables.
+4. Abre un PR hacia la base indicada y solicita los revisores de [RESPONSABILIDADES.md](docs/RESPONSABILIDADES.md).
+5. Un integrador distinto del autor realiza el merge aprobado.
+
+No compartas cuentas ni cambies identidades Git para simular contribuciones. P1–P5 son roles operativos; cada persona usa su propia cuenta cuando actúa en GitHub.
+
+## Protección de ramas
+
+La política objetivo exige PR, revisión y controles exitosos para `develop` y `main`, y bloquea force-push y eliminación. Si el plan, visibilidad o permisos de GitHub no permiten configurar rulesets:
+
+- no se hace push directo por acuerdo del equipo;
+- el PR registra autor, revisor por rol, comandos y resultados;
+- el integrador comprueba manualmente la base, el diff y los controles requeridos;
+- cualquier excepción se documenta en el PR y en el handoff correspondiente.
+
+La ausencia de una regla automática no convierte la revisión ni la validación en opcionales.
+
+## Seguridad del repositorio
+
+No confirmes archivos `.env`, claves, tokens, contraseñas, datos personales, CV, volúmenes locales, logs ni resultados de pruebas con información sensible. Los ejemplos y fixtures deben usar datos sintéticos.
