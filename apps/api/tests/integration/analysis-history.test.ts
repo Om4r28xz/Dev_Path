@@ -141,6 +141,51 @@ describe.skipIf(!databaseUrl)('ANL-03 history with JWT + PostgreSQL and ANL-01',
     await pool.end();
     if (directory) await rm(directory, { recursive: true });
   });
+
+  it('keeps legacy and corrupt stored evidence unavailable without rewriting rows', async () => {
+    const rows = await fixtures(1);
+    const id = rows[0]!.id;
+    for (const value of [[], null, { text: 'secret' }, [{ skillId: 'git', matches: [] }]]) {
+      await pool.query('UPDATE app.analyses SET evidence=$1::jsonb WHERE id=$2', [
+        JSON.stringify(value),
+        id,
+      ]);
+      const before = (await pool.query('SELECT * FROM app.analyses WHERE id=$1', [id])).rows[0];
+      const response = await call('/analyses/' + id);
+      expect(response.status).toBe(200);
+      const result = await response.json();
+      expect(validateDetail(result)).toBe(true);
+      expect(result).not.toHaveProperty('evidence');
+      expect(result.compatibilityPercentage).toBe(67);
+      expect(result).not.toHaveProperty('job_text');
+      expect((await pool.query('SELECT * FROM app.analyses WHERE id=$1', [id])).rows[0]).toEqual(
+        before,
+      );
+      expect((await call('/analyses/' + id, 1)).status).toBe(404);
+    }
+  });
+  it('reads only verified mentions from existing rows and never includes evidence in summaries', async () => {
+    const rows = await fixtures(1);
+    const id = rows[0]!.id;
+    const evidence = [
+      { skillId: 'git', matches: [{ text: 'Git', start: 0, end: 3 }] },
+      { skillId: 'javascript', matches: [{ text: 'JS', start: 4, end: 6 }] },
+      { skillId: 'react', matches: [{ text: 'React', start: 7, end: 12 }] },
+    ];
+    await pool.query('UPDATE app.analyses SET job_text=$1,evidence=$2::jsonb WHERE id=$3', [
+      'Git JS React',
+      JSON.stringify(evidence),
+      id,
+    ]);
+    const result = await (await call('/analyses/' + id)).json();
+    expect(result.evidence).toEqual(evidence);
+    expect(validateDetail(result)).toBe(true);
+    const list = await (await call('/analyses')).json();
+    expect(validateList(list)).toBe(true);
+    expect(list.items[0]).not.toHaveProperty('evidence');
+    expect(JSON.stringify(result)).not.toContain('Git JS React');
+    expect((await call('/analyses/' + id, 1)).status).toBe(404);
+  });
   it('requires bearer identity on list, detail and delete', async () => {
     for (const [route, method] of [
       ['/analyses', 'GET'],

@@ -1,3 +1,4 @@
+import { withStoredEvidence } from './evidence.js';
 import { createHash, randomUUID } from 'node:crypto';
 import type { Pool, PoolClient, QueryConfig, QueryResultRow } from 'pg';
 import { HttpError } from '../../platform/errors/http-error.js';
@@ -9,6 +10,8 @@ export interface AnalysisRow extends QueryResultRow {
   user_id: string;
   request_hash: string;
   job_title: string | null;
+  job_text: unknown;
+  evidence: unknown;
   required_skill_ids: string[];
   matched_skill_ids: string[];
   missing_skill_ids: string[];
@@ -21,23 +24,27 @@ export interface AnalysisRow extends QueryResultRow {
   created_at: Date;
 }
 export function analysisDto(row: AnalysisRow, currentRevision: number) {
-  return {
-    id: row.id,
-    source: { type: 'text' as const, title: row.job_title },
-    candidateSkillsRevision: row.candidate_skills_revision,
-    requiredSkillIds: row.required_skill_ids,
-    matchedSkillIds: row.matched_skill_ids,
-    missingSkillIds: row.missing_skill_ids,
-    compatibilityPercentage: row.compatibility_percentage,
-    versions: {
-      catalog: row.catalog_version,
-      extractor: row.extractor_version,
-      scoring: row.scoring_version,
+  return withStoredEvidence(
+    {
+      id: row.id,
+      source: { type: 'text' as const, title: row.job_title },
+      candidateSkillsRevision: row.candidate_skills_revision,
+      requiredSkillIds: row.required_skill_ids,
+      matchedSkillIds: row.matched_skill_ids,
+      missingSkillIds: row.missing_skill_ids,
+      compatibilityPercentage: row.compatibility_percentage,
+      versions: {
+        catalog: row.catalog_version,
+        extractor: row.extractor_version,
+        scoring: row.scoring_version,
+      },
+      warnings: row.warnings,
+      skillsOutdated: currentRevision !== row.candidate_skills_revision,
+      createdAt: row.created_at.toISOString(),
     },
-    warnings: row.warnings,
-    skillsOutdated: currentRevision !== row.candidate_skills_revision,
-    createdAt: row.created_at.toISOString(),
-  };
+    row.evidence,
+    row.job_text,
+  );
 }
 function conflict(): HttpError {
   return new HttpError({

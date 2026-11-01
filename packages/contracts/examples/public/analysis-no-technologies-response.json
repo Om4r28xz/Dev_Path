@@ -1,0 +1,21 @@
+{
+  "id": "5e9220ea-e5b7-42bb-8a88-adf08763837f",
+  "source": {
+    "type": "text",
+    "title": "Frontend junior"
+  },
+  "candidateSkillsRevision": 3,
+  "requiredSkillIds": [],
+  "matchedSkillIds": [],
+  "missingSkillIds": [],
+  "compatibilityPercentage": null,
+  "versions": {
+    "catalog": "1.0.0",
+    "extractor": "1.0.0",
+    "scoring": "1.0.0"
+  },
+  "warnings": ["NO_TECHNOLOGIES_DETECTED"],
+  "skillsOutdated": false,
+  "createdAt": "2026-10-31T13:00:00Z",
+  "evidence": []
+}

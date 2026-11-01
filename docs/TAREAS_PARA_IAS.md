@@ -619,3 +619,9 @@ Una tarea pasa a Ready cuando tiene contrato suficiente y dependencias integrada
 Registrar por issue: ID, entrega, responsable, revisor, rama, dependencias, criterio, enlaces a PR/evidencia y estado. Avance se mide por criterios aceptados y recorridos funcionales, no por cantidad de commits o líneas.
 
 Este documento define 50 tareas: las 49 originales y STR-01 para estructura, incluida la evaluación opcional de despliegue. Se distribuyen en el lote 00 dedicado y diez lotes de hasta cinco tareas. GOV-01 prepara decisiones antes del bootstrap; los fixes descubiertos se convierten en issues adicionales del hito afectado, no se esconden dentro de tareas no relacionadas.
+
+## Aclaración aprobada de evidence para M1
+
+Extensión contractual/API independiente (ADR0004), sin cerrar tareas retrospectivamente. CTR-01 mantiene OpenAPI1.1.0/tipos/ejemplos/validador coherentes y conserva DTO sin campo válido. ANL-01 devuelve menciones guardadas validadas en201/replay200 sin cambiar key/hash. ANL-03 reutiliza proyección en detalle, mantiene lista sin campo y404 propio/ajeno. ANL-02 deberá consumir opcional, validar JSON y renderizar texto inerte/fallback tras merge; su preparación local no se modifica aquí. ANL-04 enlazará al detalle sin cargar evidencia en resúmenes. Aceptación nueva: conservar score/versions/snapshot y operar con evidencia ausente/inválida sin recalcular; sin fuente completa en respuesta.
+
+QAA-01/QA-02 deberán cubrir evidencia presente/ausente/histórica, exceso/XSS/cuentas/recarga; DOC-02 describirá lo realmente integrado. Esos trabajos de lote06 siguen pendientes, sin pruebas/resultados humanos ficticios. JSR-01/03/04 futuros revisarán permisos de menciones derivadas antes de habilitarlas; LRN usa gaps/snapshots y no depende de textos evidence. CV/proyectos permanecen independientes; no se amplía su funcionalidad.
