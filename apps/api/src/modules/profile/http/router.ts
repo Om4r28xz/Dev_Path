@@ -100,7 +100,8 @@ function readCursor(raw: string | undefined, query: string | undefined): string 
 export function profileRouter(pool: Pool, authenticate: RequestHandler): Router {
   const router = Router();
   const repository = new ProfileRepository(pool);
-  router.use(authenticate);
+  router.use('/me', authenticate);
+  router.use('/skills', authenticate);
 
   router.get('/me', async (_request, response) => {
     try {

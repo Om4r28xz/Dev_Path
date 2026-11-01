@@ -11,6 +11,7 @@ import { beforeAll, afterAll, describe, expect, it } from 'vitest';
 import { createApp } from '../../src/app.js';
 import { loadConfig } from '../../src/platform/config/env.js';
 import { authRouter } from '../../src/modules/auth/http/router.js';
+import { profileRouter } from '../../src/modules/profile/http/router.js';
 import { createAuthService } from '../../src/modules/auth/services/auth-service.js';
 import {
   accessTokenMiddleware,
@@ -70,6 +71,7 @@ describe.skipIf(!url)('AUTH-01 real PostgreSQL and HTTP', () => {
       config,
       configureRoutes: (app) => {
         app.use('/api/v1/auth', authRouter(service, config.http.allowedOrigins, true));
+        app.use('/api/v1', profileRouter(pool, accessTokenMiddleware(service)));
         app.get('/api/v1/test-protected', accessTokenMiddleware(service), (_req, res) =>
           res.json({ userId: authenticatedUserId(res) }),
         );
@@ -77,6 +79,33 @@ describe.skipIf(!url)('AUTH-01 real PostgreSQL and HTTP', () => {
     }).listen(0, '127.0.0.1');
     await once(server, 'listening');
     base = `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
+  });
+  it('serves profile routes only with a verified access bearer', async () => {
+    const registered = await post('register', {
+      name: 'Perfil real',
+      email: email(),
+      password,
+    });
+    expect(registered.status).toBe(201);
+    const body = await registered.json();
+    const profileUrl = base + '/api/v1/me';
+    const withBearer = await fetch(profileUrl, {
+      headers: { Authorization: `Bearer ${body.accessToken}` },
+    });
+    expect(withBearer.status).toBe(200);
+    expect(await withBearer.json()).toMatchObject({ id: body.user.id, name: 'Perfil real' });
+    expect((await fetch(profileUrl)).status).toBe(401);
+    expect((await fetch(profileUrl, { headers: { Cookie: cookieOf(registered) } })).status).toBe(
+      401,
+    );
+    const skillsUrl = base + '/api/v1/skills';
+    expect((await fetch(skillsUrl)).status).toBe(401);
+    const catalog = await fetch(skillsUrl, {
+      headers: { Authorization: `Bearer ${body.accessToken}` },
+    });
+    expect(catalog.status).toBe(200);
+    expect((await catalog.json()).items.length).toBeGreaterThan(0);
+    expect((await fetch(base + '/api/v1/no-such-resource')).status).toBe(404);
   });
   afterAll(async () => {
     if (server)
