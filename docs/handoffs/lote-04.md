@@ -1,21 +1,23 @@
 # Handoff lote 04
 
-Base revisada tras `git fetch origin`: `origin/develop` en `598ff90` (merge PR #9). AUTH-01 (`ca021d6`), DAT-01, CAT-01 y WEB-01 están integradas. ENG-02 permanece en la rama local `feature/eng-02-skill-matching`, commit `4848ce0`, sin merge.
+Base revisada tras `git fetch origin`: `origin/develop` en `598ff90` (merge PR #9). AUTH-01, DAT-01, CAT-01 y WEB-01 están integradas. ENG-02 y AUTH-02 se implementaron en ramas propias locales; no están integradas.
 
-| Tarea   | Estado                 | Siguiente acción                                                      |
-| ------- | ---------------------- | --------------------------------------------------------------------- |
-| AUTH-02 | Implementada sin merge | Revisar este commit con P2; PR propio a develop e integración humana. |
-| PRO-01  | Pendiente              | Lista para rama propia desde develop actualizado.                     |
-| ENG-02  | Implementada sin merge | Revisar `4848ce0` con P1; PR propio a develop.                        |
-| AUTH-03 | Bloqueada              | Requiere AUTH-02 integrado y WEB-01, ya integrado.                    |
-| AUTH-04 | Bloqueada              | Requiere AUTH-03 integrado.                                           |
+| Tarea   | Estado                              | Siguiente acción                                                                                                  |
+| ------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| AUTH-02 | Implementada sin merge              | Rama `feature/auth-02-refresh-logout`, commit `8e63e36`; revisión P2 y PR a develop.                              |
+| PRO-01  | Implementada parcialmente sin merge | Código, migración y pruebas en esta rama; conectar al middleware definitivo y montar rutas tras integrar AUTH-02. |
+| ENG-02  | Implementada sin merge              | Rama `feature/eng-02-skill-matching`, commit `4848ce0`; revisión P1 y PR a develop.                               |
+| AUTH-03 | Bloqueada                           | Requiere AUTH-02 integrado; WEB-01 ya está integrado.                                                             |
+| AUTH-04 | Bloqueada                           | Requiere AUTH-03 integrado.                                                                                       |
 
-## AUTH-02
+## PRO-01
 
-Rama `feature/auth-02-refresh-logout`, worktree `.worktrees/auth-02`. Contrato consumido: `packages/contracts/openapi/public.yaml` 1.0.0; sin cambios de contrato ni migración. Archivos: repositorio y servicio auth, router, middleware de bearer, pruebas de integración y este handoff.
+Rama `feature/pro-01-profile-skills-api`, worktree `.worktrees/pro-01`. Contrato consumido: `packages/contracts/openapi/public.yaml` 1.0.0 y catálogo 1.0.0. La migración Drizzle añade `app.profiles.skills_revision` con valor inicial 0; no cambia DTO ni catálogo.
 
-El refresh opaco rota bajo bloqueo transaccional de la familia; el token usado se marca en DB, la reutilización revoca la familia, y la nueva cookie conserva la expiración absoluta original. Logout revoca la familia y borra la cookie con 204. Los errores de DB dan 503, sin confirmar una revocación. El middleware verifica firma RS256, typ, issuer, audience, expiración, subject UUID, jti y role candidate. Las rutas de negocio solo aceptarán ese bearer; la cookie no autentica en ellas. Los endpoints auth preservan origen exacto, encabezado de cliente, JSON y limitación local de solicitudes.
+Archivos: `packages/db/src/schema/index.ts`, migración 0001 y metadatos, `apps/api/src/modules/profile/repository.ts`, `http/router.ts`, prueba de integración y este handoff.
 
-Validación: PostgreSQL 18 aislado en `127.0.0.1:55452`, cluster y DB locales ignorados por Git. Migración OK; 28 pruebas API pasan con DB real, incluyendo rotación, carrera de refresh, reutilización, logout concurrente, origen malicioso, JWT inválidos y DB ausente. Typecheck, build y lint OK. La revisión final del diff y formato se registran al cerrar el commit. P2 revisa la implementación antes del merge.
+Comportamiento implementado en router inyectable: GET/PATCH /me; GET /skills con búsqueda literal, límite 1–50 y cursor estable; GET/PUT /me/skills con IDs únicos, máximo 100, validación contra catálogo, reemplazo y revisión atómicos. Las consultas usan el ID autenticado suministrado por el middleware; no admiten userId del cuerpo. El router no está montado en `server.ts` hasta integrar el middleware AUTH-02: exponerlo sin verificación real del bearer sería inseguro. El test inyecta una identidad sintética para verificar el dominio, no sustituye la prueba de JWT final.
 
-PR propuesto: **feat(auth): rotate refresh sessions and verify access tokens (AUTH-02)**. Destino `develop`. Cuerpo: implementa refresh/logout con familia transaccional y cookie HttpOnly, revocación por reutilización, middleware de JWT RS256 y pruebas de DB real/errores; conserva OpenAPI 1.0.0. Solicitar revisión P2; no hacer merge desde la IA.
+Validación: PostgreSQL 18 aislado en DB `devpath_pro01` del puerto `127.0.0.1:55452`, separado de AUTH-02. Migración y seed de 10 skills OK. API 28/28 pruebas con dos cuentas, búsqueda/paginación, entradas inválidas, sustitución vacía, carrera de revisión y rollback ante fallo de inserción. Typecheck de API y DB, build API, lint, Prettier y `git diff --check` pasan. Falta verificar el flujo con JWT real tras la integración de AUTH-02.
+
+PR propuesto: **feat(profile): add profile and skills API (PRO-01)**. Destino `develop`. Cuerpo: añade revisión de habilidades, rutas y repositorio de perfil/catálogo/habilidades, validación y pruebas sobre PostgreSQL real. Antes de integrar, conectar `profileRouter` al middleware `accessTokenMiddleware` de AUTH-02 y revalidar el flujo con bearer firmado. Revisión P2.

@@ -1,0 +1,1 @@
+ALTER TABLE "app"."profiles" ADD COLUMN "skills_revision" integer DEFAULT 0 NOT NULL;
