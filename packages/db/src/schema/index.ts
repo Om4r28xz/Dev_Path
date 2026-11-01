@@ -111,6 +111,7 @@ export const profiles = appSchema.table(
     fullName: text('full_name').notNull(),
     headline: text('headline'),
     location: text('location'),
+    skillsRevision: integer('skills_revision').notNull().default(0),
     updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' })
       .notNull()
       .default(sql`now()`),
