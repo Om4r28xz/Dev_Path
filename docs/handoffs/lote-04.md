@@ -1,14 +1,22 @@
 # Handoff lote 04
 
-Base revisada tras `git fetch origin`: `origin/develop` en `d32165e`. AUTH-01, DAT-01, CAT-01, WEB-01, AUTH-02, PRO-01 y ENG-02 están integradas. Los commits `8e63e36`, `82b1bf3` y `4848ce0` son ancestros de `origin/develop`.
+Base revisada tras `git fetch origin`: `origin/develop` en `c17a6a4`. AUTH-01, DAT-01, CAT-01, WEB-01, AUTH-02, PRO-01, ENG-02 y AUTH-03 están integradas. AUTH-04 parte de este merge, no de otra rama feature.
 
 | Tarea   | Estado                       | Evidencia / siguiente acción |
 | ------- | ---------------------------- | ---------------------------- |
 | AUTH-02 | Integrada                    | PR #13, merge `7f85f76`; la rama remota fue eliminada. |
 | PRO-01  | Integrada, conexión pendiente | PR #12, merge `d32165e`; `profileRouter` sigue sin montarse en `server.ts`. Conectarlo a `accessTokenMiddleware` antes de release. |
 | ENG-02  | Integrada                    | PR #10, merge `3fbaa16`. |
-| AUTH-03 | Implementada sin merge       | Rama `feature/auth-03-browser-session` desde `d32165e`; revisión P1/P2, PR a `develop` y prueba manual de dos pestañas con API real. |
-| AUTH-04 | Bloqueada                    | Esperar merge humano de AUTH-03; crear `feature/auth-04-auth-screens` desde `develop` actualizado. |
+| AUTH-03 | Integrada                    | PR #14, merge `c17a6a4`; prueba manual de dos pestañas con API real aún pendiente. |
+| AUTH-04 | Implementada sin merge       | Rama `feature/auth-04-auth-screens` desde `c17a6a4`; revisar con P5 y crear PR a `develop`. |
+
+## AUTH-04
+
+Contrato consumido: `packages/contracts/openapi/public.yaml` 1.0.0, `POST /auth/register` y `POST /auth/login` con respuesta `SessionResponse`. Los formularios respetan límites de nombre, email y contraseña; usan la API real mediante `authRequest` y entregan el access token al provider de AUTH-03, sin web storage. El guard espera bootstrap antes de mostrar rutas privadas, y el retorno tras login/registro admite únicamente rutas internas seguras. El botón de salida invoca logout real; los envíos usan bloqueo inmediato y estados pendientes para evitar doble operación. Errores de credenciales, conflicto, 429 y 503 muestran mensajes controlados, y los errores de campo y de servidor tienen foco accesible.
+
+Archivos: `apps/web/src/features/auth/pages/{LoginPage,RegisterPage}.tsx`, `RouteGuards.tsx`, `form-utils.ts` y su prueba; `apps/web/src/app/router.tsx`, `apps/web/src/components/layout/AppLayout.tsx`, `apps/web/src/styles/index.css` y este handoff.
+
+Validación: build web, lint, Prettier y 22 pruebas unitarias, incluidas validación, retorno interno y mensajes, además de las pruebas previas de sesión. Queda pendiente el recorrido manual de registro/login/logout con API y PostgreSQL reales, teclado y foco, y revisión P5. PR propuesto: **feat(auth): connect access screens and private routes (AUTH-04)**, destino `develop`. Cuerpo: conecta formularios a la API, espera bootstrap en rutas privadas, valida retornos internos y ofrece logout. No marca aceptación manual ni release como completados.
 
 ## AUTH-03
 
@@ -18,7 +26,7 @@ Archivos: `apps/web/src/lib/http/{client,transport}.ts`, `apps/web/src/lib/sessi
 
 Soporte: con Web Locks y BroadcastChannel disponibles, las pestañas serializan refresh/logout y comparten el access token únicamente por memoria del mismo origen. Sin Web Locks hay single-flight por pestaña y difusión por BroadcastChannel, pero no se puede garantizar exclusión mutua entre pestañas; se requiere recargar o iniciar sesión si una carrera invalida la familia. Sin BroadcastChannel se mantiene la coordinación del lock, pero cada pestaña obtiene su token al hacer bootstrap. No se usa localStorage ni sessionStorage para credenciales.
 
-Validación: build de web, lint y 11 pruebas unitarias enfocadas en dos pestañas, single-flight, 401 frente a 403/429/503, refresh/logout concurrentes, cambio de cuenta y fallo ambiguo. Pendiente prueba manual de navegador con API/PostgreSQL reales, expiración controlada y logout durante solicitudes; las pantallas de AUTH-04 aún son avance visual. PR propuesto: **feat(auth): coordinate browser sessions across tabs (AUTH-03)**, destino `develop`. Cuerpo: añade bootstrap, token en memoria, refresh serializado, un reintento protegido y limpieza de caché por identidad. Revisión P1/P2 sobre el flujo real de cookies y pestañas.
+Validación: build de web, lint y 11 pruebas unitarias enfocadas en dos pestañas, single-flight, 401 frente a 403/429/503, refresh/logout concurrentes, cambio de cuenta y fallo ambiguo. Pendiente prueba manual de navegador con API/PostgreSQL reales, expiración controlada y logout durante solicitudes. PR integrado: **feat(auth): coordinate browser sessions across tabs (AUTH-03)**, #14 hacia `develop`. Revisión P1/P2 del flujo real de cookies y pestañas sigue pendiente.
 
 ## PRO-01
 
