@@ -22,7 +22,7 @@ services:
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
     command: [pnpm, --filter, '@devpath/db', migrate]
     depends_on:
-      db: {condition: service_healthy}
+      db: { condition: service_healthy }
     networks: [internal]
     profiles: [tools]
   seed:
@@ -41,7 +41,13 @@ services:
       ENGINE_SERVICE_SECRET: ${ENGINE_SERVICE_SECRET:?Run setup-local}
     networks: [internal]
     healthcheck:
-      test: [CMD, node, -e, "fetch('http://127.0.0.1:3001/health/live').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      test:
+        [
+          CMD,
+          node,
+          -e,
+          "fetch('http://127.0.0.1:3001/health/live').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
       interval: 10s
       retries: 10
   api:
@@ -62,10 +68,16 @@ services:
       - ../.local-data/keys:/run/keys:ro
     networks: [internal]
     depends_on:
-      db: {condition: service_healthy}
-      engine: {condition: service_healthy}
+      db: { condition: service_healthy }
+      engine: { condition: service_healthy }
     healthcheck:
-      test: [CMD, node, -e, "fetch('http://127.0.0.1:3000/health/ready').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      test:
+        [
+          CMD,
+          node,
+          -e,
+          "fetch('http://127.0.0.1:3000/health/ready').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
       interval: 10s
       retries: 10
   web:
@@ -75,9 +87,9 @@ services:
     ports: ['127.0.0.1:8080:8080']
     networks: [internal, edge]
     depends_on:
-      api: {condition: service_healthy}
+      api: { condition: service_healthy }
 networks:
-  internal: {internal: true}
+  internal: { internal: true }
   edge: {}
 volumes:
   database: {}
