@@ -1,11 +1,66 @@
+import { readFileSync } from 'node:fs';
+
 import { describe, expect, it } from 'vitest';
 
 import { loadCatalog } from '../../src/modules/analysis/catalog.js';
 import { extractSkills } from '../../src/modules/analysis/extractor.js';
 
 const catalog = loadCatalog();
+const corpus = JSON.parse(
+  readFileSync(
+    new URL('../../../../packages/catalog/fixtures/extraction-corpus.json', import.meta.url),
+    'utf8',
+  ),
+) as { cases: Array<{ id: string; jobText: string; requiredSkillIds: string[] }> };
 
 describe('extractSkills', () => {
+  it.each(corpus.cases)('matches the labeled corpus: $id', ({ jobText, requiredSkillIds }) => {
+    const result = extractSkills(jobText, catalog);
+    expect(result.map((item) => item.skillId)).toEqual(requiredSkillIds);
+    for (const item of result) {
+      expect(item.matches.length).toBeGreaterThan(0);
+      expect(item.matches.length).toBeLessThanOrEqual(20);
+      for (const match of item.matches) {
+        expect(jobText.slice(match.start, match.end)).toBe(match.text);
+        expect(match.text.length).toBeLessThanOrEqual(100);
+      }
+    }
+    expect(extractSkills(jobText, catalog)).toEqual(result);
+  });
+
+  it('does not match inside Unicode words or confuse significant signs', () => {
+    expect(
+      extractSkills('préJava Javañ 𐐀Java C C++ C#', catalog).map((item) => item.skillId),
+    ).toEqual(['cplusplus', 'csharp']);
+  });
+
+  it('normalizes Unicode variants while preserving original evidence offsets', () => {
+    const text = 'Vacante: ＪＳ, Ｃ＋＋ y Ｃ＃.';
+    const result = extractSkills(text, catalog);
+    expect(result.map((item) => item.skillId)).toEqual(['cplusplus', 'csharp', 'javascript']);
+    for (const item of result) {
+      for (const match of item.matches) {
+        expect(text.slice(match.start, match.end)).toBe(match.text);
+      }
+    }
+  });
+
+  it('limits a suffix negation to the skill it qualifies', () => {
+    expect(
+      extractSkills('SQL and Git is not required.', catalog).map((item) => item.skillId),
+    ).toEqual(['sql']);
+  });
+
+  it('caps evidence for a maximum-length input', () => {
+    const text = 'Java '.repeat(4_000).slice(0, 20_000);
+    const start = performance.now();
+    const result = extractSkills(text, catalog);
+    const elapsedMs = performance.now() - start;
+    expect(result).toHaveLength(1);
+    expect(result[0]!.matches).toHaveLength(20);
+    expect(elapsedMs).toBeLessThan(5_000);
+  });
+
   it('finds React by alias "React.js"', () => {
     const results = extractSkills('We use React.js for the frontend.', catalog);
     const react = results.find((r) => r.skillId === 'react');

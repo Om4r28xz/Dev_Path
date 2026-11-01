@@ -151,6 +151,36 @@ describe('POST /internal/v1/analyze', () => {
     expect(payload.versions.catalog).toBe('1.0.0');
     expect(payload.evidence.length).toBeGreaterThan(0);
   });
+
+  it('returns a deterministic 67 percent response through the internal API', async () => {
+    const { baseUrl } = await start(makeApp());
+    const response = await fetch(`${baseUrl}/internal/v1/analyze`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${SERVICE_SECRET}`,
+      },
+      body: JSON.stringify({
+        catalogVersion: catalog.version,
+        jobText: 'JavaScript, React and Git. No experience with Docker is required.',
+        candidateSkillIds: ['javascript', 'react'],
+      }),
+    });
+    const payload = (await response.json()) as {
+      requiredSkillIds: string[];
+      matchedSkillIds: string[];
+      missingSkillIds: string[];
+      matchPercentage: number | null;
+      versions: { catalog: string; extractor: string; scoring: string };
+    };
+
+    expect(response.status).toBe(200);
+    expect(payload.requiredSkillIds).toEqual(['git', 'javascript', 'react']);
+    expect(payload.matchedSkillIds).toEqual(['javascript', 'react']);
+    expect(payload.missingSkillIds).toEqual(['git']);
+    expect(payload.matchPercentage).toBe(67);
+    expect(payload.versions).toEqual({ catalog: '1.0.0', extractor: '1.1.0', scoring: '1.1.0' });
+  });
 });
 
 describe('GET /health/live', () => {
