@@ -1,0 +1,124 @@
+{
+  "sourceCommit": "b84255efc996f67af26d6478528eba42afe6bce6",
+  "scope": "Computed default text styles on login/register; not full WCAG or human acceptance",
+  "outline": {
+    "width": "2px",
+    "style": "solid"
+  },
+  "measurements": [
+    {
+      "path": "/login",
+      "entries": [
+        {
+          "tag": "H1",
+          "text": "Iniciar sesión",
+          "foreground": "rgb(0, 0, 0)",
+          "background": [255, 255, 255],
+          "ratio": 21,
+          "required": 3
+        },
+        {
+          "tag": "LABEL",
+          "text": "Correo electrónico *",
+          "foreground": "rgb(59, 31, 43)",
+          "background": [255, 255, 255],
+          "ratio": 14.82172051774733,
+          "required": 4.5
+        },
+        {
+          "tag": "LABEL",
+          "text": "Contraseña *",
+          "foreground": "rgb(59, 31, 43)",
+          "background": [255, 255, 255],
+          "ratio": 14.82172051774733,
+          "required": 4.5
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Entrar",
+          "foreground": "rgb(255, 255, 255)",
+          "background": [154, 71, 104],
+          "ratio": 6.042825556921493,
+          "required": 4.5
+        },
+        {
+          "tag": "P",
+          "text": "¿No tienes cuenta? Regístrate",
+          "foreground": "rgb(0, 0, 0)",
+          "background": [255, 255, 255],
+          "ratio": 21,
+          "required": 4.5
+        },
+        {
+          "tag": "A",
+          "text": "Regístrate",
+          "foreground": "rgb(0, 0, 238)",
+          "background": [255, 255, 255],
+          "ratio": 9.397615840239814,
+          "required": 4.5
+        }
+      ]
+    },
+    {
+      "path": "/register",
+      "entries": [
+        {
+          "tag": "H1",
+          "text": "Crear cuenta",
+          "foreground": "rgb(0, 0, 0)",
+          "background": [255, 255, 255],
+          "ratio": 21,
+          "required": 3
+        },
+        {
+          "tag": "LABEL",
+          "text": "Nombre completo *",
+          "foreground": "rgb(59, 31, 43)",
+          "background": [255, 255, 255],
+          "ratio": 14.82172051774733,
+          "required": 4.5
+        },
+        {
+          "tag": "LABEL",
+          "text": "Correo electrónico *",
+          "foreground": "rgb(59, 31, 43)",
+          "background": [255, 255, 255],
+          "ratio": 14.82172051774733,
+          "required": 4.5
+        },
+        {
+          "tag": "LABEL",
+          "text": "Contraseña *",
+          "foreground": "rgb(59, 31, 43)",
+          "background": [255, 255, 255],
+          "ratio": 14.82172051774733,
+          "required": 4.5
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Registrarse",
+          "foreground": "rgb(255, 255, 255)",
+          "background": [154, 71, 104],
+          "ratio": 6.042825556921493,
+          "required": 4.5
+        },
+        {
+          "tag": "P",
+          "text": "¿Ya tienes cuenta? Inicia sesión",
+          "foreground": "rgb(0, 0, 0)",
+          "background": [255, 255, 255],
+          "ratio": 21,
+          "required": 4.5
+        },
+        {
+          "tag": "A",
+          "text": "Inicia sesión",
+          "foreground": "rgb(0, 0, 238)",
+          "background": [255, 255, 255],
+          "ratio": 9.397615840239814,
+          "required": 4.5
+        }
+      ]
+    }
+  ]
+}
