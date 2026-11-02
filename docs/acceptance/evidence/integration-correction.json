@@ -29,7 +29,9 @@
     "openapiExamples": 19,
     "migrationUpgrade": "0000-0002 -> 0003, existing synthetic user/profile/skills/67% snapshot unchanged, cursor index, idempotent rerun",
     "e2eRemainingUsers": 0,
-    "e2eRemainingAnalyses": 0
+    "e2eRemainingAnalyses": 0,
+    "composeConfigStatic": "Compose standalone5.6.1 config --quiet exit0 with infra/.env.example",
+    "composeRuntime": "not executed; Docker Engine absent; WSL status50 not installed"
   },
   "ci": {
     "qa": "https://github.com/Om4r28xz/Dev_Path/actions/runs/41519866064",

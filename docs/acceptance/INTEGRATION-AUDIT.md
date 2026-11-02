@@ -46,11 +46,11 @@ Nuevo registro y SHA256: [integration-correction.json](evidence/integration-corr
 
 ## Los tres casos completos pendientes
 
-| Caso    | Técnico comprobado                                                                                                     | Pendiente y responsable                                                                                                                                              |
-| ------- | ---------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| UI-01   | Labels, Tab/Shift+Tab, outline2px, foco de modal,13 muestras de contraste login/register mínimo6.0428:1.               | P5: lector de pantalla, zoom200%/reflujo y viewport real, contraste/estados completos, navegación y comprensión. Objetivo AA no certificado.                         |
-| EVID-06 | HTML inerte, fragmentos seguros, legacy y consulta histórica sin engine por suites existentes; regresión E2E aprobada. | P5: anuncios con lector, comprensión de evidencia/ausencia y mensajes. P1/P2 reproducen una muestra de seguridad; no es firma humana automática.                     |
-| OPS-01  | Servicios/PG nativos reales, migración desde vacío y ensayo de actualización con datos.                                | P2/P1: stack Compose/proxy8080, cookies, puertos/fronteras, restart con volumen conservado. Docker ausente; wsl.exe no implica WSL instalado. No se ejecutó Compose. |
+| Caso    | Técnico comprobado                                                                                                     | Pendiente y responsable                                                                                                                                                                                                                          |
+| ------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| UI-01   | Labels, Tab/Shift+Tab, outline2px, foco de modal,13 muestras de contraste login/register mínimo6.0428:1.               | P5: lector de pantalla, zoom200%/reflujo y viewport real, contraste/estados completos, navegación y comprensión. Objetivo AA no certificado.                                                                                                     |
+| EVID-06 | HTML inerte, fragmentos seguros, legacy y consulta histórica sin engine por suites existentes; regresión E2E aprobada. | P5: anuncios con lector, comprensión de evidencia/ausencia y mensajes. P1/P2 reproducen una muestra de seguridad; no es firma humana automática.                                                                                                 |
+| OPS-01  | Servicios/PG nativos reales, migración desde vacío y ensayo de actualización con datos.                                | P2/P1: stack Compose/proxy8080, cookies, puertos/fronteras, restart con volumen conservado. Docker ausente; wsl.exe no implica WSL instalado. Configuración estática aprobada con CLI standalone5.6.1; stack no ejecutado (falta Docker Engine). |
 
 ## Instrucciones concretas por persona
 
@@ -61,3 +61,7 @@ Nuevo registro y SHA256: [integration-correction.json](evidence/integration-corr
 5. **Omar/P1/P2:** con QA-02 en develop, evidencia humana y OPS-01 atendidos, decidir si se habilita REL-01. Antes solo hay borradores externos; no se crea release/0.1.0 ni tag. CTR-02 sigue bloqueada.
 
 La preparación correctiva está implementada localmente; publicación/PR y hash final se registran en el reporte de entrega. No se hace merge a main/develop ni se modifica la identidad Git configurada.
+
+### Comprobación estática adicional de Compose
+
+CLI standalone Docker Compose5.6.1 disponible en las herramientas locales: `--env-file infra/.env.example -f infra/compose.yaml config --quiet` terminó0, sin leer .env real ni arrancar servicios. Esto comprueba la estructura/resolución del Compose, no OPS-01, conectividad, mounts, cookies o persistencia. Docker Engine sigue ausente y wsl --status salió50 indicando subsistema no instalado. El stack y la aceptación OPS-01 siguen pendientes de P1/P2.
