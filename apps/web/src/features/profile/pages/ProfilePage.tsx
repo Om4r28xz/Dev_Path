@@ -228,8 +228,9 @@ function ProfileEditor({ userId }: { userId: string }) {
         <ul aria-label="Tecnologías del catálogo">
           {entries.map((skill) => (
             <li key={skill.id}>
-              <label>
+              <label className="profile-skill-option">
                 <input
+                  className="profile-skill-option__checkbox"
                   type="checkbox"
                   checked={selected.includes(skill.id)}
                   disabled={
