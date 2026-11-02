@@ -54,3 +54,14 @@ La rama docs/lote-06-readiness contiene solo esta actualización y dos documento
 6. CTR-02 permanece bloqueada hasta comprobar todos esos pasos. No afecta el análisis manual disponer o no de futuros permisos JSearch.
 
 Límites actuales: Node 22.23.4/pnpm 11.22.0; PG 18.3 local aislado. PG 16 solo en CI consultada de la base; Docker/Compose y aceptación humana no probados por esta entrega. Sin push, merge, tags ni identidad ajena. No se borra ningún trabajo anterior.
+
+
+## DOC-02 implementada localmente — 2026-11-02
+
+Rama docs/doc-02-mvp-architecture, worktree .worktrees/doc-02, desde c564a57 de origin/develop. ANL-04 ya integrada por PR25; AUTH-02/ENG-02 y ANL-01/02/03/evidence también están integradas. Se conserva el registro histórico anterior: sus bloqueos ANL-04 no describen la base actual. DOC-02 no incluye cambios de QAA-01, contrato ni código de producto.
+
+ARCHITECTURE.md documenta componentes reales, auth/tokens/cookies/rotación/logout, SQL/snapshots/idempotencia, engine/alias/scoring, evidence/legacy, historial/cursor/delete, seguridad/fallos, variables/puertos/Compose y mapa pantalla-endpoint. Tres diagramas Mermaid explican componentes, sesión y análisis. README enlaza el documento. M2/M3/M4 y las tres operaciones E3/JSearch se distinguen como futuras: el proceso evaluado será API Express; fixtures no prueban llamadas live; E3 no bloquea release M1.
+
+Validación: correspondencia manual con routers, esquemas Zod/OpenAPI, repositorios/servicios/config, extractor/scorer, migraciones0000–0003, proxy/Compose y ADR0001–0004; enlaces Markdown locales existentes; tres diagramas parseados y renderizados en Chromium con Mermaid11.12.1 externo a dependencias del producto; formato de documentos nuevos/README y diff sin errores de whitespace. No se ejecutaron tests de código en esta rama documental ni Docker/CI remoto: no son resultados inferidos de otra rama.
+
+Estado: implementada localmente, pendiente de publicación/revisión/integración según reporte de entrega. P1/P2 revisan conexiones/seguridad/configuración; P4 fidelidad de DTOs y límites; Omar integra el PR independiente. QAA-01 se entrega en otra rama: no se presupone su merge. QA-02 depende de ese merge; REL-01 también exige QA-02/DOC-02/DOC-01 integradas, aceptación humana y reproducción; CTR-02 espera release/tag/sincronización. Sin release ni tags creados. Si ambos PR modifican el final del handoff, conservar ambas secciones y actualizar solo estado operativo tras cada merge.
