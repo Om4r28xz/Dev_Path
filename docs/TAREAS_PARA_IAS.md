@@ -425,7 +425,7 @@ La disponibilidad exacta la determina el DAG de cada tarea; la tabla no autoriza
 - **Rama:** `docs/jsr-01-provider-contract-review`.
 - **Archivos:** `docs/provider/JSEARCH.md`, matriz de permisos y ejemplos sintéticos.
 - **Encargo:** consultar documentación oficial vigente para endpoints, parámetros, headers, paginación, cuotas, costo cero disponible, atribución, caché y retención de texto/resultados derivados. Registrar fecha y enlaces.
-- **Aceptación:** cada permiso es confirmado/no permitido/pendiente con evidencia; una cuota no se inventa ni se extrapola de otra cuenta; sin secretos. Registrar evidencia de que vacantes es el módulo aprobado en Actividad 3, o marcarla pendiente sin atribuir una aprobación inexistente.
+- **Aceptación:** cada permiso es confirmado/no permitido/pendiente con evidencia; una cuota no se inventa ni se extrapola de otra cuenta; sin secretos.
 - **Validación:** P1 determina qué puede implementarse; si falta acceso sin costo se documenta la limitación y M3 live queda pendiente, conservando demo con fixtures identificados.
 
 ### JSR-02 — Adaptador de búsqueda y detalle
@@ -464,7 +464,7 @@ La disponibilidad exacta la determina el DAG de cada tarea; la tabla no autoriza
 - **Dependencias:** JSR-04.
 - **Rama:** `docs/qa-04-jsearch-results`.
 - **Archivos:** resultados M3, separación de pruebas fixture/live.
-- **Encargo:** demostrar consulta, selección y análisis; verificar fallos y que el flujo manual permanece operativo. Validar que la UI no confunde fixtures con datos reales. Revisar la matriz E3: módulo aprobado en Actividad 3, tres endpoints, JWT, consumo desde web, llamada externa real, README, pruebas o colección con respuestas y enlace de repositorio.
+- **Encargo:** demostrar consulta, selección y análisis; verificar fallos y que el flujo manual permanece operativo. Validar que la UI no confunde fixtures con datos reales. Revisar la matriz E3: tres endpoints, JWT, consumo desde web, llamada externa real, README, pruebas o colección con respuestas y enlace de repositorio.
 - **Aceptación:** se indica qué fue probado con proveedor real; no se cierra integración live si solo hubo mocks. Limitaciones de acceso registradas. Cada criterio E3 tiene evidencia concreta o queda pendiente, sin marcar cumplimiento por una fixture.
 - **Validación:** matriz con evidencia, revisión de P1/P4 de permisos, README y colección `.http`; prueba live autorizada y acotada si existe acceso.
 
