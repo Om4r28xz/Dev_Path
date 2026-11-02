@@ -1,0 +1,40 @@
+$ pnpm -r --if-present test && pnpm test:e2e:support
+Scope: 7 of 8 workspace projects
+apps/api test$ vitest run --passWithNoTests
+apps/skill-engine test$ vitest run --passWithNoTests
+apps/web test$ vitest run --passWithNoTests
+packages/catalog test$ node scripts/validate-catalog.mjs && node scripts/validate-corpus.mjs
+packages/catalog test: Validated catalog 1.0.0: 10 technologies and 18 unambiguous aliases.
+packages/catalog test: Validated 30 synthetic ES/EN cases; catalog 1.0.0.
+packages/catalog test: Done
+packages/contracts test$ node scripts/validate-contracts.mjs
+apps/api test:  RUN  v5.0.5 <repository>/apps/api
+apps/skill-engine test:  RUN  v5.0.5 <repository>/apps/skill-engine
+apps/web test:  RUN  v5.0.5 <repository>/apps/web
+packages/contracts test: Validated 2 OpenAPI documents and 19 JSON examples.
+packages/contracts test: Done
+apps/skill-engine test:  Test Files  4 passed (4)
+apps/skill-engine test:       Tests  51 passed (51)
+apps/skill-engine test:    Start at  14:10:18
+apps/skill-engine test:    Duration  3.21s (import 47%, transform 30%, tests 19%, worker 3%)
+apps/skill-engine test: Done
+apps/web test:  Test Files  9 passed (9)
+apps/web test:       Tests  97 passed (97)
+apps/web test:    Start at  14:10:18
+apps/web test:    Duration  3.34s (transform 67%, import 28%, tests 3%, worker 2%)
+apps/web test: Done
+apps/api test:  Test Files  12 passed (12)
+apps/api test:       Tests  118 passed (118)
+apps/api test:    Start at  14:10:18
+apps/api test:    Duration  6.36s (import 45%, tests 30%, transform 25%, worker 1%)
+apps/api test: Done
+$ vitest run --config tests/e2e/vitest.config.mts
+
+ RUN  v5.0.5 <repository>
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  14:10:26
+   Duration  399ms (transform 42%, import 36%, tests 13%, worker 8%)
+

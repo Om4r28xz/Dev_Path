@@ -1,6 +1,24 @@
 # Handoff lote 06 — estado vigente y registro histórico
 
-## Estado verificado al resolver PR #27 — 2026-11-02
+## Estado vigente — QA-02 técnica preparada, 2026-11-02
+
+GitHub confirmó PR27 fusionado a develop en b84255efc996f67af26d6478528eba42afe6bce6. Ancestry de99ef5be/QAA-01 y38b7c7d/DOC-02 comprobado; develop actualizado con pull --ff-only en worktree temporal limpio. Se preservan CAT-02 y todos los worktrees anteriores. Rama QA-02 independiente: docs/qa-02-mvp-acceptance-results, .worktrees/qa-02.
+
+| Tarea  | Estado real                                                                    | Siguiente acción                                                                                                               |
+| ------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |
+| QAA-01 | Integrada por PR27/b84255e                                                     | CI base PG16 aprobado; no reimplementar.                                                                                       |
+| DOC-02 | Integrada por PR28/34a2242                                                     | Arquitectura conservada.                                                                                                       |
+| QA-02  | Implementación técnica e informe locales; aceptación humana y merge pendientes | Publicar PR propio, CI nuevo, P5/P1/P2 y Omar revisan. No equivale a M1 aceptada.                                              |
+| REL-01 | Bloqueada                                                                      | QA-02 integrada/aceptada, Compose/upgrade con datos, revisión humana y preparación de versión/changelog. DOC-01/02 integradas. |
+| CTR-02 | Bloqueada                                                                      | Publicación/tag/sincronización de REL-01 verificadas.                                                                          |
+
+Resultados y trazabilidad completos en [M1-results](../acceptance/M1-results.md): web97/API118/motor51/privacidad2;7 E2E reales; historial20+3 y reintentos/cuentas; comandos400/403/415 y caída física PostgreSQL503→200. Node22.23.4/pnpm11.22.0/PG18.3/Chromium156; migración/seed desde vacío. Dos pestañas y teclado/foco técnicos aprobados;13 muestras de contraste en login/register mínimo6.0428:1. Matriz:27 casos técnicos aprobados,0 fallidos de producto observados y3 casos completos no ejecutados (UI-01/OPS-01/EVID-06, con cobertura técnica parcial donde corresponde). No hay aprobación humana ni conformidad WCAG completa.
+
+CI de b84255e aprobado, incluido PG16, run41515963292; CI de los nuevos casos QA-02 pendiente al publicar. Docker ausente y WSL no instalado: Compose no ejecutado. Revisión P5, instalación Compose y upgrade con datos pendientes. No se modificó producto/OpenAPI/CI/seguridad del sistema; se añadieron verificaciones y evidencias saneadas. El primer initdb falló por permisos y otro intento se interrumpió; probe final aprobado con clúster propio. Limpieza del temporal interrumpido bloqueada por revisión automática, detalle en el informe.
+
+Guía humana [P5-review](../acceptance/P5-review.md) y puerta exacta [REL-01-checklist](../acceptance/REL-01-checklist.md). Los commits de herramientas/evidencia son2e21e23 y4b73e13; hash final de documentación/push se registra en entrega. No se creó release/0.1.0, tag ni aprobación ficticia. Las secciones siguientes conservan el registro histórico y sus estados NO sustituyen esta tabla vigente.
+
+## Histórico: estado al resolver PR #27 — 2026-11-02
 
 Fetch de origin/develop: **34a2242**. PR #27 sigue abierto; su rama publicada es test/qaa-01-mvp-e2e (8785173 antes del merge de actualización). Se integra origin/develop únicamente en esa rama mediante merge normal, sin rebase ni modificación de develop/main.
 
@@ -91,7 +109,7 @@ Validado con Node22.23.4, pnpm11.22.0, PostgreSQL18.3 aislado y Chromium156/Play
 
 CI añade job PG16/Chromium con migración/seed/readiness/cleanup y artefactos filtrados en fallo, incluido en ci-gate junto con los cuatro checks existentes. YAML validado estructuralmente. En la entrega local original la ejecución remota y PG16 quedaron pendientes; se confirmó después éxito de esos checks para 8785173 en Actions run 41513742076. El nuevo merge requiere su propia ejecución remota. Docker Compose y aceptación humana P5 no ejecutados ni aprobados por estas pruebas. Advertencia local NO_COLOR/FORCE_COLOR solo de presentación; no se deshabilitaron checks.
 
-Estado vigente: implementada y publicada en PR #27, commit 8785173; todavía no integrada en origin/develop. Omar/P2 deben revisar runner, lockfile, CI y artefactos; P1 aislamiento/SQL; P5 mantiene aceptación humana. QA-02 sigue bloqueada hasta verificar QAA-01 en origin/develop. DOC-02 ya está integrada por PR #28 (34a2242, commit 38b7c7d); REL-01 necesita QA-02/DOC-02/DOC-01 integradas y aceptación; CTR-02 necesita publicación/sincronización REL-01. No se crearon release, tags ni contratos futuros. E3/JSearch corresponde a M3, no bloquea pruebas M1.
+Estado en esa entrega: implementada y publicada en PR #27, commit 8785173; todavía no integrada en origin/develop. Omar/P2 deben revisar runner, lockfile, CI y artefactos; P1 aislamiento/SQL; P5 mantiene aceptación humana. QA-02 sigue bloqueada hasta verificar QAA-01 en origin/develop. DOC-02 ya está integrada por PR #28 (34a2242, commit 38b7c7d); REL-01 necesita QA-02/DOC-02/DOC-01 integradas y aceptación; CTR-02 necesita publicación/sincronización REL-01. No se crearon release, tags ni contratos futuros. E3/JSearch corresponde a M3, no bloquea pruebas M1.
 
 ## DOC-02 integrada por PR #28 — 2026-11-02
 
@@ -101,4 +119,4 @@ ARCHITECTURE.md documenta componentes reales, auth/tokens/cookies/rotación/logo
 
 Validación: correspondencia manual con routers, esquemas Zod/OpenAPI, repositorios/servicios/config, extractor/scorer, migraciones0000–0003, proxy/Compose y ADR0001–0004; enlaces Markdown locales existentes; tres diagramas parseados y renderizados en Chromium con Mermaid11.12.1 externo a dependencias del producto; formato de documentos nuevos/README y diff sin errores de whitespace. No se ejecutaron tests de código en esta rama documental ni Docker/CI remoto: no son resultados inferidos de otra rama.
 
-Estado vigente: publicada e integrada en origin/develop por PR #28, merge 34a2242, commit 38b7c7d. P1/P2 revisan conexiones/seguridad/configuración; P4 fidelidad de DTOs y límites; Omar ya integró el PR independiente. QAA-01 se entrega en otra rama: no se presupone su merge. QA-02 depende de ese merge; REL-01 también exige QA-02/DOC-02/DOC-01 integradas, aceptación humana y reproducción; CTR-02 espera release/tag/sincronización. Sin release ni tags creados. El conflicto de las dos secciones se unificó conservando ambas; los resultados históricos no equivalen a validaciones remotas nuevas.
+Estado en esa entrega: publicada e integrada en origin/develop por PR #28, merge 34a2242, commit 38b7c7d. P1/P2 revisan conexiones/seguridad/configuración; P4 fidelidad de DTOs y límites; Omar ya integró el PR independiente. QAA-01 se entrega en otra rama: no se presupone su merge. QA-02 depende de ese merge; REL-01 también exige QA-02/DOC-02/DOC-01 integradas, aceptación humana y reproducción; CTR-02 espera release/tag/sincronización. Sin release ni tags creados. El conflicto de las dos secciones se unificó conservando ambas; los resultados históricos no equivalen a validaciones remotas nuevas.

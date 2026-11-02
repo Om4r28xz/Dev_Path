@@ -1,0 +1,67 @@
+{
+  "date": "2026-11-02",
+  "productCommit": "b84255efc996f67af26d6478528eba42afe6bce6",
+  "verifiedCodeCommit": "4b73e13274b46d218e382a03a158fe042e2a89f2",
+  "executedBy": "Codex: technical automation; no human approval",
+  "environment": {
+    "E1": "Windows x64; Node22.23.4; pnpm11.22.0; PostgreSQL18.3 loopback; Chromium156; Playwright1.64.1; synthetic dedicated databases",
+    "E2": "Chromium156 on Windows; partial technical accessibility, P5 pending",
+    "E3": "PostgreSQL18.3 newly initialized throwaway cluster + compiled API; physical stop/restart",
+    "E4": "Compose not executed: Docker absent, WSL not installed"
+  },
+  "counts": {
+    "web": 97,
+    "api": 118,
+    "engine": 51,
+    "privacy": 2,
+    "e2e": 7,
+    "corpus": 30,
+    "openapiDocuments": 2,
+    "examples": 19,
+    "casesApproved": 27,
+    "casesNotExecuted": 3,
+    "casesFailed": 0
+  },
+  "contrast": [
+    {
+      "path": "/login",
+      "samples": 6,
+      "minimumRatio": 6.042825556921493
+    },
+    {
+      "path": "/register",
+      "samples": 7,
+      "minimumRatio": 6.042825556921493
+    }
+  ],
+  "files": [
+    {
+      "file": "tests/e2e/acceptance.spec.ts",
+      "sha256": "14f4738b4ea33a999843a9cce6c58351e105e09d0dc87fa7564dc8194e915478"
+    },
+    {
+      "file": "docs/acceptance/probes/database-outage.mjs",
+      "sha256": "22919c670f07085f6a48937c71bf98b7cc570894a13187e807135462400ff1d7"
+    },
+    {
+      "file": "docs/acceptance/evidence/tests.txt",
+      "sha256": "22b4b5a3132d307f4fa9003cce6866bccb8e03f54f1207f7040228f9d198d5aa"
+    },
+    {
+      "file": "docs/acceptance/evidence/e2e.txt",
+      "sha256": "e8ce08bce79e6019b5b355bec04e0131bb320352df5c63a2e465d711a8db3440"
+    },
+    {
+      "file": "docs/acceptance/evidence/history.txt",
+      "sha256": "b51c92fbf422ef40a5f90320ecd3e7fe943f6b1d417e57d2fe564c25e7c00aad"
+    },
+    {
+      "file": "docs/acceptance/evidence/database-outage.txt",
+      "sha256": "bf2e31a3fe62a739b73f0c6eb807d03d3e9c2af0a6cebed5098233f39dd1fcea"
+    },
+    {
+      "file": "docs/acceptance/evidence/ui-metrics.json",
+      "sha256": "65d691801c37c4fe713db309dc1edc9c64b1f9bf5a1bb3e7c1e43fedd0693bab"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+probe: isolated PostgreSQL started
+probe: migrations and seed applied
+PASS REG-03/AUTH-SEC: invalid name/email/password11/password129/extra400; origins/client403; media415; malformed JSON400.
+PASS ERR-02: isolated PostgreSQL stopped; login503 sanitized/no cookie; restart login200 with same persisted account.
