@@ -25,7 +25,7 @@ Equipo:
 P1 backend/DB; P2 frontend/engine/infra/CI; P3 catálogo/contenido; P4 contratos/documentación; P5 aceptación. Son marcadores de personas, no identidades de Git para suplantar. Una IA puede asistir en varias áreas del lote, pero cada tarea conserva responsable y revisor humanos. No estás solo en el repositorio: no reviertas ni sobrescribas cambios ajenos.
 
 Git y ejecución por tarea:
-1. Inspecciona git status, historial y ramas reales. Al preparar estos prompts se observó main/origin/main en c338a21 y no develop local; vuelve a verificar, porque puede cambiar.
+1. Inspecciona git status, historial y ramas reales. El 2 de noviembre se observó `develop`/`origin/develop` en `50d2b26`, con PRO-02, ANL-01, ANL-03 y la extensión de evidencia integradas; vuelve a verificar antes de actuar. No repitas tareas ya integradas.
 2. El lote es una agenda de hasta cinco tareas, no una rama gigante. Cada tarea conserva su rama exacta y PR del backlog; salvo bootstrap/release, nace del develop actualizado y vuelve a develop.
 3. Una dependencia cuenta como integrada cuando su commit está en develop. Un directorio vacío, un informe de otra IA o una rama sin merge no satisfacen la dependencia.
 4. Ejecuta las tareas en el orden indicado cuando estén listas. Si falta una dependencia, registra qué commit/PR falta; continúa solo tareas independientes Ready de este lote. No inventes un contrato, no simules un merge y no cambies a tareas de otro lote.
@@ -122,3 +122,8 @@ Entrega una tabla con las tareas PRO-02, ANL-01, ANL-03, ANL-02, ANL-04 y su est
 
 La siguiente IA puede usar el prompt del lote 06 cuando las dependencias de su tarea estén integradas, sin necesidad de repetir este encargo.
 
+## Precisión contractual ANL-01/03/02/04: evidence opcional
+
+Contrato público1.1.0/ADR0004: creación/replay/detalle pueden incluir grupos de menciones literales validadas, sin source completo; offsets UTF-16, end exclusivo. Campo ausente no invalida histórico; [] solo sin required. Mantener score/listas/versiones e idempotencia; no llamar engine al consultar/repetir un resultado guardado. Lista permanece AnalysisSummary sin evidence.
+
+ANL-02 debe validar la respuesta opcional y mostrar fragmentos como texto seguro, con fallback de no disponible distinto de no tecnologías y0%. Esta adaptación se realiza después del merge de la extensión; el trabajo y ZIP de Karen siguen provisionales. ANL-04 reutiliza detalle y no requiere evidencia en cada fila. Agregar estas comprobaciones a la validación de las tareas, sin marcar criterios anteriores como aprobados ni implementar todavía ANL-04/lote06.

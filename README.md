@@ -1,40 +1,33 @@
 # DevPath
 
-DevPath es una aplicación local para que estudiantes y desarrolladores junior comparen sus habilidades con las tecnologías mencionadas en una vacante. El resultado inicial será determinista, explicable y basado en un catálogo versionado; no usa IA generativa.
+DevPath helps students and junior developers compare their skills with technologies mentioned in a job posting. Matching uses a versioned technology catalog and deterministic rules; it is not a hiring prediction or a generative AI feature.
 
-## Estado del proyecto
+## Current status
 
-La base técnica y el corpus CAT-02 están integrados. El lote 03 prepara aceptación, infraestructura local y registro/login del servidor; su estado de validación está en [el handoff](docs/handoffs/lote-03.md). M1 completo requiere tareas posteriores.
+The repository is in active M1 development. Registration, login, session handling, profile, skills, manual job text analysis, and saved analysis history are connected to the web app and API. The five tasks in batch 05 are integrated; M1 validation and release tasks in batch 06 remain. M1 has not been released yet.
 
-Las entregas previstas son:
+| Milestone | Scope                                                           | Status                                        |
+| --------- | --------------------------------------------------------------- | --------------------------------------------- |
+| M0        | Workspace, contracts, catalog, database, infrastructure, and CI | Integrated                                    |
+| M1        | Authentication, profile, skills, manual analysis, and history   | In progress                                   |
+| M2        | Projects and private PDF résumé                                 | Planned                                       |
+| M3        | Job search and analysis through JSearch                         | Planned; subject to provider access and terms |
+| M4        | Deterministic learning paths and progress                       | Planned                                       |
 
-- M0: base técnica y contratos.
-- M1: autenticación, perfil, habilidades y análisis manual.
-- M2: proyectos y CV privado.
-- M3: integración de vacantes mediante JSearch.
-- M4: rutas de aprendizaje deterministas.
+The [implementation plan](docs/PLAN_DE_IMPLEMENTACION.md), [task batches](docs/LOTES_PARA_IAS.md), and [handoffs](docs/handoffs/) distinguish completed work from planned work. The E3 microservice requirements are assigned to pending tasks in batches 06, 08, and 09; the `e3-microservice` tag has not been created.
 
-## Arquitectura acordada
+## Architecture
 
 ```text
-Navegador → React/Vite → /api/v1 → API Express → PostgreSQL
-                                      └───────→ Skill Engine REST interno
+Browser → React/Vite → /api/v1 → Express API → PostgreSQL
+                                     └────────→ Skill Engine (internal REST)
 ```
 
-La API y el Skill Engine se ejecutan como procesos separados. Auth es un módulo de la API. El navegador nunca accede directamente a PostgreSQL, al engine ni a proveedores externos.
+The API and Skill Engine run as separate processes. Authentication is a module of the API. The browser uses only the public API. In M3, the API is planned to call JSearch for the jobs module; the browser and Skill Engine will not call JSearch directly. See the [implemented M1 architecture](docs/ARCHITECTURE.md), [architecture decisions](docs/adr/) and [project responsibilities](docs/RESPONSABILIDADES.md).
 
-Las decisiones completas están en [ADR](docs/adr/), el plan en [PLAN_DE_IMPLEMENTACION.md](docs/PLAN_DE_IMPLEMENTACION.md) y las responsabilidades en [RESPONSABILIDADES.md](docs/RESPONSABILIDADES.md).
+## Run locally
 
-## Ejecución local
-
-Guía completa de claves, variables, migraciones, seed y Compose: [SETUP_LOCAL.md](docs/SETUP_LOCAL.md). Consultar antes de iniciar procesos.
-
-Requisitos fijados por FND-01:
-
-- Node.js 22.16 o una versión posterior de Node 22.
-- pnpm 11.22.
-
-Instala exactamente lo registrado en el lockfile y ejecuta los controles comunes:
+Use Node.js `>=22.16 <23` and pnpm `11.22.0`. The full [local setup guide](docs/SETUP_LOCAL.md) covers environment variables, local keys, PostgreSQL migrations, seed data, and Docker Compose. Configure the required services before starting the application.
 
 ```powershell
 pnpm install --frozen-lockfile
@@ -45,39 +38,18 @@ pnpm test
 pnpm build
 ```
 
-Los tres procesos de desarrollo se levantan por separado:
+Start the development processes in separate terminals after completing setup:
 
 ```powershell
-pnpm dev:web
-pnpm dev:api
 pnpm dev:engine
+pnpm dev:api
+pnpm dev:web
 ```
 
-La web escucha en `127.0.0.1:5173`, la API en `127.0.0.1:3000` y el Skill Engine en `127.0.0.1:3001`. La web conserva pantallas base; los endpoints de registro/login no se conectan a la UI hasta AUTH-03/04. El extractor conserva diferencias conocidas del corpus CAT-02. Health no certifica matching.
+By default, the web app uses port 5173, the API uses port 3000, and the Skill Engine uses port 3001. The [API README](apps/api/README.md) describes the implemented routes; the [Skill Engine README](apps/skill-engine/README.md) describes its internal endpoint. The [public OpenAPI contract](packages/contracts/openapi/public.yaml) is the source of truth for API request and response shapes.
 
-## Colaboración
+## Contributing
 
-El trabajo normal nace de `develop` y vuelve a `develop` mediante pull request. `main` contiene entregas estables y recibe únicamente PR de release o hotfix según [FLUJO_GITHUB.md](docs/FLUJO_GITHUB.md).
+Work starts from `develop` and returns through a pull request. `main` is reserved for approved releases and hotfixes. Read the [Git workflow](docs/FLUJO_GITHUB.md) and the [task backlog](docs/TAREAS_PARA_IAS.md) before taking a task. Check the current Git history and task handoff rather than treating an old handoff as the live status.
 
-1. Actualiza `develop` y crea la rama exacta indicada por la tarea.
-2. Limita el diff al alcance de esa tarea.
-3. Ejecuta y documenta los controles aplicables.
-4. Abre un PR hacia la base indicada y solicita los revisores de [RESPONSABILIDADES.md](docs/RESPONSABILIDADES.md).
-5. Un integrador distinto del autor realiza el merge aprobado.
-
-No compartas cuentas ni cambies identidades Git para simular contribuciones. P1–P5 son roles operativos; cada persona usa su propia cuenta cuando actúa en GitHub.
-
-## Protección de ramas
-
-La política objetivo exige PR, revisión y controles exitosos para `develop` y `main`, y bloquea force-push y eliminación. Si el plan, visibilidad o permisos de GitHub no permiten configurar rulesets:
-
-- no se hace push directo por acuerdo del equipo;
-- el PR registra autor, revisor por rol, comandos y resultados;
-- el integrador comprueba manualmente la base, el diff y los controles requeridos;
-- cualquier excepción se documenta en el PR y en el handoff correspondiente.
-
-La ausencia de una regla automática no convierte la revisión ni la validación en opcionales.
-
-## Seguridad del repositorio
-
-No confirmes archivos `.env`, claves, tokens, contraseñas, datos personales, CV, volúmenes locales, logs ni resultados de pruebas con información sensible. Los ejemplos y fixtures deben usar datos sintéticos.
+Do not commit `.env` files, private keys, tokens, passwords, personal data, résumés, logs, or local database volumes. Examples and test fixtures must use synthetic data.

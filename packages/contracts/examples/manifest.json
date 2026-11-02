@@ -52,6 +52,16 @@
       "document": "engine",
       "schema": "InternalErrorResponse",
       "file": "internal/catalog-version-error.json"
+    },
+    {
+      "document": "public",
+      "schema": "Analysis",
+      "file": "public/analysis-with-evidence-response.json"
+    },
+    {
+      "document": "public",
+      "schema": "Analysis",
+      "file": "public/analysis-no-technologies-response.json"
     }
   ]
 }

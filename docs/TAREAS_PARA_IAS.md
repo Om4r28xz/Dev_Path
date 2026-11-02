@@ -354,7 +354,7 @@ La disponibilidad exacta la determina el DAG de cada tarea; la tabla no autoriza
 - **Rama:** `docs/ctr-02-extended-contracts`.
 - **Archivos:** OpenAPI y ejemplos de proyectos/CV/jobs/learning paths.
 - **Encargo:** contratos de M2 listos; contratos M3/M4 marcados como propuestos hasta resolver proveedor/contenido. Incluir multipart, descarga, limpieza, idempotencia y progreso.
-- **Aceptación:** M2 no depende de proveedor; límites CV claros; futuro no aparece como endpoint ya disponible.
+- **Aceptación:** M2 no depende de proveedor; límites CV claros; futuro no aparece como endpoint ya disponible. Proponer las tres operaciones E3 de M3 (búsqueda, detalle y análisis de vacante) con JWT y ejemplos, sin declararlas implementadas; JSR-01 confirma los detalles reales del proveedor antes de fijarlas.
 - **Validación:** esquemas y ejemplos; JSR-01/LRN-01 pueden motivar un PR de ajuste antes de su implementación.
 
 ### PRJ-01 — Proyectos y relación con tecnologías
@@ -433,20 +433,20 @@ La disponibilidad exacta la determina el DAG de cada tarea; la tabla no autoriza
 - **Responsable:** P1.
 - **Dependencias:** JSR-01, REL-02, CTR-02.
 - **Rama:** `feature/jsr-02-jobs-provider-api`.
-- **Archivos:** módulo jobs, interfaz JobsProvider, adaptadores live/fixtures y tests.
+- **Archivos:** módulo jobs, interfaz JobsProvider, adaptadores live/fixtures, tests y `apps/api/README.md`.
 - **Encargo:** búsqueda/detalle normalizados, host fijo, key en servidor, límites de consultas y tiempo, mapeo de errores. Persistencia/caché solo según JSR-01.
-- **Aceptación:** nunca entrega credencial al navegador; distingue modo fixture/live; no llama URLs arbitrarias; respeta paginación realmente soportada.
-- **Validación:** fixtures de 200, vacío, 429, timeout y JSON inválido. Prueba live manual acotada solo con acceso permitido y sin contratar.
+- **Aceptación:** `GET /api/v1/jobs` y `GET /api/v1/jobs/details` responden según contrato con JWT; sin token devuelven 401. Nunca entrega credencial al navegador; distingue modo fixture/live; no llama URLs arbitrarias; respeta paginación realmente soportada. El README de la API explica propósito, setup, variables y tabla de endpoints E3, indicando que análisis sigue pendiente de JSR-03.
+- **Validación:** pruebas HTTP con fixtures de 200, vacío, 429, timeout y JSON inválido, y 401 sin JWT. Prueba live manual acotada solo con acceso permitido y sin contratar; una fixture no acredita consumo real del tercero.
 
 ### JSR-03 — Analizar vacante del proveedor con engine existente
 
 - **Responsable:** P1.
 - **Dependencias:** JSR-02, ANL-01, CTR-02.
 - **Rama:** `feature/jsr-03-provider-analysis`.
-- **Archivos:** fuente jsearch de analyses, reglas de persistencia y tests.
+- **Archivos:** fuente jsearch de analyses, reglas de persistencia, tests, README de API y colección `.http` con respuestas esperadas.
 - **Encargo:** resolver providerId en servidor, obtener texto permitido, reutilizar orquestación e instantáneas según permisos. No implementar otro score.
-- **Aceptación:** devuelve Analysis DTO común; sin providerId falso como texto de confianza; caída del proveedor no rompe análisis manual. Se rechaza la ruta si permisos de persistencia requeridos siguen pendientes.
-- **Validación:** fuente manual sigue pasando, proveedor válido, ID inválido, cuota y timeout, y guardado permitido verificable.
+- **Aceptación:** `POST /api/v1/analyses` con fuente `jsearch` es la tercera operación E3, requiere JWT y devuelve Analysis DTO común; sin providerId falso como texto de confianza; caída del proveedor no rompe análisis manual. Se rechaza la ruta si permisos de persistencia requeridos siguen pendientes. Completar tabla de tres endpoints y variables en README, con ejemplos y respuestas esperadas en la colección.
+- **Validación:** pruebas HTTP de 201/401, proveedor válido, ID inválido, cuota y timeout, y guardado permitido verificable; comprobar que la web consume la API y que la API llama a JSearch live solo con acceso autorizado. Fuente manual sigue pasando.
 
 ### JSR-04 — Pantalla de búsqueda y selección
 
@@ -464,18 +464,18 @@ La disponibilidad exacta la determina el DAG de cada tarea; la tabla no autoriza
 - **Dependencias:** JSR-04.
 - **Rama:** `docs/qa-04-jsearch-results`.
 - **Archivos:** resultados M3, separación de pruebas fixture/live.
-- **Encargo:** demostrar consulta, selección y análisis; verificar fallos y que el flujo manual permanece operativo. Validar que la UI no confunde fixtures con datos reales.
-- **Aceptación:** se indica qué fue probado con proveedor real; no se cierra integración live si solo hubo mocks. Limitaciones de acceso registradas.
-- **Validación:** matriz con evidencia, revisión de P1/P4 de permisos y actualización del README.
+- **Encargo:** demostrar consulta, selección y análisis; verificar fallos y que el flujo manual permanece operativo. Validar que la UI no confunde fixtures con datos reales. Revisar la matriz E3: tres endpoints, JWT, consumo desde web, llamada externa real, README, pruebas o colección con respuestas y enlace de repositorio.
+- **Aceptación:** se indica qué fue probado con proveedor real; no se cierra integración live si solo hubo mocks. Limitaciones de acceso registradas. Cada criterio E3 tiene evidencia concreta o queda pendiente, sin marcar cumplimiento por una fixture.
+- **Validación:** matriz con evidencia, revisión de P1/P4 de permisos, README y colección `.http`; prueba live autorizada y acotada si existe acceso.
 
 ### REL-03 — Cerrar v0.3.0
 
 - **Responsable:** P1; P2 revisa.
 - **Dependencias:** QA-04.
 - **Rama:** `release/0.3.0` → main; después main → develop.
-- **Encargo:** release M3 con estados y permisos claros.
-- **Aceptación:** si live no se pudo completar, el alcance publicado lo declara como demo de adaptador y no cierra las issues de integración real. Si el criterio completo M3 es obligatorio, el release espera a resolver ese bloqueo.
-- **Validación:** configuración sin key mantiene M1/M2 utilizables; con modo habilitado se valida su comportamiento permitido.
+- **Encargo:** release M3 con estados y permisos claros. Preparar además la entrega E3: enlace de repositorio, enlace de despliegue solo si existe, matriz de QA-04 y tag `e3-microservice` sobre el commit exacto evaluable.
+- **Aceptación:** si live no se pudo completar, el alcance publicado lo declara como demo de adaptador y no cierra las issues de integración real; E3 sigue pendiente y no se etiqueta como conforme. Si el criterio completo M3 es obligatorio, el release espera a resolver ese bloqueo. El integrador humano publica `e3-microservice` solo tras verificar todos los criterios E3; puede apuntar al mismo commit que `v0.3.0`.
+- **Validación:** configuración sin key mantiene M1/M2 utilizables; con modo habilitado se valida su comportamiento permitido. Comprobar que el tag publicado apunta al commit con código, README y pruebas evidenciadas.
 
 ## 7. M4: rutas de aprendizaje sin IA generativa
 
@@ -619,3 +619,9 @@ Una tarea pasa a Ready cuando tiene contrato suficiente y dependencias integrada
 Registrar por issue: ID, entrega, responsable, revisor, rama, dependencias, criterio, enlaces a PR/evidencia y estado. Avance se mide por criterios aceptados y recorridos funcionales, no por cantidad de commits o líneas.
 
 Este documento define 50 tareas: las 49 originales y STR-01 para estructura, incluida la evaluación opcional de despliegue. Se distribuyen en el lote 00 dedicado y diez lotes de hasta cinco tareas. GOV-01 prepara decisiones antes del bootstrap; los fixes descubiertos se convierten en issues adicionales del hito afectado, no se esconden dentro de tareas no relacionadas.
+
+## Aclaración aprobada de evidence para M1
+
+Extensión contractual/API independiente (ADR0004), sin cerrar tareas retrospectivamente. CTR-01 mantiene OpenAPI1.1.0/tipos/ejemplos/validador coherentes y conserva DTO sin campo válido. ANL-01 devuelve menciones guardadas validadas en201/replay200 sin cambiar key/hash. ANL-03 reutiliza proyección en detalle, mantiene lista sin campo y404 propio/ajeno. ANL-02 deberá consumir opcional, validar JSON y renderizar texto inerte/fallback tras merge; su preparación local no se modifica aquí. ANL-04 enlazará al detalle sin cargar evidencia en resúmenes. Aceptación nueva: conservar score/versions/snapshot y operar con evidencia ausente/inválida sin recalcular; sin fuente completa en respuesta.
+
+QAA-01/QA-02 deberán cubrir evidencia presente/ausente/histórica, exceso/XSS/cuentas/recarga; DOC-02 describirá lo realmente integrado. Esos trabajos de lote06 siguen pendientes, sin pruebas/resultados humanos ficticios. JSR-01/03/04 futuros revisarán permisos de menciones derivadas antes de habilitarlas; LRN usa gaps/snapshots y no depende de textos evidence. CV/proyectos permanecen independientes; no se amplía su funcionalidad.

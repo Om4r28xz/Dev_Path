@@ -5,6 +5,8 @@
 - Clasificación: propuesta técnica; versiones exactas se fijan en FND-01
 - Responsables de revisión: P1, P2 y P4
 
+Nota de estado (2 de noviembre de 2026): FND-01 y CTR-01 ya están integradas. Las frases en futuro más abajo conservan el contexto de la decisión original; las versiones vigentes están en los manifiestos y el lockfile.
+
 ## Contexto
 
 Web, API y Skill Engine necesitan contratos compatibles, controles reproducibles y límites de importación claros. El equipo necesita una base pequeña que pueda ejecutarse localmente y crecer por entregas sin incorporar SDK de IA ni infraestructura de despliegue prematura.

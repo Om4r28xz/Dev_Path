@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-10-31",
+  "updated": "2026-11-02",
   "maxTasksPerBatch": 5,
   "taskCount": 50,
   "originalTaskCount": 49,
@@ -19,7 +19,7 @@
       "integrationGate": [
         "GOV-02"
       ],
-      "status": "prompt_prepared_not_executed"
+      "status": "integrated"
     },
     {
       "id": "L01",
@@ -37,7 +37,7 @@
         "STR-01"
       ],
       "integrationGate": [],
-      "status": "prompt_prepared_not_executed"
+      "status": "integrated"
     },
     {
       "id": "L02",
@@ -57,7 +57,7 @@
         "CAT-01"
       ],
       "integrationGate": [],
-      "status": "prompt_prepared_not_executed"
+      "status": "integrated"
     },
     {
       "id": "L03",
@@ -81,7 +81,7 @@
         "CI-01"
       ],
       "integrationGate": [],
-      "status": "prompt_prepared_not_executed"
+      "status": "integrated"
     },
     {
       "id": "L04",
@@ -104,7 +104,7 @@
         "WEB-01"
       ],
       "integrationGate": [],
-      "status": "prompt_prepared_not_executed"
+      "status": "integrated"
     },
     {
       "id": "L05",
@@ -125,7 +125,7 @@
         "AUTH-02"
       ],
       "integrationGate": [],
-      "status": "prompt_prepared_not_executed"
+      "status": "integrated"
     },
     {
       "id": "L06",
@@ -149,7 +149,7 @@
         "DOC-01"
       ],
       "integrationGate": [],
-      "status": "prompt_prepared_not_executed"
+      "status": "pending"
     },
     {
       "id": "L07",
@@ -169,7 +169,7 @@
         "AUTH-03"
       ],
       "integrationGate": [],
-      "status": "prompt_prepared_not_executed"
+      "status": "pending"
     },
     {
       "id": "L08",
@@ -191,7 +191,7 @@
         "ANL-02"
       ],
       "integrationGate": [],
-      "status": "prompt_prepared_not_executed"
+      "status": "pending"
     },
     {
       "id": "L09",
@@ -214,7 +214,7 @@
         "PRJ-01"
       ],
       "integrationGate": [],
-      "status": "prompt_prepared_not_executed"
+      "status": "pending"
     },
     {
       "id": "L10",
@@ -235,7 +235,7 @@
         "REL-01"
       ],
       "integrationGate": [],
-      "status": "prompt_prepared_not_executed"
+      "status": "pending"
     }
   ]
 }

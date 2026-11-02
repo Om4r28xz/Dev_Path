@@ -94,15 +94,64 @@ for (const file of [
   );
 }
 
-const publicAnalysis = validatedExamples.get('public/analysis-response.json');
-const expectedPublicPercentage = Math.round(
-  (100 * publicAnalysis.matchedSkillIds.length) / publicAnalysis.requiredSkillIds.length,
-);
-assert.equal(
-  publicAnalysis.compatibilityPercentage,
-  expectedPublicPercentage,
-  'Public analysis percentage must follow the same formula',
-);
+const publicSchema = documents.public.document.components.schemas;
+const validateAnalysis = ajv.compile({
+  components: { schemas: publicSchema },
+  $ref: '#/components/schemas/Analysis',
+});
+const withEvidence = validatedExamples.get('public/analysis-with-evidence-response.json');
+const withoutTechnologies = validatedExamples.get('public/analysis-no-technologies-response.json');
+const sourceText = validatedExamples.get('public/create-analysis-request.json').source.text;
+for (const result of [
+  validatedExamples.get('public/analysis-response.json'),
+  withEvidence,
+  withoutTechnologies,
+]) {
+  const required = new Set(result.requiredSkillIds);
+  assert.equal(
+    result.compatibilityPercentage,
+    required.size ? Math.round((100 * result.matchedSkillIds.length) / required.size) : null,
+  );
+  assert.deepEqual(new Set([...result.matchedSkillIds, ...result.missingSkillIds]), required);
+  assert.ok(result.matchedSkillIds.every((id) => !result.missingSkillIds.includes(id)));
+  if (result.evidence !== undefined) {
+    assert.equal(result.evidence.length, required.size);
+    assert.deepEqual(new Set(result.evidence.map((group) => group.skillId)), required);
+    for (const group of result.evidence)
+      for (const match of group.matches) {
+        assert.ok(match.start < match.end);
+        assert.equal(sourceText.slice(match.start, match.end), match.text);
+      }
+  }
+}
+for (const evidence of [
+  null,
+  {},
+  Array(101).fill(withEvidence.evidence[0]),
+  [{ skillId: 'git', matches: [] }],
+  [{ skillId: 'git', matches: Array(21).fill(withEvidence.evidence[0].matches[0]) }],
+  [{ skillId: 'git', matches: [{ text: '', start: 0, end: 1 }] }],
+  [{ skillId: 'git', matches: [{ text: 'a'.repeat(101), start: 0, end: 1 }] }],
+  [{ skillId: 'git', matches: [{ text: 'Git', start: -1, end: 1 }] }],
+  [{ skillId: 'git', matches: [{ text: 'Git', start: 0, end: 20001 }] }],
+  [{ skillId: 'git', matches: [{ text: 'Git', start: 0, end: 3, extra: true }] }],
+])
+  assert.equal(
+    validateAnalysis({ ...withEvidence, evidence }),
+    false,
+    'Malformed public evidence must fail schema',
+  );
+// Compatibility is directional: old responses remain valid, but old closed
+// validators reject new properties. Do not hide that with additionalProperties.
+const oldSchema = structuredClone(publicSchema);
+delete oldSchema.Analysis.properties.evidence;
+const validateOld = ajv.compile({
+  components: { schemas: oldSchema },
+  $ref: '#/components/schemas/Analysis',
+});
+assert.equal(validateOld(withEvidence), false);
+assert.equal(validateOld(validatedExamples.get('public/analysis-response.json')), true);
+assert.equal(validateAnalysis(validatedExamples.get('public/analysis-response.json')), true);
 
 const engineRequestProperties = Object.keys(
   documents.engine.document.components.schemas.AnalyzeRequest.properties,

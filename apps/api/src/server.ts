@@ -1,3 +1,5 @@
+import { analysesRouter } from './modules/analyses/router.js';
+import { EngineClient } from './modules/analyses/engine-client.js';
 import pg from 'pg';
 import { authRouter } from './modules/auth/http/router.js';
 import { accessTokenMiddleware } from './modules/auth/http/access-token.js';
@@ -27,6 +29,11 @@ const auth = await createAuthService(pool, {
   privateKeyFile: process.env.AUTH_PRIVATE_KEY_FILE,
   localHttp,
 });
+const engine = new EngineClient({
+  url: process.env.ENGINE_URL ?? 'http://127.0.0.1:3001',
+  secret:
+    process.env.ENGINE_SERVICE_SECRET ?? (config.environment === 'production' ? '' : 'dev-secret'),
+});
 const app = createApp({
   config,
   logger,
@@ -41,6 +48,7 @@ const app = createApp({
   configureRoutes: (app) => {
     app.use('/api/v1/auth', authRouter(auth, config.http.allowedOrigins, localHttp));
     app.use('/api/v1', profileRouter(pool, accessTokenMiddleware(auth)));
+    app.use('/api/v1', analysesRouter(pool, accessTokenMiddleware(auth), engine));
   },
 });
 

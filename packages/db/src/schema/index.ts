@@ -4,6 +4,7 @@ import {
   text,
   integer,
   boolean,
+  jsonb,
   timestamp,
   index,
   uniqueIndex,
@@ -170,6 +171,18 @@ export const analyses = appSchema.table(
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
     idempotencyKey: uuid('idempotency_key').notNull(),
+    requestHash: text('request_hash').notNull().default(''),
+    candidateSkillIds: text('candidate_skill_ids')
+      .array()
+      .notNull()
+      .default(sql`'{}'`),
+    evidence: jsonb('evidence')
+      .notNull()
+      .default(sql`'[]'::jsonb`),
+    warnings: text('warnings')
+      .array()
+      .notNull()
+      .default(sql`'{}'`),
     jobTitle: text('job_title'),
     jobText: text('job_text').notNull(),
     requiredSkillIds: text('required_skill_ids')
@@ -197,6 +210,7 @@ export const analyses = appSchema.table(
   (t) => [
     uniqueIndex('analyses_user_idempotency_idx').on(t.userId, t.idempotencyKey),
     index('analyses_user_created_idx').on(t.userId, t.createdAt),
+    index('analyses_user_created_id_idx').on(t.userId, t.createdAt.desc(), t.id.desc()),
   ],
 );
 

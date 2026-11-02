@@ -1,6 +1,6 @@
 # DevPath: lotes de trabajo y prompts para IAs
 
-Actualizado: 31 de octubre de 2026.
+Actualizado: 2 de noviembre de 2026.
 
 Se han preparado **11 prompts completos**: un lote 00 para la IA de estructura y diez lotes de hasta cinco tareas para las 49 tareas originales. Se agrega STR-01 al backlog: **50 tareas en total**, incluida DEP-01 opcional.
 
@@ -22,9 +22,11 @@ Cada prompt contiene contexto, arquitectura, dependencias, responsables humanos,
 | 09 | Aceptación del proveedor y backend de aprendizaje | QA-04, REL-03, LRN-01, LRN-02, LRN-03 | [Copiar prompt 09](prompts/lotes/09-proveedor-y-aprendizaje-api.md) |
 | 10 | Interfaz de rutas, aceptación final y opción de hosting | LRN-04, QA-05, REL-04, DEP-01 (DEP-01 opcional) | [Copiar prompt 10](prompts/lotes/10-rutas-y-cierre.md) |
 
-El inventario legible por herramientas está en [lotes.json](lotes.json). Las tareas detalladas siguen en [TAREAS_PARA_IAS.md](TAREAS_PARA_IAS.md); arquitectura en [PLAN_DE_IMPLEMENTACION.md](PLAN_DE_IMPLEMENTACION.md); colaboración en [FLUJO_GITHUB.md](FLUJO_GITHUB.md).
+El inventario legible por herramientas está en [lotes.json](lotes.json); su `status` resume la integración de tareas por lote al 2 de noviembre de 2026, no reemplaza la verificación de Git por tarea. Las tareas detalladas siguen en [TAREAS_PARA_IAS.md](TAREAS_PARA_IAS.md); arquitectura en [PLAN_DE_IMPLEMENTACION.md](PLAN_DE_IMPLEMENTACION.md); colaboración en [FLUJO_GITHUB.md](FLUJO_GITHUB.md).
 
-Estado de esta entrega: prompts preparados y planificación actualizada. Esto no afirma que las 50 tareas estén implementadas ni integradas. La creación del árbol de aplicación corresponde a ejecutar el lote 00 y validar su salida.
+**Rúbrica E3 incorporada sin agregar tareas ni cambiar los 11 lotes:** CTR-02 (lote 06) deja propuestos los contratos de las tres operaciones de vacantes; JSR-01/02/03 (lote 08) verifican el proveedor, implementan JSearch en la API y completan README, pruebas y colección; QA-04 y REL-03 (lote 09) verifican evidencia live y preparan el tag `e3-microservice`. El proceso evaluado es la API Express consumida por la web, no el Skill Engine. El lote 05 ya está integrado y sus tareas no se reabren.
+
+Estado comprobado el 2 de noviembre de 2026: `origin/develop` contiene PRO-02, ANL-01/02/03/04 y el contrato de evidencia; el lote 05 está integrado. El lote 06 sigue en preparación, validación y release. Los handoffs antiguos pueden conservar estados históricos; comprobar Git antes de reanudar cualquier tarea. La incorporación de E3 es planificación, no implementación de sus endpoints ni publicación del tag.
 
 ## 2. Cómo usar un lote
 
@@ -37,9 +39,9 @@ Estado de esta entrega: prompts preparados y planificación actualizada. Esto no
 
 Una sola IA puede llevar la agenda de cinco tareas y cambiar de rama al terminar cada una. No necesita tener cinco tareas activas ni cinco contextos simultáneos. Se pueden reutilizar IAs para lotes posteriores con el handoff y el estado del repositorio como referencia.
 
-## 3. Arranque concreto de este repositorio
+## 3. Arranque histórico de este repositorio (ya superado)
 
-Ya se observó un primer commit, c338a21, en main y la referencia local origin/main. No se encontró develop en las refs locales. Los prompts deben volver a comprobarlo, no asumir que ese estado sigue igual.
+Este apartado registra la secuencia inicial de octubre. `develop` ya existe y estas acciones no deben repetirse; usar Git y los handoffs recientes para continuar desde el estado actual.
 
 Orden de arranque:
 

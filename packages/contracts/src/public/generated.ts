@@ -20,6 +20,11 @@ export interface Analysis {
   compatibilityPercentage: number | null;
   /** @format date-time */
   createdAt: string;
+  /**
+   * Optional validated stored technology mentions, never surrounding text. Omitted when unavailable, invalid or the complete DTO would exceed 128 KiB UTF-8. An empty array means no required technologies; older servers may omit this property. Old closed-schema validators must be updated before rollout.
+   * @maxItems 100
+   */
+  evidence?: AnalysisSkillEvidence[];
   /** @format uuid */
   id: string;
   matchedSkillIds: UniqueSkillIds;
@@ -40,6 +45,36 @@ export interface AnalysisListResponse {
    * @maxLength 512
    */
   nextCursor: string | null;
+}
+
+/** Exactly one group per required skill when evidence is present; skill IDs must be unique. */
+export interface AnalysisSkillEvidence {
+  /**
+   * @maxItems 20
+   * @minItems 1
+   * @uniqueItems true
+   */
+  matches: AnalysisSkillMatch[];
+  skillId: SkillId;
+}
+
+/** Literal catalog alias in the stored original text. Offsets are UTF-16 code units, start inclusive and end exclusive, with start < end. No surrounding context or full source is exposed. */
+export interface AnalysisSkillMatch {
+  /**
+   * @min 1
+   * @max 20000
+   */
+  end: number;
+  /**
+   * @min 0
+   * @max 19999
+   */
+  start: number;
+  /**
+   * @minLength 1
+   * @maxLength 100
+   */
+  text: string;
 }
 
 export interface AnalysisSourceSummary {

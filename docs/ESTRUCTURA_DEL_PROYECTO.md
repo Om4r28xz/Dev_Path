@@ -1,6 +1,8 @@
 # Estructura del proyecto DevPath
 
-Estado: STR-01 preparado localmente. La existencia de una carpeta reserva su lugar y no implica que la funcionalidad esté implementada.
+Estado revisado el 2 de noviembre de 2026: STR-01 y FND-01 están integradas. El árbol de abajo documenta la organización objetivo M0–M4; una carpeta reservada no implica que su función esté implementada. Consultar el README principal y los handoffs para el estado de cada módulo.
+
+`project-structure.json` es el manifiesto original de STR-01: sus estados y descripciones de implementación pendiente reflejan aquel momento, no el progreso actual.
 
 ## Árbol reservado
 
@@ -182,14 +184,14 @@ Los README de área y los documentos existentes son contenido de trazabilidad; n
 
 - El navegador ejecuta `apps/web` y consume únicamente rutas relativas de la API pública bajo `/api/v1`.
 - `apps/web` puede consumir contratos públicos y contenido público del catálogo. Nunca consume código de DB, módulos internos de la API, el Skill Engine, almacenamiento ni JSearch directamente.
-- `apps/api` contiene auth integrado, coordina los módulos de negocio, es el único proceso que usa PostgreSQL y el único que integra JSearch.
+- `apps/api` contiene auth integrado, coordina los módulos de negocio, es el único proceso que usa PostgreSQL y será el único que integre JSearch en M3.
 - `apps/api` llama al Skill Engine mediante un contrato REST interno autenticado.
 - `apps/skill-engine` extrae tecnologías y calcula coincidencias. Puede consumir contratos internos y catálogo, pero no DB, auth ni JSearch.
 - `packages/contracts` separa fronteras públicas e internas. P4 lo mantiene y P1/P2 revisan su correspondencia con los consumidores.
 - `packages/catalog` contiene datos curados y versionados; P3 los mantiene con revisión técnica de P2/P1.
 - `packages/db` pertenece a P1 y solo se integra en la API.
 - `packages/test-support` y `tests/e2e` pertenecen a P2 y no deben convertirse en lógica compartida de producción.
-- `infra` y CI pertenecen a P2 con revisión de P1. La ruta canónica futura de Compose es `infra/compose.yaml`; los Dockerfiles se reservaron bajo `infra/docker`.
+- `infra` y CI pertenecen a P2 con revisión de P1. Compose existe en `infra/compose.yaml` y los Dockerfiles están bajo `infra/docker`.
 
 ## Dueños y etapas
 
@@ -204,6 +206,6 @@ Los README de área y los documentos existentes son contenido de trazabilidad; n
 
 ## Relación STR-01 → FND-01
 
-STR-01 reserva las carpetas, sus límites y su trazabilidad. No instala dependencias ni crea manifiestos, lockfiles, servidores, contratos YAML, SQL, catálogo o configuración de Compose. Cuando STR-01 esté integrado en `develop`, FND-01 debe reutilizar este árbol, añadir las herramientas reales y retirar cada `.gitkeep` únicamente cuando la misma carpeta reciba contenido real.
+STR-01 reservó las carpetas, sus límites y su trazabilidad. FND-01 añadió herramientas reales sobre ese árbol y ambas tareas ya están integradas. Este párrafo describe la división histórica del trabajo; no indica una tarea pendiente de bootstrap.
 
 Un `.gitkeep` solo conserva una hoja vacía en Git. Debe eliminarse en el mismo cambio que incorpora el primer archivo real de esa hoja; no se mantiene junto a contenido efectivo.

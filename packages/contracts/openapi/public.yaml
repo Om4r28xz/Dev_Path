@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: DevPath Public API
-  version: 1.0.0
+  version: 1.1.0
   description: |
     Canonical M1 browser-to-API contract. OpenAPI is the source of truth;
     TypeScript consumers are generated from this document.
@@ -536,6 +536,11 @@ components:
         matchedSkillIds: { $ref: '#/components/schemas/UniqueSkillIds' }
         missingSkillIds: { $ref: '#/components/schemas/UniqueSkillIds' }
         compatibilityPercentage: { type: [integer, 'null'], minimum: 0, maximum: 100 }
+        evidence:
+          type: array
+          maxItems: 100
+          description: Optional validated stored technology mentions, never surrounding text. Omitted when unavailable, invalid or the complete DTO would exceed 128 KiB UTF-8. An empty array means no required technologies; older servers may omit this property. Old closed-schema validators must be updated before rollout.
+          items: { $ref: '#/components/schemas/AnalysisSkillEvidence' }
         versions: { $ref: '#/components/schemas/AnalysisVersions' }
         warnings:
           type: array
@@ -543,6 +548,28 @@ components:
           items: { type: string, minLength: 1, maxLength: 200 }
         skillsOutdated: { type: boolean }
         createdAt: { type: string, format: date-time }
+    AnalysisSkillEvidence:
+      type: object
+      additionalProperties: false
+      required: [skillId, matches]
+      description: Exactly one group per required skill when evidence is present; skill IDs must be unique.
+      properties:
+        skillId: { $ref: '#/components/schemas/SkillId' }
+        matches:
+          type: array
+          minItems: 1
+          maxItems: 20
+          uniqueItems: true
+          items: { $ref: '#/components/schemas/AnalysisSkillMatch' }
+    AnalysisSkillMatch:
+      type: object
+      additionalProperties: false
+      required: [text, start, end]
+      description: Literal catalog alias in the stored original text. Offsets are UTF-16 code units, start inclusive and end exclusive, with start < end. No surrounding context or full source is exposed.
+      properties:
+        text: { type: string, minLength: 1, maxLength: 100 }
+        start: { type: integer, minimum: 0, maximum: 19999 }
+        end: { type: integer, minimum: 1, maximum: 20000 }
     AnalysisSummary:
       type: object
       additionalProperties: false
