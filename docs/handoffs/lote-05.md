@@ -159,3 +159,23 @@ Validación Node22.23.4/pnpm11.22.0: typecheck/build/lint/formato aprobados; web
 ANL-02 queda implementada localmente y pendiente de revisión/contribución de Karen, aceptación humanaP5 y PR/CI/merge de Omar. No se marca aceptación humana como aprobada automáticamente. ZIP definitivo técnico no equivale a autorización de merge. Tras integrar ANL-02 y verificarlo por fetch podrá iniciarse ANL-04; lote06 sigue pendiente.
 
 Comprobación adicional del recorrido final: corpus30 completo por la UI real (28 análisis persistidos con IDs esperados intactos y2 entradas vacías rechazadas), cuenta sin skills con0% cuando hay requisitos. Pérdida ambigua de respuesta tras POST201 real: retry conserva key/body, recibe200 del mismo análisis y mantiene una sola fila PostgreSQL. Todo aprobado; usuarios sintéticos limpiados.
+
+## Auditoría posterior a ANL-02 y ANL-04 local — 2026-11-02
+
+Base origin/develop09dfb04, PR24 integrado (commitKaren502df79); PRO-02/PR19, ANL-01/PR20, ANL-03/PR21 y evidence/PR22 siguen como ancestros. Checks de09dfb04 aprobados, sin confundirlos con CI de ANL-04 aún no publicada.
+
+Auditoría realizada en worktree limpio/detached audit-anl02 de la versión integrada, sin copiar borradores. Nueva ejecución Node22.23.4/pnpm11.22.0, instalaciónfrozen, lint/format/typecheck/build y pnpmtest con PostgreSQL18.3 real: web73/API118/motor51, corpus30, contratos2/19ejemplos. Chromium real repitió67%, evidence/legacy/recarga,0/null, snapshots/skills, motor detenido/recovery, corpus28persistidos+2vacíos, retries con una fila y aislamiento. Casos adicionales:401 real con refresh/retry,409 real conserva entrada/editar genera key nueva y respuesta anterior retrasada no sobrescribe detalle nuevo. Sin defectos ANL-02 reproducibles identificados en esos casos; no se abrió ramafix ni se reescribió el trabajo de Karen. Revisión humanaP5 de comprensión/lector/contraste permanece pendiente.
+
+ANL-04 implementada en feature/anl-04-analysis-history-ui, worktree anl-04, desde09dfb04. Historial propio con cursor real20/50máximoAPI, título/fecha/porcentaje0-null/skillsOutdated, carga/vacío/error/retry y enlaces al detalle/tecnologías/evidence. El usuario eligió mantener AnalysisSummary actual: no se inventan tecnologías ni se solicitan detalles por cada fila. DELETE con confirmación modal explícita,Cancelar/Escape/foco, doble envío impedido, actualización inmediata/cache e invalidación,404 concurrente y fallos separados. Consulta/cache por propietario y cancelación evitan mezclar cuentas. Detalle/404 tienen enlace de regreso. Sin cambios de contrato/backend/migraciones/dependencias/CI.
+
+Validación nueva ANL-04: lint/format/typecheck/build y suite completa aprobados, web97 (24 nuevas),API118,motor51,corpus30,OpenAPI2/19ejemplos. Prueba de integración real reproducible en apps/web/tests/integration/analysis-history.browser.mjs: dos cuentas/creación2/67%/detalle/evidence, skillsOutdated sin recalcular, confirmar/cancelar/Escape/foco, doble DELETE bloqueado, persistencia y404, paginación20+3 con timestamps iguales y comparación exacta contra DB sin huecos/duplicados;503 de paginación/borrado/inicial con retry,404 por eliminación concurrente y consulta deA retrasada no contaminaB. Los503 inducidos son fixtures negativas; éxitos entre servicios reales. Se corrigió un defecto de foco al cancelar durante el desarrollo de ANL-04 y se repitió el recorrido completo hasta aprobar. PostgreSQL16/Compose no disponibles localmente; CI de base usa16; falta CI de la nueva rama. Datos sintéticos limpiados/servicios detenidos.
+
+| Tarea | Estado al cierre local |
+| --- | --- |
+| PRO-02 | Integrada PR19 |
+| ANL-01 | Integrada PR20 |
+| ANL-03 | Integrada PR21 |
+| ANL-02 | Integrada PR24, auditada; aceptación humana pendiente |
+| ANL-04 | Implementada/validada sin merge, commit local y PR preparado |
+
+El lote05 no se declara integrado ni M1 liberada. Omar debe revisar/mergear ANL-04 y se verificará fetch/ancestría. Después QAA-01 y DOC-02 se desbloquean según dependencias propias; QA-02 requiere QAA-01 integrada,REL-01 requiere aceptación/documentación integradas yCTR-02 espera release/tag/sincronización. Se prepara planificación documental independiente; no hay ramas de implementación bloqueadas, release ni tags.

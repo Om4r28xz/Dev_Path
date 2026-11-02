@@ -22,7 +22,8 @@ export function AnalysisDetailState(props: Props) {
         </Alert>
         <p>
           <Link to="/analysis/new">Crear un nuevo análisis</Link> o{' '}
-          <Link to="/profile">volver a mi perfil</Link>.
+          <Link to="/profile">volver a mi perfil</Link>.{' '}
+          <Link to="/analyses">Volver al historial</Link>.
         </p>
       </>
     );
@@ -36,7 +37,8 @@ export function AnalysisDetailState(props: Props) {
         Reintentar
       </Button>
       <p>
-        <Link to="/profile">Volver a mi perfil</Link>
+        <Link to="/profile">Volver a mi perfil</Link> o{' '}
+        <Link to="/analyses">Volver al historial</Link>
       </p>
     </>
   );
