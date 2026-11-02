@@ -4,7 +4,7 @@ DevPath helps students and junior developers compare their skills with technolog
 
 ## Current status
 
-The repository is in active M1 development. Registration, login, session handling, profile and skills are connected to the web app. The API and Skill Engine support manual job text analysis, and the API supports saved analysis history. The analysis screens in the web app are still placeholders; connecting them is part of the remaining M1 work. M1 has not been released yet.
+The repository is in active M1 development. Registration, login, session handling, profile, skills, manual job text analysis, and saved analysis history are connected to the web app and API. The five tasks in batch 05 are integrated; M1 validation and release tasks in batch 06 remain. M1 has not been released yet.
 
 | Milestone | Scope                                                           | Status                                        |
 | --------- | --------------------------------------------------------------- | --------------------------------------------- |

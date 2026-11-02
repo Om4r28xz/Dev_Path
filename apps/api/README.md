@@ -18,7 +18,7 @@ Routes below are mounted under `/api/v1`. The API also exposes `GET /health/live
 | POST, GET   | `/analyses`             | Bearer JWT      | Create a manual analysis or list saved analyses  |
 | GET, DELETE | `/analyses/:analysisId` | Bearer JWT      | Read or delete one owned analysis                |
 
-The [public OpenAPI contract](../../packages/contracts/openapi/public.yaml) defines request and response shapes. The web analysis pages are not yet connected to these analysis routes. Jobs endpoints are planned in [M3](../../docs/PLAN_DE_IMPLEMENTACION.md) and must not be presented as available.
+The [public OpenAPI contract](../../packages/contracts/openapi/public.yaml) defines request and response shapes. The web analysis pages now use these analysis routes. Jobs endpoints are planned in [M3](../../docs/PLAN_DE_IMPLEMENTACION.md) and must not be presented as available.
 
 ## Setup and checks
 

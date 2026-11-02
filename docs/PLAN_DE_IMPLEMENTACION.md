@@ -50,7 +50,7 @@ Referencias de las herramientas propuestas: [pnpm workspaces](https://pnpm.io/wo
 
 ### 1.3 Estado real del repositorio
 
-Actualización comprobada el 2 de noviembre de 2026: `develop` y `origin/develop` apuntaban a `50d2b26`; ANL-03 y la extensión de evidencia ya estaban integradas, mientras ANL-02/ANL-04 y el lote 06 seguían pendientes. El árbol de trabajo estaba limpio antes de esta actualización documental. Los párrafos siguientes conservan la inspección histórica del arranque y no describen las ramas actuales.
+Actualización comprobada el 2 de noviembre de 2026: `origin/develop` apunta a `18f37ed`; PRO-02, ANL-01/02/03/04 y la extensión de evidencia ya están integradas. El lote 05 terminó; el lote 06 sigue en preparación, validación y release. Los párrafos siguientes conservan la inspección histórica del arranque y no describen las ramas actuales.
 
 La inspección inicial del 30 de octubre encontró solo la descripción y ningún commit. La revisión del 31 de octubre ya encuentra el commit `c338a21` (`FIRTS STEPS`), con `main` y la referencia local `origin/main` apuntando a él, además de los tres documentos de planificación. No se encontró una rama `develop` local ni su referencia remota descargada. Esto no verifica por sí solo el estado actual del servidor remoto. No se verificó el tag `e3-microservice`.
 
@@ -711,7 +711,7 @@ Al iniciar cada entrega, registrar una decisión breve con contexto, opciones, e
 
 ## 16. Siguiente acción recomendada
 
-Usar el [índice de lotes](LOTES_PARA_IAS.md) y comprobar los merges reales. En la revisión del 2 de noviembre de 2026, ANL-03 y la extensión de evidencia están en `develop`; continuar las tareas pendientes ANL-02/ANL-04 del lote 05 y, tras integrarlas, iniciar el lote 06. CTR-02, aún pendiente dentro del lote 06, preparará los contratos propuestos para E3; los lotes 08–09 ejecutarán y verificarán el resto de la rúbrica. El [backlog](TAREAS_PARA_IAS.md) conserva responsables y dependencias; el [flujo GitHub](FLUJO_GITHUB.md) define la integración y publicación.
+Usar el [índice de lotes](LOTES_PARA_IAS.md) y comprobar los merges reales. El lote 05 está integrado; continuar el lote 06 conforme a sus dependencias, aceptación y puertas de release. CTR-02, aún pendiente dentro del lote 06, preparará los contratos propuestos para E3; los lotes 08–09 ejecutarán y verificarán el resto de la rúbrica. El [backlog](TAREAS_PARA_IAS.md) conserva responsables y dependencias; el [flujo GitHub](FLUJO_GITHUB.md) define la integración y publicación.
 
 ## Analysis público y evidencia (extensión M1)
 

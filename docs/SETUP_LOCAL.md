@@ -39,7 +39,7 @@ docker compose --env-file infra/.env -f infra/compose.yaml up -d api engine web
 docker compose --env-file infra/.env -f infra/compose.yaml ps
 ```
 
-No iniciar la API antes de migrar. Abrir http://localhost:8080/login; recargar la URL comprueba fallback SPA. Registro, login, sesión, perfil y habilidades ya están conectados a la API. Las pantallas de análisis siguen como avance visual hasta completar ANL-02/04, aunque la API de análisis e historial ya existe. Health solo certifica disponibilidad, no exactitud del matching.
+No iniciar la API antes de migrar. Abrir http://localhost:8080/login; recargar la URL comprueba fallback SPA. Registro, login, sesión, perfil, habilidades, análisis e historial ya están conectados a la API. La aceptación integral de M1 corresponde al lote 06. Health solo certifica disponibilidad, no exactitud del matching.
 
 Solo se publica 127.0.0.1:8080; DB5432, API3000 y engine3001 quedan internos. Proxy solo envía `/api/v1/` y `/health/` a API, nunca `/internal/` al engine. La API accede a DB y llama al engine para los análisis manuales. El volumen `database` conserva datos. Claves privadas solo montadas en API; engine no recibe datos personales ni DB.
 
@@ -108,6 +108,6 @@ Para integración real establecer TEST_DATABASE_URL en DB migrada de prueba ante
 - DB no disponible: revisar conexión, pg_isready/health y migraciones; conservar volúmenes.
 - Config ausente: ejecutar setup-local; no sobrescribe claves ni `.env`. `.env`, `.local-data`, PEM y KEY están ignorados. En Windows proteger además permisos NTFS de la carpeta local: mode POSIX no sustituye ACL.
 - 403 auth: comprobar origen exacto, header de cliente y modo local; no relajar CORS con `*`.
-- 404 en perfil/análisis: verificar prefijo `/api/v1`, método, ruta y token; la web de análisis todavía no está conectada aunque sus endpoints existen.
+- 404 en perfil/análisis: verificar prefijo `/api/v1`, método, ruta, token y propiedad del recurso; la web usa los endpoints de análisis e historial.
 
 La evidencia y limitaciones reales de esta entrega se mantienen en docs/handoffs/lote-03.md.
