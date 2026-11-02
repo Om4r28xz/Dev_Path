@@ -25,3 +25,32 @@ Base técnica de pruebas: Node22.23.4/pnpm11.22.0, PostgreSQL18.3 aislado y engi
 5. Solo al comprobar esa integración/sincronización, crear docs/ctr-02-extended-contracts desde develop para contratos M2 y propuestas claramente marcadas M3/M4. Sin implementación de features futuras.
 
 No hay M1 liberada, ni tareas06 implementadas, publicadas o integradas por esta entrega. El siguiente paso disponible tras merge de ANL-01 es ANL-03; QAA-01 se desbloquea únicamente después de ANL-04 integrada.
+
+## Estado actualizado tras auditoría ANL-02 — 2026-11-02
+
+Esta sección reemplaza únicamente el estado operativo, conservando el registro histórico anterior. Base verificada origin/develop 09dfb04 (mergePR #24, Karen502df79); PRO-02/ANL-01/ANL-03/evidence integradas. ANL-04 existe solo localmente en feature/anl-04-analysis-history-ui, commit e628ce4, y NO es dependencia integrada. Fetch posterior a ese commit mantiene develop 09dfb04. No hay QAA-01/DOC-02/QA-02 implementadas por esta preparación.
+
+Auditoría de la versión integrada: lint/formato/typecheck/build aprobados; web 73/API 118/motor 51, catálogo 30,OpenAPI 2/19 ejemplos con PostgreSQL18.3 real. Chromium real verificó67%, evidence/legacy/recarga/0-null, motor detenido/retry, snapshots/cuentas/corpus y respuesta perdida201→200 sin duplicar. Además401 real + refresh,409 real conserva entrada/nueva key tras editar y detalle lento no sustituye resultado actual. No se detectaron defectos ANL-02 reproducibles en este alcance; no hay rama fix inventada. P5 aún debe revisar comprensión/accesibilidad humana.
+
+ANL-04 local pasó lint/formato/typecheck/build; web 97/API 118/motor 51 y navegador real con historial propio, cursor20+3 sin duplicados/huecos a timestamps iguales, confirmación/cancelación/foco, persistencia/404/cuentas y fallos de red/retry. El defecto de foco al cancelar surgió en la feature nueva y se corrigió allí. Estos resultados no equivalen a CI remoto ni integración de ANL-04.
+
+| Tarea | Estado verificado | Dependencias y siguiente acción |
+| --- | --- | --- |
+| QAA-01 | Bloqueada | ANL-04 sin merge. AUTH-03/OPS-01/CI-01 integradas. Tras merge verificado, crear test/qaa-01-mvp-e2e desde develop actualizado. |
+| QA-02 | Bloqueada | QAA-01 sin integrar. No crear M1-results.md con aprobaciones supuestas; después ejecutar casos y registrar commit/observados reales. |
+| DOC-02 | Bloqueada | ANL-04 sin merge; AUTH-02/ENG-02 integradas. Tras ANL-04 puede avanzar en rama separada y en paralelo a QAA-01. |
+| REL-01 | Bloqueada | Faltan QA-02 y DOC-02 integradas, aceptación y bloqueantes resueltos. DOC-01 integrada; reproducción Compose pendiente en este entorno. Sin release/0.1.0 ni changelog/tag creados. |
+| CTR-02 | Bloqueada | REL-01 no publicada; falta tag/historial/sincronización main→develop verificados. No modificar OpenAPI futuro. |
+
+La rama docs/lote-06-readiness contiene solo esta actualización y dos documentos de planificación: docs/PLAN_EJECUCION_M1.md y docs/CHECKLIST_PREPARATORIO_M1.md. No implementa tareas bloqueadas ni adelanta contratos M2. P2/P4 pueden revisar el material desde la base integrada; Omar decide su PR separado. El PR de ANL-04 tiene revisión independiente.
+
+## Orden exacto para retomar
+
+1. Emanuel publica ANL-04 cuando lo autorice, P1 revisa código/propiedad/cursor/cache, P5 teclado/mensajes y Omar integra. Revisar CI de esa rama, no reutilizar el verde de 09dfb04 como evidencia de feature.
+2. Fetch y verificar commit/PR ANL-04 en origin/develop (si squash, contenido y PR), sin copiar su worktree local a otras ramas.
+3. Desde esa base crear test/qaa-01-mvp-e2e y docs/doc-02-mvp-architecture independientemente. Plan y criterios en PLAN_EJECUCION_M1.md. La prueba manual automatizada de ANL-04 es insumo, no QAA-01 terminada.
+4. Tras QAA-01 integrada, P5/IA ejecutan únicamente verificaciones disponibles en docs/qa-02-mvp-acceptance-results, registrando no ejecutado para lo humano pendiente. Integrar resultados y DOC-02 después de revisión.
+5. Solo con QA-02/DOC-02/DOC-01 integradas y bloqueantes resueltos, preparar release/0.1.0/changelog/smoke. Humano autoriza merge hacia main, tag exacto v0.1.0 y sincronización main→develop. Ninguno se ejecuta aquí.
+6. CTR-02 permanece bloqueada hasta comprobar todos esos pasos. No afecta el análisis manual disponer o no de futuros permisos JSearch.
+
+Límites actuales: Node 22.23.4/pnpm 11.22.0; PG 18.3 local aislado. PG 16 solo en CI consultada de la base; Docker/Compose y aceptación humana no probados por esta entrega. Sin push, merge, tags ni identidad ajena. No se borra ningún trabajo anterior.
