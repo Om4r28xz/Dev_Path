@@ -1,6 +1,6 @@
 # DevPath: plan de implementación y conexión de componentes
 
-Fecha de referencia: 30 de octubre de 2026. Actualización de lotes y estado Git: 31 de octubre de 2026. Estado: planificación; no hay aplicación implementada.
+Fecha de referencia: 30 de octubre de 2026. Estado revisado: 2 de noviembre de 2026. M0 está integrado y M1 sigue en desarrollo; las secciones M2–M4 describen trabajo futuro, no funciones disponibles.
 
 Este plan se basa en [la descripción del proyecto](../DevPath_Project_Description.md), en la inspección del repositorio y en las respuestas del equipo. El documento original se conserva como fuente; sus ejemplos y su sección de instrucciones para otra IA se tratan como contexto, no como decisiones ya aprobadas.
 
@@ -42,15 +42,19 @@ Son decisiones recomendadas para que las tareas tengan una base común. Pueden c
 | Ejecución | Desarrollo con Vite y servicios locales; Docker Compose para la demostración completa | No depende de contratar hosting. |
 | Versiones | Versiones estables compatibles, fijadas durante FND-01 en manifiestos y lockfile | No usar etiquetas flotantes como `latest` en la configuración entregada. |
 
+**Entrega E3 — microservicio REST:** para esta rúbrica, el proceso independiente `apps/api` alimenta el módulo de vacantes del proyecto DevPath (el proyecto referido como aprobado en la Actividad 3); `apps/skill-engine` conserva su responsabilidad de matching y no es el servicio que se presenta como consumidor de terceros. La API se consume desde la web, protege las rutas de negocio con JWT y, en M3, consume JSearch desde el servidor. Se conserva la topología aceptada y los componentes de M1 que ya están integrados. La rúbrica no exige que el módulo de vacantes haya sido aprobado por separado.
+
 La fuente deja abierta la separación física de auth. Aquí se recomienda integrarlo como módulo por el tamaño del equipo. Esto es una simplificación propuesta, no una afirmación de que el documento exigía esa topología. Si se exige un microservicio de auth independiente, resolverlo en GOV-01 antes de FND-01: conservar las rutas, separar credenciales y sesiones, y rediseñar el alta de perfil y el borrado de cuentas sin transacciones entre procesos.
 
 Referencias de las herramientas propuestas: [pnpm workspaces](https://pnpm.io/workspaces), [Drizzle](https://orm.drizzle.team/docs/sql-schema-declaration), [Zod](https://zod.dev/), [React Router](https://reactrouter.com/start/declarative/installation), [TanStack Query](https://tanstack.com/query/latest/docs/framework/react/overview), [Vitest](https://vitest.dev/guide/) y [Playwright](https://playwright.dev/docs/intro). La selección y la organización de módulos son propuestas propias de este plan.
 
 ### 1.3 Estado real del repositorio
 
+Actualización comprobada el 2 de noviembre de 2026: `develop` y `origin/develop` apuntaban a `50d2b26`; ANL-03 y la extensión de evidencia ya estaban integradas, mientras ANL-02/ANL-04 y el lote 06 seguían pendientes. El árbol de trabajo estaba limpio antes de esta actualización documental. Los párrafos siguientes conservan la inspección histórica del arranque y no describen las ramas actuales.
+
 La inspección inicial del 30 de octubre encontró solo la descripción y ningún commit. La revisión del 31 de octubre ya encuentra el commit `c338a21` (`FIRTS STEPS`), con `main` y la referencia local `origin/main` apuntando a él, además de los tres documentos de planificación. No se encontró una rama `develop` local ni su referencia remota descargada. Esto no verifica por sí solo el estado actual del servidor remoto. No se verificó el tag `e3-microservice`.
 
-GOV-02 debe reutilizar ese historial, comprobar las refs y establecer `develop` cuando falte. No repetir el primer commit ni reinicializar el repositorio. La receta sin historial del flujo Git solo corresponde a un repositorio realmente nuevo.
+GOV-02 reutilizó ese historial y `develop` ya existe. No repetir el primer commit ni reinicializar el repositorio. La receta sin historial del flujo Git solo corresponde a un repositorio realmente nuevo.
 
 ## 2. Entregas y límites de alcance
 
@@ -444,6 +448,8 @@ Estos controles se apoyan en [OWASP File Upload](https://cheatsheetseries.owasp.
 
 ### 7.6 Vacantes JSearch, M3
 
+**Criterio E3 sobre el mismo proceso REST:** contar tres operaciones de negocio, no los health checks: `GET /api/v1/jobs`, `GET /api/v1/jobs/details` y `POST /api/v1/analyses` con fuente `jsearch`. Las tres exigen JWT de usuario en la API; la web consume búsqueda, detalle y análisis. La API obtiene búsqueda/detalle de JSearch mediante HTTPS y usa el Skill Engine existente para calcular el análisis. La integración de tercero solo queda demostrada con una llamada real autorizada y su respuesta normalizada; fixtures y mocks prueban comportamiento, pero no acreditan consumo live. Los nombres finales y DTOs deben quedar en OpenAPI durante CTR-02/JSR-01 antes de implementar M3.
+
 1. Web envía filtros de búsqueda a la API.
 2. Adaptador JSearch construye parámetros en un host fijo, agrega credenciales y aplica presupuesto de solicitudes.
 3. Normaliza cada resultado a `provider,providerId,title,company,location,description,applyUrl,fetchedAt` y campos de paginación comprobables.
@@ -453,6 +459,8 @@ Estos controles se apoyan en [OWASP File Upload](https://cheatsheetseries.owasp.
 7. El resultado usa el mismo componente React y Analysis DTO del flujo manual.
 
 La documentación primaria de [JSearch](https://rapidapi.com/letscrape-6bRBa3QguO5/api/jsearch) describe búsqueda, detalle y autenticación con encabezados RapidAPI. Este plan no fija cuotas, precio ni permiso de almacenamiento: JSR-01 debe verificar el plan disponible para la cuenta y documentar retención, caché, atribución y uso de resultados derivados.
+
+**Evidencia y entrega E3:** JSR-02/03 deben completar `apps/api/README.md` con propósito, instalación y arranque, variables de entorno y tabla de los tres endpoints (método, ruta, autenticación, ejemplo y respuesta esperada). Añadir pruebas HTTP automatizadas de éxito, 401 sin JWT, errores del proveedor y el flujo API → JSearch normalizado → análisis, más una colección `.http` reproducible con respuestas esperadas y datos sintéticos. QA-04 registra por separado pruebas automatizadas con fixtures y una prueba real acotada de JSearch, además del recorrido web → API. REL-03 comprueba repositorio y evidencia, y prepara el tag adicional `e3-microservice` sobre el commit exacto evaluable, junto a `v0.3.0` si coinciden; solo el integrador humano publica los tags tras aprobar el corte. Si el acceso live está bloqueado, no declarar E3 cumplida ni crear un tag que sugiera esa conformidad: registrar el faltante y conservar la demo identificada como fixture. El enlace del repositorio es obligatorio para la entrega; un enlace de despliegue solo si existe.
 
 **Puerta de entrada obligatoria para M3:** antes de persistir descripciones o resultados derivados, completar la matriz de permisos del proveedor. Si un permiso no está claro, deshabilitar esa persistencia y no activar el flujo que depende de ella. Texto manual sigue funcionando. No presentar un modo con fixtures como integración real con JSearch.
 
@@ -649,24 +657,21 @@ El backlog contiene IDs, dependencias y asignación por olas. No se asignan fech
 
 ## 13. Configuración y operación local
 
-| Variable propuesta | Dónde existe | Nota |
+| Variable | Dónde existe | Estado y nota |
 | --- | --- | --- |
-| NODE_ENV / APP_ENV | Servicios | Modo local, test o eventual producción explícito. |
-| DATABASE_URL | API y migrador | Nunca en web; cuenta de migraciones distinta si procede. |
-| AUTH_PRIVATE_KEY_PATH / AUTH_PUBLIC_KEY_PATH | API | Claves generadas localmente, ignoradas por Git. |
-| AUTH_ISSUER / AUTH_AUDIENCE | API | Valores coherentes con validación. |
-| AUTH_ACCESS_TTL_SECONDS / AUTH_REFRESH_MAX_AGE_SECONDS | API | 900 y 604800 iniciales. |
-| WEB_ORIGIN / COOKIE_SECURE | API | Origen exacto; modo inseguro solo local. |
-| SKILL_ENGINE_BASE_URL / SKILL_ENGINE_SERVICE_KEY | API | Host controlado, credencial distinta de JWT/JSearch. |
-| SKILL_ENGINE_SERVICE_KEY | Engine | Comparación segura y arranque que falla si falta. |
-| CV_STORAGE_DIR / CV_MAX_BYTES | API | Volumen privado; 5 MiB iniciales. |
-| JSEARCH_ENABLED / JOBS_PROVIDER_MODE | API | Desactivado hasta M3; live o fixtures, visible en la UI. |
-| RAPIDAPI_KEY / JSEARCH_BASE_URL | API | Secreto y host permitido; no disponibles para React. |
-| LOG_LEVEL | Servicios | Redacción de cookies, Authorization, contraseñas y cuerpos sensibles. |
+| NODE_ENV / HOST / PORT | API y engine | Implementadas; modo de ejecución, interfaz y puerto. |
+| DATABASE_URL | API y migrador/seed | Implementada; nunca en web o engine. |
+| AUTH_PRIVATE_KEY_FILE / AUTH_LOCAL_HTTP | API | Implementadas; clave local ignorada por Git y cookie HTTP solo en entorno local permitido. |
+| CORS_ALLOWED_ORIGINS | API | Implementada; lista exacta de orígenes permitidos. |
+| ENGINE_URL / ENGINE_SERVICE_SECRET | API | Implementadas; URL interna y credencial distinta del JWT del usuario. |
+| ENGINE_SERVICE_SECRET | Engine | Implementada; misma credencial que usa la API. |
+| TEST_DATABASE_URL | Pruebas API | Implementada; DB aislada para pruebas de integración. |
+| CV_STORAGE_DIR / CV_MAX_BYTES | API | Propuestas para M2; volumen privado y límite de 5 MiB. |
+| JSEARCH_ENABLED / JOBS_PROVIDER_MODE / RAPIDAPI_KEY / JSEARCH_BASE_URL | API | Propuestas para M3, sujetas a JSR-01; no existen en la implementación actual. Nunca en React. |
 
 En frontend, cualquier variable VITE_* se considera pública. Usar rutas relativas elimina la necesidad de exponer direcciones internas.
 
-Comandos que deberá entregar FND-01/OPS-01: instalación con lockfile, generación de claves locales, migraciones, seed idempotente, desarrollo, lint, typecheck, pruebas, build y Compose completo. Son comandos objetivo; no se presentan como ya existentes.
+FND-01/OPS-01 ya entregaron instalación con lockfile, generación de claves locales, migraciones, seed idempotente, comandos de desarrollo, lint, typecheck, pruebas, build y Compose. La [guía local](SETUP_LOCAL.md) contiene los comandos vigentes. La aceptación completa del recorrido M1 y del stack Compose sigue pendiente de las tareas de QA y release.
 
 No agregar scripts que borren volúmenes por defecto. Reiniciar la base o borrar CV requiere un comando explícito documentado. El setup usa datos sintéticos y detecta configuración incompleta con mensajes claros.
 
@@ -706,7 +711,7 @@ Al iniciar cada entrega, registrar una decisión breve con contexto, opciones, e
 
 ## 16. Siguiente acción recomendada
 
-Usar el [índice de lotes](LOTES_PARA_IAS.md). El lote 00 prepara las carpetas y el lote 01 organiza GOV-01/GOV-02; integrar STR-01 cuando exista develop. Después integrar FND-01, CTR-01 y CAT-01. A partir de ahí, P1 y P2 pueden implementar módulos independientes mientras P3/P4/P5 aportan contenido, documentación y aceptación mediante sus propias ramas. El [backlog](TAREAS_PARA_IAS.md) contiene los encargos listos para adaptar a otra IA y el [flujo GitHub](FLUJO_GITHUB.md) define su recorrido hasta merge.
+Usar el [índice de lotes](LOTES_PARA_IAS.md) y comprobar los merges reales. En la revisión del 2 de noviembre de 2026, ANL-03 y la extensión de evidencia están en `develop`; continuar las tareas pendientes ANL-02/ANL-04 del lote 05 y, tras integrarlas, iniciar el lote 06. CTR-02, aún pendiente dentro del lote 06, preparará los contratos propuestos para E3; los lotes 08–09 ejecutarán y verificarán el resto de la rúbrica. El [backlog](TAREAS_PARA_IAS.md) conserva responsables y dependencias; el [flujo GitHub](FLUJO_GITHUB.md) define la integración y publicación.
 
 ## Analysis público y evidencia (extensión M1)
 

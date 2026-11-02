@@ -1,8 +1,8 @@
 # ADR 0004 — Evidencia pública opcional de Analysis
 
 - Fecha: 2026-11-01.
-- Estado: implementación local autorizada por Emanuel, quien comunica la aprobación de Omar; pendiente revisión y merge del PR.
-- Alcance: M1, contrato público y API. ANL-02/Karen se adapta después del merge, no en esta rama.
+- Estado: contrato y API integrados en `develop` mediante PR #22 (`50d2b26`); la adaptación de ANL-02 sigue pendiente.
+- Alcance: M1, contrato público y API. ANL-02/Karen se adapta después de este merge.
 
 ## Decisión
 
@@ -16,7 +16,7 @@ POST201/replay200 y GET propio comparten la proyección. Listado mantiene Analys
 
 ## Compatibilidad y consumidores
 
-Los DTO antiguos sin propiedad siguen válidos en1.1.0. Clientes tolerantes la ignoran; validadores antiguos additionalProperties:false sí rechazan nuevas respuestas. Se actualizan artefactos generados, ejemplos y validadores estrictos del repo; tests lo comprueban explícitamente. No se promete compatibilidad con consumidores estrictos externos no inventariados. El cliente web integrado aún no consume Analysis funcional; su cast genérico no rechaza propiedades. La UI local de Karen se conserva y se adaptará tras integrar este PR. Antes de desplegar frente a otros clientes, Omar debe confirmar sus versiones/validadores y actualizar lectores primero; si no es posible, se requiere otra decisión de negociación/versionado, no relajar esquemas silenciosamente.
+Los DTO antiguos sin propiedad siguen válidos en1.1.0. Clientes tolerantes la ignoran; validadores antiguos additionalProperties:false sí rechazan nuevas respuestas. Se actualizaron artefactos generados, ejemplos y validadores estrictos del repo; tests lo comprueban explícitamente. No se promete compatibilidad con consumidores estrictos externos no inventariados. El cliente web integrado aún no consume Analysis funcional; su cast genérico no rechaza propiedades. ANL-02 debe adaptar la UI al contrato ya integrado. Antes de desplegar frente a otros clientes, Omar debe confirmar sus versiones/validadores y actualizar lectores primero; si no es posible, se requiere otra decisión de negociación/versionado, no relajar esquemas silenciosamente.
 
 ## Seguridad, límites y reversión
 
@@ -24,6 +24,6 @@ El JSONB se trata como unknown y se reconstruyen solo propiedades permitidas; nu
 
 La reversión consiste en retirar la emisión desde el mapper mediante PR revisado manteniendo esquema opcional/cliente tolerante; sin borrar columnas, registros ni migraciones. Si se revierte también el contrato, regenerar tipos/huella y comprobar consumidores. No reset/force push.
 
-## Validación y puertas pendientes
+## Validación histórica y puertas pendientes
 
-Unitarias de proyección/límites/Unicode, contratos con y sin campo/negativos, API+engine+PG reales, replay/historia/cuentas/404/lista y suites generales. PG16 se ejecutará en CI; el entorno local solo dispone de18.3. No declarar CI/revisión humana hasta comprobarlos. ANL-04 y lote06 mantienen sus dependencias. JSearch futuro deberá verificar permisos de derivados; rutas usan gaps/snapshots, no evidencia textual.
+Antes del merge se ejecutaron unitarias de proyección/límites/Unicode, contratos con y sin campo/negativos, API+engine+PG reales, replay/historia/cuentas/404/lista y suites generales. El registro original usó PostgreSQL 18.3 local y dejó CI con PostgreSQL 16 pendiente de comprobar; este ADR no afirma un resultado de CI posterior. ANL-02/04 y lote 06 mantienen sus dependencias. JSearch futuro deberá verificar permisos de derivados; rutas usan gaps/snapshots, no evidencia textual.

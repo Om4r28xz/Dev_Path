@@ -25,7 +25,7 @@ Equipo:
 P1 backend/DB; P2 frontend/engine/infra/CI; P3 catálogo/contenido; P4 contratos/documentación; P5 aceptación. Son marcadores de personas, no identidades de Git para suplantar. Una IA puede asistir en varias áreas del lote, pero cada tarea conserva responsable y revisor humanos. No estás solo en el repositorio: no reviertas ni sobrescribas cambios ajenos.
 
 Git y ejecución por tarea:
-1. Inspecciona git status, historial y ramas reales. Al preparar estos prompts se observó main/origin/main en c338a21 y no develop local; vuelve a verificar, porque puede cambiar.
+1. Inspecciona git status, historial y ramas reales. El 2 de noviembre se observó `develop`/`origin/develop` en `50d2b26`; vuelve a verificar antes de actuar, porque puede cambiar.
 2. El lote es una agenda de hasta cinco tareas, no una rama gigante. Cada tarea conserva su rama exacta y PR del backlog; salvo bootstrap/release, nace del develop actualizado y vuelve a develop.
 3. Una dependencia cuenta como integrada cuando su commit está en develop. Un directorio vacío, un informe de otra IA o una rama sin merge no satisfacen la dependencia.
 4. Ejecuta las tareas en el orden indicado cuando estén listas. Si falta una dependencia, registra qué commit/PR falta; continúa solo tareas independientes Ready de este lote. No inventes un contrato, no simules un merge y no cambies a tareas de otro lote.
@@ -55,13 +55,14 @@ No marques el lote completo si faltan merges, aceptación o publicación humana 
 ## Detalles técnicos y orden de este lote
 
 Objetivo: estabilizar M2 y entregar integración JSearch controlada, preservando análisis manual.
+La entrega E3 usa el proceso REST `apps/api` consumido por la web para el módulo de vacantes de DevPath; no cambia el Skill Engine ya integrado. Los tres endpoints de negocio a demostrar son GET /api/v1/jobs, GET /api/v1/jobs/details y POST /api/v1/analyses con fuente jsearch. Los health checks no cuentan. Todos requieren JWT y la API consume JSearch live con credencial solo en servidor cuando JSR-01 confirme acceso permitido. La Actividad 3 se refiere a la aprobación del proyecto, no del módulo por separado.
 Orden REL-02 → JSR-01 → JSR-02 → JSR-03 → JSR-04. JSR-01 puede investigarse antes porque solo depende de REL-01; no implica habilitar M3 ni pagar.
 REL-02 prepara release0.2 con upgrade de DB desde0.1, CV privado, volumen y regresión; humano integra main, tag v0.2.0 y sincroniza develop antes de implementar M3.
 JSR-01: docs/provider/JSEARCH.md con fuente oficial y fecha: endpoints, parámetros, paginación, encabezados RapidAPI, cuota real de la cuenta, acceso cero pesos, atribución, caché, retención de texto y resultados derivados. No extrapolar permisos ni contratar. Incertidumbre de permisos mantiene live desactivado.
-JSR-02: JobsProvider con adaptadores live/fixtures, GET /jobs?q&location&page y /jobs/details?providerId. Host fijo, RAPIDAPI_KEY solo API; timeouts y errores normalizados, presupuesto y paginación demostrable; nunca URL arbitraria del cliente. Fixtures sintéticos en CI y modo visible.
-JSR-03: fuente {type:"jsearch",providerId:"..."} en POST /analyses, resuelta en servidor y procesada por orquestador/engine de M1; mismo DTO e idempotencia, sin segundo algoritmo. No persistir texto ni derivados si permiso no confirmado; rechazar operación dependiente y conservar texto manual.
+JSR-02: JobsProvider con adaptadores live/fixtures, GET /jobs?q&location&page y /jobs/details?providerId. Host fijo, RAPIDAPI_KEY solo API; timeouts y errores normalizados, presupuesto y paginación demostrable; nunca URL arbitraria del cliente. Fixtures sintéticos en CI y modo visible. Probar HTTP 200/401 y documentar propósito, setup, variables y endpoints en apps/api/README.md sin declarar completado el análisis de JSR-03.
+JSR-03: fuente {type:"jsearch",providerId:"..."} en POST /analyses, resuelta en servidor y procesada por orquestador/engine de M1; mismo DTO e idempotencia, sin segundo algoritmo. No persistir texto ni derivados si permiso no confirmado; rechazar operación dependiente y conservar texto manual. Completar tabla de los tres endpoints en README y colección .http reproducible con requests, autenticación y respuestas esperadas sintéticas. Probar 201/401, integración con proveedor simulado y, por separado, llamada real autorizada a JSearch.
 JSR-04: búsqueda, filtro, detalle, atribución y CTA analizar al componente AnalysisResult compartido; debounce/envíos controlados, error de cuota/timeout y fixture/live visible.
-Pruebas: proveedor200/vacío/429/timeout/JSON inválido y no filtración de key; prueba live acotada sin costo solo con acceso permitido; no afirmar integración live por probar mocks.
+Pruebas: proveedor200/vacío/429/timeout/JSON inválido y no filtración de key; 401 sin JWT en las tres operaciones; prueba live acotada sin costo solo con acceso permitido; no afirmar integración live por probar mocks. Una llamada real y su respuesta normalizada deben quedar evidenciadas para E3.
 Si no hay acceso permitido cero pesos: producir adaptador/fixtures explícitos y documentar live pendiente. No completar silenciosamente el criterio live; rutas de M4 pueden seguir con análisis manuales.
 
 ## Tareas exactas y criterios de aceptación
@@ -90,20 +91,20 @@ Si no hay acceso permitido cero pesos: producir adaptador/fixtures explícitos y
 - **Responsable:** P1.
 - **Dependencias:** JSR-01, REL-02, CTR-02.
 - **Rama:** `feature/jsr-02-jobs-provider-api`.
-- **Archivos:** módulo jobs, interfaz JobsProvider, adaptadores live/fixtures y tests.
+- **Archivos:** módulo jobs, interfaz JobsProvider, adaptadores live/fixtures, tests y `apps/api/README.md`.
 - **Encargo:** búsqueda/detalle normalizados, host fijo, key en servidor, límites de consultas y tiempo, mapeo de errores. Persistencia/caché solo según JSR-01.
-- **Aceptación:** nunca entrega credencial al navegador; distingue modo fixture/live; no llama URLs arbitrarias; respeta paginación realmente soportada.
-- **Validación:** fixtures de 200, vacío, 429, timeout y JSON inválido. Prueba live manual acotada solo con acceso permitido y sin contratar.
+- **Aceptación:** GET `/api/v1/jobs` y GET `/api/v1/jobs/details` requieren JWT y devuelven 401 sin él; nunca entrega credencial al navegador; distingue modo fixture/live; no llama URLs arbitrarias; respeta paginación realmente soportada. README de API incluye propósito, setup, variables y tabla E3 parcial.
+- **Validación:** pruebas HTTP con fixtures de 200, vacío, 429, timeout y JSON inválido, y 401 sin JWT. Prueba live manual acotada solo con acceso permitido y sin contratar.
 
 ### JSR-03 — Analizar vacante del proveedor con engine existente
 
 - **Responsable:** P1.
 - **Dependencias:** JSR-02, ANL-01, CTR-02.
 - **Rama:** `feature/jsr-03-provider-analysis`.
-- **Archivos:** fuente jsearch de analyses, reglas de persistencia y tests.
+- **Archivos:** fuente jsearch de analyses, reglas de persistencia, tests, README de API y colección `.http` con respuestas esperadas.
 - **Encargo:** resolver providerId en servidor, obtener texto permitido, reutilizar orquestación e instantáneas según permisos. No implementar otro score.
-- **Aceptación:** devuelve Analysis DTO común; sin providerId falso como texto de confianza; caída del proveedor no rompe análisis manual. Se rechaza la ruta si permisos de persistencia requeridos siguen pendientes.
-- **Validación:** fuente manual sigue pasando, proveedor válido, ID inválido, cuota y timeout, y guardado permitido verificable.
+- **Aceptación:** POST `/api/v1/analyses` con fuente jsearch es la tercera operación E3, requiere JWT y devuelve Analysis DTO común; sin providerId falso como texto de confianza; caída del proveedor no rompe análisis manual. Se rechaza la ruta si permisos de persistencia requeridos siguen pendientes. README y colección explican tres operaciones y respuestas.
+- **Validación:** pruebas HTTP de 201/401; fuente manual sigue pasando, proveedor válido, ID inválido, cuota y timeout, y guardado permitido verificable. Registrar llamada live solo si hay acceso autorizado.
 
 ### JSR-04 — Pantalla de búsqueda y selección
 

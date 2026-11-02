@@ -1,6 +1,6 @@
 # Matriz de aceptación M1 — QA-01
 
-Estado inicial: todos los casos **no ejecutados**. Esta matriz define esperados; no certifica M1 completo. Base contractual: OpenAPI público/interno 1.0.0; catálogo 1.0.0. Endpoints públicos bajo `/api/v1`. Las dependencias posteriores indican casos aún no ejecutables en lote 03.
+Estado de la matriz: todos los resultados siguen marcados **no ejecutados** hasta que P5 registre evidencia de QA-02; esta matriz define esperados y no certifica M1 completo. Los contratos vigentes son OpenAPI público 1.1.0 e interno 1.0.0; el catálogo es 1.0.0. Endpoints públicos bajo `/api/v1`. Algunos casos requieren las pantallas de ANL-02/04 aún pendientes.
 
 Usar DB de prueba aislada, dos contextos de navegador A/B y datos sintéticos. No usar cuentas/volúmenes de demo para inyectar fallos. Contraseñas aquí son exclusivamente datos de prueba. Antes de cada ejecución registrar commit, Windows/Node/navegador, versión catálogo, fecha, ejecutor y precondiciones. Conservar evidencia saneada sin cookies/tokens.
 

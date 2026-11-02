@@ -1,7 +1,12 @@
-# Base de datos
+# Database
 
-Esquemas, migraciones y semillas versionadas para PostgreSQL. La API será su único consumidor de ejecución.
+This package contains the PostgreSQL schemas, versioned migrations, connection pool, catalog seed, and test factory used by DevPath. The M1 database foundation is implemented; the API is the only application process that accesses PostgreSQL. Migrations for projects, CV, jobs, and learning paths belong to later milestones.
 
-- Responsable humano: P1.
-- Etapas: base M0 y evolución de datos M1–M4.
-- Estado: paquete reservado por FND-01; esquema y migraciones pendientes de DAT-01.
+From the repository root, configure `DATABASE_URL` for a DevPath database, then run:
+
+```powershell
+pnpm --filter @devpath/db migrate
+pnpm --filter @devpath/db seed
+```
+
+Use a separate database for integration tests. See the [local setup guide](../../docs/SETUP_LOCAL.md). Owner: P1.

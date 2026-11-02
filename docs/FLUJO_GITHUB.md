@@ -1,8 +1,8 @@
 # DevPath: ramas, commits, PRs y colaboración con IAs
 
-Este flujo es una propuesta concreta basada en la preferencia del equipo: cada feature nace de `develop`, se revisa y vuelve a `develop`. Está adaptado a dos personas programando, tres contribuyendo contenido/documentación/aceptación y una aplicación local sin despliegue obligatorio.
+Este flujo documenta la preferencia del equipo: cada feature nace de `develop`, se revisa y vuelve a `develop`. Está adaptado a dos personas programando, tres contribuyendo contenido/documentación/aceptación y una aplicación local sin despliegue obligatorio. `develop` ya existe; la sección 3 conserva únicamente la secuencia histórica de bootstrap.
 
-Ver [plan técnico](PLAN_DE_IMPLEMENTACION.md), [backlog de 50 tareas](TAREAS_PARA_IAS.md) e [índice de lotes con prompts](LOTES_PARA_IAS.md). Los comandos son instrucciones para la implementación futura; redactar este plan no crea ramas, commits, PRs ni configuraciones remotas.
+Ver [plan técnico](PLAN_DE_IMPLEMENTACION.md), [backlog de 50 tareas](TAREAS_PARA_IAS.md) e [índice de lotes con prompts](LOTES_PARA_IAS.md). Los comandos de ejemplo no constituyen evidencia de ejecución; verificar siempre el estado real de Git.
 
 ## 1. Ramas y significado
 
@@ -42,11 +42,11 @@ flowchart TD
 
 Una release no crea una nueva línea de features; es un corte estable del trabajo ya integrado. Mientras se estabiliza, se congela el merge de nuevas features en develop para simplificar la operación del equipo.
 
-## 3. Arranque: reutilizar el historial existente
+## 3. Arranque histórico: reutilización del historial existente
 
 ### 3.1 Inspección antes de escribir historial
 
-La inspección inicial del 30 de octubre no encontró historial; la revisión del 31 de octubre sí observa `c338a21` (`FIRTS STEPS`) en main y la referencia local origin/main. No se encontró develop local. GOV-02 reutiliza ese commit y verifica remoto/refs antes de establecer develop. No repetir un primer commit ni reinicializar este repositorio.
+La inspección inicial del 30 de octubre no encontró historial; la revisión del 31 de octubre sí observó `c338a21` (`FIRTS STEPS`) en main y la referencia local origin/main. Entonces no se encontró develop local. GOV-02 reutilizó ese historial y `develop` existe desde entonces. Los pasos de esta sección son históricos y no se vuelven a ejecutar en este repositorio.
 
 GOV-02 debe comprobar, desde el repositorio correcto:
 
@@ -60,7 +60,7 @@ Si origin no existe o no apunta al repositorio del equipo, configurarlo con la U
 
 Si el remoto ya tiene commits, traerlo y reconciliar la base antes de continuar. No crear un historial incompatible ni usar force push para sobrescribirlo. La receta siguiente solo corresponde al caso de repositorio remoto sin historial que se confirme.
 
-### 3.2 Caso actual: crear develop sin repetir el primer commit
+### 3.2 Caso histórico: crear develop sin repetir el primer commit
 
 Si después de verificar el remoto develop no existe y main es la base válida, crear develop desde esa main y publicarla mediante la cuenta autorizada. Si ya existe en remoto, descargarla y seguirla. El resto de GOV-02 se entrega por PR normal; STR-01 preparado por el lote 00 se integra por su propio PR antes de FND-01. Conservar cambios locales sin incluirlos accidentalmente en otra tarea.
 
@@ -356,7 +356,7 @@ Asignar a cada IA su ruta exacta. Ese ejemplo solo se usa si las ramas no existe
 
 Cada worktree necesita dependencias instaladas y recursos de prueba aislados. No apuntar tests de dos tareas a la misma DB mutable. Usar DB/puertos o proyectos Compose distintos con nombres por tarea, y no reutilizar el volumen de datos de la demo como DB de prueba.
 
-El integrador mantiene una tabla:
+Ejemplo histórico de la tabla que puede mantener el integrador (no refleja el estado actual de AUTH-01/WEB-01):
 
 | Tarea | Persona/IA | Rama | Carpeta | Archivos compartidos reservados | Estado |
 | --- | --- | --- | --- | --- | --- |

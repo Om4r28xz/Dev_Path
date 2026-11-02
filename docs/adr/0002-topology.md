@@ -5,6 +5,8 @@
 - Clasificación: topología del Skill Engine confirmada; organización de auth aceptada como propuesta técnica
 - Responsables de revisión: P1, P2 y P4
 
+Nota de estado (2 de noviembre de 2026): la API, el engine y la llamada interna de análisis ya existen. JSearch sigue previsto para M3. Las referencias a FND-01 y revisiones pendientes más abajo corresponden al momento en que se redactó este ADR.
+
 ## Contexto
 
 El navegador necesita una única API pública. El Skill Engine debe poder evolucionar y probarse sin acceder a datos personales ni a PostgreSQL. La descripción inicial dejaba abierta la separación física de autenticación y no establecía con precisión quién debía llamar a JSearch.

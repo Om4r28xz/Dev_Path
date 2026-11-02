@@ -5,6 +5,8 @@
 - Clasificación: decisiones de producto confirmadas y límites propuestos para su ejecución
 - Responsables de revisión: P1, P2 y P4
 
+Nota de estado (2 de noviembre de 2026): este ADR registra la decisión tomada al iniciar M0. M0 ya está integrado y M1 está en desarrollo; las frases sobre estado de implementación más abajo describen el momento de la decisión, no el estado actual.
+
 ## Contexto
 
 DevPath ayuda a estudiantes y desarrolladores junior a comparar sus habilidades con las tecnologías solicitadas en una vacante. El repositorio se encuentra en M0: los documentos describen el producto planeado, pero no demuestran que sus funciones estén implementadas.
