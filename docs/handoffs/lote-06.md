@@ -1,4 +1,30 @@
-# Handoff lote 06 — bloqueado por integraciones pendientes
+# Handoff lote 06 — estado vigente y registro histórico
+
+## Estado verificado al resolver PR #27 — 2026-11-02
+
+Fetch de origin/develop: **34a2242**. PR #27 sigue abierto; su rama publicada es test/qaa-01-mvp-e2e (8785173 antes del merge de actualización). Se integra origin/develop únicamente en esa rama mediante merge normal, sin rebase ni modificación de develop/main.
+
+| Tarea  | Estado vigente                                   | Dependencia o siguiente acción                                                                      |
+| ------ | ------------------------------------------------ | --------------------------------------------------------------------------------------------------- |
+| QAA-01 | Implementada y publicada en PR #27; no integrada | Handoff unificado y pruebas locales aprobadas; publicación del merge, CI nuevo y revisión de Omar.  |
+| QA-02  | Bloqueada; no completada                         | Requiere QAA-01 realmente integrada en origin/develop; después aceptación técnica y humana P5.      |
+| DOC-02 | Integrada por PR #28, merge 34a2242 (38b7c7d)    | Arquitectura y README conservados íntegros desde develop.                                           |
+| REL-01 | Bloqueada; M1 no liberada                        | QA-02 integrada, aceptación humana, reproducción y bloqueantes resueltos. DOC-01/DOC-02 integradas. |
+| CTR-02 | Bloqueada; contratos futuros intactos            | Release publicada/tag y sincronización main→develop comprobados.                                    |
+
+ANL-04 (e628ce4, PR #25), ANL-01/02/03, PRO-02 y evidence están integradas. Los bloqueos antiguos ANL-04/QAA-01 descritos abajo son históricos: ya no bloquean comenzar QAA-01, pero su PR todavía no está integrado. Los resultados locales no sustituyen CI PostgreSQL16, Docker Compose o aceptación humana. CI del commit previo 8785173 está aprobado, incluido PostgreSQL16; la nueva revisión remota del merge sigue pendiente. Docker Compose y aceptación humana continúan pendientes. E3/JSearch corresponde a M3 y no se convierte en criterio de release M1.
+
+El conflicto fue de adición al mismo final del archivo: QAA-01 frente a DOC-02. Se conservaron las dos contribuciones, las decisiones de Omar, pruebas y pendientes; README y ARCHITECTURE.md entran sin modificaciones adicionales.
+
+## Validación de esta resolución
+
+Node22.23.4/pnpm11.22.0: lint, format:check, typecheck y build aprobados. pnpm test: web97/API118/engine51 y privacidad2; catálogo30, OpenAPI2 documentos/19 ejemplos aprobados. E2E4/4 en Chromium con API/engine y PostgreSQL18.3 reales; usuarios/análisis residuales0/0. Base dedicada conservada; procesos propios detenidos. Diff sin whitespace inválido, sin marcadores ni otros archivos unmerged. No existe script real de validación documental en Docs workflow (solo echo): se usó Prettier explícito, validación de contratos y comprobación de preservación de contenidos.
+
+README.md y ARCHITECTURE.md son idénticos a origin/develop34a2242; runner, tests E2E y workflow CI son idénticos a QAA-01 anterior. Se preserva la base histórica y ambas secciones de tareas, actualizando solo estados comprobados. CI previo: [Actions41513742076](https://github.com/Om4r28xz/Dev_Path/actions/runs/41513742076). No se afirma CI nuevo aprobado ni M1 liberada.
+
+## Registro histórico anterior a la integración de DOC-02
+
+Los siguientes estados, bases y resultados conservan su fecha original. La tabla vigente anterior y las secciones QAA-01/DOC-02 posteriores los sustituyen para decisiones operativas.
 
 Fecha: 1 de noviembre de 2026. Base origin/develop659e305. PR9 y lote04 integrados; verificar evidencia en lote-05.md. No hay cambios funcionales de lote06, ramas de tareas06, PR de release ni tag creados.
 
@@ -34,13 +60,13 @@ Auditoría de la versión integrada: lint/formato/typecheck/build aprobados; web
 
 ANL-04 local pasó lint/formato/typecheck/build; web 97/API 118/motor 51 y navegador real con historial propio, cursor20+3 sin duplicados/huecos a timestamps iguales, confirmación/cancelación/foco, persistencia/404/cuentas y fallos de red/retry. El defecto de foco al cancelar surgió en la feature nueva y se corrigió allí. Estos resultados no equivalen a CI remoto ni integración de ANL-04.
 
-| Tarea | Estado verificado | Dependencias y siguiente acción |
-| --- | --- | --- |
-| QAA-01 | Bloqueada | ANL-04 sin merge. AUTH-03/OPS-01/CI-01 integradas. Tras merge verificado, crear test/qaa-01-mvp-e2e desde develop actualizado. |
-| QA-02 | Bloqueada | QAA-01 sin integrar. No crear M1-results.md con aprobaciones supuestas; después ejecutar casos y registrar commit/observados reales. |
-| DOC-02 | Bloqueada | ANL-04 sin merge; AUTH-02/ENG-02 integradas. Tras ANL-04 puede avanzar en rama separada y en paralelo a QAA-01. |
-| REL-01 | Bloqueada | Faltan QA-02 y DOC-02 integradas, aceptación y bloqueantes resueltos. DOC-01 integrada; reproducción Compose pendiente en este entorno. Sin release/0.1.0 ni changelog/tag creados. |
-| CTR-02 | Bloqueada | REL-01 no publicada; falta tag/historial/sincronización main→develop verificados. No modificar OpenAPI futuro. |
+| Tarea  | Estado verificado | Dependencias y siguiente acción                                                                                                                                                     |
+| ------ | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| QAA-01 | Bloqueada         | ANL-04 sin merge. AUTH-03/OPS-01/CI-01 integradas. Tras merge verificado, crear test/qaa-01-mvp-e2e desde develop actualizado.                                                      |
+| QA-02  | Bloqueada         | QAA-01 sin integrar. No crear M1-results.md con aprobaciones supuestas; después ejecutar casos y registrar commit/observados reales.                                                |
+| DOC-02 | Bloqueada         | ANL-04 sin merge; AUTH-02/ENG-02 integradas. Tras ANL-04 puede avanzar en rama separada y en paralelo a QAA-01.                                                                     |
+| REL-01 | Bloqueada         | Faltan QA-02 y DOC-02 integradas, aceptación y bloqueantes resueltos. DOC-01 integrada; reproducción Compose pendiente en este entorno. Sin release/0.1.0 ni changelog/tag creados. |
+| CTR-02 | Bloqueada         | REL-01 no publicada; falta tag/historial/sincronización main→develop verificados. No modificar OpenAPI futuro.                                                                      |
 
 La rama docs/lote-06-readiness contiene solo esta actualización y dos documentos de planificación: docs/PLAN_EJECUCION_M1.md y docs/CHECKLIST_PREPARATORIO_M1.md. No implementa tareas bloqueadas ni adelanta contratos M2. P2/P4 pueden revisar el material desde la base integrada; Omar decide su PR separado. El PR de ANL-04 tiene revisión independiente.
 
@@ -55,8 +81,19 @@ La rama docs/lote-06-readiness contiene solo esta actualización y dos documento
 
 Límites actuales: Node 22.23.4/pnpm 11.22.0; PG 18.3 local aislado. PG 16 solo en CI consultada de la base; Docker/Compose y aceptación humana no probados por esta entrega. Sin push, merge, tags ni identidad ajena. No se borra ningún trabajo anterior.
 
+## QAA-01 publicada en PR #27, pendiente de integración — 2026-11-02
 
-## DOC-02 implementada localmente — 2026-11-02
+Base c564a57: fetch confirmó ANL-04 por PR25/3b7c30e (e628ce4), preparación06 por PR26/b4c7a15, E3 por PR23/18f37ed y documentación c564a57. develop se actualizó mediante pull --ff-only en worktree temporal limpio. Se conservaron los cambios CAT-02 y borradores ANL-02 sin copiarlos. Rama test/qaa-01-mvp-e2e, worktree .worktrees/qaa-01, independiente de DOC-02.
+
+Implementada suite Playwright con cuatro escenarios reales: recorrido completo con 67%, perfil/skills, evidence, snapshot PG/historial/detalle/recarga/borrado/logout/protección; dos cuentas/404/propiedad; parada real del proceso engine y retry/key/replay sin duplicar; legacy, 0/null y HTML inerte. El runner exige DB loopback dedicada sin usuarios, migra/seed, genera clave efímera, sirve build y apaga exclusivamente sus hijos. No usa mocks internos ni modifica código de producto/contratos.
+
+Validado con Node22.23.4, pnpm11.22.0, PostgreSQL18.3 aislado y Chromium156/Playwright1.64.1: install frozen, lint, formato, typecheck (incluye tests), build; web97/API118/engine51, soporte privacidad2, catálogo30 y OpenAPI2/19 ejemplos. E2E4/4; consulta posterior users=0,analyses=0. Fallo deliberado de privacidad dio exit1 esperado y se retiró el archivo temporal; trazas/reportes inspeccionados sin passwords/JWT, incluso con campo password rellenado. Se descubrió y evitó la copia DOM automática de Playwright que incluía password; se conservan errores y trazas filtradas. Detalles/reproducción en tests/e2e/README.md.
+
+CI añade job PG16/Chromium con migración/seed/readiness/cleanup y artefactos filtrados en fallo, incluido en ci-gate junto con los cuatro checks existentes. YAML validado estructuralmente. En la entrega local original la ejecución remota y PG16 quedaron pendientes; se confirmó después éxito de esos checks para 8785173 en Actions run 41513742076. El nuevo merge requiere su propia ejecución remota. Docker Compose y aceptación humana P5 no ejecutados ni aprobados por estas pruebas. Advertencia local NO_COLOR/FORCE_COLOR solo de presentación; no se deshabilitaron checks.
+
+Estado vigente: implementada y publicada en PR #27, commit 8785173; todavía no integrada en origin/develop. Omar/P2 deben revisar runner, lockfile, CI y artefactos; P1 aislamiento/SQL; P5 mantiene aceptación humana. QA-02 sigue bloqueada hasta verificar QAA-01 en origin/develop. DOC-02 ya está integrada por PR #28 (34a2242, commit 38b7c7d); REL-01 necesita QA-02/DOC-02/DOC-01 integradas y aceptación; CTR-02 necesita publicación/sincronización REL-01. No se crearon release, tags ni contratos futuros. E3/JSearch corresponde a M3, no bloquea pruebas M1.
+
+## DOC-02 integrada por PR #28 — 2026-11-02
 
 Rama docs/doc-02-mvp-architecture, worktree .worktrees/doc-02, desde c564a57 de origin/develop. ANL-04 ya integrada por PR25; AUTH-02/ENG-02 y ANL-01/02/03/evidence también están integradas. Se conserva el registro histórico anterior: sus bloqueos ANL-04 no describen la base actual. DOC-02 no incluye cambios de QAA-01, contrato ni código de producto.
 
@@ -64,4 +101,4 @@ ARCHITECTURE.md documenta componentes reales, auth/tokens/cookies/rotación/logo
 
 Validación: correspondencia manual con routers, esquemas Zod/OpenAPI, repositorios/servicios/config, extractor/scorer, migraciones0000–0003, proxy/Compose y ADR0001–0004; enlaces Markdown locales existentes; tres diagramas parseados y renderizados en Chromium con Mermaid11.12.1 externo a dependencias del producto; formato de documentos nuevos/README y diff sin errores de whitespace. No se ejecutaron tests de código en esta rama documental ni Docker/CI remoto: no son resultados inferidos de otra rama.
 
-Estado: implementada localmente, pendiente de publicación/revisión/integración según reporte de entrega. P1/P2 revisan conexiones/seguridad/configuración; P4 fidelidad de DTOs y límites; Omar integra el PR independiente. QAA-01 se entrega en otra rama: no se presupone su merge. QA-02 depende de ese merge; REL-01 también exige QA-02/DOC-02/DOC-01 integradas, aceptación humana y reproducción; CTR-02 espera release/tag/sincronización. Sin release ni tags creados. Si ambos PR modifican el final del handoff, conservar ambas secciones y actualizar solo estado operativo tras cada merge.
+Estado vigente: publicada e integrada en origin/develop por PR #28, merge 34a2242, commit 38b7c7d. P1/P2 revisan conexiones/seguridad/configuración; P4 fidelidad de DTOs y límites; Omar ya integró el PR independiente. QAA-01 se entrega en otra rama: no se presupone su merge. QA-02 depende de ese merge; REL-01 también exige QA-02/DOC-02/DOC-01 integradas, aceptación humana y reproducción; CTR-02 espera release/tag/sincronización. Sin release ni tags creados. El conflicto de las dos secciones se unificó conservando ambas; los resultados históricos no equivalen a validaciones remotas nuevas.

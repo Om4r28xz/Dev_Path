@@ -61,4 +61,10 @@ export default tseslint.config(
       globals: globals.node,
     },
   },
+  {
+    files: ['tests/e2e/**/*.{ts,mts}'],
+    languageOptions: {
+      globals: { ...globals.node, ...globals.browser },
+    },
+  },
 );
