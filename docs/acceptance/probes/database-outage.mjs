@@ -122,6 +122,53 @@ try {
   const registered = await post('register', { name: 'Database Recovery', ...credentials });
   assert.equal(registered.status, 201);
   const originalId = (await registered.json()).user.id;
+  const valid = { name: 'Invalid command probe', ...credentials };
+  for (const variant of [
+    { ...valid, name: '  ' },
+    { ...valid, email: 'invalid-' + randomUUID() },
+    { ...valid, password: 'x'.repeat(11) },
+    { ...valid, password: 'x'.repeat(129) },
+    { ...valid, extra: true },
+  ])
+    assert.equal((await post('register', variant)).status, 400);
+  const headers = {
+    'Content-Type': 'application/json',
+    Origin: 'http://localhost:5173',
+    'X-DevPath-Client': 'web',
+  };
+  for (const variant of [
+    { ...headers, Origin: 'https://untrusted.example.test' },
+    { ...headers, Origin: 'null' },
+    { ...headers, Origin: '' },
+    { ...headers, 'X-DevPath-Client': '' },
+  ])
+    assert.equal(
+      (
+        await fetch(base + '/api/v1/auth/login', {
+          method: 'POST',
+          headers: variant,
+          body: JSON.stringify(credentials),
+        })
+      ).status,
+      403,
+    );
+  assert.equal(
+    (
+      await fetch(base + '/api/v1/auth/login', {
+        method: 'POST',
+        headers: { ...headers, 'Content-Type': 'text/plain' },
+        body: JSON.stringify(credentials),
+      })
+    ).status,
+    415,
+  );
+  assert.equal(
+    (await fetch(base + '/api/v1/auth/login', { method: 'POST', headers, body: '{' })).status,
+    400,
+  );
+  console.log(
+    'PASS REG-03/AUTH-SEC: invalid name/email/password11/password129/extra400; origins/client403; media415; malformed JSON400.',
+  );
   pg('-w', 'stop', '-m', 'fast');
   running = false;
   const offline = await post('login', credentials);
