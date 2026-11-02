@@ -24,7 +24,9 @@ Cada prompt contiene contexto, arquitectura, dependencias, responsables humanos,
 
 El inventario legible por herramientas está en [lotes.json](lotes.json). Las tareas detalladas siguen en [TAREAS_PARA_IAS.md](TAREAS_PARA_IAS.md); arquitectura en [PLAN_DE_IMPLEMENTACION.md](PLAN_DE_IMPLEMENTACION.md); colaboración en [FLUJO_GITHUB.md](FLUJO_GITHUB.md).
 
-Estado de esta entrega: prompts preparados y planificación actualizada. Esto no afirma que las 50 tareas estén implementadas ni integradas. La creación del árbol de aplicación corresponde a ejecutar el lote 00 y validar su salida.
+**Rúbrica E3 incorporada sin agregar tareas ni cambiar los 11 lotes:** CTR-02 (lote 06) deja propuestos los contratos de las tres operaciones de vacantes; JSR-01/02/03 (lote 08) verifican el módulo aprobado, implementan JSearch en la API y completan README, pruebas y colección; QA-04 y REL-03 (lote 09) verifican evidencia live y preparan el tag `e3-microservice`. El proceso evaluado es la API Express consumida por la web, no el Skill Engine. No se reabren tareas integradas de lotes anteriores; las tareas pendientes del lote 05 conservan sus encargos.
+
+Estado comprobado el 2 de noviembre de 2026: `develop` contiene trabajo del lote 05 hasta ANL-03 y el contrato de evidencia; ANL-02/04 y el lote 06 aún requieren completar sus dependencias y validación. Los handoffs antiguos pueden conservar estados históricos; comprobar Git antes de reanudar cualquier tarea. La incorporación de E3 es planificación, no implementación de sus endpoints ni publicación del tag.
 
 ## 2. Cómo usar un lote
 
@@ -37,9 +39,9 @@ Estado de esta entrega: prompts preparados y planificación actualizada. Esto no
 
 Una sola IA puede llevar la agenda de cinco tareas y cambiar de rama al terminar cada una. No necesita tener cinco tareas activas ni cinco contextos simultáneos. Se pueden reutilizar IAs para lotes posteriores con el handoff y el estado del repositorio como referencia.
 
-## 3. Arranque concreto de este repositorio
+## 3. Arranque histórico de este repositorio (ya superado)
 
-Ya se observó un primer commit, c338a21, en main y la referencia local origin/main. No se encontró develop en las refs locales. Los prompts deben volver a comprobarlo, no asumir que ese estado sigue igual.
+Este apartado registra la secuencia inicial de octubre. `develop` ya existe y estas acciones no deben repetirse; usar Git y los handoffs recientes para continuar desde el estado actual.
 
 Orden de arranque:
 

@@ -25,7 +25,7 @@ Equipo:
 P1 backend/DB; P2 frontend/engine/infra/CI; P3 catálogo/contenido; P4 contratos/documentación; P5 aceptación. Son marcadores de personas, no identidades de Git para suplantar. Una IA puede asistir en varias áreas del lote, pero cada tarea conserva responsable y revisor humanos. No estás solo en el repositorio: no reviertas ni sobrescribas cambios ajenos.
 
 Git y ejecución por tarea:
-1. Inspecciona git status, historial y ramas reales. Al preparar estos prompts se observó main/origin/main en c338a21 y no develop local; vuelve a verificar, porque puede cambiar.
+1. Inspecciona git status, historial y ramas reales. El 2 de noviembre se observó `develop`/`origin/develop` en `50d2b26`; vuelve a verificar antes de actuar, porque puede cambiar.
 2. El lote es una agenda de hasta cinco tareas, no una rama gigante. Cada tarea conserva su rama exacta y PR del backlog; salvo bootstrap/release, nace del develop actualizado y vuelve a develop.
 3. Una dependencia cuenta como integrada cuando su commit está en develop. Un directorio vacío, un informe de otra IA o una rama sin merge no satisfacen la dependencia.
 4. Ejecuta las tareas en el orden indicado cuando estén listas. Si falta una dependencia, registra qué commit/PR falta; continúa solo tareas independientes Ready de este lote. No inventes un contrato, no simules un merge y no cambies a tareas de otro lote.
@@ -56,7 +56,7 @@ No marques el lote completo si faltan merges, aceptación o publicación humana 
 
 Objetivo: documentar qué funciona realmente con el proveedor y generar rutas deterministas usando análisis y proyectos propios.
 Orden normal QA-04 → REL-03 → LRN-01 → LRN-02 → LRN-03. Importante: el carril LRN-01→LRN-02→LRN-03 NO depende de REL-03. Si JSearch bloquea QA-04/release, continuar aprendizaje con M1/M2 y mantener esas tareas pendientes.
-QA-04: evidencia fixture/live separada, cuotas/fallos y regresión manual. REL-03 prepara versión0.3; humano decide alcance documentado y publica/sincroniza. No etiquetar como live si solo fixture.
+QA-04: evidencia fixture/live separada, cuotas/fallos y regresión manual. Revisar cada criterio E3: vacantes aprobado en Actividad 3, tres endpoints de negocio con JWT, consumo desde web, llamada real de API a JSearch, README de API con propósito/setup/variables/tabla, pruebas HTTP o colección .http con respuestas esperadas, y enlace al repositorio. REL-03 prepara versión0.3 y el tag adicional e3-microservice sobre el commit evaluable solo si E3 cumple todo; humano decide alcance documentado y publica/sincroniza. No etiquetar como live si solo fixture ni marcar E3 cumplida sin llamada real.
 LRN-01: packages/catalog/learning-templates.json con versión, skillIds conocidos, prerequisitos sin ciclos, actividad/evidencia/recurso opcional pertinente. Conectar prácticas a proyectos existentes cuando encajen. P3 revisa contenido con P1/P5; no promesas de contratación.
 LRN-02: API genera ruta desde analysisId propio, snapshot skills+gaps, proyectos/revisión y plantillas. Expandir prerequisitos no cubiertos, orden estable y razones, transacción cabecera+pasos, idempotency key/hash. Guardar generatorVersion/templateVersion/input snapshot. Sin LLM, red externa ni cambio de score.
 LRN-03: GET lista/detalle; PATCH /learning-paths/:id/steps/:stepId {status:"pending"|"in_progress"|"completed"}; DELETE ruta. Progreso derivado; reabrir paso ajusta completed_at. Validar pertenencia de paso/ruta y owner. Completar actividad no añade skills ni acredita dominio.
@@ -71,18 +71,18 @@ Pruebas: misma entrada/versiones→misma estructura, ciclo de prerequisitos rech
 - **Dependencias:** JSR-04.
 - **Rama:** `docs/qa-04-jsearch-results`.
 - **Archivos:** resultados M3, separación de pruebas fixture/live.
-- **Encargo:** demostrar consulta, selección y análisis; verificar fallos y que el flujo manual permanece operativo. Validar que la UI no confunde fixtures con datos reales.
-- **Aceptación:** se indica qué fue probado con proveedor real; no se cierra integración live si solo hubo mocks. Limitaciones de acceso registradas.
-- **Validación:** matriz con evidencia, revisión de P1/P4 de permisos y actualización del README.
+- **Encargo:** demostrar consulta, selección y análisis; verificar fallos y que el flujo manual permanece operativo. Validar que la UI no confunde fixtures con datos reales. Preparar matriz E3 criterio → evidencia → estado.
+- **Aceptación:** se indica qué fue probado con proveedor real; no se cierra integración live si solo hubo mocks. Limitaciones de acceso registradas. La matriz cubre módulo de Actividad 3, tres endpoints con JWT, consumo web y JSearch live, README, pruebas/colección y enlace del repo.
+- **Validación:** matriz con evidencia, revisión de P1/P4 de permisos, README y colección `.http`; prueba live autorizada y acotada si existe acceso.
 
 ### REL-03 — Cerrar v0.3.0
 
 - **Responsable:** P1; P2 revisa.
 - **Dependencias:** QA-04.
 - **Rama:** `release/0.3.0` → main; después main → develop.
-- **Encargo:** release M3 con estados y permisos claros.
-- **Aceptación:** si live no se pudo completar, el alcance publicado lo declara como demo de adaptador y no cierra las issues de integración real. Si el criterio completo M3 es obligatorio, el release espera a resolver ese bloqueo.
-- **Validación:** configuración sin key mantiene M1/M2 utilizables; con modo habilitado se valida su comportamiento permitido.
+- **Encargo:** release M3 con estados y permisos claros; preparar enlace de repositorio y, solo si existe, enlace de despliegue. Tras la verificación E3, preparar el tag adicional `e3-microservice` en el commit exacto evaluable.
+- **Aceptación:** si live no se pudo completar, el alcance publicado lo declara como demo de adaptador y no cierra las issues de integración real; E3 queda pendiente. Si el criterio completo M3 es obligatorio, el release espera a resolver ese bloqueo. El integrador humano publica `e3-microservice` solo con todos los criterios E3 verificados; puede compartir commit con `v0.3.0`.
+- **Validación:** configuración sin key mantiene M1/M2 utilizables; con modo habilitado se valida su comportamiento permitido. Verificar que tag, código, README y evidencia corresponden al mismo commit.
 
 ### LRN-01 — Plantillas, prerequisitos y actividades curadas
 

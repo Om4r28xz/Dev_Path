@@ -25,7 +25,7 @@ Equipo:
 P1 backend/DB; P2 frontend/engine/infra/CI; P3 catálogo/contenido; P4 contratos/documentación; P5 aceptación. Son marcadores de personas, no identidades de Git para suplantar. Una IA puede asistir en varias áreas del lote, pero cada tarea conserva responsable y revisor humanos. No estás solo en el repositorio: no reviertas ni sobrescribas cambios ajenos.
 
 Git y ejecución por tarea:
-1. Inspecciona git status, historial y ramas reales. Al preparar estos prompts se observó main/origin/main en c338a21 y no develop local; vuelve a verificar, porque puede cambiar.
+1. Inspecciona git status, historial y ramas reales. El 2 de noviembre se observó `develop`/`origin/develop` en `50d2b26`; vuelve a verificar antes de actuar, porque puede cambiar.
 2. El lote es una agenda de hasta cinco tareas, no una rama gigante. Cada tarea conserva su rama exacta y PR del backlog; salvo bootstrap/release, nace del develop actualizado y vuelve a develop.
 3. Una dependencia cuenta como integrada cuando su commit está en develop. Un directorio vacío, un informe de otra IA o una rama sin merge no satisfacen la dependencia.
 4. Ejecuta las tareas en el orden indicado cuando estén listas. Si falta una dependencia, registra qué commit/PR falta; continúa solo tareas independientes Ready de este lote. No inventes un contrato, no simules un merge y no cambies a tareas de otro lote.
@@ -60,7 +60,7 @@ QAA-01: tests/e2e y job real Playwright; registro, login, perfil, skills, análi
 QA-02: docs/acceptance/M1-results.md con commit y resultados honestos; teclado, foco, contraste, dos pestañas y fallos. La IA puede ejecutar herramientas disponibles y preparar evidencia; no afirmar comprobación visual/manual que no realizó. P5 valida la parte humana pendiente.
 DOC-02: docs/ARCHITECTURE.md y mapa pantalla/endpoint; describir lo implementado y distinguir carpetas reservadas.
 REL-01: preparar release/0.1.0 desde develop solo con bloqueantes resueltos. Changelog/versión, migración y smoke. PR release→main con merge commit; integrador humano aprueba/mergea y etiqueta commit exacto v0.1.0; main→develop merge commit. La IA no sustituye esos pasos ni marca cierre antes de comprobarlos.
-CTR-02: ampliar OpenAPI/ejemplos de proyectos/CV; futuros jobs/rutas como propuestos hasta JSR-01/LRN-01. Multipart un PDF ≤5 MiB; download bearer attachment, limpieza y errores; CRUD propio de proyectos. Definir propuestas de jobs y ruta/progreso sin afirmar disponibilidad.
+CTR-02: ampliar OpenAPI/ejemplos de proyectos/CV; futuros jobs/rutas como propuestos hasta JSR-01/LRN-01. Multipart un PDF ≤5 MiB; download bearer attachment, limpieza y errores; CRUD propio de proyectos. Proponer las tres operaciones E3 de M3: GET /api/v1/jobs, GET /api/v1/jobs/details y POST /api/v1/analyses con fuente jsearch, todas con JWT. Incluir ejemplos y 401 sin autenticar; no afirmar que ya funcionan ni que se ha llamado al proveedor. JSR-01 confirma los detalles reales antes de implementar.
 La creación del release/PR está separada de su aprobación y tag. Si esperas al humano, escribe handoff con instrucciones exactas para completar y retomar, sin pedir que se reescriba el encargo.
 Validación: CI y E2E verdes, evidencia ligada al commit probado, setup reproducible y ningún mock entre servicios internos en la demostración feliz.
 
@@ -112,7 +112,7 @@ Validación: CI y E2E verdes, evidencia ligada al commit probado, setup reproduc
 - **Rama:** `docs/ctr-02-extended-contracts`.
 - **Archivos:** OpenAPI y ejemplos de proyectos/CV/jobs/learning paths.
 - **Encargo:** contratos de M2 listos; contratos M3/M4 marcados como propuestos hasta resolver proveedor/contenido. Incluir multipart, descarga, limpieza, idempotencia y progreso.
-- **Aceptación:** M2 no depende de proveedor; límites CV claros; futuro no aparece como endpoint ya disponible.
+- **Aceptación:** M2 no depende de proveedor; límites CV claros; futuro no aparece como endpoint ya disponible. Las tres operaciones E3 propuestas tienen autenticación y ejemplos, sin atribuir integración live a un contrato.
 - **Validación:** esquemas y ejemplos; JSR-01/LRN-01 pueden motivar un PR de ajuste antes de su implementación.
 
 ## Cierre y continuación
