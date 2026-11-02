@@ -139,3 +139,23 @@ OpenAPI público1.1.0 añade evidence opcional en Analysis; Summary sigue sin el
 Validación local Node22.23.4/pnpm11.22.0 y PostgreSQL18.3 aislado devpath_evidence: typecheck/build/lint/formato, contratos2/19ejemplos, corpus30, web22, motor51 yAPI118 aprobados. API incluye29 unitarias de proyección y3 nuevas integraciones (históricos válidos/corruptos y replaylegacy), además de86 previas. Smoke de binarios compilados con API/engine/DB reales:67%, menciones/offsets persistidos, replay200 con motor parado sin cambios, GET histórico estable tras editar skills, lista sin evidence, cuentaB404 y DELETE propio204→404. Usuarios sintéticos limpiados y servicios detenidos. PostgreSQL16 y Compose no están disponibles localmente; CI existente usa16, resultado del nuevo PR todavía pendiente hasta publicación. Los casos manuales añadidos conservan observado “no ejecutado”; no se declara aceptaciónP5 por pruebas automatizadas.
 
 No se implementa ANL-02/ANL-04 ni lote06. Tras confirmación del merge por el usuario, fetch/verificar contrato/API integrados y adaptar la rama/borradorANL-02 conservado, guardas frontend/renderseguro y pruebas; solo entonces generar ZIPdefinitivo y revisión/contribuciónKaren. QAA-01/QA-02/DOC-02 y release mantienen sus dependencias. Proveedor/rutas/CV son futuros, sin cambios funcionales.
+
+## Registro previo de ANL-02 (anterior a integrar evidence)
+
+## Actualización ANL-02 — 2026-11-01
+
+ANL-03 integrada en origin/develop a73565f mediante PR #21; ambos commits 6ed2ec9/8163c2e incluidos. Checks de ese PR: CI gate, Lint & Format, Test, Type Check, Docs check y Build aprobados. Esto no equivale a CI de ANL-02.
+
+Se recuperó el borrador sin alterarlo en un worktree nuevo .worktrees/anl-02-karen, rama feature/anl-02-analysis-ui desde develop actualizado. Implementados POST con navegación a GET persistente, recarga, errores/404, snapshots y estados accesibles. Pruebas completas locales aprobadas (34 web, 86 API, 51 motor, contratos y catálogo). Entrega provisional: evidencia pendiente de aprobación e integración por PR separado; no modificar OpenAPI en esta rama. Karen revisará/probará/contribuirá antes de publicar. No commit/push/PR ni merge realizados para ANL-02. ANL-04 y lote06 permanecen pendientes de integración final de ANL-02 y sus dependencias.
+
+## ANL-02 con evidence integrada — entrega técnica para Karen
+
+Fetch confirmó develop50d2b26 (mergePR22), con e0aaed3 y ANL-01/PRO-02/ANL-03 como ancestros. PR22 fusionado y checks de la base aprobados. Se preservaron los13 archivos previos con copia verificada y stash de respaldo; rama feature/anl-02-analysis-ui adelantada a la base integrada y avance recuperado. Se resolvió únicamente el conflicto del handoff conservando las notas integradas y el registro histórico del avance local.
+
+Se completó evidence en React como texto seguro y agrupado, ausencia histórica y[], tipo público generado y validación runtime antes de cache. Se conserva formulario/idempotencia/GET persistente/404/0-null/estados/foco/aislamiento. tsconfig.app.json incluye el tipo generado por la composición TypeScript; sin relajar checks ni modificar contratos/servidores/DB/CI/dependencias.17 archivos de ANL-02 (frontend/config local/handoff), sin commit de entrega ni publicación.
+
+Validación Node22.23.4/pnpm11.22.0: typecheck/build/lint/formato aprobados; web73/API118/motor51; catálogo30 y2 OpenAPI/19 ejemplos. DB aislada PostgreSQL18.3 real;16 no disponible localmente. Chromium real comprobó67%, evidencia tras recarga, legacy usando snapshot aislado con[] y restauración, HTML adversario inerte, fallo/retry de detalle, engine detenido sin perder GET, snapshots al editar skills, null/0%,404 y cuentas/teclado/foco. Recorrido y resultados detallados van en ZIP fuera del repo. Las fixtures negativas de transporte no sustituyen éxitos reales.
+
+ANL-02 queda implementada localmente y pendiente de revisión/contribución de Karen, aceptación humanaP5 y PR/CI/merge de Omar. No se marca aceptación humana como aprobada automáticamente. ZIP definitivo técnico no equivale a autorización de merge. Tras integrar ANL-02 y verificarlo por fetch podrá iniciarse ANL-04; lote06 sigue pendiente.
+
+Comprobación adicional del recorrido final: corpus30 completo por la UI real (28 análisis persistidos con IDs esperados intactos y2 entradas vacías rechazadas), cuenta sin skills con0% cuando hay requisitos. Pérdida ambigua de respuesta tras POST201 real: retry conserva key/body, recibe200 del mismo análisis y mantiene una sola fila PostgreSQL. Todo aprobado; usuarios sintéticos limpiados.
