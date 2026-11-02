@@ -68,6 +68,9 @@ function OwnedAnalysisDetail({ owner, id }: { owner: string; id: string }) {
   return (
     <div className="page-form" ref={resultRegion} tabIndex={-1} aria-busy={analysis.isFetching}>
       <h1>Detalle del análisis</h1>
+      <p>
+        <Link to="/analyses">Volver al historial</Link>
+      </p>
       {analysis.isFetching && <p role="status">Actualizando análisis…</p>}
       <AnalysisResult analysis={analysis.data} skillNames={names} />
       <p>

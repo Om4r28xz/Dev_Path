@@ -1,4 +1,30 @@
-# ANL-02 — formulario, resultado y detalle persistente
+# Análisis M1: formulario, detalle e historial
+
+## ANL-04 — implementación local, pendiente de integración
+
+Historial propio con GET /analyses y cursor real20 por página; carga/error/vacío/retry separados. Resúmenes del contrato público generado: título/fecha/porcentaje0 o null/skillsOutdated y enlace al detalle para tecnologías/evidence. El usuario aprobó mantener este contrato; no se cargan detalles/evidence por cada fila ni se inventan tecnologías en Summary.
+
+Eliminación con diálogo modal nativo: confirmar explícitamente, Cancelar/Escape y devolución de foco al disparador; durante envío se impide duplicar. DELETE204 elimina inmediatamente el registro de cache/lista y el detalle cacheado; luego actualiza servidor.404 concurrente limpia el registro ya ausente; fallo conserva confirmación y ofrece retry/cancelar. Queries por propietario, cancelación y guardas de identidad evitan resultados tardíos entre cuentas. Las invalidaciones existentes de creación y skills se reutilizan; snapshots no se recalculan. El detalle y404 ya ofrecen volver al historial.
+
+Nuevas pruebas unitarias de contrato/paginación/cache/transport/renderizado y prueba de integración real manual automatizada en apps/web/tests/integration/analysis-history.browser.mjs. No equivale a QAA-01 de CI ni añade dependencia Playwright al monorepo antes de sus puertas.
+
+### Ejecutar el recorrido de integración ANL-04
+
+Desde la raíz del repo, Node22/pnpm11.22, dependencias instaladas, PostgreSQL aislado migrado/sembrado y setup-local ejecutado. Puertos libres5186/31966/31967. DATABASE_URL debe apuntar exclusivamente a una base de pruebas: el recorrido crea cuentas sintéticas, ajusta timestamps de sus propios registros y las limpia al finalizar. No elimina bases/volúmenes ni usuarios reales.
+
+Instalar Playwright1.64.1/Chromium fuera del repo si no está disponible; definir DEVPATH_PLAYWRIGHT_MODULE con la ruta del módulo y PLAYWRIGHT_BROWSERS_PATH con su caché. Después:
+
+```powershell
+node scripts/setup-local.mjs
+$env:DATABASE_URL=Read-Host 'URL de base aislada ANL-04'
+pnpm --filter @devpath/db migrate
+pnpm --filter @devpath/db seed
+node apps/web/tests/integration/analysis-history.browser.mjs
+```
+
+El script usa API/engine/DB reales en éxitos. Solo fuerza503 de red para casos negativos. Revisa teclado/foco y aislamiento en navegador; no declara revisión humana P5 de comprensión/lector/contraste. Repetir controles generales y CI al publicar.
+
+## Registro anterior de preparación de ANL-02
 
 Implementación local para revisión y contribución de Karen. Base50d2b26 de develop, con evidence integrado por PR22. Sin commit de entrega, push ni PR de ANL-02 desde esta preparación. ANL-04 y lote06 fuera de alcance.
 
