@@ -54,3 +54,16 @@ La rama docs/lote-06-readiness contiene solo esta actualización y dos documento
 6. CTR-02 permanece bloqueada hasta comprobar todos esos pasos. No afecta el análisis manual disponer o no de futuros permisos JSearch.
 
 Límites actuales: Node 22.23.4/pnpm 11.22.0; PG 18.3 local aislado. PG 16 solo en CI consultada de la base; Docker/Compose y aceptación humana no probados por esta entrega. Sin push, merge, tags ni identidad ajena. No se borra ningún trabajo anterior.
+
+
+## QAA-01 implementada localmente — 2026-11-02
+
+Base c564a57: fetch confirmó ANL-04 por PR25/3b7c30e (e628ce4), preparación06 por PR26/b4c7a15, E3 por PR23/18f37ed y documentación c564a57. develop se actualizó mediante pull --ff-only en worktree temporal limpio. Se conservaron los cambios CAT-02 y borradores ANL-02 sin copiarlos. Rama test/qaa-01-mvp-e2e, worktree .worktrees/qaa-01, independiente de DOC-02.
+
+Implementada suite Playwright con cuatro escenarios reales: recorrido completo con 67%, perfil/skills, evidence, snapshot PG/historial/detalle/recarga/borrado/logout/protección; dos cuentas/404/propiedad; parada real del proceso engine y retry/key/replay sin duplicar; legacy, 0/null y HTML inerte. El runner exige DB loopback dedicada sin usuarios, migra/seed, genera clave efímera, sirve build y apaga exclusivamente sus hijos. No usa mocks internos ni modifica código de producto/contratos.
+
+Validado con Node22.23.4, pnpm11.22.0, PostgreSQL18.3 aislado y Chromium156/Playwright1.64.1: install frozen, lint, formato, typecheck (incluye tests), build; web97/API118/engine51, soporte privacidad2, catálogo30 y OpenAPI2/19 ejemplos. E2E4/4; consulta posterior users=0,analyses=0. Fallo deliberado de privacidad dio exit1 esperado y se retiró el archivo temporal; trazas/reportes inspeccionados sin passwords/JWT, incluso con campo password rellenado. Se descubrió y evitó la copia DOM automática de Playwright que incluía password; se conservan errores y trazas filtradas. Detalles/reproducción en tests/e2e/README.md.
+
+CI añade job PG16/Chromium con migración/seed/readiness/cleanup y artefactos filtrados en fallo, incluido en ci-gate junto con los cuatro checks existentes. YAML validado estructuralmente; ejecución remota y PG16 pendientes hasta publicación/CI. Docker Compose y aceptación humana P5 no ejecutados ni aprobados por estas pruebas. Advertencia local NO_COLOR/FORCE_COLOR solo de presentación; no se deshabilitaron checks.
+
+Estado: implementada localmente, no integrada. Consultar hash/push en reporte de entrega; no inferir merge de este handoff. Omar/P2 deben revisar runner, lockfile, CI y artefactos; P1 aislamiento/SQL; P5 mantiene aceptación humana. QA-02 sigue bloqueada hasta verificar QAA-01 en origin/develop. DOC-02 puede avanzar aparte; REL-01 necesita QA-02/DOC-02/DOC-01 integradas y aceptación; CTR-02 necesita publicación/sincronización REL-01. No se crearon release, tags ni contratos futuros. E3/JSearch corresponde a M3, no bloquea pruebas M1.

@@ -175,10 +175,55 @@ jobs:
   # ci-gate — Aggregates all required jobs; configure THIS job as the required
   #           status check in branch protection (not the individual jobs above).
   # ---------------------------------------------------------------------------
+  e2e:
+    name: M1 E2E (Chromium + PostgreSQL 16)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: devpath_e2e
+          POSTGRES_PASSWORD: synthetic_e2e_password
+          POSTGRES_DB: devpath_e2e
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      E2E_DATABASE_URL: postgresql://devpath_e2e:synthetic_e2e_password@127.0.0.1:5432/devpath_e2e
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm build
+      # Runner migrates/seeds, starts/awaits services, and stops its children.
+      - run: pnpm test:e2e
+      - name: Upload sanitized failure evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m1-e2e-failure
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 7
+          if-no-files-found: ignore
+
   ci-gate:
     name: CI gate (required)
     runs-on: ubuntu-latest
-    needs: [lint, typecheck, build, test]
+    needs: [lint, typecheck, build, test, e2e]
     if: always()
     steps:
       - name: Check all required jobs passed
@@ -186,7 +231,8 @@ jobs:
           if [[ "${{ needs.lint.result }}" != "success" || \
                 "${{ needs.typecheck.result }}" != "success" || \
                 "${{ needs.build.result }}" != "success" || \
-                "${{ needs.test.result }}" != "success" ]]; then
+                "${{ needs.test.result }}" != "success" || \
+                "${{ needs.e2e.result }}" != "success" ]]; then
             echo "One or more required jobs failed or were cancelled."
             exit 1
           fi
