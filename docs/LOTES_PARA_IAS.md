@@ -1,6 +1,6 @@
 # DevPath: lotes de trabajo y prompts para IAs
 
-Actualizado: 31 de octubre de 2026.
+Actualizado: 2 de noviembre de 2026.
 
 Se han preparado **11 prompts completos**: un lote 00 para la IA de estructura y diez lotes de hasta cinco tareas para las 49 tareas originales. Se agrega STR-01 al backlog: **50 tareas en total**, incluida DEP-01 opcional.
 
@@ -22,7 +22,7 @@ Cada prompt contiene contexto, arquitectura, dependencias, responsables humanos,
 | 09 | Aceptación del proveedor y backend de aprendizaje | QA-04, REL-03, LRN-01, LRN-02, LRN-03 | [Copiar prompt 09](prompts/lotes/09-proveedor-y-aprendizaje-api.md) |
 | 10 | Interfaz de rutas, aceptación final y opción de hosting | LRN-04, QA-05, REL-04, DEP-01 (DEP-01 opcional) | [Copiar prompt 10](prompts/lotes/10-rutas-y-cierre.md) |
 
-El inventario legible por herramientas está en [lotes.json](lotes.json). Las tareas detalladas siguen en [TAREAS_PARA_IAS.md](TAREAS_PARA_IAS.md); arquitectura en [PLAN_DE_IMPLEMENTACION.md](PLAN_DE_IMPLEMENTACION.md); colaboración en [FLUJO_GITHUB.md](FLUJO_GITHUB.md).
+El inventario legible por herramientas está en [lotes.json](lotes.json); su `status` resume la integración de tareas por lote al 2 de noviembre de 2026, no reemplaza la verificación de Git por tarea. Las tareas detalladas siguen en [TAREAS_PARA_IAS.md](TAREAS_PARA_IAS.md); arquitectura en [PLAN_DE_IMPLEMENTACION.md](PLAN_DE_IMPLEMENTACION.md); colaboración en [FLUJO_GITHUB.md](FLUJO_GITHUB.md).
 
 **Rúbrica E3 incorporada sin agregar tareas ni cambiar los 11 lotes:** CTR-02 (lote 06) deja propuestos los contratos de las tres operaciones de vacantes; JSR-01/02/03 (lote 08) verifican el proveedor, implementan JSearch en la API y completan README, pruebas y colección; QA-04 y REL-03 (lote 09) verifican evidencia live y preparan el tag `e3-microservice`. El proceso evaluado es la API Express consumida por la web, no el Skill Engine. No se reabren tareas integradas de lotes anteriores; las tareas pendientes del lote 05 conservan sus encargos.
 

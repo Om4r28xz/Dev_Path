@@ -1,7 +1,5 @@
-# Soporte de pruebas
+# Test support
 
-Factorías y utilidades reutilizables exclusivamente para pruebas. No contiene lógica de negocio de producción.
+Reserved workspace package for synthetic test fixtures and reusable helpers. It currently contains only its package manifest; add helpers alongside the tests that need them. The M1 user factory currently lives in the [database package](../db/src/factory/user.factory.ts).
 
-- Responsable humano: P2.
-- Etapa: M0, ampliable junto con las pruebas M1–M4.
-- Estado: paquete reservado por FND-01; helpers concretos se añadirán con sus pruebas consumidoras.
+This package must not contain production business logic. Owner: P2.

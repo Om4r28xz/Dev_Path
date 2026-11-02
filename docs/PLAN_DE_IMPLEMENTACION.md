@@ -1,6 +1,6 @@
 # DevPath: plan de implementación y conexión de componentes
 
-Fecha de referencia: 30 de octubre de 2026. Actualización de lotes y estado Git: 31 de octubre de 2026. Estado: planificación; no hay aplicación implementada.
+Fecha de referencia: 30 de octubre de 2026. Estado revisado: 2 de noviembre de 2026. M0 está integrado y M1 sigue en desarrollo; las secciones M2–M4 describen trabajo futuro, no funciones disponibles.
 
 Este plan se basa en [la descripción del proyecto](../DevPath_Project_Description.md), en la inspección del repositorio y en las respuestas del equipo. El documento original se conserva como fuente; sus ejemplos y su sección de instrucciones para otra IA se tratan como contexto, no como decisiones ya aprobadas.
 
@@ -54,7 +54,7 @@ Actualización comprobada el 2 de noviembre de 2026: `develop` y `origin/develop
 
 La inspección inicial del 30 de octubre encontró solo la descripción y ningún commit. La revisión del 31 de octubre ya encuentra el commit `c338a21` (`FIRTS STEPS`), con `main` y la referencia local `origin/main` apuntando a él, además de los tres documentos de planificación. No se encontró una rama `develop` local ni su referencia remota descargada. Esto no verifica por sí solo el estado actual del servidor remoto. No se verificó el tag `e3-microservice`.
 
-GOV-02 debe reutilizar ese historial, comprobar las refs y establecer `develop` cuando falte. No repetir el primer commit ni reinicializar el repositorio. La receta sin historial del flujo Git solo corresponde a un repositorio realmente nuevo.
+GOV-02 reutilizó ese historial y `develop` ya existe. No repetir el primer commit ni reinicializar el repositorio. La receta sin historial del flujo Git solo corresponde a un repositorio realmente nuevo.
 
 ## 2. Entregas y límites de alcance
 
@@ -657,24 +657,21 @@ El backlog contiene IDs, dependencias y asignación por olas. No se asignan fech
 
 ## 13. Configuración y operación local
 
-| Variable propuesta | Dónde existe | Nota |
+| Variable | Dónde existe | Estado y nota |
 | --- | --- | --- |
-| NODE_ENV / APP_ENV | Servicios | Modo local, test o eventual producción explícito. |
-| DATABASE_URL | API y migrador | Nunca en web; cuenta de migraciones distinta si procede. |
-| AUTH_PRIVATE_KEY_PATH / AUTH_PUBLIC_KEY_PATH | API | Claves generadas localmente, ignoradas por Git. |
-| AUTH_ISSUER / AUTH_AUDIENCE | API | Valores coherentes con validación. |
-| AUTH_ACCESS_TTL_SECONDS / AUTH_REFRESH_MAX_AGE_SECONDS | API | 900 y 604800 iniciales. |
-| WEB_ORIGIN / COOKIE_SECURE | API | Origen exacto; modo inseguro solo local. |
-| SKILL_ENGINE_BASE_URL / SKILL_ENGINE_SERVICE_KEY | API | Host controlado, credencial distinta de JWT/JSearch. |
-| SKILL_ENGINE_SERVICE_KEY | Engine | Comparación segura y arranque que falla si falta. |
-| CV_STORAGE_DIR / CV_MAX_BYTES | API | Volumen privado; 5 MiB iniciales. |
-| JSEARCH_ENABLED / JOBS_PROVIDER_MODE | API | Desactivado hasta M3; live o fixtures, visible en la UI. |
-| RAPIDAPI_KEY / JSEARCH_BASE_URL | API | Secreto y host permitido; no disponibles para React. |
-| LOG_LEVEL | Servicios | Redacción de cookies, Authorization, contraseñas y cuerpos sensibles. |
+| NODE_ENV / HOST / PORT | API y engine | Implementadas; modo de ejecución, interfaz y puerto. |
+| DATABASE_URL | API y migrador/seed | Implementada; nunca en web o engine. |
+| AUTH_PRIVATE_KEY_FILE / AUTH_LOCAL_HTTP | API | Implementadas; clave local ignorada por Git y cookie HTTP solo en entorno local permitido. |
+| CORS_ALLOWED_ORIGINS | API | Implementada; lista exacta de orígenes permitidos. |
+| ENGINE_URL / ENGINE_SERVICE_SECRET | API | Implementadas; URL interna y credencial distinta del JWT del usuario. |
+| ENGINE_SERVICE_SECRET | Engine | Implementada; misma credencial que usa la API. |
+| TEST_DATABASE_URL | Pruebas API | Implementada; DB aislada para pruebas de integración. |
+| CV_STORAGE_DIR / CV_MAX_BYTES | API | Propuestas para M2; volumen privado y límite de 5 MiB. |
+| JSEARCH_ENABLED / JOBS_PROVIDER_MODE / RAPIDAPI_KEY / JSEARCH_BASE_URL | API | Propuestas para M3, sujetas a JSR-01; no existen en la implementación actual. Nunca en React. |
 
 En frontend, cualquier variable VITE_* se considera pública. Usar rutas relativas elimina la necesidad de exponer direcciones internas.
 
-Comandos que deberá entregar FND-01/OPS-01: instalación con lockfile, generación de claves locales, migraciones, seed idempotente, desarrollo, lint, typecheck, pruebas, build y Compose completo. Son comandos objetivo; no se presentan como ya existentes.
+FND-01/OPS-01 ya entregaron instalación con lockfile, generación de claves locales, migraciones, seed idempotente, comandos de desarrollo, lint, typecheck, pruebas, build y Compose. La [guía local](SETUP_LOCAL.md) contiene los comandos vigentes. La aceptación completa del recorrido M1 y del stack Compose sigue pendiente de las tareas de QA y release.
 
 No agregar scripts que borren volúmenes por defecto. Reiniciar la base o borrar CV requiere un comando explícito documentado. El setup usa datos sintéticos y detecta configuración incompleta con mensajes claros.
 

@@ -25,7 +25,7 @@ Equipo:
 P1 backend/DB; P2 frontend/engine/infra/CI; P3 catálogo/contenido; P4 contratos/documentación; P5 aceptación. Son marcadores de personas, no identidades de Git para suplantar. Una IA puede asistir en varias áreas del lote, pero cada tarea conserva responsable y revisor humanos. No estás solo en el repositorio: no reviertas ni sobrescribas cambios ajenos.
 
 Git y ejecución por tarea:
-1. Inspecciona git status, historial y ramas reales. Al preparar estos prompts se observó main/origin/main en c338a21 y no develop local; vuelve a verificar, porque puede cambiar.
+1. Inspecciona git status, historial y ramas reales. El 2 de noviembre se observó `develop`/`origin/develop` en `50d2b26`; vuelve a verificar antes de actuar, porque puede cambiar.
 2. El lote es una agenda de hasta cinco tareas, no una rama gigante. Cada tarea conserva su rama exacta y PR del backlog; salvo bootstrap/release, nace del develop actualizado y vuelve a develop.
 3. Una dependencia cuenta como integrada cuando su commit está en develop. Un directorio vacío, un informe de otra IA o una rama sin merge no satisfacen la dependencia.
 4. Ejecuta las tareas en el orden indicado cuando estén listas. Si falta una dependencia, registra qué commit/PR falta; continúa solo tareas independientes Ready de este lote. No inventes un contrato, no simules un merge y no cambies a tareas de otro lote.
