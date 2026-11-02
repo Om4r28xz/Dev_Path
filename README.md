@@ -23,7 +23,7 @@ Browser → React/Vite → /api/v1 → Express API → PostgreSQL
                                      └────────→ Skill Engine (internal REST)
 ```
 
-The API and Skill Engine run as separate processes. Authentication is a module of the API. The browser uses only the public API. In M3, the API is planned to call JSearch for the jobs module; the browser and Skill Engine will not call JSearch directly. See the [architecture decisions](docs/adr/) and [project responsibilities](docs/RESPONSABILIDADES.md).
+The API and Skill Engine run as separate processes. Authentication is a module of the API. The browser uses only the public API. In M3, the API is planned to call JSearch for the jobs module; the browser and Skill Engine will not call JSearch directly. See the [implemented M1 architecture](docs/ARCHITECTURE.md), [architecture decisions](docs/adr/) and [project responsibilities](docs/RESPONSABILIDADES.md).
 
 ## Run locally
 
