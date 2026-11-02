@@ -1,0 +1,1 @@
+PASS migration upgrade: historical0000-0002 + real synthetic user/profile/skills/67% analysis/evidence/key;0003 preserves all rows, adds cursor index, rerun unchanged; fixture user cleaned.

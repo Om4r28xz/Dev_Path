@@ -47,7 +47,22 @@ for (const entry of execution.files)
     entry.sha256,
     `Evidence changed: ${entry.file}`,
   );
-for (const name of ['M1-results.md', 'P5-review.md', 'REL-01-checklist.md']) {
+const documents = ['M1-results.md', 'P5-review.md', 'REL-01-checklist.md'];
+if (existsSync(base + '/INTEGRATION-AUDIT.md')) documents.push('INTEGRATION-AUDIT.md');
+if (existsSync(base + '/evidence/integration-correction.json')) {
+  const correction = JSON.parse(
+    readFileSync(base + '/evidence/integration-correction.json', 'utf8'),
+  );
+  for (const field of ['targetDevelop', 'main', 'sourceQa'])
+    assert(/^[a-f0-9]{40}$/.test(correction[field]));
+  for (const entry of correction.files)
+    assert.equal(
+      createHash('sha256').update(readFileSync(entry.file)).digest('hex'),
+      entry.sha256,
+      `Correction evidence changed: ${entry.file}`,
+    );
+}
+for (const name of documents) {
   const content = readFileSync(base + '/' + name, 'utf8');
   assert(!/^(<<<<<<<|=======|>>>>>>>)/m.test(content));
   for (const link of content.matchAll(/\]\(([^)]+)\)/g))

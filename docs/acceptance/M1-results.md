@@ -1,5 +1,13 @@
 # Resultados de aceptación M1 — QA-02
 
+## Actualización de integración y preparación técnica
+
+QA-02 se publicó y se fusionó por PR30 a **main**, no a develop. La rama fix/qa-02-integrate-develop recupera solo los commits originales desde origin/develop; no fusiona main completo. QAA-01/PR27 y DOC-02/PR28 sí están integradas en develop. Ver [auditoría verificable](INTEGRATION-AUDIT.md).
+
+Nueva ejecución: lint/formato/typecheck/build, web97/API118/motor51/privacidad2 y E2E7/7 aprobados; instalación frozen en worktree nuevo limpio. El ensayo de actualización0000–0002→0003 con datos sintéticos existentes preservó filas/score/evidence/idempotencia, creó índice de cursor y pasó reejecución sin cambios en PG18.3. Evidencias separadas en [integration-correction.json](evidence/integration-correction.json). CI QA-02/a0faee1 y merge-main/fe830bb aprobados con PG16; la nueva punta correctiva requiere su propio CI.
+
+La matriz histórica de30 casos conserva27 aprobados técnicos y3 completos pendientes: UI-01/EVID-06 humanos y OPS-01/Compose técnico bloqueado por entorno. No hay aceptación humana ni M1 liberada. Los apartados originales siguientes conservan los resultados de su entrega; esta actualización sustituye únicamente el estado de integración/CI y del ensayo técnico de upgrade.
+
 Fecha: 2 de noviembre de 2026. **Aceptación técnica documentada; M1 NO aceptada formalmente ni liberada.** Ejecutor: Codex, automatización técnica. Sin firma de P5 ni aprobación humana inventada.
 
 ## Base y trazabilidad
@@ -17,17 +25,17 @@ Los esperados proceden de [M1-cases.md](M1-cases.md), no se modificaron para aju
 
 Bases sintéticas nuevas: devpath_test_qa02, devpath_e2e_qa02 y devpath_test_qa02_history, puerto55465. Migraciones0000–0003 y seed aplicados desde vacío. El probe ERR-02 genera otro clúster temporal propio y elimina su directorio validado al finalizar. No se usaron datos/volúmenes de demo.
 
-| Verificación                                         | Resultado                                                             | Evidencia                                                                           |
-| ---------------------------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| Install frozen, lint, format:check, typecheck, build | Aprobados; Node22.23.4/pnpm11.22.0                                    | execution.json y comandos reproducibles abajo                                       |
-| Web / API / motor / privacidad                       | 97 / 118 / 51 / 2 aprobados                                           | [tests](evidence/tests.txt)                                                         |
-| Playwright                                           | 7/7 aprobados,11.3s                                                   | [E2E](evidence/e2e.txt)                                                             |
-| Historial real ampliado                              | Cursor20+3, timestamps iguales, retry, foco y cuenta tardía aprobados | [historial](evidence/history.txt)                                                   |
-| Catálogo/OpenAPI                                     | Corpus30,2 documentos/19 ejemplos aprobados                           | tests.txt                                                                           |
-| Auth inválido y caída física DB                      | 400/403/415 y503→200 correctos                                        | [probe](evidence/database-outage.txt)                                               |
-| Contraste acotado                                    | Login6 muestras; registro7; mínimo6.0428:1, outline2px                | [métricas](evidence/ui-metrics.json)                                                |
-| CI base integrada PG16                               | Todos los checks aprobados en b84255e                                 | [Actions41515963292](https://github.com/Om4r28xz/Dev_Path/actions/runs/41515963292) |
-| CI de QA-02 / PG16 local / Compose / revisión humana | No ejecutados en esta entrega                                         | Pendientes claramente separados                                                     |
+| Verificación                                           | Resultado                                                             | Evidencia                                                                           |
+| ------------------------------------------------------ | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Install frozen, lint, format:check, typecheck, build   | Aprobados; Node22.23.4/pnpm11.22.0                                    | execution.json y comandos reproducibles abajo                                       |
+| Web / API / motor / privacidad                         | 97 / 118 / 51 / 2 aprobados                                           | [tests](evidence/tests.txt)                                                         |
+| Playwright                                             | 7/7 aprobados,11.3s                                                   | [E2E](evidence/e2e.txt)                                                             |
+| Historial real ampliado                                | Cursor20+3, timestamps iguales, retry, foco y cuenta tardía aprobados | [historial](evidence/history.txt)                                                   |
+| Catálogo/OpenAPI                                       | Corpus30,2 documentos/19 ejemplos aprobados                           | tests.txt                                                                           |
+| Auth inválido y caída física DB                        | 400/403/415 y503→200 correctos                                        | [probe](evidence/database-outage.txt)                                               |
+| Contraste acotado                                      | Login6 muestras; registro7; mínimo6.0428:1, outline2px                | [métricas](evidence/ui-metrics.json)                                                |
+| CI base integrada PG16                                 | Todos los checks aprobados en b84255e                                 | [Actions41515963292](https://github.com/Om4r28xz/Dev_Path/actions/runs/41515963292) |
+| CI correctivo / PG16 local / Compose / revisión humana | No ejecutados en esta entrega                                         | Pendientes claramente separados                                                     |
 
 Resultado formal de la matriz: **27 casos técnicos aprobados, 0 fallidos de producto observados y 3 casos completos no ejecutados** (UI-01, OPS-01, EVID-06). UI-01/EVID-06 sí tienen resultados parciales automatizados. Esto no es aceptación global. No se declara conformidad WCAG; contraste medido solo sobre estilos de texto por defecto en login/registro, sin cubrir todos los estados, componentes, imágenes o pantallas.
 
@@ -369,12 +377,12 @@ No se detectó un defecto de producto reproducible en los recorridos ejecutados;
 
 El primer initdb del probe falló por permisos al renombrar WAL en el temporal del sandbox. Otro intento con pipes heredados se interrumpió; se acotaron timeouts y stdio, y el probe final pasó íntegro desde QA_TEMP_ROOT autorizado. No se cuentan esos intentos como aprobados. No se instalaron herramientas elevadas ni se relajaron controles de seguridad. El temporal del intento interrumpido, work/devpath-qa02-pg-v8CsyI, quedó pendiente de limpieza porque la revisión automática rechazó el comando recursivo por requerir aprobación no disponible. No pertenece al repositorio ni a los resultados de producto; no volver a usarlo como base de prueba.
 
-Docker no figura en PATH ni en la ubicación oficial de Docker Desktop; wsl.exe existe pero --status informa subsistema no instalado. Por eso OPS-01 no se ejecutó. PG16 está comprobado **en CI de la base integrada**; localmente se usó18.3. CI de los tres nuevos casos QA-02 debe verificarse al publicar, no se hereda el verde de QAA-01.
+Docker no figura en PATH ni en la ubicación oficial de Docker Desktop; wsl.exe existe pero --status informa subsistema no instalado. Por eso OPS-01 no se ejecutó. PG16 está comprobado **en CI de la base integrada**; localmente se usó18.3. CI QA-02 a0faee1 ya está comprobado con PG16; el correctivo requiere CI propio al publicar.
 
-Migración desde vacío e instalación frozen sí se probaron en un worktree nuevo. Actualización desde esquema previo con datos, reinicio completo Compose con volumen y smoke del tag todavía no se ejecutaron; son puertas de release. Los negativos de timeout/rollback usan inyección controlada en integración; los éxitos, caída del engine y caída DB descritos como reales sí usaron procesos reales.
+Migración desde vacío e instalación frozen sí se probaron en un worktree nuevo. La actualización con datos estaba pendiente en esta entrega original; el ensayo0000–0002→0003 se aprobó después según INTEGRATION-AUDIT. Reinicio completo Compose con volumen, revisión humana del ensayo y smoke del candidato/tag siguen pendientes. Los negativos de timeout/rollback usan inyección controlada en integración; los éxitos, caída del engine y caída DB descritos como reales sí usaron procesos reales.
 
 ## Revisión humana y recomendación
 
 P5 debe completar [P5-review.md](P5-review.md), registrar observados/evidencia/fecha y firmar con su propia identidad. P1/P2 deben reproducir una muestra técnica y revisar conexiones/aislamiento, probe e instalación. Omar revisa e integra este PR y registra la decisión; la IA no sustituye esas revisiones.
 
-**Recomendación: QA-02 está lista para revisión técnica/humana; REL-01 aún no está habilitada.** Falta integrar/aceptar QA-02, ejecutar Compose, actualización con datos y revisión P5/P1/P2/Omar, confirmar CI nuevo, congelar alcance y preparar versiones/changelog. Ver [checklist exacto REL-01](REL-01-checklist.md). No hay release/0.1.0 ni tag creados por esta tarea. CTR-02 espera publicación y sincronización verificadas de REL-01.
+**Recomendación: QA-02 está lista para revisión técnica/humana; REL-01 aún no está habilitada.** Falta integrar/aceptar QA-02, ejecutar Compose, revisar el ensayo de actualización con datos y completar revisión P5/P1/P2/Omar, confirmar CI nuevo, congelar alcance y preparar versiones/changelog. Ver [checklist exacto REL-01](REL-01-checklist.md). No hay release/0.1.0 ni tag creados por esta tarea. CTR-02 espera publicación y sincronización verificadas de REL-01.

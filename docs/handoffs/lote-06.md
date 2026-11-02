@@ -1,6 +1,18 @@
 # Handoff lote 06 — estado vigente y registro histórico
 
-## Estado vigente — QA-02 técnica preparada, 2026-11-02
+## Estado vigente tras auditoría PR27–30 — 2026-11-02
+
+PR27/QAA-01 y PR28/DOC-02 integrados en develop b84255e. PR29 fusionó develop34a2242→main; PR30 fusionó QA-02 a0faee1→main fe830bb, sin llevarla a develop. GitHub merged=true y contenido/ancestry comprobados, no solo mensajes de commits. QA-02 está publicada/integrada en main, falta integración y aceptación en develop.
+
+Correctivo fix/qa-02-integrate-develop, .worktrees/qa-02-correction: parte de origin/develop y hace fast-forward solo de la rama QA-02, conservando autores/hashes de sus cuatro commits. No se fusionó main; su handoff04 exclusivo queda fuera y a salvo. [Auditoría](../acceptance/INTEGRATION-AUDIT.md).
+
+Validación nueva: install frozen en worktree limpio, lint/formato/typecheck/build, web97/API118/motor51/privacidad2, E2E7/7 y contratos/corpus aprobados. Nuevo ensayo PG18.3: datos existentes0000–0002→0003 preservados, índice y rerun correctos; fixture limpio. CI QA a0faee1/main fe830bb aprobado con PG16; correctivo pendiente de publicación/CI/revisión/merge según reporte de entrega.
+
+Persisten3 casos completos pendientes: UI-01/EVID-06 dependen de P5 (lector/zoom/contraste completo/comprensión), OPS-01 depende de P1/P2 y Compose no disponible. No se cambian las27 aprobaciones técnicas anteriores ni se firma aceptación humana. REL-01 sigue bloqueada por integración correctiva/aceptación/reproducción y revisión humana; ensayo de upgrade ya aprobado técnicamente, revisión P1/P2 pendiente. Sin release/0.1.0, tag ni CTR-02. Borrador de changelog/publicación solo fuera del repositorio.
+
+Las secciones siguientes son históricas; las referencias antiguas a QA-02 solo local o CI pendiente describen su entrega original, no la situación actual.
+
+## Histórico — QA-02 técnica preparada, 2026-11-02
 
 GitHub confirmó PR27 fusionado a develop en b84255efc996f67af26d6478528eba42afe6bce6. Ancestry de99ef5be/QAA-01 y38b7c7d/DOC-02 comprobado; develop actualizado con pull --ff-only en worktree temporal limpio. Se preservan CAT-02 y todos los worktrees anteriores. Rama QA-02 independiente: docs/qa-02-mvp-acceptance-results, .worktrees/qa-02.
 
