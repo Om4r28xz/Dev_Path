@@ -37,4 +37,3 @@ $ vitest run --config tests/e2e/vitest.config.mts
       Tests  2 passed (2)
    Start at  14:10:26
    Duration  399ms (transform 42%, import 36%, tests 13%, worker 8%)
-

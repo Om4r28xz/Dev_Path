@@ -45,19 +45,19 @@
     },
     {
       "file": "docs/acceptance/evidence/tests.txt",
-      "sha256": "22b4b5a3132d307f4fa9003cce6866bccb8e03f54f1207f7040228f9d198d5aa"
+      "sha256": "94d4fecac618b603f3a9e6afb995b5bd58ae58ff80d89e3e7919a1ec31eae97d"
     },
     {
       "file": "docs/acceptance/evidence/e2e.txt",
-      "sha256": "e8ce08bce79e6019b5b355bec04e0131bb320352df5c63a2e465d711a8db3440"
+      "sha256": "6d354a88c3664091b8b82a452b70b7efe209a8e9489b9967ed645ae7b11b158b"
     },
     {
       "file": "docs/acceptance/evidence/history.txt",
-      "sha256": "b51c92fbf422ef40a5f90320ecd3e7fe943f6b1d417e57d2fe564c25e7c00aad"
+      "sha256": "a22255d4ff1895d2c8f8e3fc7241bb532b858c60ceb7be33c059db92fc9d8edc"
     },
     {
       "file": "docs/acceptance/evidence/database-outage.txt",
-      "sha256": "bf2e31a3fe62a739b73f0c6eb807d03d3e9c2af0a6cebed5098233f39dd1fcea"
+      "sha256": "17fcdb13689c7da99c71806f38791aca80e32dd64e10ae863db14b6ea1678eab"
     },
     {
       "file": "docs/acceptance/evidence/ui-metrics.json",
