@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { resolve } from 'node:path';
+import { resolve, dirname } from 'node:path';
 
 const base = 'docs/acceptance';
 const matrix = readFileSync(base + '/M1-cases.md', 'utf8');
@@ -48,6 +48,42 @@ for (const entry of execution.files)
     `Evidence changed: ${entry.file}`,
   );
 const documents = ['M1-results.md', 'P5-review.md', 'REL-01-checklist.md'];
+for (const name of [
+  'READINESS-M1.md',
+  'P5-review-form.md',
+  'OPS-01-runbook.md',
+  'defects/M1-A11Y-001.md',
+  '../release/M1-VERSION-PLAN.md',
+  '../release/M1-CHANGELOG-DRAFT.md',
+  '../release/M1-PUBLICATION-PLAN.md',
+]) {
+  if (existsSync(base + '/' + name)) documents.push(name);
+}
+if (existsSync(base + '/evidence/readiness-manifest.json')) {
+  const readiness = JSON.parse(readFileSync(base + '/evidence/readiness-manifest.json', 'utf8'));
+  for (const entry of readiness.files)
+    assert.equal(
+      createHash('sha256').update(readFileSync(entry.file)).digest('hex'),
+      entry.sha256,
+      `Readiness evidence changed: ${entry.file}`,
+    );
+  const original = JSON.parse(
+    readFileSync(base + '/evidence/readiness-accessibility.json', 'utf8'),
+  );
+  const fixed = JSON.parse(
+    readFileSync(base + '/evidence/readiness-accessibility-fixed.json', 'utf8'),
+  );
+  assert.equal(original.productCommit, readiness.integratedCommit);
+  assert.equal(fixed.productCommit, readiness.codeFixCommit);
+  assert(
+    original.results.some((screen) =>
+      screen.violations.some((finding) => finding.id === 'target-size'),
+    ),
+  );
+  assert(fixed.results.every((screen) => screen.violations.length === 0));
+  assert.equal(readiness.humanApprovals.length, 0);
+  assert.equal(readiness.release.branchCreated, false);
+}
 if (existsSync(base + '/INTEGRATION-AUDIT.md')) documents.push('INTEGRATION-AUDIT.md');
 if (existsSync(base + '/evidence/integration-correction.json')) {
   const correction = JSON.parse(
@@ -67,7 +103,7 @@ for (const name of documents) {
   assert(!/^(<<<<<<<|=======|>>>>>>>)/m.test(content));
   for (const link of content.matchAll(/\]\(([^)]+)\)/g))
     if (!/^(https?:|#)/.test(link[1]))
-      assert(existsSync(resolve(base, link[1])), `Broken link ${link[1]}`);
+      assert(existsSync(resolve(dirname(base + '/' + name), link[1])), `Broken link ${link[1]}`);
 }
 assert.equal(cases.find((c) => c.id === 'UI-01').state, 'no ejecutado');
 assert.equal(cases.find((c) => c.id === 'OPS-01').state, 'no ejecutado');

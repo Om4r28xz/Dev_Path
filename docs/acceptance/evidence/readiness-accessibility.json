@@ -1,0 +1,201 @@
+{
+  "productCommit": "6d057b15d8a5fb886e66420d6dfd5910728bce9b",
+  "scope": "Automated axe checks and320CSS-px overflow measurement; not human acceptance, real browser200% zoom, or full WCAG certification",
+  "results": [
+    {
+      "screen": "login",
+      "axeVersion": "4.11.0",
+      "violations": [],
+      "incomplete": [],
+      "passedRules": 22,
+      "narrowViewport": {
+        "width": 320,
+        "scrollWidth": 320,
+        "clientWidth": 320
+      }
+    },
+    {
+      "screen": "register",
+      "axeVersion": "4.11.0",
+      "violations": [],
+      "incomplete": [],
+      "passedRules": 22,
+      "narrowViewport": {
+        "width": 320,
+        "scrollWidth": 320,
+        "clientWidth": 320
+      }
+    },
+    {
+      "screen": "profile",
+      "axeVersion": "4.11.0",
+      "violations": [
+        {
+          "id": "target-size",
+          "impact": "serious",
+          "help": "All touch targets must be 24px large, or leave sufficient space",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/target-size?application=axeAPI",
+          "nodes": [
+            {
+              "target": ["li:nth-child(1) > label > input[type=\"checkbox\"]"],
+              "failureSummary": "Fix any of the following:\n  Target has insufficient size (13px by 13px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+            },
+            {
+              "target": ["li:nth-child(2) > label > input[type=\"checkbox\"]"],
+              "failureSummary": "Fix any of the following:\n  Target has insufficient size (13px by 13px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+            },
+            {
+              "target": ["li:nth-child(3) > label > input[type=\"checkbox\"]"],
+              "failureSummary": "Fix any of the following:\n  Target has insufficient size (13px by 13px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+            },
+            {
+              "target": ["li:nth-child(4) > label > input[type=\"checkbox\"]"],
+              "failureSummary": "Fix any of the following:\n  Target has insufficient size (13px by 13px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+            },
+            {
+              "target": ["li:nth-child(5) > label > input[type=\"checkbox\"]"],
+              "failureSummary": "Fix any of the following:\n  Target has insufficient size (13px by 13px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+            },
+            {
+              "target": ["li:nth-child(6) > label > input[type=\"checkbox\"]"],
+              "failureSummary": "Fix any of the following:\n  Target has insufficient size (13px by 13px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+            },
+            {
+              "target": ["li:nth-child(7) > label > input[type=\"checkbox\"]"],
+              "failureSummary": "Fix any of the following:\n  Target has insufficient size (13px by 13px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+            },
+            {
+              "target": ["li:nth-child(8) > label > input[type=\"checkbox\"]"],
+              "failureSummary": "Fix any of the following:\n  Target has insufficient size (13px by 13px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+            },
+            {
+              "target": ["li:nth-child(9) > label > input[type=\"checkbox\"]"],
+              "failureSummary": "Fix any of the following:\n  Target has insufficient size (13px by 13px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+            },
+            {
+              "target": ["li:nth-child(10) > label > input[type=\"checkbox\"]"],
+              "failureSummary": "Fix any of the following:\n  Target has insufficient size (13px by 13px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px."
+            }
+          ]
+        }
+      ],
+      "incomplete": [],
+      "passedRules": 25,
+      "narrowViewport": {
+        "width": 320,
+        "scrollWidth": 320,
+        "clientWidth": 320
+      }
+    },
+    {
+      "screen": "analysis-form",
+      "axeVersion": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": ["#analysis-text"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ]
+        }
+      ],
+      "passedRules": 20,
+      "narrowViewport": {
+        "width": 320,
+        "scrollWidth": 320,
+        "clientWidth": 320
+      }
+    },
+    {
+      "screen": "analysis-detail-evidence",
+      "axeVersion": "4.11.0",
+      "violations": [],
+      "incomplete": [],
+      "passedRules": 19,
+      "narrowViewport": {
+        "width": 320,
+        "scrollWidth": 320,
+        "clientWidth": 320
+      }
+    },
+    {
+      "screen": "history",
+      "axeVersion": "4.11.0",
+      "violations": [],
+      "incomplete": [],
+      "passedRules": 21,
+      "narrowViewport": {
+        "width": 320,
+        "scrollWidth": 320,
+        "clientWidth": 320
+      }
+    },
+    {
+      "screen": "delete-dialog",
+      "axeVersion": "4.11.0",
+      "violations": [],
+      "incomplete": [],
+      "passedRules": 12,
+      "narrowViewport": {
+        "width": 320,
+        "scrollWidth": 320,
+        "clientWidth": 320
+      }
+    },
+    {
+      "screen": "legacy-evidence-absent",
+      "axeVersion": "4.11.0",
+      "violations": [],
+      "incomplete": [],
+      "passedRules": 19,
+      "narrowViewport": {
+        "width": 320,
+        "scrollWidth": 320,
+        "clientWidth": 320
+      }
+    },
+    {
+      "screen": "detail-404",
+      "axeVersion": "4.11.0",
+      "violations": [],
+      "incomplete": [],
+      "passedRules": 19,
+      "narrowViewport": {
+        "width": 320,
+        "scrollWidth": 320,
+        "clientWidth": 320
+      }
+    },
+    {
+      "screen": "engine-503",
+      "axeVersion": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": ["#analysis-text"],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ]
+        }
+      ],
+      "passedRules": 23,
+      "narrowViewport": {
+        "width": 320,
+        "scrollWidth": 320,
+        "clientWidth": 320
+      }
+    }
+  ]
+}

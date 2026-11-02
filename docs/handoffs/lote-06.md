@@ -1,6 +1,18 @@
 # Handoff lote 06 — estado vigente y registro histórico
 
-## Estado vigente tras auditoría PR27–30 — 2026-11-02
+## Estado vigente tras PR31 — preparación M1,2026-11-02
+
+QA-02 correctiva/a80e48a integrada en origin/develop6d057b1 por PR31 merged=true; QAA-01/DOC-01/DOC-02 también integradas. Develop local actualizado mediante pull --ff-only; worktrees anteriores conservados. CI del merge aprobado con PG16, run41524142215.
+
+Rama documental docs/m1-human-review-release-readiness desde6d057b1, sin release/0.1.0. Checks funcionales97web/118API/51motor/2privacidad y7E2E aprobados; nuevo probe axe4.11 falló en10 checkbox13x13/espacio16px (M1-A11Y-001). Corrección aislada fix/profile-skill-target-size/6cba655: objetivos24px/labels32px,8E2E y probe10vistas sin infracciones confirmadas aprobados localmente; falta revisión/CI/integración. No se cambió producto en la rama documental ni se ocultó el fallo original.
+
+Persisten2 contrastes incomplete de textarea y aceptación humana UI-01/EVID-06. Formulario P5 y runbook OPS preparados. OPS-01: falta Docker Engine/WSL; usuario instalará y confirmará docker info. La validación estática Compose no aprueba el stack. No se cambió seguridad del sistema ni se atendió UAC.
+
+Ensayo nuevo0000–0002→0003 con datos existente/repetición aprobadoPG18.3; instalación frozen/build desde copia nueva. REL-01 bloqueada por fix no integrado, aceptación/OPS y revisiones P1/P2/Omar. Changelog/versión/publicación preparados solo como borradores docs/release;8 manifiestos privados siguen0.0.0. Sin tags, merge protegido o publicación. CTR-02 bloqueada.
+
+Detalle/evidencias en [READINESS-M1](../acceptance/READINESS-M1.md) y [defecto](../acceptance/defects/M1-A11Y-001.md). Las secciones anteriores en el tiempo que siguen conservan su historia; ya no describen QA-02 ausente de develop.
+
+## Histórico: auditoría PR27–30 — 2026-11-02
 
 PR27/QAA-01 y PR28/DOC-02 integrados en develop b84255e. PR29 fusionó develop34a2242→main; PR30 fusionó QA-02 a0faee1→main fe830bb, sin llevarla a develop. GitHub merged=true y contenido/ancestry comprobados, no solo mensajes de commits. QA-02 está publicada/integrada en main, falta integración y aceptación en develop.
 
