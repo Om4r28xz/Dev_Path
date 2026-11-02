@@ -1,0 +1,67 @@
+{
+  "date": "2026-11-02",
+  "branch": "fix/qa-02-integrate-develop",
+  "targetDevelop": "b84255efc996f67af26d6478528eba42afe6bce6",
+  "main": "fe830bb5e3ec2161014a8dc78b1c0a1987923276",
+  "sourceQa": "a0faee1813d9717bb92f0b5b58904b02a88f351c",
+  "method": "fast-forward original QA branch only; no main merge/cherry-pick",
+  "excluded": "main-only docs/handoffs/lote-04.md and main merge history",
+  "runtime": {
+    "node": "22.23.4",
+    "pnpm": "11.22.0",
+    "postgres": "18.3",
+    "playwright": "1.64.1",
+    "chromium": "156"
+  },
+  "checks": {
+    "frozenInstall": true,
+    "lint": true,
+    "format": true,
+    "typecheck": true,
+    "build": true,
+    "web": 97,
+    "api": 118,
+    "engine": 51,
+    "privacy": 2,
+    "e2e": 7,
+    "catalogCases": 30,
+    "openapiDocuments": 2,
+    "openapiExamples": 19,
+    "migrationUpgrade": "0000-0002 -> 0003, existing synthetic user/profile/skills/67% snapshot unchanged, cursor index, idempotent rerun",
+    "e2eRemainingUsers": 0,
+    "e2eRemainingAnalyses": 0,
+    "composeConfigStatic": "Compose standalone5.6.1 config --quiet exit0 with infra/.env.example",
+    "composeRuntime": "not executed; Docker Engine absent; WSL status50 not installed"
+  },
+  "ci": {
+    "qa": "https://github.com/Om4r28xz/Dev_Path/actions/runs/41519866064",
+    "main": "https://github.com/Om4r28xz/Dev_Path/actions/runs/41520120131",
+    "both": "all checks success including PostgreSQL16 E2E",
+    "newCorrectiveTip": "pending"
+  },
+  "pending": [
+    "UI-01 human P5",
+    "EVID-06 human P5",
+    "OPS-01 Docker Compose P1/P2",
+    "corrective PR publication/review/merge develop",
+    "REL-01 human approvals and candidate smoke/version/changelog"
+  ],
+  "files": [
+    {
+      "file": "docs/acceptance/evidence/correction-tests.txt",
+      "sha256": "a7e2e59cfb89ca2a57084b54b0b803b712bf013d87a0cd5188ca81b0567f8d68"
+    },
+    {
+      "file": "docs/acceptance/evidence/correction-e2e.txt",
+      "sha256": "2a6964bdffd51eee1906eec0d443747542a6a30a96eba49c791b1a095b16c683"
+    },
+    {
+      "file": "docs/acceptance/evidence/correction-upgrade.txt",
+      "sha256": "5bff921a8e9bcf88bcc35552b3e7d9ba7bbc64bc58f312e5503a2f4513166ba5"
+    },
+    {
+      "file": "docs/acceptance/probes/migration-upgrade.mjs",
+      "sha256": "26a671be86ce83cda6a33ba31a60a52fe2bc3e4a8c12729587f3f59951282de2"
+    }
+  ]
+}
