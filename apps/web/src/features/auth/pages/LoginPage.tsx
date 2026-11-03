@@ -64,61 +64,70 @@ export function LoginPage() {
   }
 
   return (
-    <main className="page-form">
-      <h1>Iniciar sesión</h1>
-      {serverError && (
-        <div ref={errorFocus} tabIndex={-1}>
-          <Alert variant="error">{serverError}</Alert>
-        </div>
-      )}
-      <form onSubmit={(event) => void handleSubmit(event)} noValidate aria-busy={pending}>
-        <TextField
-          id="email"
-          label="Correo electrónico"
-          type="email"
-          required
-          autoComplete="email"
-          autoFocus
-          maxLength={254}
-          disabled={pending}
-          error={errors.email ?? ''}
-          value={fields.email}
-          onChange={(event) => {
-            setFields((old) => ({ ...old, email: event.target.value }));
-            setErrors((old) => ({ ...old, email: undefined }));
-          }}
-        />
-        <TextField
-          id="password"
-          label="Contraseña"
-          type="password"
-          required
-          autoComplete="current-password"
-          maxLength={128}
-          disabled={pending}
-          error={errors.password ?? ''}
-          value={fields.password}
-          onChange={(event) => {
-            setFields((old) => ({ ...old, password: event.target.value }));
-            setErrors((old) => ({ ...old, password: undefined }));
-          }}
-        />
-        <Button type="submit" variant="primary" isLoading={pending}>
-          Entrar
-        </Button>
-      </form>
-      <p>
-        ¿No tienes cuenta?{' '}
-        <Link
-          to={
-            returnTo === '/profile'
-              ? '/register'
-              : `/register?returnTo=${encodeURIComponent(returnTo)}`
-          }
-        >
-          Regístrate
-        </Link>
-      </p>
+    <main className="page-form auth-page" id="main-content">
+      <div className="auth-card surface">
+        <header className="auth-card__header">
+          <h1>Iniciar sesión</h1>
+          <p className="auth-card__description">
+            Accede a tu cuenta para comparar tus habilidades técnicas con vacantes de desarrollo.
+          </p>
+        </header>
+        {serverError && (
+          <div ref={errorFocus} tabIndex={-1}>
+            <Alert variant="error">{serverError}</Alert>
+          </div>
+        )}
+        <form onSubmit={(event) => void handleSubmit(event)} noValidate aria-busy={pending}>
+          <TextField
+            id="email"
+            label="Correo electrónico"
+            type="email"
+            required
+            autoComplete="email"
+            autoFocus
+            maxLength={254}
+            disabled={pending}
+            error={errors.email ?? ''}
+            value={fields.email}
+            onChange={(event) => {
+              setFields((old) => ({ ...old, email: event.target.value }));
+              setErrors((old) => ({ ...old, email: undefined }));
+            }}
+          />
+          <TextField
+            id="password"
+            label="Contraseña"
+            type="password"
+            required
+            autoComplete="current-password"
+            maxLength={128}
+            disabled={pending}
+            error={errors.password ?? ''}
+            value={fields.password}
+            onChange={(event) => {
+              setFields((old) => ({ ...old, password: event.target.value }));
+              setErrors((old) => ({ ...old, password: undefined }));
+            }}
+          />
+          <Button type="submit" variant="primary" isLoading={pending}>
+            Entrar
+          </Button>
+        </form>
+        <footer className="auth-card__footer">
+          <p>
+            ¿No tienes cuenta?{' '}
+            <Link
+              to={
+                returnTo === '/profile'
+                  ? '/register'
+                  : `/register?returnTo=${encodeURIComponent(returnTo)}`
+              }
+            >
+              Regístrate
+            </Link>
+          </p>
+        </footer>
+      </div>
     </main>
   );
 }

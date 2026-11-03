@@ -1,0 +1,246 @@
+{
+  "planHash": "32335f0379ca7f00146b55fc141e0f1ffa170877c2615dde53f8c4185eb1f80c",
+  "phase": "standalone",
+  "recordedAtUtc": "2026-11-03T20:11:26.4695683Z",
+  "retryCount": 1,
+  "resetBaseline": false,
+  "complete": true,
+  "result": {
+    "setupSucceeded": true,
+    "setupDurationMs": 0,
+    "setupFailureOutput": null,
+    "assertions": [
+      {
+        "name": "format-check",
+        "kind": "process",
+        "verificationMethod": "exit-code",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "$ prettier --check \u0022apps/**/*.{ts,tsx,css,html,json,md}\u0022 \u0022packages/**/*.{ts,tsx,json,yaml,yml,md}\u0022 \u0022*.{json,yaml,yml,mjs}\u0022 README.md \u0022tests/e2e/**/*.{ts,mts,md}\u0022 playwright.config.ts scripts/run-e2e.mjs\r\nChecking formatting...\r\nAll matched files use Prettier code style!\r\n",
+        "durationMs": 13840
+      },
+      {
+        "name": "lint-check",
+        "kind": "process",
+        "verificationMethod": "exit-code",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "",
+        "durationMs": 20251
+      },
+      {
+        "name": "typecheck",
+        "kind": "process",
+        "verificationMethod": "exit-code",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "$ pnpm -r --if-present typecheck \u0026\u0026 tsc -p tsconfig.e2e.json\r\nScope: 7 of 8 workspace projects\r\napps/api typecheck$ tsc -p tsconfig.json --noEmit --pretty false\r\napps/web typecheck$ tsc -b --pretty false\r\napps/skill-engine typecheck$ tsc -p tsconfig.json --noEmit --pretty false\r\npackages/contracts typecheck$ tsc --noEmit\r\npackages/contracts typecheck: Done\r\npackages/db typecheck$ tsc --noEmit\r\napps/skill-engine typecheck: Done\r\napps/web typecheck: Done\r\napps/api typecheck: Done\r\npackages/db typecheck: Done\r\n",
+        "durationMs": 34740
+      },
+      {
+        "name": "build",
+        "kind": "process",
+        "verificationMethod": "exit-code",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "$ pnpm -r --if-present build\r\nScope: 7 of 8 workspace projects\r\napps/api build$ tsc -p tsconfig.json --pretty false\r\npackages/catalog build$ pnpm test\r\napps/skill-engine build$ tsc -p tsconfig.json --pretty false\r\napps/web build$ tsc -b --pretty false \u0026\u0026 vite build\r\napps/web build: \u001B[36mvite v8.3.5 \u001B[32mbuilding client environment for production...\u001B[36m\u001B[39m\r\napps/web build: transforming...\r\npackages/catalog build: $ node scripts/validate-catalog.mjs \u0026\u0026 node scripts/validate-corpus.mjs\r\napps/web build: \u2713 96 modules transformed.\r\napps/web build: rendering chunks...\r\npackages/catalog build: Validated catalog 1.0.0: 10 technologies and 18 unambiguous aliases.\r\napps/web build: computing gzip size...\r\napps/web build: dist/index.html                   0.46 kB \u2502 gzip:   0.29 kB\r\napps/web build: dist/assets/index-VkI6Mqe8.css   13.72 kB \u2502 gzip:   3.05 kB\r\napps/web build: dist/assets/index-BjcGPDMU.js   336.79 kB \u2502 gzip: 103.44 kB\r\npackages/catalog build: Validated 30 synthetic ES/EN cases; catalog 1.0.0.\r\napps/web build: \u001B[32m\u2713 built in 1.38s\u001B[39m\r\napps/web build: Done\r\npackages/catalog build: Done\r\npackages/contracts build$ pnpm generate \u0026\u0026 pnpm typecheck\r\napps/skill-engine build: Done\r\npackages/contracts build: $ node scripts/generate-contracts.mjs\r\napps/api build: Done\r\npackages/contracts build: Generated M1, M2 and proposed M3/M4 TypeScript contracts from OpenAPI.\r\npackages/contracts build: $ tsc --noEmit\r\npackages/contracts build: Done\r\n",
+        "durationMs": 71935
+      },
+      {
+        "name": "web-preview-serves-login",
+        "kind": "http-probe",
+        "verificationMethod": "http-status",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": null,
+        "outputSample": "HTTP 200\n\u003C!doctype html\u003E\n\u003Chtml lang=\u0022es\u0022\u003E\n  \u003Chead\u003E\n    \u003Cmeta charset=\u0022UTF-8\u0022 /\u003E\n    \u003Cmeta name=\u0022viewport\u0022 content=\u0022width=device-width, initial-scale=1.0\u0022 /\u003E\n    \u003Cmeta name=\u0022description\u0022 content=\u0022Base t\u00E9cnica local de DevPath\u0022 /\u003E\n    \u003Ctitle\u003EDevPath\u003C/title\u003E\n    \u003Cscript type=\u0022module\u0022 crossorigin src=\u0022/assets/index-BjcGPDMU.js\u0022\u003E\u003C/script\u003E\n    \u003Clink rel=\u0022stylesheet\u0022 crossorigin href=\u0022/assets/index-VkI6Mqe8.css\u0022\u003E\n  \u003C/head\u003E\n  \u003Cbody\u003E\n    \u003Cdiv id=\u0022root\u0022\u003E\u003C/div\u003E\n  \u003C/body\u003E\n\u003C/html\u003E\n\n--- server output ---\n$ vite preview --host 127.0.0.1 \u0022--host\u0022 \u0022127.0.0.1\u0022 \u0022--port\u0022 \u00224173\u0022\r\n  \u001B[32m\u279C\u001B[39m  \u001B[1mLocal\u001B[22m:   \u001B[36mhttp://127.0.0.1:\u001B[1m4173\u001B[22m/\u001B[39m\r\n",
+        "durationMs": 4783
+      },
+      {
+        "name": "tests-pass",
+        "kind": "process",
+        "verificationMethod": "test-results",
+        "passed": true,
+        "timedOut": false,
+        "skipped": false,
+        "skippedReason": null,
+        "exitCode": 0,
+        "outputSample": "$ pnpm -r --if-present test \u0026\u0026 pnpm test:e2e:support\r\nScope: 7 of 8 workspace projects\r\napps/api test$ vitest run --passWithNoTests\r\npackages/catalog test$ node scripts/validate-catalog.mjs \u0026\u0026 node scripts/validate-corpus.mjs\r\napps/skill-engine test$ vitest run --passWithNoTests\r\napps/web test$ vitest run --passWithNoTests\r\npackages/catalog test: Validated catalog 1.0.0: 10 technologies and 18 unambiguous aliases.\r\npackages/catalog test: Validated 30 synthetic ES/EN cases; catalog 1.0.0.\r\npackages/catalog test: Done\r\npackages/contracts test$ node scripts/validate-contracts.mjs\r\napps/api test: \u001B[1m\u001B[30m\u001B[46m RUN \u001B[49m\u001B[39m\u001B[22m \u001B[36mv5.0.5 \u001B[39m\u001B[90mC:/Users/omar2/Documents/GitHub/Dev_Path/apps/api\u001B[39m\r\napps/skill-engine test: \u001B[1m\u001B[30m\u001B[46m RUN \u001B[49m\u001B[39m\u001B[22m \u001B[36mv5.0.5 \u001B[39m\u001B[90mC:/Users/omar2/Documents/GitHub/Dev_Path/apps/skill-engine\u001B[39m\r\napps/web test: \u001B[1m\u001B[30m\u001B[46m RUN \u001B[49m\u001B[39m\u001B[22m \u001B[36mv5.0.5 \u001B[39m\u001B[90mC:/Users/omar2/Documents/GitHub/Dev_Path/apps/web\u001B[39m\r\napps/web test:  \u001B[32m\u2713\u001B[39m src/features/analyses/api.test.ts \u001B[2m(\u001B[22m\u001B[2m8 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 83\u001B[2mms\u001B[22m\u001B[39m\r\napps/web test:  \u001B[32m\u2713\u001B[39m src/features/analyses/validation.test.ts \u001B[2m(\u001B[22m\u001B[2m33 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 178\u001B[2mms\u001B[22m\u001B[39m\r\napps/skill-engine test:  \u001B[32m\u2713\u001B[39m tests/unit/scorer.test.ts \u001B[2m(\u001B[22m\u001B[2m3 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 27\u001B[2mms\u001B[22m\u001B[39m\r\napps/skill-engine test:  \u001B[32m\u2713\u001B[39m tests/unit/port.test.ts \u001B[2m(\u001B[22m\u001B[2m2 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 35\u001B[2mms\u001B[22m\u001B[39m\r\napps/skill-engine test:  \u001B[32m\u2713\u001B[39m tests/unit/extractor.test.ts \u001B[2m(\u001B[22m\u001B[2m39 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[33m 529\u001B[2mms\u001B[22m\u001B[39m\r\napps/web test:  \u001B[32m\u2713\u001B[39m src/features/analyses/draft.test.ts \u001B[2m(\u001B[22m\u001B[2m4 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 42\u001B[2mms\u001B[22m\u001B[39m\r\napps/web test:  \u001B[32m\u2713\u001B[39m src/features/analyses/history.test.ts \u001B[2m(\u001B[22m\u001B[2m21 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 88\u001B[2mms\u001B[22m\u001B[39m\r\napps/api test:  \u001B[32m\u2713\u001B[39m tests/unit/config.test.ts \u001B[2m(\u001B[22m\u001B[2m4 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 37\u001B[2mms\u001B[22m\u001B[39m\r\napps/api test:  \u001B[32m\u2713\u001B[39m tests/unit/logger.test.ts \u001B[2m(\u001B[22m\u001B[2m1 test\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 191\u001B[2mms\u001B[22m\u001B[39m\r\napps/web test:  \u001B[32m\u2713\u001B[39m src/lib/session/session.test.ts \u001B[2m(\u001B[22m\u001B[2m7 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 270\u001B[2mms\u001B[22m\u001B[39m\r\napps/api test:  \u001B[32m\u2713\u001B[39m tests/unit/analysis-evidence.test.ts \u001B[2m(\u001B[22m\u001B[2m29 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 169\u001B[2mms\u001B[22m\u001B[39m\r\napps/api test:  \u001B[32m\u2713\u001B[39m tests/unit/port.test.ts \u001B[2m(\u001B[22m\u001B[2m2 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 28\u001B[2mms\u001B[22m\u001B[39m\r\napps/web test:  \u001B[32m\u2713\u001B[39m src/features/analyses/history-view.test.ts \u001B[2m(\u001B[22m\u001B[2m3 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 161\u001B[2mms\u001B[22m\u001B[39m\r\napps/api test:  \u001B[32m\u2713\u001B[39m tests/unit/auth-commands.test.ts \u001B[2m(\u001B[22m\u001B[2m2 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 46\u001B[2mms\u001B[22m\u001B[39m\r\napps/web test:  \u001B[32m\u2713\u001B[39m src/features/analyses/result.test.ts \u001B[2m(\u001B[22m\u001B[2m6 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 131\u001B[2mms\u001B[22m\u001B[39m\r\napps/web test:  \u001B[32m\u2713\u001B[39m src/lib/http/client.test.ts \u001B[2m(\u001B[22m\u001B[2m4 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[33m 311\u001B[2mms\u001B[22m\u001B[39m\r\napps/api test:  \u001B[32m\u2713\u001B[39m tests/unit/history-cursor.test.ts \u001B[2m(\u001B[22m\u001B[2m11 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 169\u001B[2mms\u001B[22m\u001B[39m\r\napps/api test:  \u001B[32m\u2713\u001B[39m tests/unit/analysis-validation.test.ts \u001B[2m(\u001B[22m\u001B[2m9 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 229\u001B[2mms\u001B[22m\u001B[39m\r\napps/web test:  \u001B[32m\u2713\u001B[39m src/features/auth/form-utils.test.ts \u001B[2m(\u001B[22m\u001B[2m11 tests\u001B[22m\u001B[2m)\u001B[22m\u001B[32m 89\u001B[2mms\u001B[22m\u001B[39m\r\napps/web test: \u001B[2m Test Files \u001B[22m \u001B[1m\u001B[32m9 passed\u001B[39m\u001B[22m\u001B[90m (9)\u001B[39m\r\napps/web test: \u001B[2m      Tests \u001B[22m \u001B[1m\u001B[32m97 passed\u001B[39m\u001B[22m\u001B[90m (97)\u001B[39m\r\napps/web test: \u001B[2m   Start at \u001B[22m 14:11:03\r\napps/web test: \u001B[2m   Duration \u001B[22m 8.61s\u001B[2m (import 70%, worker 11%, transform 10%, tests 9%)\u001B[22m\r\napps/web test: Done\r\napps/api test: \u001B[90mstdout\u001B[2m | tests/integration/app.test.ts\u001B[2m \u003E \u001B[22m\u001B[2mAPI HTTP foundation\u001B[2m \u003E \u001B[22m\u001B[2mexpone health sin secretos y conserva request IDs UUID v\u00E1lidos\r\napps/api test: \u001B[22m\u001B[39m{\u0022timestamp\u0022:\u00222026-11-03T20:11:15.109Z\u0022,\u0022level\u0022:\u0022info\u0022,\u0022service\u0022:\u0022api\u0022,\u0022environment\u0022:\u0022test\u0022,\u0022message\u0022:\u0022HTTP request completed.\u0022,\u0022requestId\u0022:\u00227bfb5328-6b03-4ff8-91e8-a285f31add47\u0022,\u0022method\u0022:\u0022GET\u0022,\u0022pat\n\u2026[truncated]",
+        "durationMs": 32187,
+        "testResults": {
+          "testFramework": "vitest",
+          "runnerDetectedFrom": "package_json",
+          "testsTotal": 2,
+          "testsPassed": 2,
+          "testsFailed": 0,
+          "testsSkipped": 0,
+          "parseFailed": false
+        }
+      }
+    ],
+    "executions": [
+      {
+        "source": "format-check",
+        "resolvedExecutable": "C:\\Users\\omar2\\AppData\\Roaming\\npm\\pnpm.CMD",
+        "args": [
+          "format:check"
+        ],
+        "cwd": "C:\\Users\\omar2\\Documents\\GitHub\\Dev_Path",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32",
+        "nodeExecutable": "C:\\Program Files\\nodejs\\node.EXE",
+        "nodeVersion": "v22.16.0",
+        "packageManager": "pnpm",
+        "packageManagerExecutable": "C:\\Users\\omar2\\AppData\\Roaming\\npm\\pnpm.CMD",
+        "packageManagerVersion": "11.22.0",
+        "cleanup": {
+          "RootProcessId": 28240,
+          "Completed": true,
+          "ProcessesObserved": 5,
+          "ProcessesTerminated": 0,
+          "Failure": null
+        }
+      },
+      {
+        "source": "lint-check",
+        "resolvedExecutable": "C:\\Users\\omar2\\AppData\\Roaming\\npm\\pnpm.CMD",
+        "args": [
+          "exec",
+          "eslint",
+          ".",
+          "--ignore-pattern",
+          ".worktrees/**"
+        ],
+        "cwd": "C:\\Users\\omar2\\Documents\\GitHub\\Dev_Path",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32",
+        "nodeExecutable": "C:\\Program Files\\nodejs\\node.EXE",
+        "nodeVersion": "v22.16.0",
+        "packageManager": "pnpm",
+        "packageManagerExecutable": "C:\\Users\\omar2\\AppData\\Roaming\\npm\\pnpm.CMD",
+        "packageManagerVersion": "11.22.0",
+        "cleanup": {
+          "RootProcessId": 31540,
+          "Completed": true,
+          "ProcessesObserved": 5,
+          "ProcessesTerminated": 1,
+          "Failure": null
+        }
+      },
+      {
+        "source": "typecheck",
+        "resolvedExecutable": "C:\\Users\\omar2\\AppData\\Roaming\\npm\\pnpm.CMD",
+        "args": [
+          "typecheck"
+        ],
+        "cwd": "C:\\Users\\omar2\\Documents\\GitHub\\Dev_Path",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32",
+        "nodeExecutable": "C:\\Program Files\\nodejs\\node.EXE",
+        "nodeVersion": "v22.16.0",
+        "packageManager": "pnpm",
+        "packageManagerExecutable": "C:\\Users\\omar2\\AppData\\Roaming\\npm\\pnpm.CMD",
+        "packageManagerVersion": "11.22.0",
+        "cleanup": {
+          "RootProcessId": 18564,
+          "Completed": true,
+          "ProcessesObserved": 16,
+          "ProcessesTerminated": 1,
+          "Failure": null
+        }
+      },
+      {
+        "source": "build",
+        "resolvedExecutable": "C:\\Users\\omar2\\AppData\\Roaming\\npm\\pnpm.CMD",
+        "args": [
+          "build"
+        ],
+        "cwd": "C:\\Users\\omar2\\Documents\\GitHub\\Dev_Path",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32",
+        "nodeExecutable": "C:\\Program Files\\nodejs\\node.EXE",
+        "nodeVersion": "v22.16.0",
+        "packageManager": "pnpm",
+        "packageManagerExecutable": "C:\\Users\\omar2\\AppData\\Roaming\\npm\\pnpm.CMD",
+        "packageManagerVersion": "11.22.0",
+        "cleanup": {
+          "RootProcessId": 38948,
+          "Completed": true,
+          "ProcessesObserved": 32,
+          "ProcessesTerminated": 1,
+          "Failure": null
+        }
+      },
+      {
+        "source": "web-preview-serves-login",
+        "resolvedExecutable": "C:\\Users\\omar2\\AppData\\Roaming\\npm\\pnpm.CMD",
+        "args": [
+          "--filter",
+          "@devpath/web",
+          "preview",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "4173"
+        ],
+        "cwd": "C:\\Users\\omar2\\Documents\\GitHub\\Dev_Path",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32",
+        "nodeExecutable": "C:\\Program Files\\nodejs\\node.EXE",
+        "nodeVersion": "v22.16.0",
+        "packageManager": "pnpm",
+        "packageManagerExecutable": "C:\\Users\\omar2\\AppData\\Roaming\\npm\\pnpm.CMD",
+        "packageManagerVersion": "11.22.0",
+        "cleanup": {
+          "RootProcessId": 11540,
+          "Completed": true,
+          "ProcessesObserved": 8,
+          "ProcessesTerminated": 5,
+          "Failure": null
+        }
+      },
+      {
+        "source": "tests-pass",
+        "resolvedExecutable": "C:\\Users\\omar2\\AppData\\Roaming\\npm\\pnpm.CMD",
+        "args": [
+          "test"
+        ],
+        "cwd": "C:\\Users\\omar2\\Documents\\GitHub\\Dev_Path",
+        "env": {},
+        "prependPath": [],
+        "platform": "win32",
+        "nodeExecutable": "C:\\Program Files\\nodejs\\node.EXE",
+        "nodeVersion": "v22.16.0",
+        "packageManager": "pnpm",
+        "packageManagerExecutable": "C:\\Users\\omar2\\AppData\\Roaming\\npm\\pnpm.CMD",
+        "packageManagerVersion": "11.22.0",
+        "cleanup": {
+          "RootProcessId": 36532,
+          "Completed": true,
+          "ProcessesObserved": 57,
+          "ProcessesTerminated": 1,
+          "Failure": null
+        }
+      }
+    ]
+  }
+}

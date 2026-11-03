@@ -5,6 +5,7 @@ interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   type?: 'text' | 'email' | 'password';
   error?: string;
+  hint?: string;
   required?: boolean;
 }
 
@@ -13,11 +14,16 @@ export const TextField: React.FC<TextFieldProps> = ({
   label,
   type = 'text',
   error,
+  hint,
   required = false,
   className = '',
   ...rest
 }) => {
   const errorId = `${id}-error`;
+  const hintId = `${id}-hint`;
+  const describedBy = [error ? errorId : undefined, hint ? hintId : undefined]
+    .filter(Boolean)
+    .join(' ');
 
   return (
     <div className="field">
@@ -30,12 +36,17 @@ export const TextField: React.FC<TextFieldProps> = ({
           </span>
         )}
       </label>
+      {hint && (
+        <span id={hintId} className="field__hint">
+          {hint}
+        </span>
+      )}
       <input
         id={id}
         type={type}
         required={required}
         aria-invalid={error ? 'true' : undefined}
-        aria-describedby={error ? errorId : undefined}
+        aria-describedby={describedBy || undefined}
         className={`field__input ${className}`.trim()}
         {...rest}
       />
