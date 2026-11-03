@@ -1,5 +1,8 @@
 # Formulario de revisión humana M1 — pendiente
 
+Evidencia manual complementaria disponible: [revisión de Emanuel](Emanuel-visual-review.md), con Opera GX, recorrido funcional/33%, zoom200%, teclado, Narrador básico, ventana estrecha y validación/null confirmados. Quien tenga el rol de aceptación debe revisar esa evidencia y registrar su decisión real; no repetir los recorridos acreditados sin motivo ni asignar automáticamente la firma a P5/P1/P2. Los campos siguientes pertenecen a sus respectivos revisores, no a la IA.
+
+
 No rellenado por una persona autorizada. No constituye firma de aceptación. Guía complementaria: [P5-review](P5-review.md).
 
 - Persona y rol: ____________________
