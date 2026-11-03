@@ -1,5 +1,12 @@
 # Puerta de REL-01 — todavía no habilitada
 
+## Estado vigente tras PR34
+
+Base integrada 5061185183a2f4b6201cc8f73f29a2d59f0899cb. QAA-01/QA-02/DOC-02 y fixes target-size/UID de llave integrados. Dos ejecuciones reales Compose sobre44b0301 aprobadas (push41568936504 y PR41568942398); expediente [OPS-01](OPS-01-dossier.md). Ejecución técnica acreditada por jobs/pasos GitHub, contenidos de artefactos pendientes de revisión autenticada P1/P2. No confundir el fallo local por Docker ausente con el resultado remoto aprobado.
+
+OPS-01: pendiente aceptación P1/P2; UI-01/EVID-06: pendientes P5. Matriz histórica27/3 se conserva, no se inventan aprobaciones. REL-01 bloqueada hasta registrar decisiones; versiones siguen0.0.0, sin rama release/tag/release oficial ni CTR-02. Las secciones siguientes conservan historia y quedan subordinadas a este estado.
+
+
 Fecha: 2026-11-02. Base integrada actual:f700cf2a9fdda8c88cef245a65a53988278c2b43. No se crea `release/0.1.0`, changelog de release, versión o tag en QA-02.
 
 | Requisito                           | Evidencia actual                                                                              | Pendiente / paso exacto                                                                                                                                                                     |
@@ -80,3 +87,7 @@ Ver [READINESS-M1](READINESS-M1.md), [formulario P5](P5-review-form.md), [OPS-01
 ## Puertas actuales de cierre
 
 Las integraciones y el fix están comprobados en f700cf2. Solo quedan como bloqueantes de aceptación los recorridos humanos UI-01/EVID-06, OPS-01 real y revisión/decisión de P1/P2/Omar. Los colores de las dos muestras pendientes ya tienen prueba técnica independiente; no se requiere alterar estilos para ocultar incomplete de axe. Rollback preparado en [M1-ROLLBACK-PLAN](../release/M1-ROLLBACK-PLAN.md). REL-01 y CTR-02 no están completadas.
+
+## CI del merge integrado
+
+Merge5061185: ocho checks completos aprobados, incluido Compose real (run41569680337) y CI/E2E PG16 (run41569680256). [Registro](https://github.com/Om4r28xz/Dev_Path/actions/runs/41569680337). Evidencia pública en docs/acceptance/evidence/pr34-merge-checks.json. Esto añade ejecución sobre develop integrado, sin sustituir revisión de artefactos ni firmas humanas.

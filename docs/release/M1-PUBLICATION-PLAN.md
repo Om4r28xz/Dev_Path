@@ -1,6 +1,10 @@
 # Publicación M1 — guía de preparación, no autorización de release
 
-## Integración confirmada y corrección nueva pendiente
+## Integración confirmada — estado vigente
+
+PR34 integrado en develop5061185, junto con QAA/QA/DOC y fixes. No repetir PR32/33/34. Compose real aprobó dos ejecuciones; [expediente](../acceptance/OPS-01-dossier.md). Pendientes firmas P5/P1/P2 y autorización Omar; preparar candidato según [checklist](M1-CANDIDATE-CHECKLIST.md). Texto siguiente conserva historia de preparación.
+
+## Histórico: integración confirmada y corrección pendiente
 
 QA-02 correctiva ya está integrada por PR31/6d057b1, con CI PG16 aprobado. No repetir el PR correctivo anterior ni fusionar main completo. Ahora Omar/P2 deben revisar el fix independiente fix/profile-skill-target-size/6cba655 (M1-A11Y-001), publicar su PR autorizado y repetir CI/probe sobre el merge integrado. P5 confirma interacción. Esta guía reutiliza el borrador anterior, actualizando hechos y puertas; no autoriza publicar.
 

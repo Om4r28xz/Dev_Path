@@ -1,5 +1,12 @@
 # Preparación M1 tras integrar QA-02 — todavía bloqueada
 
+## Estado vigente tras PR34
+
+Base integrada 5061185183a2f4b6201cc8f73f29a2d59f0899cb. QAA-01/QA-02/DOC-02 y fixes target-size/UID de llave integrados. Dos ejecuciones reales Compose sobre44b0301 aprobadas (push41568936504 y PR41568942398); expediente [OPS-01](OPS-01-dossier.md). Ejecución técnica acreditada por jobs/pasos GitHub, contenidos de artefactos pendientes de revisión autenticada P1/P2. No confundir el fallo local por Docker ausente con el resultado remoto aprobado.
+
+OPS-01: pendiente aceptación P1/P2; UI-01/EVID-06: pendientes P5. Matriz histórica27/3 se conserva, no se inventan aprobaciones. REL-01 bloqueada hasta registrar decisiones; versiones siguen0.0.0, sin rama release/tag/release oficial ni CTR-02. Las secciones siguientes conservan historia y quedan subordinadas a este estado.
+
+
 ## Actualización final integrada
 
 PR32 y PR33 están fusionados a develop **f700cf2**. No volver a publicar las ramas ya integradas. El fix target-size está cerrado técnicamente por8 E2E integrados y CI del merge32 PG16 aprobado; el merge33 solo tiene Docs check (producto idéntico al de32). Las dos muestras de contraste pasan cálculo sRGB independiente18.5267:1; axe conserva incomplete. La revisión humana y OPS-01 siguen pendientes. Los apartados siguientes conservan el estado de la entrega anterior.

@@ -1,5 +1,12 @@
 # OPS-01 — reproducción oficial aislada
 
+## Estado vigente tras PR34
+
+Base integrada 5061185183a2f4b6201cc8f73f29a2d59f0899cb. QAA-01/QA-02/DOC-02 y fixes target-size/UID de llave integrados. Dos ejecuciones reales Compose sobre44b0301 aprobadas (push41568936504 y PR41568942398); expediente [OPS-01](OPS-01-dossier.md). Ejecución técnica acreditada por jobs/pasos GitHub, contenidos de artefactos pendientes de revisión autenticada P1/P2. No confundir el fallo local por Docker ausente con el resultado remoto aprobado.
+
+OPS-01: pendiente aceptación P1/P2; UI-01/EVID-06: pendientes P5. Matriz histórica27/3 se conserva, no se inventan aprobaciones. REL-01 bloqueada hasta registrar decisiones; versiones siguen0.0.0, sin rama release/tag/release oficial ni CTR-02. Las secciones siguientes conservan historia y quedan subordinadas a este estado.
+
+
 ## PR34 — fallo real y corrección de permisos
 
 El primer artefacto de CI sobre c631a27 confirmó Docker28.0.4/Compose2.38.2, imágenes construidas, PostgreSQL16.15 y engine saludables. La API terminó1 con EACCES al abrir /run/keys/access-private.pem. Setup genera la llave con0600 para el usuario del host; el bind mount :ro conserva los permisos y no concede lectura al usuario node de la imagen cuando su UID difiere. No es un fallo de disponibilidad de Docker ni del health check.

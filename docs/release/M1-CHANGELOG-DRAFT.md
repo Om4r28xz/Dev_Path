@@ -14,7 +14,7 @@
 
 ## Preparación y validación disponibles
 
-Node22 >=22.16 y <23; pnpm11.22.0; PostgreSQL16 oficial. CI de QA-02 y de su merge a main aprobado, incluido E2E PG16. Validación local adicional en PG18.3:97 web,118 API,51 motor,2 privacidad y7 E2E; ensayo0000–0002→0003 con datos preservados y rerun correcto. CI de la base6d057b1 aprobado; el nuevo fix de accesibilidad requiere revisión/integración y su propio CI.
+Node22 >=22.16 y <23; pnpm11.22.0; PostgreSQL16 oficial. Base integrada5061185 incluye PR34 y corrección EACCES: API con identidad no-root alineada al dueño de llave0600 y montaje read-only. Dos jobs Compose reales aprobados sobre44b0301. Última regresión local97 web/118 API/51 motor/2 privacidad/8 E2E (PG18.3); upgrade y backup/restauración aislados aprobados. Evidencia y límites en [expediente OPS](../acceptance/OPS-01-dossier.md). Repetir candidato final cuando se apliquen versiones.
 
 ## Cambios de datos y contratos
 
@@ -22,7 +22,7 @@ Migraciones0000–0003, con índice de historial en0003. El ensayo de upgrade no
 
 ## Limitaciones que deben revisarse antes de publicar
 
-- Aceptación P5 UI-01/EVID-06 y OPS-01/Compose pendientes; no declarar conformidad WCAG ni M1 aceptada.
+- Aceptación P5 UI-01/EVID-06 y firma técnica OPS-01 pendientes; ejecución Compose remota aprobada; no declarar conformidad WCAG ni M1 aceptada.
 - QA-02 ya integrada correctamente en develop por PR31/6d057b1; ninguna de esas integraciones constituye una release.
 - Catálogo pequeño y reglas de negación acotadas; porcentaje de cobertura tecnológica, no probabilidad de contratación.
 - No hay funcionalidades M2/M3/M4: proyectos/CV, JSearch/E3 y aprendizaje son futuros; no se afirma integración live con proveedor.
@@ -31,7 +31,7 @@ Migraciones0000–0003, con índice de historial en0003. El ensayo de upgrade no
 
 ## Antes de convertirlo en changelog oficial
 
-Completar puertas humanas/técnicas, integrar QA-02 en develop, congelar commit/alcance M1, decidir versiones del workspace y documentar cambios reales y limitaciones aceptadas. Solo entonces preparar release/0.1.0 y PR a main. Omar decide merge/tag exacto y posterior sincronización main→develop; la IA no publica automáticamente.
+Completar puertas humanas/técnicas (QA-02 ya integrada), congelar commit/alcance M1, decidir versiones del workspace y documentar cambios reales y limitaciones aceptadas. Solo entonces preparar release/0.1.0 y PR a main. Omar decide merge/tag exacto y posterior sincronización main→develop; la IA no publica automáticamente.
 
 ## Corrección técnica integrada por PR32
 
