@@ -51,6 +51,8 @@ services:
       interval: 10s
       retries: 10
   api:
+    # Same numeric owner as the host-generated 0600 key; never root.
+    user: '${LOCAL_UID:?Run setup-local}:${LOCAL_GID:?Run setup-local}'
     build:
       context: ..
       dockerfile: infra/docker/runtime.Dockerfile

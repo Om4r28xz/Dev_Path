@@ -1,5 +1,15 @@
 # OPS-01 — reproducción oficial aislada
 
+## PR34 — fallo real y corrección de permisos
+
+El primer artefacto de CI sobre c631a27 confirmó Docker28.0.4/Compose2.38.2, imágenes construidas, PostgreSQL16.15 y engine saludables. La API terminó1 con EACCES al abrir /run/keys/access-private.pem. Setup genera la llave con0600 para el usuario del host; el bind mount :ro conserva los permisos y no concede lectura al usuario node de la imagen cuando su UID difiere. No es un fallo de disponibilidad de Docker ni del health check.
+
+La corrección configura solo la API con LOCAL_UID:LOCAL_GID del usuario no-root que ejecuta setup. Mantiene0600, montaje :ro y USER node como valor por defecto de la imagen; no usa root, chmod777 ni cambia otros servicios. En Windows, sin UID/GID POSIX del proceso, setup usa1000:1000; la traducción de permisos de Docker Desktop debe verificarse en runtime. No admite setup con UID/GID0; verifica dueño/modo de una llave Unix existente y rechaza configuraciones incompatibles sin reemplazarla.
+
+En copias anteriores ejecutar otra vez node scripts/setup-local.mjs con el usuario propietario, sin sudo: añade únicamente los campos de identidad ausentes, sin rotar llaves ni credenciales. Si hay discrepancia de propietario o identidad, detenerse y revisar esa copia; no ampliar permisos ni sobrescribir secretos. Compose exige esos campos antes de arrancar. Esta configuración local presupone Docker Linux con bind mount del host local; un daemon remoto/remapeo de usuarios requiere revisión específica, no permisos más amplios.
+
+Pruebas nuevas: node --test scripts/setup-local.test.mjs verifica setup/rerun, preservación de credenciales antiguas y rechazo de override root. En Unix también comprueba propietario/0600. La validación estática confirma UID/GID configurados, montaje read-only y PostgreSQL16. La corrección **aún requiere ejecución real satisfactoria del workflow** y aceptación P1/P2; no aprueba OPS-01 por sí sola. La evidencia histórica siguiente conserva el estado previo a publicar PR34.
+
 Estado: **stack no ejecutado**. Docker Engine/WSL ausentes al verificar; el usuario instalará Docker Desktop/WSL y avisará cuando `docker info` funcione. No se atendió UAC ni se cambiaron características/servicios del sistema desde esta sesión. La autorización previa de instalación no se vuelve a solicitar; falta habilitación efectiva del entorno.
 
 La CLI standalone Compose5.6.1 sí permite validar configuración estática. Su `config --quiet` aprobado no prueba imágenes, montajes, red, cookies, health o persistencia. No marcar OPS-01 por ese resultado.
