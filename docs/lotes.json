@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-11-02",
+  "updated": "2026-11-03",
   "maxTasksPerBatch": 5,
-  "taskCount": 50,
+  "taskCount": 54,
   "originalTaskCount": 49,
   "structureTaskId": "STR-01",
   "taskBranchesRemainSeparate": true,
@@ -149,6 +149,25 @@
         "DOC-01"
       ],
       "integrationGate": [],
+      "status": "integrated"
+    },
+    {
+      "id": "L06.5",
+      "name": "Sistema visual profesional y rediseño M1",
+      "prompt": "prompts/lotes/06.5-sistema-visual-m1.md",
+      "taskIds": [
+        "VIS-01",
+        "VIS-02",
+        "VIS-03",
+        "VIS-04"
+      ],
+      "optionalTaskIds": [],
+      "externalDependencies": [
+        "REL-01",
+        "CTR-02",
+        "ANL-04"
+      ],
+      "integrationGate": [],
       "status": "pending"
     },
     {
@@ -168,6 +187,10 @@
         "REL-01",
         "AUTH-03"
       ],
+      "taskSpecificDependencies": {
+        "PRJ-02": ["VIS-04"],
+        "CV-02": ["VIS-04"]
+      },
       "integrationGate": [],
       "status": "pending"
     },
@@ -190,6 +213,9 @@
         "ANL-01",
         "ANL-02"
       ],
+      "taskSpecificDependencies": {
+        "JSR-04": ["VIS-04"]
+      },
       "integrationGate": [],
       "status": "pending"
     },
@@ -234,6 +260,9 @@
         "ANL-02",
         "REL-01"
       ],
+      "taskSpecificDependencies": {
+        "LRN-04": ["VIS-04"]
+      },
       "integrationGate": [],
       "status": "pending"
     }
