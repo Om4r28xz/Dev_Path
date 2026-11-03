@@ -11,6 +11,8 @@
 
 ### Infraestructura y correcciones
 
+- Verificación Compose tras reinicio sincronizada con la respuesta real de habilidades y su estado renderizado; regresión de carga tardía sin simular datos ni omitir persistencia.
+
 - React/Vite, Express y Skill Engine separado; PostgreSQL16 oficial, migraciones0000–0003 y seed idempotente.
 - Compose con proxy mismo origen, servicios internos y persistencia; recuperación tras fallo del engine y reinicio comprobada en CI.
 - Dependencias corregidas durante estabilización: React Router7.18.2, Drizzle ORM0.45.2 y Zod4.6.6; adaptación del default de paginación para mantener20 sin alterar el contrato.

@@ -1,5 +1,18 @@
 # OPS-01 — evidencia para P1/P2 y Omar
 
+## Estabilización M1: carrera en verificación tras reinicio
+
+Run41581061547 sobre mainc4201f7 falla en persistent restart, ops-compose.mjs:197:10, isChecked() inmediato devuelvefalse. Cuatro checks previos aprobados; persistencia y recuperación no se dan por aprobadas en esa ejecución. ZIP cotejado con digest GitHub. API GET /me/skills200 consta en log, pero sin cuerpo ni consulta DB: no prueba por sí solo el estado original de filas.
+
+Frontend carga profile/skills/catalog en consultas independientes; hasta recibir skills, selected=[] y catálogo puede mostrar checkbox visible, desmarcado y deshabilitado. Regresión determinista con backend/PG reales reproducefalse a la vez que SQL y respuesta upstream contienen JavaScript/React. Se retiene solo la entrega de esa respuesta real y luego se libera intacta; sin sleeps ni datos simulados. Prueba confirma la carrera, no pérdida de datos en la reproducción; el artefacto original no permite inspeccionar retroactivamente sus filas.
+
+Fix mínimo en probe: capturar/validar GET /me/skills tras login y exigir skillIds persistidos; helper compartido espera nombre y ambos checkboxes realmente seleccionados mediante expect reintentable. Sigue fallando si API/persistencia es incorrecta; no se elimina ninguna comprobación. No cambia frontend/API/SQL ni contratos.
+
+Regresión1/1 y suite9/9; API118/web97/motor51/privacidad2, lint/formato/typecheck/build y contratos aprobados localmente. [Evidencia acotada](evidence/ops-profile-readiness-fix.json). Docker/PG16 Compose del fix pendiente de CI. Historial fuente del probe se archiva con SHA idéntico en final06-ops-compose-source.txt; manifest anterior conserva hash real sin fingir que el nuevo script fue el probado entonces.
+
+Rama fix/ops-profile-skills-readiness desde c4201f7, correctivo hacia main: FLUJO_GITHUB clasifica los defectos antes de primera publicación como fix, no hotfix de versión estable. Esperar checks/Compose de rama, revisión y merge humanos; después repetir Compose del nuevo main y verificar ese SHA antes del tag. No etiquetar c4201f7 ni declarar REL cerrada con el fallo pendiente.
+
+
 ## Aceptación delegada recibida
 
 Emanuel, autorizado por Omar para asumir revisiones restantes según su comunicación, aceptó explícitamente el alcance técnico comprobado para preparar el candidato. [Decisión real](evidence/M1-delegated-acceptance.json). No es firma de P1/P2/P4 ni prueba manual nueva. La reproducción se sustenta en CI real y el artefacto inspeccionado; Windows/Docker local no comprobado queda como limitación aceptada. La revisión independiente del release y sus resultados sigue pendiente. Los registros vacíos inferiores son plantillas históricas, no puertas que ignoren esta decisión delegada.
