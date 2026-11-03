@@ -1,5 +1,13 @@
 # Resultados de aceptación M1 — QA-02
 
+## Estado actual tras PR31 y auditoría ampliada
+
+QA-02 correctiva está integrada en origin/develop **6d057b1**, GitHub merged=true/PR31 y ancestry comprobados. CI PG16 del merge aprobado. Las referencias antiguas a QA-02 solo en main o correctivo pendiente son históricas. [Preparación actual](READINESS-M1.md).
+
+Nueva prueba técnica sobre6d057b1: suites funcionales aprobadas, pero **probe axe fallido** por10 objetivos pequeños del perfil (M1-A11Y-001). Corrección independiente **6cba655**, aún no integrada:8 E2E y probe de10 vistas sin infracciones confirmadas;2 contrastes incomplete siguen para revisar. No se cambió el esperado ni se desactivó la regla. [Defecto y revalidación](defects/M1-A11Y-001.md).
+
+UI-01/EVID-06 completas continúan pendientes de P5 y OPS-01 no se ejecutó sin Docker Engine; el usuario instalará Desktop/WSL y confirmará docker info. Se prepararon [formulario humano](P5-review-form.md) y [runbook aislado](OPS-01-runbook.md). Las27 aprobaciones técnicas y3 casos completos pendientes del registro original se conservan, pero la nueva incidencia debe atenderse antes de afirmar aceptación global. REL-01 sigue bloqueada; sin rama release/tag/publicación.
+
 ## Actualización de integración y preparación técnica
 
 QA-02 se publicó y se fusionó por PR30 a **main**, no a develop. La rama fix/qa-02-integrate-develop recupera solo los commits originales desde origin/develop; no fusiona main completo. QAA-01/PR27 y DOC-02/PR28 sí están integradas en develop. Ver [auditoría verificable](INTEGRATION-AUDIT.md).

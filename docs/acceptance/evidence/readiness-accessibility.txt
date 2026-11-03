@@ -1,0 +1,83 @@
+$ node scripts/run-e2e.mjs "--config" "docs/acceptance/probes/readiness.config.ts"
+Running migrations from: <repository>\packages\db\migrations
+Migrations applied successfully.
+Seeding skill catalog…
+✓ app.skills — 10 row(s) upserted.
+
+Running 1 test using 1 worker
+
+(node:23796) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  1 [chromium] › docs\acceptance\probes\readiness.browser.spec.ts:19:5 › M1 readiness: automated accessibility, narrow reflow and evidence/error states (6.2s)
+
+
+  1) [chromium] › docs\acceptance\probes\readiness.browser.spec.ts:19:5 › M1 readiness: automated accessibility, narrow reflow and evidence/error states
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 39
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "id": "target-size",
+    +     "impact": "serious",
+    +     "screen": "profile",
+    +     "target": Array [
+    +       Array [
+    +         "li:nth-child(1) > label > input[type=\"checkbox\"]",
+    +       ],
+    +       Array [
+    +         "li:nth-child(2) > label > input[type=\"checkbox\"]",
+    +       ],
+    +       Array [
+    +         "li:nth-child(3) > label > input[type=\"checkbox\"]",
+    +       ],
+    +       Array [
+    +         "li:nth-child(4) > label > input[type=\"checkbox\"]",
+    +       ],
+    +       Array [
+    +         "li:nth-child(5) > label > input[type=\"checkbox\"]",
+    +       ],
+    +       Array [
+    +         "li:nth-child(6) > label > input[type=\"checkbox\"]",
+    +       ],
+    +       Array [
+    +         "li:nth-child(7) > label > input[type=\"checkbox\"]",
+    +       ],
+    +       Array [
+    +         "li:nth-child(8) > label > input[type=\"checkbox\"]",
+    +       ],
+    +       Array [
+    +         "li:nth-child(9) > label > input[type=\"checkbox\"]",
+    +       ],
+    +       Array [
+    +         "li:nth-child(10) > label > input[type=\"checkbox\"]",
+    +       ],
+    +     ],
+    +   },
+    + ]
+
+      151 |       })),
+      152 |     ),
+    > 153 |   ).toEqual([]);
+          |     ^
+      154 |   expect(
+      155 |     results
+      156 |       .filter((r) => r.narrowViewport.scrollWidth > r.narrowViewport.width + 1)
+        at <repository>\docs\acceptance\probes\readiness.browser.spec.ts:153:5
+
+    attachment #1: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results\readiness.browser-M1-readi-69799-w-and-evidence-error-states-chromium\attachments\trace-37c8aa097fc7535e9b98271797d120924da54f13.zip
+    Usage:
+
+        pnpm exec playwright show-trace test-results\readiness.browser-M1-readi-69799-w-and-evidence-error-states-chromium\attachments\trace-37c8aa097fc7535e9b98271797d120924da54f13.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results\readiness.browser-M1-readi-69799-w-and-evidence-error-states-chromium\error-context.md
+
+  1 failed
+    [chromium] › docs\acceptance\probes\readiness.browser.spec.ts:19:5 › M1 readiness: automated accessibility, narrow reflow and evidence/error states
+[ELIFECYCLE] Command failed with exit code 1.

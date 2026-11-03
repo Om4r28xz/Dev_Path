@@ -2,6 +2,8 @@
 
 Estado: **no ejecutada por P5; sin aprobación humana**. Complementa [M1-results.md](M1-results.md), no lo reemplaza.
 
+Formulario rellenable: [P5-review-form](P5-review-form.md). Estado técnico nuevo y defecto: [READINESS-M1](READINESS-M1.md). PR31 integra QA-02, pero no equivale a firma de aceptación. M1-A11Y-001 tiene fix local6cba655 pendiente de integración; registrar el commit real que evalúe P5.
+
 ## Preparación
 
 P1/P2 preparan una copia del commit revisado, migraciones/seed y dos cuentas sintéticas en una base dedicada. Confirmar versión/commit y no usar datos personales, credenciales ni CV reales. Usar [SETUP_LOCAL](../SETUP_LOCAL.md); no apuntar pruebas destructivas a volúmenes de demo. Si Docker está disponible, ejecutar también OPS-01 de la matriz.

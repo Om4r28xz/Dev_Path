@@ -1,0 +1,102 @@
+{
+  "date": "2026-11-02",
+  "integratedCommit": "6d057b15d8a5fb886e66420d6dfd5910728bce9b",
+  "integratedPr": 31,
+  "codeFixBranch": "fix/profile-skill-target-size",
+  "codeFixCommit": "6cba65598572718ce844779d3a6179cd7b19c1aa",
+  "codeFixIntegrated": false,
+  "ci": "https://github.com/Om4r28xz/Dev_Path/actions/runs/41524142215",
+  "node": "22.23.4",
+  "pnpm": "11.22.0",
+  "postgresLocal": "18.3",
+  "playwright": "1.64.1",
+  "axe": "4.11.0",
+  "baseline": {
+    "web": 97,
+    "api": 118,
+    "engine": 51,
+    "privacy": 2,
+    "e2e": 7,
+    "axeProbe": "failed exit1",
+    "defect": "M1-A11Y-001",
+    "targetSizeFailures": 10,
+    "overflowAt320": 0,
+    "migrationUpgrade": "passed0000-0002->0003, snapshot preserved and rerun idempotent"
+  },
+  "fix": {
+    "web": 97,
+    "api": 118,
+    "engine": 51,
+    "privacy": 2,
+    "e2e": 8,
+    "axeProbe": "passed exit0 on10 screens",
+    "confirmedAxeViolations": 0,
+    "overflowAt320": 0,
+    "incompleteContrastScreens": ["analysis-form", "engine-503"]
+  },
+  "humanApprovals": [],
+  "ops": {
+    "engineAvailable": false,
+    "stackExecuted": false,
+    "userWillInstallDesktopAndWsl": true,
+    "awaiting": "user confirmation docker info works",
+    "staticComposeOnly": true
+  },
+  "release": {
+    "branchCreated": false,
+    "versionsChanged": false,
+    "tagCreated": false,
+    "published": false,
+    "ctr02Blocked": true
+  },
+  "files": [
+    {
+      "file": "docs/acceptance/evidence/readiness-tests.txt",
+      "sha256": "658b0f1a65c8fec0046e3b926ce43a30d95bb6bcdd648fd73d55517d29890d17"
+    },
+    {
+      "file": "docs/acceptance/evidence/readiness-e2e.txt",
+      "sha256": "6e5ba6f04f17ad1c64833466a984d3468ce3514597d8c6c13fe3bad8a3fb8955"
+    },
+    {
+      "file": "docs/acceptance/evidence/readiness-accessibility.txt",
+      "sha256": "c0d889149b5a098eee04ad7eecc5fd9a731cbf147b18c5b2fda31d1514362e88"
+    },
+    {
+      "file": "docs/acceptance/evidence/readiness-upgrade.txt",
+      "sha256": "5bff921a8e9bcf88bcc35552b3e7d9ba7bbc64bc58f312e5503a2f4513166ba5"
+    },
+    {
+      "file": "docs/acceptance/evidence/profilefix-tests.txt",
+      "sha256": "b8c547c6a951dfa0a0014b252abaa437e486e04d9ca2bf3c9019dee7f0646d3a"
+    },
+    {
+      "file": "docs/acceptance/evidence/profilefix-e2e.txt",
+      "sha256": "b80bf07375f70f7fde2dd968eae80bf8a04617b81fff44aba5763730b1861853"
+    },
+    {
+      "file": "docs/acceptance/evidence/profilefix-accessibility.txt",
+      "sha256": "9b2c08a32b2cc43887a831ee7b7f1dca457217ab379e6bfc9e49f7f0017ceecd"
+    },
+    {
+      "file": "docs/acceptance/evidence/readiness-accessibility.json",
+      "sha256": "2daa5d062ddbb00a83b37b7614f38a9afb298a046e8a93dbd3b3ccb4004dce42"
+    },
+    {
+      "file": "docs/acceptance/evidence/readiness-accessibility-fixed.json",
+      "sha256": "881a2fd4cb4defa2eecd17f0cc4efc79017d78ae0803ac5aa7dda442a930c6cf"
+    },
+    {
+      "file": "docs/acceptance/probes/readiness.browser.spec.ts",
+      "sha256": "b76a03a99faef3cb051db53f5aeabdc092bf82eabb98e5ace4063f029b930152"
+    },
+    {
+      "file": "docs/acceptance/probes/readiness.config.ts",
+      "sha256": "02782821789f4e733a85f95088d8d5a34ad2fb270533fe1eb941eae973f80194"
+    },
+    {
+      "file": "docs/acceptance/probes/tsconfig.readiness.json",
+      "sha256": "7e66e48b5dea73c3b7b1f77d589dd10bb419b5be2eddb17854a87091de36d740"
+    }
+  ]
+}
