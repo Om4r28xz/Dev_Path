@@ -1,0 +1,4 @@
+{
+  "extends": "../../../tsconfig.e2e.json",
+  "include": ["readiness.config.ts", "readiness.browser.spec.ts", "../../../tests/e2e/fixtures.ts"]
+}

@@ -1,0 +1,62 @@
+{
+  "productCommit": "5061185183a2f4b6201cc8f73f29a2d59f0899cb",
+  "checks": [
+    {
+      "id": 125699811855,
+      "name": "CI gate (required)",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Om4r28xz/Dev_Path/actions/runs/41569680256/job/125699811855"
+    },
+    {
+      "id": 125699409699,
+      "name": "Docs check",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Om4r28xz/Dev_Path/actions/runs/41569680331/job/125699409699"
+    },
+    {
+      "id": 125699409600,
+      "name": "Build",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Om4r28xz/Dev_Path/actions/runs/41569680256/job/125699409600"
+    },
+    {
+      "id": 125699409584,
+      "name": "Test",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Om4r28xz/Dev_Path/actions/runs/41569680256/job/125699409584"
+    },
+    {
+      "id": 125699409547,
+      "name": "Type Check",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Om4r28xz/Dev_Path/actions/runs/41569680256/job/125699409547"
+    },
+    {
+      "id": 125699409540,
+      "name": "Lint & Format",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Om4r28xz/Dev_Path/actions/runs/41569680256/job/125699409540"
+    },
+    {
+      "id": 125699409500,
+      "name": "M1 E2E (Chromium + PostgreSQL 16)",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Om4r28xz/Dev_Path/actions/runs/41569680256/job/125699409500"
+    },
+    {
+      "id": 125699409270,
+      "name": "compose-runtime",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/Om4r28xz/Dev_Path/actions/runs/41569680337/job/125699409270"
+    }
+  ],
+  "humanApprovals": []
+}

@@ -1,26 +1,39 @@
 # Puerta de REL-01 — todavía no habilitada
 
-Fecha: 2026-11-02. Base integrada comprobada: b84255efc996f67af26d6478528eba42afe6bce6. No se crea `release/0.1.0`, changelog de release, versión o tag en QA-02.
+## Estado vigente tras PR34
+
+Base integrada 5061185183a2f4b6201cc8f73f29a2d59f0899cb. QAA-01/QA-02/DOC-02 y fixes target-size/UID de llave integrados. Dos ejecuciones reales Compose sobre44b0301 aprobadas (push41568936504 y PR41568942398); expediente [OPS-01](OPS-01-dossier.md). Ejecución técnica acreditada por jobs/pasos GitHub, contenidos de artefactos pendientes de revisión autenticada P1/P2. No confundir el fallo local por Docker ausente con el resultado remoto aprobado.
+
+OPS-01: pendiente aceptación P1/P2; UI-01/EVID-06: pendientes P5. Matriz histórica27/3 se conserva, no se inventan aprobaciones. REL-01 bloqueada hasta registrar decisiones; versiones siguen0.0.0, sin rama release/tag/release oficial ni CTR-02. Las secciones siguientes conservan historia y quedan subordinadas a este estado.
+
+
+Fecha: 2026-11-02. Base integrada actual:f700cf2a9fdda8c88cef245a65a53988278c2b43. No se crea `release/0.1.0`, changelog de release, versión o tag en QA-02.
 
 | Requisito                           | Evidencia actual                                                                              | Pendiente / paso exacto                                                                                                                                                                     |
 | ----------------------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | QAA-01 integrada                    | PR27/b84255e; ancestry de99ef5be confirmado                                                   | Satisfecho para comenzar QA-02.                                                                                                                                                             |
 | DOC-02 integrada                    | PR28/34a2242; commit38b7c7d                                                                   | Satisfecho.                                                                                                                                                                                 |
 | DOC-01 integrada                    | PR9;08981cb ancestro de develop                                                               | Satisfecho; actualizar setup por PR si Compose revela una discrepancia real.                                                                                                                |
-| QA-02 integrada y aceptada          | Resultados y herramientas preparados en rama propia                                           | Publicar, revisar P5/P1/P2/Omar; integrar su PR y verificar fetch/commit efectivo. Actualmente no integrada.                                                                                |
-| E2E PostgreSQL16 de la base         | CI b84255e, run41515963292 aprobado                                                           | Revalidar los7 casos de QA-02 en CI al publicar; no heredar el verde de4 casos anteriores.                                                                                                  |
-| Defectos bloqueantes                | No se observaron fallos de producto en los recorridos ejecutados                              | No equivale a ausencia global; cerrar hallazgos de P5/Compose con PR fix y repetir pruebas.                                                                                                 |
+| QA-02 integrada y aceptada          | PR31 integrada en develop6d057b1; aceptación humana no registrada                             | P5 completa UI-01/EVID-06; OPS-01 pendiente.                                                                                                                                                |
+| E2E PostgreSQL16                    | CI merge32 completo aprobado;33 Docs-only con árbol de producto idéntico                      | Revalidar candidato final tras versiones; no atribuir heavy CI a33.                                                                                                                         |
+| Defectos y criterio UI              | M1-A11Y-001 integrado PR32,8 E2E actuales aprobados; contraste18.5267:1                       | P5 revisa interfaz completa; no queda fix target-size por integrar.                                                                                                                         |
 | Aceptación humana                   | UI-01/EVID-06 completas pendientes                                                            | Ejecutar y firmar P5-review.md con evidencia; revisión técnica de otra persona.                                                                                                             |
 | Instalación y migración desde vacío | Install frozen en worktree nuevo;0000–0003/seed en bases vacías PG18.3; base CI PG16 aprobada | Repetir en copia limpia del commit candidato integrado.                                                                                                                                     |
 | Compose/proxy/volumen               | No ejecutado: Docker ausente, WSL no instalado                                                | Preparar entorno autorizado o equipo de P2; seguir SETUP_LOCAL, verificar8080, fronteras internas, cookies, restart con volumen conservado y persistencia. Nunca down -v. Registrar OPS-01. |
-| Actualización de esquema con datos  | No ejecutada en QA-02                                                                         | En DB aislada, instalar esquema de versión anterior con datos sintéticos, aplicar migraciones pendientes y comprobar filas, índices y reejecución idempotente. No usar DB de desarrollo.    |
-| Alcance, versiones y changelog      | Manifiestos0.0.0; no se preparó release                                                       | Tras cumplir puertas, congelar solo M1, preparar cambios de versión/changelog y limitaciones en release/0.1.0.                                                                              |
+| Actualización de esquema con datos  | Ensayo0000–0002→0003 aprobado PG18.3; datos preservados, índice y reejecución correctos       | P1/P2 revisar y reproducir en el candidato/PG16 oficial. Compose sigue pendiente.                                                                                                           |
+| Alcance, versiones y changelog      | Ocho manifiestos privados0.0.0 conservados; borradores reutilizados en docs/release           | Revisar plan0.1.0 y aplicar solo al habilitar REL-01.                                                                                                                                       |
 | Revisión Omar/P1/P2                 | No consta aprobación humana de QA-02/release                                                  | Revisar muestra de datos/ownership/sesión, instalación, CI y alcance; registrar decisiones en PR.                                                                                           |
 | Publicación/tag/sincronización      | No ejecutados                                                                                 | Integrador humano aprueba merge release→main, etiqueta commit exacto v0.1.0 y sincroniza main→develop mediante PR. Verificar smoke del tag y ancestry.                                      |
 
+## Histórico: actualización comprobada tras PR30
+
+QA-02 está en main por fe830bb, todavía no en origin/develop b84255e. El correctivo fix/qa-02-integrate-develop preserva los cuatro commits QA-02 y excluye main exclusivo. CI de a0faee1 y fe830bb aprobado con PG16; CI correctivo pendiente. [Auditoría](INTEGRATION-AUDIT.md).
+
+Ensayo con datos existentes aprobado en PG18.3:0000–0002→0003, filas idénticas, índice correcto y rerun idempotente. Debe revisarlo P1/P2 y reproducirse en el candidato/PG16 cuando corresponda; no acredita Compose ni aceptación humana. Instalación frozen/build se repitió desde un worktree nuevo limpio.
+
 ## Orden para retomar
 
-1. Publicar QA-02 y revisar su CI nuevo. P5 completa aceptación humana; P1/P2 completan OPS-01 y actualización con datos. Registrar fallidos/no ejecutados sin maquillarlos.
+1. Correctivo QA-02 ya integrado por PR31. Fix M1-A11Y-001 ya integrado/revalidado; P5 completa aceptación humana y P1/P2 OPS-01/ensayo de upgrade. Registrar fallidos/no ejecutados sin maquillarlos.
 2. Resolver bloqueantes mediante PRs separados y volver a ejecutar casos afectados. Omar revisa/integrará QA-02 cuando corresponda.
 3. Fetch; comprobar QA-02/DOC-02/DOC-01 en origin/develop y las revisiones humanas. Actualizar develop de forma segura conservando worktrees.
 4. Solo entonces crear release/0.1.0 desde develop actualizado; preparar versiones/changelog, migraciones y smoke de instalación limpia. Abrir PR hacia main para revisión humana.
@@ -62,3 +75,19 @@ node docs/acceptance/probes/database-outage.mjs
 Ese probe crea un clúster nuevo con puertos efímeros, lo detiene/reinicia y elimina solo su directorio validado. No apunta a un clúster existente. En Windows se usa stdio sin pipes heredados al arrancar PostgreSQL. El temporal del intento interrumpido descrito en M1-results no debe reutilizarse. Para repetir el navegador ampliado del historial, migrar/seed otra DB dedicada, configurar DATABASE_URL y DEVPATH_PLAYWRIGHT_MODULE a Playwright instalado y ejecutar `node apps/web/tests/integration/analysis-history.browser.mjs`.
 
 El comando de formato raíz no incluye todo docs; comprobar explícitamente los Markdown/JSON/MJS nuevos con Prettier. El workflow Docs solo imprime echo y no certifica el contenido del informe.
+
+### Repetir el ensayo de actualización
+
+Crear una base **nueva vacía** de prueba loopback (no demo/desarrollo), definir QA_UPGRADE_DATABASE_URL y QA_TEMP_ROOT hacia un directorio temporal autorizado, y ejecutar `node docs/acceptance/probes/migration-upgrade.mjs`. El probe crea un historial Drizzle0000–0002 en esa DB, inserta fixtures, aplica0003 y verifica conservación/índice/rerun; rechaza DB con relaciones existentes antes de modificarla. No borra bases ni cambia migraciones del producto. Logs sin credenciales en evidence/correction-upgrade.txt.
+
+## Preparación actual sin release prematura
+
+Ver [READINESS-M1](READINESS-M1.md), [formulario P5](P5-review-form.md), [OPS-01-runbook](OPS-01-runbook.md), [defecto](defects/M1-A11Y-001.md) y [plan de versiones/publicación](../release/M1-PUBLICATION-PLAN.md). QA-02/DOC-02/DOC-01 están integradas; falta aceptación/OPS y cierre/revalidación del fix. No se crea release/0.1.0. Los apartados de PR30 conservan contexto histórico y no revierten la integración de PR31.
+
+## Puertas actuales de cierre
+
+Las integraciones y el fix están comprobados en f700cf2. Solo quedan como bloqueantes de aceptación los recorridos humanos UI-01/EVID-06, OPS-01 real y revisión/decisión de P1/P2/Omar. Los colores de las dos muestras pendientes ya tienen prueba técnica independiente; no se requiere alterar estilos para ocultar incomplete de axe. Rollback preparado en [M1-ROLLBACK-PLAN](../release/M1-ROLLBACK-PLAN.md). REL-01 y CTR-02 no están completadas.
+
+## CI del merge integrado
+
+Merge5061185: ocho checks completos aprobados, incluido Compose real (run41569680337) y CI/E2E PG16 (run41569680256). [Registro](https://github.com/Om4r28xz/Dev_Path/actions/runs/41569680337). Evidencia pública en docs/acceptance/evidence/pr34-merge-checks.json. Esto añade ejecución sobre develop integrado, sin sustituir revisión de artefactos ni firmas humanas.

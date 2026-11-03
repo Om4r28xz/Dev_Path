@@ -1,6 +1,42 @@
 # Handoff lote 06 — estado vigente y registro histórico
 
-## Estado vigente — QA-02 técnica preparada, 2026-11-02
+## Vigente tras merge PR34
+
+Develop5061185 contiene44b0301, QAA-01, QA-02, DOC-02 y target-size (ascendencia verificada). Dos jobs Compose reales aprobados; [expediente OPS](../acceptance/OPS-01-dossier.md). OPS ejecutada técnicamente, pendiente aceptación P1/P2. UI-01/EVID-06 pendientes P5, autorización REL pendiente Omar. Rama documental docs/m1-acceptance-closeout; no crear release/0.1.0 sin firmas, no aplicar versiones ni iniciar CTR. [Candidato](../release/M1-CANDIDATE-CHECKLIST.md) reutiliza changelog/versiones/publicación/rollback. Registros anteriores son históricos.
+
+## Estado vigente final técnico —2026-11-02
+
+Develop f700cf2 incluye PR32/6cba655 (fix target-size) y PR33/ff667d8 (documentación). QAA-01/QA-02/DOC-02 integradas; no duplicar sus ramas.8 E2E sobre integración,97web/118API/51motor/2privacidad, corpus30/OpenAPI2/19 y upgrade con datos aprobados PG18.3. CI heavy del merge32 aprobado PG16;33 Docs-only y producto idéntico.
+
+Nuevo probe contraste normal/503:18.5267:1, colores/fondo opacos sin filtros, muestras de geometría visibles. Axe conserva incomplete: no se alteró su salida ni se afirmó revisión visual humana. Target-size cerrado técnicamente e integrado; UI-01/EVID-06 completas siguen pendientes P5. OPS-01 no ejecutado: WSL ausente, Docker ausente en PATH/modos usuario y sistema; consulta CIM de virtualización denegada, estado hardware desconocido. Instrucciones oficiales añadidas al runbook; no se ejecutó admin/reinicio ni se eludió UAC.
+
+Rama docs/lote-06-final-technical-checks: resultados técnicos nuevos, rollback, guías actualizadas. Sin cambios de producto/contratos/versiones y sin release/0.1.0. Se añade un workflow independiente OPS M1 Compose runtime; el CI existente se conserva. Driver preparado, ejecución local bloqueada por docker ENOENT; todavía no ejecutado en GitHub. Backup custom/restauración real en DB nueva PG18.3 aprobados, sin restaurar datos de producción. Preparación REL-01 lista para revisión, bloqueada por OPS y aprobación humana/P1/P2/Omar. CTR-02 no iniciada formalmente hasta release/tag/sincronización; cualquier prepropuesta queda fuera del contrato vigente. Las secciones siguientes conservan historia, no sustituyen este estado.
+
+## Histórico: estado tras PR31 — preparación M1,2026-11-02
+
+QA-02 correctiva/a80e48a integrada en origin/develop6d057b1 por PR31 merged=true; QAA-01/DOC-01/DOC-02 también integradas. Develop local actualizado mediante pull --ff-only; worktrees anteriores conservados. CI del merge aprobado con PG16, run41524142215.
+
+Rama documental docs/m1-human-review-release-readiness desde6d057b1, sin release/0.1.0. Checks funcionales97web/118API/51motor/2privacidad y7E2E aprobados; nuevo probe axe4.11 falló en10 checkbox13x13/espacio16px (M1-A11Y-001). Corrección aislada fix/profile-skill-target-size/6cba655: objetivos24px/labels32px,8E2E y probe10vistas sin infracciones confirmadas aprobados localmente; falta revisión/CI/integración. No se cambió producto en la rama documental ni se ocultó el fallo original.
+
+Persisten2 contrastes incomplete de textarea y aceptación humana UI-01/EVID-06. Formulario P5 y runbook OPS preparados. OPS-01: falta Docker Engine/WSL; usuario instalará y confirmará docker info. La validación estática Compose no aprueba el stack. No se cambió seguridad del sistema ni se atendió UAC.
+
+Ensayo nuevo0000–0002→0003 con datos existente/repetición aprobadoPG18.3; instalación frozen/build desde copia nueva. REL-01 bloqueada por fix no integrado, aceptación/OPS y revisiones P1/P2/Omar. Changelog/versión/publicación preparados solo como borradores docs/release;8 manifiestos privados siguen0.0.0. Sin tags, merge protegido o publicación. CTR-02 bloqueada.
+
+Detalle/evidencias en [READINESS-M1](../acceptance/READINESS-M1.md) y [defecto](../acceptance/defects/M1-A11Y-001.md). Las secciones anteriores en el tiempo que siguen conservan su historia; ya no describen QA-02 ausente de develop.
+
+## Histórico: auditoría PR27–30 — 2026-11-02
+
+PR27/QAA-01 y PR28/DOC-02 integrados en develop b84255e. PR29 fusionó develop34a2242→main; PR30 fusionó QA-02 a0faee1→main fe830bb, sin llevarla a develop. GitHub merged=true y contenido/ancestry comprobados, no solo mensajes de commits. QA-02 está publicada/integrada en main, falta integración y aceptación en develop.
+
+Correctivo fix/qa-02-integrate-develop, .worktrees/qa-02-correction: parte de origin/develop y hace fast-forward solo de la rama QA-02, conservando autores/hashes de sus cuatro commits. No se fusionó main; su handoff04 exclusivo queda fuera y a salvo. [Auditoría](../acceptance/INTEGRATION-AUDIT.md).
+
+Validación nueva: install frozen en worktree limpio, lint/formato/typecheck/build, web97/API118/motor51/privacidad2, E2E7/7 y contratos/corpus aprobados. Nuevo ensayo PG18.3: datos existentes0000–0002→0003 preservados, índice y rerun correctos; fixture limpio. CI QA a0faee1/main fe830bb aprobado con PG16; correctivo pendiente de publicación/CI/revisión/merge según reporte de entrega.
+
+Persisten3 casos completos pendientes: UI-01/EVID-06 dependen de P5 (lector/zoom/contraste completo/comprensión), OPS-01 depende de P1/P2 y Compose no disponible. No se cambian las27 aprobaciones técnicas anteriores ni se firma aceptación humana. REL-01 sigue bloqueada por integración correctiva/aceptación/reproducción y revisión humana; ensayo de upgrade ya aprobado técnicamente, revisión P1/P2 pendiente. Sin release/0.1.0, tag ni CTR-02. Borrador de changelog/publicación solo fuera del repositorio.
+
+Las secciones siguientes son históricas; las referencias antiguas a QA-02 solo local o CI pendiente describen su entrega original, no la situación actual.
+
+## Histórico — QA-02 técnica preparada, 2026-11-02
 
 GitHub confirmó PR27 fusionado a develop en b84255efc996f67af26d6478528eba42afe6bce6. Ancestry de99ef5be/QAA-01 y38b7c7d/DOC-02 comprobado; develop actualizado con pull --ff-only en worktree temporal limpio. Se preservan CAT-02 y todos los worktrees anteriores. Rama QA-02 independiente: docs/qa-02-mvp-acceptance-results, .worktrees/qa-02.
 
