@@ -1,0 +1,4 @@
+{
+  "extends": "./tsconfig.readiness.json",
+  "include": ["contrast.config.ts", "contrast.browser.spec.ts", "../../../tests/e2e/fixtures.ts"]
+}

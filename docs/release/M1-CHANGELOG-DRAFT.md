@@ -33,6 +33,6 @@ Migraciones0000–0003, con índice de historial en0003. El ensayo de upgrade no
 
 Completar puertas humanas/técnicas, integrar QA-02 en develop, congelar commit/alcance M1, decidir versiones del workspace y documentar cambios reales y limitaciones aceptadas. Solo entonces preparar release/0.1.0 y PR a main. Omar decide merge/tag exacto y posterior sincronización main→develop; la IA no publica automáticamente.
 
-## Corrección candidata, todavía sin integrar
+## Corrección técnica integrada por PR32
 
-M1-A11Y-001: objetivos pequeños de checkbox del perfil. Fix independiente6cba655 aumenta tamaño y conserva semántica/teclado/guardado;8 E2E y repetición axe de10 vistas aprobados en esa rama. No presentarlo como incluido en develop hasta comprobar su PR. Mantener lector/zoom/contraste incomplete y aceptación P5 pendientes.
+M1-A11Y-001: objetivos pequeños de checkbox del perfil. Fix independiente6cba655 aumenta tamaño y conserva semántica/teclado/guardado;8 E2E y repetición axe de10 vistas aprobados en esa rama. PR32 confirma su inclusión en develop;8 E2E sobre f700cf2 aprobados. Mantener lector/zoom y aceptación P5 pendientes. Las dos muestras de contraste cuentan con cálculo independiente18.5267:1; axe conserva incomplete.

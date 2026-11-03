@@ -1,6 +1,6 @@
 # Puerta de REL-01 — todavía no habilitada
 
-Fecha: 2026-11-02. Base integrada actual:6d057b15d8a5fb886e66420d6dfd5910728bce9b. No se crea `release/0.1.0`, changelog de release, versión o tag en QA-02.
+Fecha: 2026-11-02. Base integrada actual:f700cf2a9fdda8c88cef245a65a53988278c2b43. No se crea `release/0.1.0`, changelog de release, versión o tag en QA-02.
 
 | Requisito                           | Evidencia actual                                                                              | Pendiente / paso exacto                                                                                                                                                                     |
 | ----------------------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -8,8 +8,8 @@ Fecha: 2026-11-02. Base integrada actual:6d057b15d8a5fb886e66420d6dfd5910728bce9
 | DOC-02 integrada                    | PR28/34a2242; commit38b7c7d                                                                   | Satisfecho.                                                                                                                                                                                 |
 | DOC-01 integrada                    | PR9;08981cb ancestro de develop                                                               | Satisfecho; actualizar setup por PR si Compose revela una discrepancia real.                                                                                                                |
 | QA-02 integrada y aceptada          | PR31 integrada en develop6d057b1; aceptación humana no registrada                             | P5 completa UI-01/EVID-06; OPS-01 pendiente.                                                                                                                                                |
-| E2E PostgreSQL16                    | CI merge6d057b1 aprobado, run41524142215                                                      | CI y revalidación del nuevo fix6cba655 pendientes.                                                                                                                                          |
-| Defectos y criterio UI              | M1-A11Y-001 reproducido en develop; fix6cba655 local aprobado técnicamente                    | Omar/P2 revisan/integran fix y repiten; P5 evalúa aceptación.                                                                                                                               |
+| E2E PostgreSQL16                    | CI merge32 completo aprobado;33 Docs-only con árbol de producto idéntico                      | Revalidar candidato final tras versiones; no atribuir heavy CI a33.                                                                                                                         |
+| Defectos y criterio UI              | M1-A11Y-001 integrado PR32,8 E2E actuales aprobados; contraste18.5267:1                       | P5 revisa interfaz completa; no queda fix target-size por integrar.                                                                                                                         |
 | Aceptación humana                   | UI-01/EVID-06 completas pendientes                                                            | Ejecutar y firmar P5-review.md con evidencia; revisión técnica de otra persona.                                                                                                             |
 | Instalación y migración desde vacío | Install frozen en worktree nuevo;0000–0003/seed en bases vacías PG18.3; base CI PG16 aprobada | Repetir en copia limpia del commit candidato integrado.                                                                                                                                     |
 | Compose/proxy/volumen               | No ejecutado: Docker ausente, WSL no instalado                                                | Preparar entorno autorizado o equipo de P2; seguir SETUP_LOCAL, verificar8080, fronteras internas, cookies, restart con volumen conservado y persistencia. Nunca down -v. Registrar OPS-01. |
@@ -26,7 +26,7 @@ Ensayo con datos existentes aprobado en PG18.3:0000–0002→0003, filas idénti
 
 ## Orden para retomar
 
-1. Correctivo QA-02 ya integrado por PR31. Revisar/integrar el fix independiente M1-A11Y-001 y revalidarlo sobre develop; P5 completa aceptación humana y P1/P2 OPS-01/ensayo de upgrade. Registrar fallidos/no ejecutados sin maquillarlos.
+1. Correctivo QA-02 ya integrado por PR31. Fix M1-A11Y-001 ya integrado/revalidado; P5 completa aceptación humana y P1/P2 OPS-01/ensayo de upgrade. Registrar fallidos/no ejecutados sin maquillarlos.
 2. Resolver bloqueantes mediante PRs separados y volver a ejecutar casos afectados. Omar revisa/integrará QA-02 cuando corresponda.
 3. Fetch; comprobar QA-02/DOC-02/DOC-01 en origin/develop y las revisiones humanas. Actualizar develop de forma segura conservando worktrees.
 4. Solo entonces crear release/0.1.0 desde develop actualizado; preparar versiones/changelog, migraciones y smoke de instalación limpia. Abrir PR hacia main para revisión humana.
@@ -76,3 +76,7 @@ Crear una base **nueva vacía** de prueba loopback (no demo/desarrollo), definir
 ## Preparación actual sin release prematura
 
 Ver [READINESS-M1](READINESS-M1.md), [formulario P5](P5-review-form.md), [OPS-01-runbook](OPS-01-runbook.md), [defecto](defects/M1-A11Y-001.md) y [plan de versiones/publicación](../release/M1-PUBLICATION-PLAN.md). QA-02/DOC-02/DOC-01 están integradas; falta aceptación/OPS y cierre/revalidación del fix. No se crea release/0.1.0. Los apartados de PR30 conservan contexto histórico y no revierten la integración de PR31.
+
+## Puertas actuales de cierre
+
+Las integraciones y el fix están comprobados en f700cf2. Solo quedan como bloqueantes de aceptación los recorridos humanos UI-01/EVID-06, OPS-01 real y revisión/decisión de P1/P2/Omar. Los colores de las dos muestras pendientes ya tienen prueba técnica independiente; no se requiere alterar estilos para ocultar incomplete de axe. Rollback preparado en [M1-ROLLBACK-PLAN](../release/M1-ROLLBACK-PLAN.md). REL-01 y CTR-02 no están completadas.

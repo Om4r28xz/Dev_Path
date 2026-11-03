@@ -1,6 +1,14 @@
 # Handoff lote 06 — estado vigente y registro histórico
 
-## Estado vigente tras PR31 — preparación M1,2026-11-02
+## Estado vigente final técnico —2026-11-02
+
+Develop f700cf2 incluye PR32/6cba655 (fix target-size) y PR33/ff667d8 (documentación). QAA-01/QA-02/DOC-02 integradas; no duplicar sus ramas.8 E2E sobre integración,97web/118API/51motor/2privacidad, corpus30/OpenAPI2/19 y upgrade con datos aprobados PG18.3. CI heavy del merge32 aprobado PG16;33 Docs-only y producto idéntico.
+
+Nuevo probe contraste normal/503:18.5267:1, colores/fondo opacos sin filtros, muestras de geometría visibles. Axe conserva incomplete: no se alteró su salida ni se afirmó revisión visual humana. Target-size cerrado técnicamente e integrado; UI-01/EVID-06 completas siguen pendientes P5. OPS-01 no ejecutado: WSL ausente, Docker ausente en PATH/modos usuario y sistema; consulta CIM de virtualización denegada, estado hardware desconocido. Instrucciones oficiales añadidas al runbook; no se ejecutó admin/reinicio ni se eludió UAC.
+
+Rama docs/lote-06-final-technical-checks: resultados técnicos nuevos, rollback, guías actualizadas. Sin cambios de producto/contratos/versiones y sin release/0.1.0. Se añade un workflow independiente OPS M1 Compose runtime; el CI existente se conserva. Driver preparado, ejecución local bloqueada por docker ENOENT; todavía no ejecutado en GitHub. Backup custom/restauración real en DB nueva PG18.3 aprobados, sin restaurar datos de producción. Preparación REL-01 lista para revisión, bloqueada por OPS y aprobación humana/P1/P2/Omar. CTR-02 no iniciada formalmente hasta release/tag/sincronización; cualquier prepropuesta queda fuera del contrato vigente. Las secciones siguientes conservan historia, no sustituyen este estado.
+
+## Histórico: estado tras PR31 — preparación M1,2026-11-02
 
 QA-02 correctiva/a80e48a integrada en origin/develop6d057b1 por PR31 merged=true; QAA-01/DOC-01/DOC-02 también integradas. Develop local actualizado mediante pull --ff-only; worktrees anteriores conservados. CI del merge aprobado con PG16, run41524142215.
 

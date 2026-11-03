@@ -1,0 +1,45 @@
+name: OPS M1 Compose runtime
+on:
+  push:
+    paths:
+      - '.github/workflows/ops-m1.yml'
+      - 'infra/**'
+      - 'scripts/setup-local.mjs'
+      - 'docs/acceptance/probes/ops-compose.mjs'
+  pull_request:
+    branches: [develop, main]
+    paths:
+      - '.github/workflows/ops-m1.yml'
+      - 'infra/**'
+      - 'scripts/setup-local.mjs'
+      - 'docs/acceptance/probes/ops-compose.mjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  compose-runtime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: '11.22.0'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - name: Execute official stack, restart persistence and engine recovery
+        env:
+          OPS_OUTPUT_PATH: ${{ runner.temp }}/ops-runtime.json
+        run: node docs/acceptance/probes/ops-compose.mjs
+      - name: Upload sanitized runtime result (never env, keys or raw logs)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ops-m1-runtime-result
+          path: ${{ runner.temp }}/ops-runtime.json
+          retention-days: 7
+          if-no-files-found: ignore

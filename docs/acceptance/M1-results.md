@@ -1,5 +1,11 @@
 # Resultados de aceptación M1 — QA-02
 
+## Actualización final sobre f700cf2
+
+QAA-01, QA-02 y DOC-02 integradas; PR32 cierra la corrección técnica M1-A11Y-001 y PR33 integra su documentación. Revalidación actual: web97/API118/motor51/privacidad2,8 E2E, contraste específico normal/503 y upgrade con datos aprobados. Las dos muestras de color dan18.5267:1 mediante método independiente sobre estilos opacos y geometría comprobada; axe sigue incomplete y se conserva.
+
+UI-01/EVID-06 completas continúan pendientes de la decisión real de P5. OPS-01 no ejecutada sin Docker/WSL; workflow independiente de Compose preparado, aún sin ejecución remota. Backup/restauración real en DB nueva PG18.3 aprobados. La matriz histórica de27 casos técnicos aprobados y3 completos pendientes no se convierte en aceptación global; fuente y evidencias de cada ejecución se conservan. Nuevo registro [final06-manifest](evidence/final06-manifest.json). Las secciones de anteriores entregas se interpretan con su base/fecha, no revierten integraciones verificadas.
+
 ## Estado actual tras PR31 y auditoría ampliada
 
 QA-02 correctiva está integrada en origin/develop **6d057b1**, GitHub merged=true/PR31 y ancestry comprobados. CI PG16 del merge aprobado. Las referencias antiguas a QA-02 solo en main o correctivo pendiente son históricas. [Preparación actual](READINESS-M1.md).
