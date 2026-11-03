@@ -1,5 +1,14 @@
 # Primera revisión visual M1 — Emanuel
 
+## Delegación y comprobaciones finales en curso
+
+Emanuel comunica que Omar le delegó coordinar el cierre y autorizó continuar el trabajo técnico y preparar/publicar el candidato **cuando se satisfagan sus requisitos**. Esto acredita coordinación y participación de Emanuel, no firmas realizadas por P1/P2/P5 ni reasignación automática de todos los roles. FLUJO_GITHUB pide revisor humano distinto del autor como objetivo; si no está disponible, registrar revisión pendiente. No inventar aprobación.
+
+La primera revisión fue grabada según informa Emanuel; video no adjunto ni inspeccionado por la IA. Zoom real200%, teclado completo, lector, estados y comprensión adicional se registrarán solo tras recibir sus resultados. Zoom real200%: Emanuel confirmó explícitamente que revisó Perfil, Nuevo análisis y resultado con evidencias, todo legible y utilizable, y después volvió al100%. Resultado: aprobado por Emanuel para ese alcance; navegador/versión y capturas no aportados. No equivale a aprobación integral UI-01 ni a firma de otro rol. Teclado: Emanuel confirmó que completó sin mouse los cuatro pasos solicitados: Tab/Shift+Tab y foco en Perfil, Space para skills y guardado con Enter, formulario/análisis por teclado y cancelación del modal con Escape/retorno de foco. Resultado: aprobado por Emanuel para ese recorrido; no prueba de todas las combinaciones ni firma ajena. Lector de pantalla: tras las instrucciones de activar Narrador y recorrer perfil, formulario, resultado/evidencias y confirmación de eliminación, Emanuel confirmó que funcionó todo el recorrido solicitado. Resultado: compatibilidad básica observada por Emanuel, sin problemas reportados; navegador/versión y versión del lector no aportados. No constituye certificación WCAG ni prueba exhaustiva de anuncios/estados. No crear rama release hasta satisfacer las puertas.
+
+Fetch actual: PR36 (develop→main) y PR37 (revisión Emanuel→main) fusionados; main956ed32, develop3024b5c. La revisión bf66975 es ancestro de main, no de develop. Sin tagv0.1.0 observado. No se interpreta integración prematura en main como REL-01 completa; sincronización main→develop reservada al procedimiento humano, tras revisar contenido exclusivo.
+
+
 ## Identidad, entorno y alcance
 
 Fuente: observaciones directas comunicadas por Emanuel en esta conversación. Revisión manual realizada por **Emanuel**; no es firma de P5, P1/P2 ni Omar. Fecha/hora exacta de ejecución, navegador/versión, viewport y capturas: no aportados. Demo preparada sobre3024b5c, Node22/PostgreSQL18.3 nativos y servicios reales; no se atribuye prueba Docker local ni PG16 local.
@@ -44,6 +53,20 @@ Se conserva la matriz histórica27 técnicos/3 casos completos pendientes. Esta 
 
 La preparación independiente de REL-01 ya está integrada: changelog propuesto, estrategia de8 versiones privadas, instalación limpia, smoke, rollback y sincronización en `docs/release/M1-CANDIDATE-CHECKLIST.md`. No requiere otro rediseño ni repetir suites para cerrar esta revisión documental.
 
-**Aún no habilitada la rama release/0.1.0 según las puertas actuales:** faltan decisiones humanas documentadas y autorización explícita de Omar. Después se aplican versiones/changelog y se valida el SHA candidato final; esos resultados futuros no se inventan a partir de CI previo. Merge/tagv0.1.0 y sincronización main→develop son pasos humanos del proceso autorizado. CTR-02 espera su comprobación.
+**Aún no habilitada la rama release/0.1.0 según las puertas actuales:** faltan decisiones humanas documentadas. La autorización de Omar para continuar y preparar/publicar el candidato validado fue comunicada por Emanuel; es condicional al cumplimiento de las puertas, no sustituye esas decisiones. Después se aplican versiones/changelog y se valida el SHA candidato final; esos resultados futuros no se inventan a partir de CI previo. Merge/tagv0.1.0 y sincronización main→develop son pasos humanos del proceso autorizado. CTR-02 espera su comprobación.
 
 Estado: revisión funcional/visual inicial de Emanuel realizada sin bloqueantes reportados; UI-01/EVID-06 integrales y OPS-01 formal pendientes. Sin release/tag/merge automático.
+
+## Revisión manual de ventana estrecha
+
+Emanuel confirmó que Perfil, Nuevo análisis, resultado con evidencias e Historial funcionaron con ventana estrecha y zoom100%, sin reportar textos cortados, superposiciones, botones inaccesibles ni desplazamiento horizontal en ese recorrido. Resultado: aprobado por Emanuel para el tamaño utilizado; ancho exacto y navegador/versión no aportados. No equivale a prueba de todos los dispositivos o breakpoints.
+
+## Validación y vacante sin tecnologías — confirmación de Emanuel
+
+Emanuel indicó que ya había realizado esta prueba y confirmó que funciona tal como se describió: vacante vacía impide envío o presenta indicación clara; texto «Buscamos una persona organizada y con buena comunicación.» se procesa sin tecnologías y explica compatibilidad no calculable, sin confundirla con0% o un fallo del sistema. Se registra confirmación de prueba previa, no nueva ejecución ordenada por la IA. No se recibió literal del mensaje ni captura.
+
+## Consolidación manual actual
+
+Recorrido funcional inicial/33%, zoom real200%, teclado solicitado, Narrador básico, ventana estrecha y validación/null: confirmados por Emanuel. Sin bloqueantes funcionales reportados; preferencias estéticas opcionales sin cambios de código. Navegador/versión y tamaños exactos siguen sin aportarse; video informado pero no inspeccionado. Pruebas técnicas existentes de legacy/HTML inerte, engine503/retry, contraste, sesiones y aislamiento se reutilizan sin convertirlas en ejecuciones manuales de Emanuel. Las comprobaciones que no confirmó explícitamente conservan esa limitación.
+
+Siguiente puerta: P1/P2 revisan artefactos y aceptación OPS/QA; P5 o revisor formalmente designado evalúa la cobertura de este registro y documenta la decisión UI-01/EVID-06. Coordinación delegada a Emanuel no se transforma en firmas ajenas. Omar confirma decisiones y autoriza candidato con requisitos satisfechos. No repetir pruebas acreditadas; solo repetir afectadas por un defecto o las obligatorias sobre el candidato final.
