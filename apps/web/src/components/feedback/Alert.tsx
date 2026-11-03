@@ -9,7 +9,10 @@ interface AlertProps {
 
 export const Alert: React.FC<AlertProps> = ({ variant = 'info', children }) => {
   return (
-    <div role="alert" className={`alert alert--${variant}`}>
+    <div
+      role={variant === 'error' || variant === 'warning' ? 'alert' : 'status'}
+      className={`alert alert--${variant}`}
+    >
       {children}
     </div>
   );
