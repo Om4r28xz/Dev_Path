@@ -1,5 +1,12 @@
 # Resultados de aceptación M1 — QA-02
 
+## Estado vigente tras PR34
+
+Base integrada 5061185183a2f4b6201cc8f73f29a2d59f0899cb. QAA-01/QA-02/DOC-02 y fixes target-size/UID de llave integrados. Dos ejecuciones reales Compose sobre44b0301 aprobadas (push41568936504 y PR41568942398); expediente [OPS-01](OPS-01-dossier.md). Ejecución técnica acreditada por jobs/pasos GitHub, contenidos de artefactos pendientes de revisión autenticada P1/P2. No confundir el fallo local por Docker ausente con el resultado remoto aprobado.
+
+OPS-01: pendiente aceptación P1/P2; UI-01/EVID-06: pendientes P5. Matriz histórica27/3 se conserva, no se inventan aprobaciones. REL-01 bloqueada hasta registrar decisiones; versiones siguen0.0.0, sin rama release/tag/release oficial ni CTR-02. Las secciones siguientes conservan historia y quedan subordinadas a este estado.
+
+
 ## Actualización final sobre f700cf2
 
 QAA-01, QA-02 y DOC-02 integradas; PR32 cierra la corrección técnica M1-A11Y-001 y PR33 integra su documentación. Revalidación actual: web97/API118/motor51/privacidad2,8 E2E, contraste específico normal/503 y upgrade con datos aprobados. Las dos muestras de color dan18.5267:1 mediante método independiente sobre estilos opacos y geometría comprobada; axe sigue incomplete y se conserva.

@@ -1,5 +1,9 @@
 # Handoff lote 06 — estado vigente y registro histórico
 
+## Vigente tras merge PR34
+
+Develop5061185 contiene44b0301, QAA-01, QA-02, DOC-02 y target-size (ascendencia verificada). Dos jobs Compose reales aprobados; [expediente OPS](../acceptance/OPS-01-dossier.md). OPS ejecutada técnicamente, pendiente aceptación P1/P2. UI-01/EVID-06 pendientes P5, autorización REL pendiente Omar. Rama documental docs/m1-acceptance-closeout; no crear release/0.1.0 sin firmas, no aplicar versiones ni iniciar CTR. [Candidato](../release/M1-CANDIDATE-CHECKLIST.md) reutiliza changelog/versiones/publicación/rollback. Registros anteriores son históricos.
+
 ## Estado vigente final técnico —2026-11-02
 
 Develop f700cf2 incluye PR32/6cba655 (fix target-size) y PR33/ff667d8 (documentación). QAA-01/QA-02/DOC-02 integradas; no duplicar sus ramas.8 E2E sobre integración,97web/118API/51motor/2privacidad, corpus30/OpenAPI2/19 y upgrade con datos aprobados PG18.3. CI heavy del merge32 aprobado PG16;33 Docs-only y producto idéntico.
