@@ -1,5 +1,10 @@
 # Resultados de aceptación M1 — QA-02
 
+## Primera revisión manual de Emanuel
+
+Emanuel confirmó recorrido funcional/visual inicial sin fallos que impidan uso principal; ejemplo33% coherente (C# y Git frente Git/JavaScript/React). Mejoras estéticas opcionales registradas, sin rediseño. [Informe y pendientes](Emanuel-visual-review.md). No constituye firma P5/P1/P2/Omar ni aceptación global. Zoom/lector/estados completos y decisiones humanas siguen pendientes; REL-01 conserva sus puertas y CTR-02 sigue bloqueada.
+
+
 ## Estado vigente tras PR34
 
 Base integrada 5061185183a2f4b6201cc8f73f29a2d59f0899cb. QAA-01/QA-02/DOC-02 y fixes target-size/UID de llave integrados. Dos ejecuciones reales Compose sobre44b0301 aprobadas (push41568936504 y PR41568942398); expediente [OPS-01](OPS-01-dossier.md). Ejecución técnica acreditada por jobs/pasos GitHub, contenidos de artefactos pendientes de revisión autenticada P1/P2. No confundir el fallo local por Docker ausente con el resultado remoto aprobado.
