@@ -16,9 +16,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "drizzle-orm": "0.43.1",
+    "drizzle-orm": "0.45.2",
     "pg": "8.16.0",
-    "zod": "3.25.67"
+    "zod": "4.6.6"
   },
   "devDependencies": {
     "@types/pg": "8.11.14",

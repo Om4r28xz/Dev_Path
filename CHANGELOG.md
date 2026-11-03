@@ -13,6 +13,7 @@
 
 - React/Vite, Express y Skill Engine separado; PostgreSQL16 oficial, migraciones0000–0003 y seed idempotente.
 - Compose con proxy mismo origen, servicios internos y persistencia; recuperación tras fallo del engine y reinicio comprobada en CI.
+- Dependencias corregidas durante estabilización: React Router7.18.2, Drizzle ORM0.45.2 y Zod4.6.6; adaptación del default de paginación para mantener20 sin alterar el contrato.
 - Checkboxes del perfil con objetivos accesibles; API no-root alineada al dueño de la llave0600, montaje read-only.
 - Corpus, contratos OpenAPI, pruebas unitarias/integración/E2E y expediente de aceptación. Ocho manifiestos privados pasan a0.1.0 sin publicar paquetes npm.
 
