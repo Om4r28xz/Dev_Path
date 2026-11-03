@@ -1,5 +1,44 @@
 # OPS-01 — evidencia para P1/P2 y Omar
 
+## Aceptación delegada recibida
+
+Emanuel, autorizado por Omar para asumir revisiones restantes según su comunicación, aceptó explícitamente el alcance técnico comprobado para preparar el candidato. [Decisión real](evidence/M1-delegated-acceptance.json). No es firma de P1/P2/P4 ni prueba manual nueva. La reproducción se sustenta en CI real y el artefacto inspeccionado; Windows/Docker local no comprobado queda como limitación aceptada. La revisión independiente del release y sus resultados sigue pendiente. Los registros vacíos inferiores son plantillas históricas, no puertas que ignoren esta decisión delegada.
+
+
+## Artefacto exitoso inspeccionado — estado vigente
+
+ZIP facilitado por Emanuel, ejecución [41568942398](https://github.com/Om4r28xz/Dev_Path/actions/runs/41568942398), artifact13200486709. SHA256 del ZIP idéntico al digest público de GitHub: 0f9e6085a38f1785bf023d883225b04cdbc928119987fcd7b3331d27ae573703. [JSON original](evidence/ops-pr34-runtime.json) y [verificación](evidence/ops-pr34-runtime-verification.json). No contiene tokens, claves ni contraseñas.
+
+El JSON registra productCommit **a2002e345363d4aec848232a3df8f4a7464af266**, merge temporal del PR con padres f700cf2 y44b0301. No se sustituyó por el SHA de la rama. La API de GitHub confirma head44b0301 y éxito del run; el árbol completo de a2002e3 y44b0301 es idéntico (dde2ff71d034d2891c2408e662e9ea2e5301f203). Así corresponde a la corrección indicada, probada en su integración temporal.
+
+Runtime: Docker28.0.4, Compose2.38.2, PostgreSQL16.15. Status passed/stage complete; seis checks observed=true/result=passed:
+
+|Check registrado|Qué acredita|Límite|
+|---|---|---|
+|Build/migrations/seed/readiness|Arranque oficial web/API/engine/DB, migración/seed y disponibilidad|Resultado agregado, sin log SQL individual|
+|Only web published on loopback|Puertos de DB/API/engine no publicados, web loopback|No auditoría general de seguridad/red|
+|SPA direct reload/internal blocked|Ruta SPA directa y rechazo de ruta interna comprobados por driver|No prueba todas las URLs posibles|
+|Register/profile/skills/analysis67/evidence|Recorrido navegador→proxy→Express→engine→PG real,67% y evidence|No lectura humana/estética ni todos los casos de auth|
+|Persist after real restart|Login, perfil, historial y snapshot recuperados tras reinicio|No backup/restore de producción|
+|Engine503/same-key retry/success|Fallo real de engine, borrador/reintento seguro y recuperación|No ensayo de todas las caídas posibles|
+
+Cleanup registrado: solo contenedores/red propios retirados, volumen retenido, volumesRemoved=false. No hay campo error/diagnostics ni checks fallidos u omitidos entre los seis. El JSON no enumera advertencias de build: no afirmar que fueron cero. Servicios concretos, assertions y orden se contrastaron con el driver del mismo árbol; no se acredita una prueba solo por existir su script.
+
+**Conclusión técnica:** evidencia suficiente del recorrido automatizado OPS-01, incluida persistencia y recuperación real. No acredita Docker Desktop/Windows local, revisión manual completa, restauración productiva ni firma de P1/P2. Especificación original OPS-01 (TAREAS_PARA_IAS): P2 responsable y P4 reproduce instrucciones; la revisión asignada debe registrar esa reproducción o su evidencia aceptada y cualquier reasignación explícita. No imponer repetir el mismo CI sin motivo.
+
+## Registro de aceptación humana pendiente
+
+Persona/rol autorizado: __________. Fecha: __________. Ejecución/SHA/evidencia revisados: __________. Reproducción/muestra o evidencia aceptada, y límites: __________. Decisión aprobado/fallido/pendiente: __________. Observaciones/defectos: __________. Revisor adicional/reasignación explícita si corresponde: __________.
+
+P1/P2 deben registrar su aceptación técnica; P5 o revisor formalmente designado registra decisión UI-01/EVID-06 usando la revisión real de Emanuel ya integrada. No se fabrican firmas. Autorización de Omar para avanzar condicionada al cumplimiento de las puertas ya comunicada; no equivale a decisiones de esos roles.
+
+Git actual: PR34/35 integrados en develop; PR38 entró en main y PR39 integra la revisión también en develop6cfdd2f. Sin cambios de producto/infra/scripts/workflows respecto44b0301. El CI de6cfdd2f es Docs-only, no nueva ejecución completa. REL-01 aún no publicada ni etiquetada/sincronizada; CTR-02 bloqueada.
+
+## Histórico previo a inspeccionar el artefacto
+
+Las menciones siguientes a artefactos no descargados describen la revisión anterior; el contenido del artefacto PR está ahora inspeccionado arriba. El artefacto separado de push no fue suministrado ni se presume leído.
+
+
 Commit: `44b03015d982369b2de15c1b9629669bab73231d`. PR34 fusionado a develop como `5061185183a2f4b6201cc8f73f29a2d59f0899cb` (GitHub merged=true, ascendencia de44b0301 confirmada). Los nueve checks del commit están aprobados; no se realizó merge ni se cambió código en esta revisión.
 
 | Ejecución real                                                                            | Resultado | Paso de stack/reinicio/recuperación       |

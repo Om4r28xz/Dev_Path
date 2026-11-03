@@ -1,3 +1,20 @@
+# Revisión M1 — decisión de Emanuel como revisor delegado
+
+Emanuel aceptó explícitamente «Acepto ese alcance para preparar el candidato», bajo delegación de Omar comunicada por él. [Registro verificable](evidence/M1-delegated-acceptance.json) y [observaciones reales](Emanuel-visual-review.md). Registro UTC 2026-11-03T04:33:03.720Z; fecha exacta de pruebas no aportada. Navegador Opera GX, versión no aportada; demo3024b5c y revisión integrada por PR39.
+
+|Criterio|Evidencia y decisión real|Límite|
+|---|---|---|
+|UI-01|Recorrido principal, zoom200%, teclado con foco/modal, Narrador y ventana estrecha confirmados por Emanuel; evidencia automatizada complementaria. Aceptado para candidato.|No certificación WCAG completa ni todos los estados/dispositivos.|
+|EVID-06|Presentación de citas/porcentaje revisada;33% y ausencia de tecnologías comprendidos; HTML inerte/legacy y motor indisponible cubiertos técnicamente. Alcance aceptado por Emanuel.|No afirmar ejecución manual de los casos técnicos no confirmados.|
+|OPS-01|Seis checks reales del artefacto aprobado, digest/commit cotejados; alcance técnico aceptado por Emanuel.|Docker Windows local no probado; no firma de P1/P2/P4.|
+|Revisión independiente|Pendiente para PR release según FLUJO_GITHUB.|No se deduce de la aceptación del autor/coordinador.|
+
+Mejoras de espacio blanco, jerarquía/tamaño y organización de skills se aceptan como opcionales sin bloqueo demostrado. No se crea rediseño. Esta decisión habilita preparar/validar candidato; no publica M1 ni autoriza merge/tag automático. No atribuye firmas a P1/P2/P5.
+
+## Formulario histórico previo a la decisión
+
+Las casillas inferiores conservan la solicitud original; la decisión vigente es la anterior. No se interpretan campos antiguos vacíos como una firma inexistente de otros roles.
+
 # Formulario de revisión humana M1 — pendiente
 
 Evidencia manual complementaria disponible: [revisión de Emanuel](Emanuel-visual-review.md), con Opera GX, recorrido funcional/33%, zoom200%, teclado, Narrador básico, ventana estrecha y validación/null confirmados. Quien tenga el rol de aceptación debe revisar esa evidencia y registrar su decisión real; no repetir los recorridos acreditados sin motivo ni asignar automáticamente la firma a P5/P1/P2. Los campos siguientes pertenecen a sus respectivos revisores, no a la IA.

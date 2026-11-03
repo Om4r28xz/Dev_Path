@@ -1,5 +1,10 @@
 # Plan de versiones M1 — propuesta sin aplicar
 
+## Aplicación en el candidato
+
+Los8 manifiestos privados se actualizaron a0.1.0 en release/0.1.0 tras aceptación explícita de Emanuel como revisor delegado. Instalación frozen y validaciones del SHA candidato se registrarán aparte. No hay publicación npm/tag/release oficial. La tabla inferior conserva la propuesta histórica0.0.0→0.1.0; no describe las versiones vigentes de esta rama. Versiones de contratos/datos no cambiaron.
+
+
 Estado: bloqueada la publicación. No se cambiaron manifiestos ni lockfile. Requiere aceptación humana, firma P1/P2 de OPS-01 (runtime remoto ya aprobado por PR34) y revisión final del candidato (M1-A11Y-001 ya integrada/revalidada por PR32) antes de preparar release/0.1.0.
 
 | Manifiesto privado                 | Versión actual | Propuesta a revisar en REL-01 |

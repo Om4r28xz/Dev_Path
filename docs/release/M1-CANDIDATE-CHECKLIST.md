@@ -1,5 +1,10 @@
 # REL-01 — candidato preparado, todavía no autorizado
 
+## Candidato autorizado para preparación
+
+Emanuel confirmó la aceptación delegada y límites en docs/acceptance/evidence/M1-delegated-acceptance.json. release/0.1.0 creada desde6cfdd2f; versiones0.1.0 y CHANGELOG.md aplicados. Revisión independiente del PR pendiente; ninguna firma ajena inventada. Los bloqueos de aceptación descritos más abajo son históricos, sustituidos por el registro delegado. Validaciones/CI del candidato, merge humano, tag/smoke y sincronización siguen siendo puertas reales.
+
+
 Base integrada:5061185. No se ha creado release/0.1.0 ni cambiado versiones. Usar [changelog](M1-CHANGELOG-DRAFT.md), [versiones](M1-VERSION-PLAN.md), [publicación](M1-PUBLICATION-PLAN.md) y [rollback](M1-ROLLBACK-PLAN.md); no duplicarlos ni presentar el borrador como changelog publicado.
 
 ## Puertas de entrada
