@@ -42,3 +42,18 @@ Estados admitidos: aprobado / fallido / no ejecutado. Si falla, registrar ID, se
 - Decisión de aceptación por Omar y referencia: ____________________
 
 Este formulario no autoriza merge/tag/release. OPS-01 tiene su propio registro técnico en [OPS-01-runbook](OPS-01-runbook.md).
+
+## Registro de revisión técnica por P1/P2
+
+Persona/rol: __________. Fecha: __________. Commit: __________. Entorno: __________.
+
+| Criterio              | Qué permite aprobar                                                                                                                                  | Observado/evidencia/decisión |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| Integraciones y CI    | QAA/QA/DOC y fix presentes por contenido/ancestry; checks del candidato identificados sin confundir Docs-only con CI completo.                       | __________                   |
+| Instalación limpia    | Lockfile frozen, build y arranque reproducibles en copia nueva; no depender de secretos o datos de otro checkout.                                    | __________                   |
+| DB y migraciones      | Desde vacío y con datos existentes; snapshots/evidence/key/revisión preservados e índice/rerun correctos; repetir candidato/PG16 cuando corresponda. | __________                   |
+| Privacidad/seguridad  | Solo datos sintéticos; sin .env/PEM/tokens/passwords en commits/evidencia; ownership y cookies/origen correctos.                                     | __________                   |
+| OPS-01                | Stack real, proxy, red, fallos/recovery y reinicio con volumen verificados según runbook. Un config estático no basta.                               | __________                   |
+| Preparación/reversión | Changelog/versiones propuestos, backup/restauración aislada y rollback revisados; ningún tag/merge automático.                                       | __________                   |
+
+Estado global P1/P2: **no ejecutado por estas personas**. Aprobación, limitaciones aceptadas y referencia del PR: __________. Omar registra por separado la autorización final de REL-01; no se deduce de los merges anteriores.

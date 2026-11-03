@@ -2,7 +2,7 @@
 
 Estado: **no ejecutada por P5; sin aprobación humana**. Complementa [M1-results.md](M1-results.md), no lo reemplaza.
 
-Formulario rellenable: [P5-review-form](P5-review-form.md). Estado técnico nuevo y defecto: [READINESS-M1](READINESS-M1.md). PR31 integra QA-02, pero no equivale a firma de aceptación. M1-A11Y-001 tiene fix local6cba655 pendiente de integración; registrar el commit real que evalúe P5.
+Formulario rellenable: [P5-review-form](P5-review-form.md). Estado técnico nuevo y defecto: [READINESS-M1](READINESS-M1.md). PR31 integra QA-02, pero no equivale a firma de aceptación. M1-A11Y-001 tiene fix6cba655 integrado por PR32 y revalidado sobre f700cf2; registrar el commit real que evalúe P5.
 
 ## Preparación
 

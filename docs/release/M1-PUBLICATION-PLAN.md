@@ -24,3 +24,7 @@ QA-02 correctiva ya está integrada por PR31/6d057b1, con CI PG16 aprobado. No r
 ## Artefactos de preparación
 
 [M1-VERSION-PLAN](M1-VERSION-PLAN.md), [M1-CHANGELOG-DRAFT](M1-CHANGELOG-DRAFT.md), [READINESS-M1](../acceptance/READINESS-M1.md), [formulario P5](../acceptance/P5-review-form.md) y [OPS-01-runbook](../acceptance/OPS-01-runbook.md). Ningún casillero humano se da por aprobado.
+
+## Actualización final tras PR32/33
+
+No repetir publicación/integración de las ramas profile-skill-target-size o m1-human-review-release-readiness: ya están integradas en f700cf2. El fix se revalidó con8 E2E y las muestras de contraste se comprobaron técnicamente; quedan revisión humana y OPS-01. La rama docs/lote-06-final-technical-checks publica solo resultados/probe y guías faltantes. No crear release/0.1.0 mientras falten esas puertas. Reversión y backup seguro en [M1-ROLLBACK-PLAN](M1-ROLLBACK-PLAN.md).

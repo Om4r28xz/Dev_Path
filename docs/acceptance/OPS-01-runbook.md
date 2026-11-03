@@ -62,3 +62,45 @@ docker compose -p $opsProject --env-file infra/.env -f infra/compose.yaml stop
 No usar down -v, prune ni eliminación de bases/volúmenes. No reutilizar nombres ajenos. Registrar SHA, nombre del proyecto aislado, SO/Docker/Compose, PostgreSQL16 efectivo, timestamps, esperado/observado y códigos de salida. Si se omite un caso, queda no ejecutado con causa.
 
 `pnpm test:e2e` del repo arranca su propio stack nativo; pasarlo no demuestra que Compose funcione. OPS-01 exige el recorrido anterior contra8080. P1/P2 revisan datos y red, P5 revisa comprensión y Omar decide la aceptación. Ninguna casilla está aprobada por preparar este runbook.
+
+## Diagnóstico local y pasos oficiales de Windows — 2026-11-02
+
+En esta sesión: wsl --status salió50, --version y --list --verbose salieron1: subsistema no instalado. Docker CLI no aparece en PATH, Program Files/Docker/Docker ni LOCALAPPDATA/Programs/DockerDesktop. El servicio com.docker.service tampoco aparece; su ausencia por sí sola no diagnostica fallo en una instalación por usuario. CLI standalone Compose5.6.1 config --quiet sí termina0, sin motor ni contenedores.
+
+La consulta Win32_Processor/Win32_ComputerSystem por CIM fue denegada por el entorno de ejecución: no se afirma si BIOS/UEFI o hipervisor están habilitados. El registro devolvió ProductName Windows10HomeSingleLanguage, DisplayVersion26H2/build26300; confirmar edición real con winver, no decidir compatibilidad usando solo ese nombre de registro.
+
+La autorización previa de Docker/WSL permanece registrada y el usuario indicó que hará la instalación. Ningún cambio administrativo/reinicio se ejecuta desde el agente. Una persona autorizada debe abrir PowerShell como administrador, atender UAC y decidir el reinicio guardando antes su trabajo.
+
+Microsoft documenta instalar WSL sin distribución y actualizarlo mediante estos comandos ([instalación](https://learn.microsoft.com/en-us/windows/wsl/install), [opciones oficiales](https://learn.microsoft.com/en-us/windows/wsl/basic-commands)):
+
+```powershell
+# Ejecutar manualmente en PowerShell administrador autorizado:
+wsl --install --no-distribution
+# Si Windows solicita reinicio, acordarlo y hacerlo manualmente antes de seguir.
+wsl --update
+wsl --set-default-version 2
+wsl --status
+wsl --version
+wsl --list --verbose
+```
+
+Docker describe instalación por usuario y backend WSL2, con WSL>=2.1.5 y virtualización de hardware habilitada. Descargar y abrir el instalador oficial, elegir modo por usuario y Linux/WSL2, abrir Desktop y revisar sus términos personalmente. La instalación por usuario no requiere admin, pero habilitar WSL2 por primera vez sí puede requerirlo. Ver [Docker Windows oficial](https://docs.docker.com/desktop/setup/install/windows-install/). No se aceptan términos ni se elude UAC automáticamente.
+
+En PowerShell normal del usuario, comprobar después:
+
+```powershell
+docker info
+docker compose version
+```
+
+Si no aparece docker tras instalar, abrir una terminal nueva o localizar el CLI en LOCALAPPDATA/Programs/DockerDesktop/resources/bin o Program Files/Docker/Docker/resources/bin; no cambiar permisos/grupos a ciegas. Para verificar hardware, usar Administrador de tareas→Rendimiento→CPU→Virtualización, o ejecutar las consultas CIM de diagnóstico desde la consola autorizada. Si dice deshabilitada, P1/P2/Omar deben revisar el cambio de firmware; no se altera BIOS desde este procedimiento.
+
+Cuando docker info responda con servidor Linux, ejecutar el runbook anterior desde el checkout limpio y proyecto único. Si este equipo no puede habilitarse, P1/P2 ejecutan exactamente ese runbook en otro equipo autorizado y registran SHA/entorno/observados; no se presume aprobado por probar solo componentes nativos.
+
+## Ensayo automatizado del stack oficial
+
+Nuevo workflow OPS M1 Compose runtime: ejecuta el driver probes/ops-compose.mjs en Ubuntu con Docker, en un proyecto único y checkout limpio. No modifica el workflow CI existente. Comprueba PostgreSQL16, proxy, registro/login, perfil,67%, evidence, migraciones repetidas con datos, reinicio persistente y caída/recuperación real del engine con la misma clave. Conserva el volumen propio, nunca usa down -v. Solo sube JSON saneado; no env, llaves, tokens ni dumps.
+
+Para P1/P2 en otra copia limpia: Node22/pnpm11.22, instalación congelada, Playwright Chromium y Docker operativo; ejecutar node docs/acceptance/probes/ops-compose.mjs desde la raíz. Puerto8080 libre, sin infra/.env existente; genera configuración solo para esa copia. Revisar status=passed, todos los checks y cleanup antes de registrar la decisión. El volumen sintético queda retenido; no eliminar volúmenes ajenos.
+
+Estado local: el preflight terminó bloqueado con docker ENOENT; no construyó ni inició contenedores. La automatización está preparada, pero aún NO ejecutada en GitHub. Su existencia no aprueba OPS-01. Evidencia: evidence/ops-runtime-preflight.json.

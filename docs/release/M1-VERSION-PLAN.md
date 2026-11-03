@@ -1,6 +1,6 @@
 # Plan de versiones M1 — propuesta sin aplicar
 
-Estado: bloqueada la publicación. No se cambiaron manifiestos ni lockfile. Requiere aceptación humana, OPS-01 y cierre/revalidación de M1-A11Y-001 antes de preparar release/0.1.0.
+Estado: bloqueada la publicación. No se cambiaron manifiestos ni lockfile. Requiere aceptación humana, OPS-01 y revisión final del candidato (M1-A11Y-001 ya integrada/revalidada por PR32) antes de preparar release/0.1.0.
 
 | Manifiesto privado                 | Versión actual | Propuesta a revisar en REL-01 |
 | ---------------------------------- | -------------- | ----------------------------- |

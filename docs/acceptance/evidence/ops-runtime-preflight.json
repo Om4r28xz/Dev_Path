@@ -1,0 +1,10 @@
+{
+  "productCommit": "f700cf2a9fdda8c88cef245a65a53988278c2b43",
+  "project": "devpath-m1-ops-7fe7a2c0",
+  "status": "blocked",
+  "stage": "preflight",
+  "checks": [],
+  "cleanup": "not needed",
+  "volumesRemoved": false,
+  "error": "spawnSync docker ENOENT"
+}

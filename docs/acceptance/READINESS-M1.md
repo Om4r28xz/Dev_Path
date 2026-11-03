@@ -1,5 +1,9 @@
 # Preparación M1 tras integrar QA-02 — todavía bloqueada
 
+## Actualización final integrada
+
+PR32 y PR33 están fusionados a develop **f700cf2**. No volver a publicar las ramas ya integradas. El fix target-size está cerrado técnicamente por8 E2E integrados y CI del merge32 PG16 aprobado; el merge33 solo tiene Docs check (producto idéntico al de32). Las dos muestras de contraste pasan cálculo sRGB independiente18.5267:1; axe conserva incomplete. La revisión humana y OPS-01 siguen pendientes. Los apartados siguientes conservan el estado de la entrega anterior.
+
 Fecha:2026-11-02. Base integrada **6d057b15d8a5fb886e66420d6dfd5910728bce9b**, PR31 merged=true a develop confirmado en GitHub y por ascendencia de a80e48a. QAA-01, QA-02, DOC-01 y DOC-02 están integradas. Develop local actualizado con pull --ff-only; avances CAT-02 y worktrees anteriores preservados.
 
 Rama documental: `docs/m1-human-review-release-readiness`, worktree `.worktrees/m1-readiness`. No es release/0.1.0 y no incorpora código de producción del fix por copia/merge. No hay aprobaciones humanas nuevas.

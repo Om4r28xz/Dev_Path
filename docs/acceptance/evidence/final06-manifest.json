@@ -1,0 +1,132 @@
+{
+  "date": "2026-11-02",
+  "productCommit": "f700cf2a9fdda8c88cef245a65a53988278c2b43",
+  "merged": {
+    "accessibilityPr": 32,
+    "readinessPr": 33,
+    "qaCorrectivePr": 31
+  },
+  "runtime": {
+    "node": "22.23.4",
+    "pnpm": "11.22.0",
+    "postgresLocal": "18.3",
+    "playwright": "1.64.1",
+    "axe": "4.11.0"
+  },
+  "checks": {
+    "web": 97,
+    "api": 118,
+    "engine": 51,
+    "privacy": 2,
+    "e2e": 8,
+    "e2eSeconds": 15.2,
+    "contrastProbe": "passed",
+    "migrationUpgrade": "passed0000-0002->0003 with data, index, idempotent rerun",
+    "catalogCases": 30,
+    "openapiDocuments": 2,
+    "examples": 19,
+    "remainingBrowserUsers": 0,
+    "remainingBrowserAnalyses": 0,
+    "backupRestore": "passed: PostgreSQL18.3 pg_dump custom -> new empty DB, data/journal identical, migration rerun unchanged"
+  },
+  "contrast": [
+    {
+      "state": "normal",
+      "ratio": 18.526740961784572,
+      "opaque": true,
+      "targetUnobscuredAtSamplePoints": true,
+      "axeIncomplete": ["color-contrast"],
+      "axeViolations": [],
+      "technicalColorCheck": "passed by independent deterministic sRGB calculation; axe incomplete not relabeled"
+    },
+    {
+      "state": "engine503",
+      "ratio": 18.526740961784572,
+      "opaque": true,
+      "targetUnobscuredAtSamplePoints": true,
+      "axeIncomplete": ["color-contrast"],
+      "axeViolations": [],
+      "technicalColorCheck": "passed by independent deterministic sRGB calculation; axe incomplete not relabeled"
+    }
+  ],
+  "ci": {
+    "merge32": "https://github.com/Om4r28xz/Dev_Path/actions/runs/41553299045",
+    "merge32Result": "all heavy checks success including PG16",
+    "merge33": "https://github.com/Om4r28xz/Dev_Path/actions/runs/41553368707",
+    "merge33Result": "Docs check only, success",
+    "applicationTree": "identical cdeb6ab -> f700cf2; checked apps/packages/.github/root manifests and lockfile"
+  },
+  "ops": {
+    "dockerInstalled": false,
+    "checkedLocations": [
+      "PATH",
+      "Program Files/Docker/Docker",
+      "LOCALAPPDATA/Programs/DockerDesktop"
+    ],
+    "wslStatus": 50,
+    "wslVersion": 1,
+    "wslList": 1,
+    "cimVirtualization": "access denied; hardware state not established",
+    "composeStatic": "standalone5.6.1 config --quiet exit0",
+    "stackExecuted": false,
+    "automation": "prepared, not run; local preflight blocked docker ENOENT"
+  },
+  "humanApprovals": [],
+  "releaseBranchCreated": false,
+  "tagCreated": false,
+  "ctr02Started": false,
+  "files": [
+    {
+      "file": "docs/acceptance/evidence/final06-tests.txt",
+      "sha256": "fa0c11725f671073182040b2719a70f11ecdc7182fc4d1d9bc5b818ff3dc2ff5"
+    },
+    {
+      "file": "docs/acceptance/evidence/final06-e2e.txt",
+      "sha256": "5e89148d1e674c08a65b92d71a540a5b28d876d792de45b33b6f58ca9f954783"
+    },
+    {
+      "file": "docs/acceptance/evidence/final06-contrast.txt",
+      "sha256": "a05301fb82887b24e3da9676aae71165606770a298a7bfebb10ce01cf18a5635"
+    },
+    {
+      "file": "docs/acceptance/evidence/final06-upgrade.txt",
+      "sha256": "5bff921a8e9bcf88bcc35552b3e7d9ba7bbc64bc58f312e5503a2f4513166ba5"
+    },
+    {
+      "file": "docs/acceptance/evidence/contrast-recheck.json",
+      "sha256": "ec165583c07330968f9d904307aa0838d0a49e1fc1973060b85d7dfd8d5493aa"
+    },
+    {
+      "file": "docs/acceptance/probes/contrast.browser.spec.ts",
+      "sha256": "2322cfb0983f9290ad598f51bce3a805ad1da522cfc13f9af242ec58ddb02741"
+    },
+    {
+      "file": "docs/acceptance/probes/contrast.config.ts",
+      "sha256": "a9adfc938a13c03e957c0649ee27764164572c2961791ff258a2f896f7a00d33"
+    },
+    {
+      "file": "docs/acceptance/probes/tsconfig.contrast.json",
+      "sha256": "11d2c978f2c6b63ad1c7f690ef929d857c7ec96efc51d125b33805a2d95e5f52"
+    },
+    {
+      "file": "docs/acceptance/evidence/final06-backup.txt",
+      "sha256": "2332474cf31d4e1d0da7594480317e917757e71eaf1be93d29a49a6ee55d0f15"
+    },
+    {
+      "file": "docs/acceptance/evidence/ops-runtime-preflight.json",
+      "sha256": "58c4c3ba568cc0dd8dc20f5309040f3678368a0553f7a4d1d5395c948884260e"
+    },
+    {
+      "file": "docs/acceptance/probes/backup-restore.mjs",
+      "sha256": "e0a4894b4d074b8698f63e60675b2b36c0a9b78e998dbc2c024eb95419d23e81"
+    },
+    {
+      "file": "docs/acceptance/probes/ops-compose.mjs",
+      "sha256": "8017a9a21733604f3abbb59dc3efd55a1da2f4eb50c951039f463d646a986dea"
+    },
+    {
+      "file": ".github/workflows/ops-m1.yml",
+      "sha256": "c7b51b8cd1e32a44422ae0f78b092ce17582d231162091503630b407e22401a4"
+    }
+  ]
+}
