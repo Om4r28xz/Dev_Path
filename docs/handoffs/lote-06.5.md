@@ -1,13 +1,13 @@
 # Lote 06.5 — handoff de implementación
 
-Estado verificado el 3 de noviembre de 2026 desde Git, no desde handoffs antiguos. Base de VIS-01: `origin/develop` 47f2af0. Commit de implementación probado: `ffd3584`. Issue [#44](https://github.com/Om4r28xz/Dev_Path/issues/44); PR borrador [#45](https://github.com/Om4r28xz/Dev_Path/pull/45) hacia `develop`. El tag `v0.1.0` es ancestro de `origin/develop`; CTR-02 está integrado por PR #43. No se modificó `main` ni el tag.
+Estado verificado el 3 de noviembre de 2026 desde Git, no desde handoffs antiguos. Base de VIS-01: `origin/develop` 47f2af0. Commit de código probado en CI: `507b1f3`. Issue [#44](https://github.com/Om4r28xz/Dev_Path/issues/44); PR borrador [#45](https://github.com/Om4r28xz/Dev_Path/pull/45) hacia `develop`. El tag `v0.1.0` es ancestro de `origin/develop`; CTR-02 está integrado por PR #43. No se modificó `main` ni el tag.
 
-| Tarea  | Estado                                                                          | Rama                                               | Siguiente acción                                                                                             |
-| ------ | ------------------------------------------------------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| VIS-01 | Implementación y validación técnica local terminadas; revisión humana pendiente | `feature/vis-01-design-system`                     | P5 revisa uso, zoom, teclado y lector; P1 revisa contrato/privacidad. Integrar PR solo tras esas revisiones. |
-| VIS-02 | Bloqueada por dependencia                                                       | `feature/vis-02-auth-profile-ui` aún no creada     | Partir de `origin/develop` después de integrar VIS-01.                                                       |
-| VIS-03 | Bloqueada por dependencia                                                       | `feature/vis-03-analysis-history-ui` aún no creada | Partir de `origin/develop` después de integrar VIS-02. ANL-04 ya está integrado.                             |
-| VIS-04 | Bloqueada por dependencia                                                       | `docs/vis-04-m1-ui-acceptance` aún no creada       | P5 ejecuta la matriz real después de integrar VIS-03; no atribuir aceptación humana sin ejecución.           |
+| Tarea  | Estado                                                   | Rama                                               | Siguiente acción                                                                                             |
+| ------ | -------------------------------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| VIS-01 | Implementación y CI aprobados; revisión humana pendiente | `feature/vis-01-design-system`                     | P5 revisa uso, zoom, teclado y lector; P1 revisa contrato/privacidad. Integrar PR solo tras esas revisiones. |
+| VIS-02 | Bloqueada por dependencia                                | `feature/vis-02-auth-profile-ui` aún no creada     | Partir de `origin/develop` después de integrar VIS-01.                                                       |
+| VIS-03 | Bloqueada por dependencia                                | `feature/vis-03-analysis-history-ui` aún no creada | Partir de `origin/develop` después de integrar VIS-02. ANL-04 ya está integrado.                             |
+| VIS-04 | Bloqueada por dependencia                                | `docs/vis-04-m1-ui-acceptance` aún no creada       | P5 ejecuta la matriz real después de integrar VIS-03; no atribuir aceptación humana sin ejecución.           |
 
 ## VIS-01
 
@@ -22,11 +22,11 @@ Validación local:
 - `pnpm build`: pasó.
 - `pnpm test`: pasó; web 97, engine 51, API 64 (54 pruebas de integración omitidas por entorno), soporte E2E 2.
 - `pnpm exec eslint . --ignore-pattern '.worktrees/**'`: pasó. `pnpm lint` sin exclusión falla porque ESLint recorre otros worktrees ubicados dentro de `.worktrees`, y detecta múltiples raíces TSConfig; no es un error de VIS-01.
-- `node scripts/vis-01-capture.mjs`: pasó en Edge local, shell desktop/móvil, targets de navegación y logout de al menos 44 px, enlace de salto y ausencia de desbordamiento horizontal.
-- El primer CI de PR #45 detectó que los checkboxes habían bajado a 20 px. Se restauraron a 24 px mediante `--checkbox-size`; el script de captura comprueba ahora esa medida. La corrección requiere CI de nuevo commit.
+- `node scripts/vis-01-capture.mjs`: pasó en Edge local, shell desktop/móvil, targets de navegación y logout de al menos 44 px, checkboxes de al menos 24 px, enlace de salto y ausencia de desbordamiento horizontal.
+- El primer CI de PR #45 detectó que los checkboxes habían bajado a 20 px. Se restauraron a 24 px mediante `--checkbox-size`. El CI del commit `507b1f3` pasó: build, pruebas, typecheck, lint/formato y M1 E2E con Chromium y PostgreSQL 16, además del check Docs.
 - Contraste calculado para parejas documentadas en el sistema visual: todas superan 4.5:1. No se ejecutó axe en esta sesión porque `QA_AXE_CORE_SOURCE` no está configurada.
-- No se ejecutó el E2E real con API, engine y PostgreSQL porque `E2E_DATABASE_URL` no está configurada. Capturas sintéticas no sustituyen esa prueba.
+- El E2E real con API, engine y PostgreSQL no se ejecutó localmente porque `E2E_DATABASE_URL` no está configurada; sí pasó en CI para `507b1f3`. Capturas sintéticas no sustituyen esa prueba.
 
-Pendiente: CI del PR, axe, reflujo con zoom real al 200%, recorrido manual de teclado y lector de pantalla, y revisiones de P5/P1. VIS-02 aplicará el sistema a auth, perfil y selección de habilidades; VIS-03 migrará los estilos heredados de historial y el diálogo.
+Pendiente: axe, reflujo con zoom real al 200%, recorrido manual de teclado y lector de pantalla, y revisiones de P5/P1. VIS-02 aplicará el sistema a auth, perfil y selección de habilidades; VIS-03 migrará los estilos heredados de historial y el diálogo.
 
 La integración GitHub devolvió 403 al intentar crear la issue y el PR. Ambos se crearon después mediante la credencial Git ya autorizada para publicar la rama, sin guardar el token ni incluirlo en el repositorio.
