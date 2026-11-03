@@ -269,8 +269,8 @@ li + li {
 }
 .checkbox-option input,
 .profile-skill-option__checkbox {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
   flex-shrink: 0;
   accent-color: var(--color-brand);
 }

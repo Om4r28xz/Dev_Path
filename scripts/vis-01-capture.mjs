@@ -31,7 +31,14 @@ try {
                 createdAt: '2026-11-03T00:00:00Z',
                 updatedAt: '2026-11-03T00:00:00Z',
               }
-            : { catalogVersion: 'demo', items: [], nextCursor: null };
+            : {
+                catalogVersion: '1.0.0',
+                items: [
+                  { id: 'javascript', name: 'JavaScript', category: 'language' },
+                  { id: 'react', name: 'React', category: 'library' },
+                ],
+                nextCursor: null,
+              };
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -40,6 +47,7 @@ try {
     });
     await page.goto(base + '/profile');
     await page.getByRole('heading', { name: 'Mi perfil' }).waitFor();
+    await page.getByRole('checkbox', { name: 'JavaScript' }).waitFor();
     const overflow = await page.evaluate(
       () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
     );
@@ -52,6 +60,16 @@ try {
         );
       if (heights.some((height) => height < 44)) throw Error(name + ': target below 44px');
     }
+    const checkboxSizes = await page
+      .locator('.profile-skill-option__checkbox')
+      .evaluateAll((elements) =>
+        elements.map((element) => ({
+          width: element.getBoundingClientRect().width,
+          height: element.getBoundingClientRect().height,
+        })),
+      );
+    if (checkboxSizes.some((size) => size.width < 24 || size.height < 24))
+      throw Error(name + ': checkbox below 24px');
     await page.screenshot({
       path: 'docs/acceptance/evidence/vis-01-shell-' + name + '.png',
       fullPage: true,
@@ -63,7 +81,9 @@ try {
     await skip.press('Enter');
     const target = await page.evaluate(() => document.activeElement?.id);
     if (target !== 'main-content') throw Error(name + ': skip link did not focus main');
-    console.log(name + ': shell visible, targets >=44px, skip link and overflow OK');
+    console.log(
+      name + ': shell visible, targets >=44px, checkbox >=24px, skip link and overflow OK',
+    );
     await page.close();
   }
 } finally {

@@ -58,5 +58,6 @@
   --reading-width: 64ch;
   --form-width: 40rem;
   --control-height: 2.75rem;
+  --checkbox-size: 1.5rem;
   --shadow-raised: 0 0.25rem 1.25rem rgb(40 39 45 / 8%);
 }

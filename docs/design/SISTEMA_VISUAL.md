@@ -10,22 +10,23 @@ La tarea y el siguiente paso deben quedar visibles sin recorrido innecesario. El
 
 La fuente de verdad es [tokens.css](../../apps/web/src/styles/tokens.css). [index.css](../../apps/web/src/styles/index.css) contiene reglas de base y patrones compartidos. No copiar colores, radios ni espaciados literales en una pantalla nueva.
 
-| Rol              | Token                            | Valor               | Uso                          |
-| ---------------- | -------------------------------- | ------------------- | ---------------------------- |
-| Fondo            | `--color-canvas`                 | `#faf9f8`           | Página                       |
-| Superficie       | `--color-surface`                | `#ffffff`           | Cabecera, controles, paneles |
-| Superficie suave | `--color-surface-soft`           | `#f4f1f1`           | Agrupaciones discretas       |
-| Texto            | `--color-text`                   | `#28272d`           | Texto principal              |
-| Texto secundario | `--color-text-muted`             | `#59555e`           | Ayudas, metadatos            |
-| Borde            | `--color-border`                 | `#d4ced1`           | Separación sin sombra        |
-| Marca            | `--color-brand`                  | `#823b5b`           | CTA, enlace, foco            |
-| Marca hover      | `--color-brand-hover`            | `#682c48`           | Hover de acciones            |
-| Marca suave      | `--color-brand-soft`             | `#f9eef2`           | Navegación activa            |
-| Error            | `--color-danger`                 | `#a42d36`           | Error, eliminación           |
-| Informativo      | `--color-info-text/soft`         | `#255477 / #eaf3f8` | Estado informativo           |
-| Éxito            | `--color-success-text/soft`      | `#1d583c / #eaf5ef` | Confirmación                 |
-| Aviso            | `--color-warning-text/soft`      | `#744d00 / #fff6df` | Estado desactualizado        |
-| Inhabilitado     | `--color-disabled-text/disabled` | `#4b454b / #e9e6e7` | Controles deshabilitados     |
+| Rol              | Token                            | Valor               | Uso                                           |
+| ---------------- | -------------------------------- | ------------------- | --------------------------------------------- |
+| Fondo            | `--color-canvas`                 | `#faf9f8`           | Página                                        |
+| Superficie       | `--color-surface`                | `#ffffff`           | Cabecera, controles, paneles                  |
+| Superficie suave | `--color-surface-soft`           | `#f4f1f1`           | Agrupaciones discretas                        |
+| Texto            | `--color-text`                   | `#28272d`           | Texto principal                               |
+| Texto secundario | `--color-text-muted`             | `#59555e`           | Ayudas, metadatos                             |
+| Borde            | `--color-border`                 | `#d4ced1`           | Separación sin sombra                         |
+| Marca            | `--color-brand`                  | `#823b5b`           | CTA, enlace, foco                             |
+| Marca hover      | `--color-brand-hover`            | `#682c48`           | Hover de acciones                             |
+| Marca suave      | `--color-brand-soft`             | `#f9eef2`           | Navegación activa                             |
+| Error            | `--color-danger`                 | `#a42d36`           | Error, eliminación                            |
+| Informativo      | `--color-info-text/soft`         | `#255477 / #eaf3f8` | Estado informativo                            |
+| Éxito            | `--color-success-text/soft`      | `#1d583c / #eaf5ef` | Confirmación                                  |
+| Aviso            | `--color-warning-text/soft`      | `#744d00 / #fff6df` | Estado desactualizado                         |
+| Inhabilitado     | `--color-disabled-text/disabled` | `#4b454b / #e9e6e7` | Controles deshabilitados                      |
+| Checkbox         | `--checkbox-size`                | `1.5rem` (24 px)    | Entrada visible en etiqueta de al menos 44 px |
 
 Contraste calculado con luminancia relativa sRGB: texto principal sobre blanco 14.8:1; secundario sobre blanco 7.28:1; marca sobre blanco 7.70:1; blanco sobre marca 7.70:1; error sobre blanco 6.98:1; texto informativo en su fondo 7.15:1; éxito 7.48:1; aviso 6.95:1. Estos valores cubren las parejas indicadas, no sustituyen una inspección de todos los estados.
 

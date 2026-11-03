@@ -23,6 +23,7 @@ Validación local:
 - `pnpm test`: pasó; web 97, engine 51, API 64 (54 pruebas de integración omitidas por entorno), soporte E2E 2.
 - `pnpm exec eslint . --ignore-pattern '.worktrees/**'`: pasó. `pnpm lint` sin exclusión falla porque ESLint recorre otros worktrees ubicados dentro de `.worktrees`, y detecta múltiples raíces TSConfig; no es un error de VIS-01.
 - `node scripts/vis-01-capture.mjs`: pasó en Edge local, shell desktop/móvil, targets de navegación y logout de al menos 44 px, enlace de salto y ausencia de desbordamiento horizontal.
+- El primer CI de PR #45 detectó que los checkboxes habían bajado a 20 px. Se restauraron a 24 px mediante `--checkbox-size`; el script de captura comprueba ahora esa medida. La corrección requiere CI de nuevo commit.
 - Contraste calculado para parejas documentadas en el sistema visual: todas superan 4.5:1. No se ejecutó axe en esta sesión porque `QA_AXE_CORE_SOURCE` no está configurada.
 - No se ejecutó el E2E real con API, engine y PostgreSQL porque `E2E_DATABASE_URL` no está configurada. Capturas sintéticas no sustituyen esa prueba.
 
