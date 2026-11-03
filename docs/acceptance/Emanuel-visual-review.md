@@ -70,3 +70,7 @@ Emanuel indicó que ya había realizado esta prueba y confirmó que funciona tal
 Recorrido funcional inicial/33%, zoom real200%, teclado solicitado, Narrador básico, ventana estrecha y validación/null: confirmados por Emanuel. Sin bloqueantes funcionales reportados; preferencias estéticas opcionales sin cambios de código. Navegador/versión y tamaños exactos siguen sin aportarse; video informado pero no inspeccionado. Pruebas técnicas existentes de legacy/HTML inerte, engine503/retry, contraste, sesiones y aislamiento se reutilizan sin convertirlas en ejecuciones manuales de Emanuel. Las comprobaciones que no confirmó explícitamente conservan esa limitación.
 
 Siguiente puerta: P1/P2 revisan artefactos y aceptación OPS/QA; P5 o revisor formalmente designado evalúa la cobertura de este registro y documenta la decisión UI-01/EVID-06. Coordinación delegada a Emanuel no se transforma en firmas ajenas. Omar confirma decisiones y autoriza candidato con requisitos satisfechos. No repetir pruebas acreditadas; solo repetir afectadas por un defecto o las obligatorias sobre el candidato final.
+
+## Navegador confirmado
+
+Emanuel identificó Opera GX como navegador utilizado para su revisión manual. Versión exacta no aportada. Esta confirmación completa el nombre del navegador; no añade pruebas ni aprobaciones de otros roles.
