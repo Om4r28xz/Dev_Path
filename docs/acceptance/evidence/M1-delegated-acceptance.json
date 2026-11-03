@@ -1,0 +1,24 @@
+{
+  "recordedAtUtc": "2026-11-03T04:33:03.720Z",
+  "manualExecutionDate": "not supplied; do not infer from record timestamp",
+  "reviewer": "Emanuel",
+  "authority": "Omar delegated remaining reviews and closure, as reported by Emanuel in this conversation",
+  "decision": "accepted for preparing release candidate",
+  "exactConfirmation": "Acepto ese alcance para preparar el candidato",
+  "scope": [
+    "UI-01 and EVID-06: confirmed manual scope plus existing automated evidence",
+    "OPS-01: verified successful runtime artifact"
+  ],
+  "manualCommit": "3024b5ca9d6d20d34b1f91bd1c6813a27644505b",
+  "integratedBase": "6cfdd2ff4898b7a2ec5e4143aedb84292e9e06a6",
+  "browser": "Opera GX; version not supplied",
+  "limitations": [
+    "Optional aesthetic improvements deferred",
+    "Local Docker Desktop on Windows untested; native demo PG18.3",
+    "No full WCAG certification; tests do not cover every combination",
+    "Video reported by Emanuel, not attached or inspected by AI",
+    "Other named roles did not sign; independent release PR review remains pending"
+  ],
+  "independentReleaseReview": "pending; required before protected merge; no approval invented",
+  "releasePublished": false
+}

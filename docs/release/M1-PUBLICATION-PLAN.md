@@ -1,5 +1,10 @@
 # Publicación M1 — guía de preparación, no autorización de release
 
+## Preparación de candidato en curso
+
+Aceptación delegada explícita de Emanuel registrada. release/0.1.0 nace de develop6cfdd2f, con CHANGELOG.md y8 manifiestos0.1.0. PR debe ir a main y requiere revisión independiente; no merge/tag automático. Tras publicar la rama, ejecutar CI y OPS M1 Compose runtime sobre release/0.1.0 (workflow_dispatch si el filtro de rutas no lo lanza); no reciclar verde de44b0301 como Compose del nuevo candidato.
+
+
 ## Integración confirmada — estado vigente
 
 PR34 integrado en develop5061185, junto con QAA/QA/DOC y fixes. No repetir PR32/33/34. Compose real aprobó dos ejecuciones; [expediente](../acceptance/OPS-01-dossier.md). Pendientes firmas P5/P1/P2 y autorización Omar; preparar candidato según [checklist](M1-CANDIDATE-CHECKLIST.md). Texto siguiente conserva historia de preparación.

@@ -1,5 +1,10 @@
 # Primera revisión visual M1 — Emanuel
 
+## Decisión de aceptación del revisor delegado
+
+Emanuel comunicó que Omar le autorizó asumir las revisiones restantes y el cierre. Ante el resumen concreto de UI-01/EVID-06 y del artefacto OPS-01 confirmó: **«Acepto ese alcance para preparar el candidato»**. [Registro](evidence/M1-delegated-acceptance.json). Fecha de registro UTC 2026-11-03T04:33:03.720Z; fecha exacta de ejecución manual no aportada. Se acepta preparar release/0.1.0 con mejoras estéticas opcionales, Docker Windows local no probado y sin certificación WCAG completa. Esto sustituye el estado previo de decisión delegada pendiente; no atribuye firmas a P1/P2/P5 ni autoriza merge/tag automáticos. Revisión independiente del PR permanece pendiente.
+
+
 ## Delegación y comprobaciones finales en curso
 
 Emanuel comunica que Omar le delegó coordinar el cierre y autorizó continuar el trabajo técnico y preparar/publicar el candidato **cuando se satisfagan sus requisitos**. Esto acredita coordinación y participación de Emanuel, no firmas realizadas por P1/P2/P5 ni reasignación automática de todos los roles. FLUJO_GITHUB pide revisor humano distinto del autor como objetivo; si no está disponible, registrar revisión pendiente. No inventar aprobación.

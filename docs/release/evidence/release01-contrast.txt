@@ -1,0 +1,12 @@
+Running migrations from: <repository>\packages\db\migrations
+Migrations applied successfully.
+Seeding skill catalog…
+✓ app.skills — 10 row(s) upserted.
+
+Running 1 test using 1 worker
+
+(node:4560) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › docs\acceptance\probes\contrast.browser.spec.ts:20:5 › rechecks textarea contrast in normal and503 states with visible geometry and computed colors (2.2s)
+
+  1 passed (4.1s)

@@ -1,0 +1,349 @@
+{
+  "advisories": {
+    "1112053": {
+      "findings": [
+        {
+          "version": "7.6.2",
+          "paths": [
+            "apps__web>react-router"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1112053,
+      "title": "React Router vulnerable to XSS via Open Redirects",
+      "module_name": "react-router",
+      "vulnerable_versions": ">=7.0.0 <=7.11.0",
+      "patched_versions": ">=7.11.1",
+      "severity": "high",
+      "cwe": "CWE-79",
+      "github_advisory_id": "GHSA-2w69-qvjg-hvjx",
+      "url": "https://github.com/advisories/GHSA-2w69-qvjg-hvjx"
+    },
+    "1112056": {
+      "findings": [
+        {
+          "version": "7.6.2",
+          "paths": [
+            "apps__web>react-router"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1112056,
+      "title": "React Router has unexpected external redirect via untrusted paths",
+      "module_name": "react-router",
+      "vulnerable_versions": ">=7.0.0 <7.9.6",
+      "patched_versions": ">=7.9.6",
+      "severity": "moderate",
+      "cwe": "CWE-601",
+      "github_advisory_id": "GHSA-9jcx-v3wj-wh4m",
+      "url": "https://github.com/advisories/GHSA-9jcx-v3wj-wh4m"
+    },
+    "1116251": {
+      "findings": [
+        {
+          "version": "0.43.1",
+          "paths": [
+            "packages__db>drizzle-orm"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1116251,
+      "title": "Drizzle ORM has SQL injection via improperly escaped SQL identifiers",
+      "module_name": "drizzle-orm",
+      "vulnerable_versions": "<0.45.2",
+      "patched_versions": ">=0.45.2",
+      "severity": "high",
+      "cwe": "CWE-89",
+      "github_advisory_id": "GHSA-gpj5-g38j-94v9",
+      "url": "https://github.com/advisories/GHSA-gpj5-g38j-94v9"
+    },
+    "1120063": {
+      "findings": [
+        {
+          "version": "7.6.2",
+          "paths": [
+            "apps__web>react-router"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1120063,
+      "title": "React Router's vendored turbo-stream v2 allows arbitrary constructor invocation via TYPE_ERROR deserialization leading to Unauth RCE",
+      "module_name": "react-router",
+      "vulnerable_versions": ">=7.0.0 <=7.14.1",
+      "patched_versions": ">=7.14.2",
+      "severity": "high",
+      "cwe": "CWE-502",
+      "github_advisory_id": "GHSA-49rj-9fvp-4h2h",
+      "url": "https://github.com/advisories/GHSA-49rj-9fvp-4h2h"
+    },
+    "1120069": {
+      "findings": [
+        {
+          "version": "7.6.2",
+          "paths": [
+            "apps__web>react-router"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1120069,
+      "title": "React Router vulnerable to DoS via unbounded path expansion in __manifest endpoint",
+      "module_name": "react-router",
+      "vulnerable_versions": ">=7.0.0 <7.15.0",
+      "patched_versions": ">=7.15.0",
+      "severity": "high",
+      "cwe": "CWE-400",
+      "github_advisory_id": "GHSA-8x6r-g9mw-2r78",
+      "url": "https://github.com/advisories/GHSA-8x6r-g9mw-2r78"
+    },
+    "1120081": {
+      "findings": [
+        {
+          "version": "7.6.2",
+          "paths": [
+            "apps__web>react-router"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1120081,
+      "title": "React Router vulnerable to Denial of Service via reflected user input in single-fetch",
+      "module_name": "react-router",
+      "vulnerable_versions": ">=7.0.0 <7.14.0",
+      "patched_versions": ">=7.14.0",
+      "severity": "high",
+      "cwe": "CWE-770",
+      "github_advisory_id": "GHSA-rxv8-25v2-qmq8",
+      "url": "https://github.com/advisories/GHSA-rxv8-25v2-qmq8"
+    },
+    "1120382": {
+      "findings": [
+        {
+          "version": "7.6.2",
+          "paths": [
+            "apps__web>react-router"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1120382,
+      "title": "React Router has CSRF issue in Action/Server Action Request Processing",
+      "module_name": "react-router",
+      "vulnerable_versions": ">=7.0.0 <=7.11.0",
+      "patched_versions": ">=7.11.1",
+      "severity": "moderate",
+      "cwe": "CWE-346, CWE-352",
+      "github_advisory_id": "GHSA-h5cw-625j-3rxh",
+      "url": "https://github.com/advisories/GHSA-h5cw-625j-3rxh"
+    },
+    "1124268": {
+      "findings": [
+        {
+          "version": "7.6.2",
+          "paths": [
+            "apps__web>react-router"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1124268,
+      "title": "React Router: Open redirect via backslash in <Link> and useNavigate (CVE-2025-68470 bypass)",
+      "module_name": "react-router",
+      "vulnerable_versions": ">=6.0.0 <7.18.0",
+      "patched_versions": ">=7.18.0",
+      "severity": "moderate",
+      "cwe": "CWE-601",
+      "github_advisory_id": "GHSA-wrjc-x8rr-h8h6",
+      "url": "https://github.com/advisories/GHSA-wrjc-x8rr-h8h6"
+    },
+    "1124272": {
+      "findings": [
+        {
+          "version": "7.6.2",
+          "paths": [
+            "apps__web>react-router"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1124272,
+      "title": "React Router: Arbitrary Constructor Injection via deserializeErrors() in React Router SSR Hydration",
+      "module_name": "react-router",
+      "vulnerable_versions": ">=6.4.0 <7.18.0",
+      "patched_versions": ">=7.18.0",
+      "severity": "moderate",
+      "cwe": "CWE-470",
+      "github_advisory_id": "GHSA-337j-9hxr-rhxg",
+      "url": "https://github.com/advisories/GHSA-337j-9hxr-rhxg"
+    },
+    "1124276": {
+      "findings": [
+        {
+          "version": "7.6.2",
+          "paths": [
+            "apps__web>react-router"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1124276,
+      "title": "React Router: Unauthenticated Denial of Service via Inefficient Route Matching",
+      "module_name": "react-router",
+      "vulnerable_versions": ">=7.0.0 <7.18.0",
+      "patched_versions": ">=7.18.0",
+      "severity": "high",
+      "cwe": "CWE-400, CWE-407",
+      "github_advisory_id": "GHSA-chx6-hx7r-mcp5",
+      "url": "https://github.com/advisories/GHSA-chx6-hx7r-mcp5"
+    },
+    "1136304": {
+      "findings": [
+        {
+          "version": "7.6.2",
+          "paths": [
+            "apps__web>react-router"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1136304,
+      "title": "React Router's same-origin redirect with path starting // causes open redirect via protocol-relative URL reinterpretation",
+      "module_name": "react-router",
+      "vulnerable_versions": ">=7.0.0 <7.14.1",
+      "patched_versions": ">=7.14.1",
+      "severity": "moderate",
+      "cwe": "CWE-601",
+      "github_advisory_id": "GHSA-2j2x-hqr9-3h42",
+      "url": "https://github.com/advisories/GHSA-2j2x-hqr9-3h42"
+    },
+    "1193653": {
+      "findings": [
+        {
+          "version": "7.6.2",
+          "paths": [
+            "apps__web>react-router"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1193653,
+      "title": "React Router has stored XSS via unescaped Location header in prerendered redirect HTML",
+      "module_name": "react-router",
+      "vulnerable_versions": ">=7.5.1 <7.13.2",
+      "patched_versions": ">=7.13.2",
+      "severity": "moderate",
+      "cwe": "CWE-79",
+      "github_advisory_id": "GHSA-f22v-gfqf-p8f3",
+      "url": "https://github.com/advisories/GHSA-f22v-gfqf-p8f3"
+    },
+    "1193655": {
+      "findings": [
+        {
+          "version": "7.6.2",
+          "paths": [
+            "apps__web>react-router"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1193655,
+      "title": "React Router SSR XSS in ScrollRestoration",
+      "module_name": "react-router",
+      "vulnerable_versions": ">=7.0.0 <7.12.0",
+      "patched_versions": ">=7.12.0",
+      "severity": "high",
+      "cwe": "CWE-79",
+      "github_advisory_id": "GHSA-8v8x-cx79-35w7",
+      "url": "https://github.com/advisories/GHSA-8v8x-cx79-35w7"
+    },
+    "1193657": {
+      "findings": [
+        {
+          "version": "7.6.2",
+          "paths": [
+            "apps__web>react-router"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1193657,
+      "title": "React Router has XSS Vulnerability",
+      "module_name": "react-router",
+      "vulnerable_versions": ">=7.0.0 <=7.8.2",
+      "patched_versions": ">=7.8.3",
+      "severity": "high",
+      "cwe": "CWE-79",
+      "github_advisory_id": "GHSA-3cgp-3xvw-98x8",
+      "url": "https://github.com/advisories/GHSA-3cgp-3xvw-98x8"
+    },
+    "1243066": {
+      "findings": [
+        {
+          "version": "3.25.67",
+          "paths": [
+            "apps__api>zod",
+            "apps__skill-engine>zod",
+            "packages__db>zod"
+          ],
+          "dev": false,
+          "optional": false,
+          "bundled": false
+        }
+      ],
+      "id": 1243066,
+      "title": "Zod can exhaust memory while validating oversized constrained collections",
+      "module_name": "zod",
+      "vulnerable_versions": "<4.6.6",
+      "patched_versions": ">=4.6.6",
+      "severity": "high",
+      "cwe": "CWE-770",
+      "github_advisory_id": "GHSA-mrhx-c7xc-m3w5",
+      "url": "https://github.com/advisories/GHSA-mrhx-c7xc-m3w5"
+    }
+  },
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 6,
+      "high": 9,
+      "critical": 0
+    },
+    "dependencies": 101,
+    "devDependencies": 0,
+    "optionalDependencies": 12,
+    "totalDependencies": 113
+  }
+}

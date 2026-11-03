@@ -1,5 +1,17 @@
 # REL-01 — candidato preparado, todavía no autorizado
 
+## Validación local del candidato corregido
+
+SHA 023cc64bfa848747b9b1b1be3f8c9a83f57e8b8a: lint/formato/typecheck/build,3 setup,97 web/118 API/51 motor/2 privacidad,8 E2E,10 vistas axe/reflujo y contraste, upgrade con datos y backup/restauración aprobados. Instalación frozen y build exit0 en checkout independiente. Auditoría producción pasa de15 avisos a0 tras actualización de dependencias; sin modificar contratos ni SQL histórico. [Evidencia](evidence/release01-manifest.json). Windows requiere tests secuenciales por EPERM de caché, sin quitar casos.
+
+Pendientes efectivos del candidato: CI PostgreSQL16, OPS Compose de release/0.1.0 (ejecutar manualmente el workflow si no se dispara por rutas), revisión independiente, merge humano, tag/smoke y sincronización. CI histórico OPS no se presenta como resultado nuevo del candidato.
+
+
+## Candidato autorizado para preparación
+
+Emanuel confirmó la aceptación delegada y límites en docs/acceptance/evidence/M1-delegated-acceptance.json. release/0.1.0 creada desde6cfdd2f; versiones0.1.0 y CHANGELOG.md aplicados. Revisión independiente del PR pendiente; ninguna firma ajena inventada. Los bloqueos de aceptación descritos más abajo son históricos, sustituidos por el registro delegado. Validaciones/CI del candidato, merge humano, tag/smoke y sincronización siguen siendo puertas reales.
+
+
 Base integrada:5061185. No se ha creado release/0.1.0 ni cambiado versiones. Usar [changelog](M1-CHANGELOG-DRAFT.md), [versiones](M1-VERSION-PLAN.md), [publicación](M1-PUBLICATION-PLAN.md) y [rollback](M1-ROLLBACK-PLAN.md); no duplicarlos ni presentar el borrador como changelog publicado.
 
 ## Puertas de entrada

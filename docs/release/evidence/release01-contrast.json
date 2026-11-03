@@ -1,0 +1,150 @@
+{
+  "productCommit": "023cc64bfa848747b9b1b1be3f8c9a83f57e8b8a",
+  "method": "Scroll target into viewport, axe color-contrast only, and sRGB contrast on verified opaque computed colors; no human approval",
+  "measurements": [
+    {
+      "state": "normal",
+      "foreground": "rgb(26, 10, 18)",
+      "background": "rgb(255, 250, 250)",
+      "backgroundImage": "none",
+      "opacity": "1",
+      "ancestors": [
+        {
+          "opacity": "1",
+          "filter": "none"
+        },
+        {
+          "opacity": "1",
+          "filter": "none"
+        },
+        {
+          "opacity": "1",
+          "filter": "none"
+        },
+        {
+          "opacity": "1",
+          "filter": "none"
+        },
+        {
+          "opacity": "1",
+          "filter": "none"
+        },
+        {
+          "opacity": "1",
+          "filter": "none"
+        },
+        {
+          "opacity": "1",
+          "filter": "none"
+        },
+        {
+          "opacity": "1",
+          "filter": "none"
+        }
+      ],
+      "ratio": 18.526740961784572,
+      "opaqueColors": true,
+      "placeholderPresent": false,
+      "fontSize": "16px",
+      "coverage": [
+        {
+          "topTag": "TEXTAREA",
+          "targetOnTop": true
+        },
+        {
+          "topTag": "TEXTAREA",
+          "targetOnTop": true
+        },
+        {
+          "topTag": "TEXTAREA",
+          "targetOnTop": true
+        }
+      ],
+      "geometry": {
+        "top": 387.875,
+        "bottom": 585.875,
+        "height": 198,
+        "viewport": 720
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ],
+        "passes": []
+      }
+    },
+    {
+      "state": "engine503",
+      "foreground": "rgb(26, 10, 18)",
+      "background": "rgb(255, 250, 250)",
+      "backgroundImage": "none",
+      "opacity": "1",
+      "ancestors": [
+        {
+          "opacity": "1",
+          "filter": "none"
+        },
+        {
+          "opacity": "1",
+          "filter": "none"
+        },
+        {
+          "opacity": "1",
+          "filter": "none"
+        },
+        {
+          "opacity": "1",
+          "filter": "none"
+        },
+        {
+          "opacity": "1",
+          "filter": "none"
+        },
+        {
+          "opacity": "1",
+          "filter": "none"
+        },
+        {
+          "opacity": "1",
+          "filter": "none"
+        },
+        {
+          "opacity": "1",
+          "filter": "none"
+        }
+      ],
+      "ratio": 18.526740961784572,
+      "opaqueColors": true,
+      "placeholderPresent": false,
+      "fontSize": "16px",
+      "coverage": [
+        {
+          "topTag": "TEXTAREA",
+          "targetOnTop": true
+        },
+        {
+          "topTag": "TEXTAREA",
+          "targetOnTop": true
+        },
+        {
+          "topTag": "TEXTAREA",
+          "targetOnTop": true
+        }
+      ],
+      "geometry": {
+        "top": 397.875,
+        "bottom": 595.875,
+        "height": 198,
+        "viewport": 720
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ],
+        "passes": []
+      }
+    }
+  ]
+}

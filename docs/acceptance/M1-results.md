@@ -1,5 +1,20 @@
 # Resultados de aceptación M1 — QA-02
 
+## Candidato REL-01 validado localmente
+
+Aceptación delegada recibida. SHA 023cc64bfa848747b9b1b1be3f8c9a83f57e8b8a con versiones0.1.0 y correcciones de dependencias pasó pruebas y verificaciones locales; ver [manifest](../release/evidence/release01-manifest.json). No se modificó matriz histórica ni esperados. CI PG16/Compose del candidato y revisión independiente pendientes; no hay publicación ni tag.
+
+
+## Aceptación M1 delegada para candidato
+
+Emanuel confirmó «Acepto ese alcance para preparar el candidato» tras revisar el alcance manual UI-01/EVID-06 y resumen OPS-01 verificado. [Decisión y límites](evidence/M1-delegated-acceptance.json), [formulario actualizado](P5-review-form.md). Omar delegó las revisiones restantes según comunicación de Emanuel. Sin firmas ficticias P1/P2/P5. Permite preparar candidato, no declarar publicación. Matriz/evidencias históricas27/3 se preservan como resultados de sus ejecuciones originales; la decisión nueva se registra separadamente. Pendientes: validación del SHA candidato, revisión independiente del PR y merge/tag/smoke/sincronización humanos.
+
+
+## Actualización de evidencia OPS-01 y revisión integrada
+
+PR39 integra la revisión manual de Emanuel en develop6cfdd2f. Artefacto exitoso de PR34 inspeccionado y digest ZIP verificado: seis checks passed, PostgreSQL16.15, persistencia/recovery y cleanup conservando volumen. SHA ejecutado a2002e3 (merge de prueba con44b0301), árbol idéntico a44b0301; no confundir head del PR con SHA ejecutado. Ver [expediente actualizado](OPS-01-dossier.md). Aceptación formal P1/P2 y decisión UI-01/EVID-06 del rol autorizado siguen pendientes. Matriz histórica conservada; no se atribuyen firmas.
+
+
 ## Primera revisión manual de Emanuel
 
 Emanuel confirmó recorrido funcional/visual inicial sin fallos que impidan uso principal; ejemplo33% coherente (C# y Git frente Git/JavaScript/React). Mejoras estéticas opcionales registradas, sin rediseño. [Informe y pendientes](Emanuel-visual-review.md). No constituye firma P5/P1/P2/Omar ni aceptación global. Zoom/lector/estados completos y decisiones humanas siguen pendientes; REL-01 conserva sus puertas y CTR-02 sigue bloqueada.
