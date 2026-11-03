@@ -1,0 +1,61 @@
+{
+  "affectedCommit": "c4201f70d05e6b29f1d33f46a10971b6f4950aab",
+  "runId": 41581061547,
+  "artifactId": 13206321530,
+  "zipSha256": "f2c71feafa0e14b899bc38969dcfcaacb615bbc265f6b4c476b6bf2c07e46532",
+  "digestMatchesGitHub": true,
+  "stage": "persistent restart",
+  "failedLine": 197,
+  "error": "assert.equal(immediate JavaScript isChecked(), true): false !== true",
+  "completedChecks": 4,
+  "persistenceCheck": "not completed in failed run",
+  "engineRecoveryCheck": "not reached in failed run",
+  "remoteDataLimit": "Artifact records GET /me/skills200 but not its body or SQL rows; cannot assert original DB state from that alone",
+  "reproduction": {
+    "realServices": true,
+    "upstreamPayload": "unmodified real API response; delivery gated",
+    "databaseBeforeAndAfter": ["javascript", "react"],
+    "apiStatus": 200,
+    "apiSkillIds": ["javascript", "react"],
+    "checkboxWhileResponseHeld": {
+      "checked": false,
+      "disabled": true
+    },
+    "afterRelease": "shared condition-based assertions pass for profile/JavaScript/React",
+    "fixedDelaysUsed": false
+  },
+  "validation": {
+    "node": "22.23.4",
+    "pnpm": "11.22.0",
+    "postgresLocal": "18.3",
+    "typecheck": "passed",
+    "lint": "passed",
+    "format": "passed",
+    "build": "passed",
+    "api": 118,
+    "web": 97,
+    "engine": 51,
+    "privacy": 2,
+    "openapiDocuments": 2,
+    "examples": 19,
+    "corpus": 30,
+    "focusedRegression": 1,
+    "fullE2E": 9,
+    "e2eSeconds": 12.6,
+    "actualComposeFix": "pending CI; local Docker absent"
+  },
+  "applicationCodeChanged": false,
+  "contractsChanged": false,
+  "sqlChanged": false,
+  "tagCreated": false,
+  "files": [
+    {
+      "file": "docs/acceptance/evidence/opsfix-race.txt",
+      "sha256": "3ce6c1ae39d9c21cc9a4a224b3a95d6e0170d831950a2f07a3f923bd7c1968e0"
+    },
+    {
+      "file": "docs/acceptance/evidence/opsfix-e2e.txt",
+      "sha256": "8297034184415efba5b7f5523ec39f66b17def98c5a8515bedb58005169b9906"
+    }
+  ]
+}

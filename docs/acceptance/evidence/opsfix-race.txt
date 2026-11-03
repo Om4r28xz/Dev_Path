@@ -1,0 +1,12 @@
+Running migrations from: C:\Users\auror\OneDrive\Escritorio\ramses\Dev_Path\.worktrees\ops-artifact-review\packages\db\migrations
+Migrations applied successfully.
+Seeding skill catalog…
+✓ app.skills — 10 row(s) upserted.
+
+Running 1 test using 1 worker
+
+(node:28324) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\profile-skills-readiness.spec.ts:4:5 › saved skills remain in PostgreSQL while a fresh login waits for their real API response (2.0s)
+
+  1 passed (3.5s)
