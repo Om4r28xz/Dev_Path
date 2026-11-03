@@ -1,13 +1,35 @@
 # Lote 06.5 — handoff de implementación
 
-Estado verificado el 3 de noviembre de 2026 desde Git, no desde handoffs antiguos. Base de VIS-01: `origin/develop` 47f2af0. Commit de código probado en CI: `507b1f3`. Issue [#44](https://github.com/Om4r28xz/Dev_Path/issues/44); PR borrador [#45](https://github.com/Om4r28xz/Dev_Path/pull/45) hacia `develop`. El tag `v0.1.0` es ancestro de `origin/develop`; CTR-02 está integrado por PR #43. No se modificó `main` ni el tag.
+Estado verificado el 3 de noviembre de 2026 desde Git, no desde handoffs antiguos. VIS-01 quedó integrado en `origin/develop` mediante PR [#45](https://github.com/Om4r28xz/Dev_Path/pull/45), merge `0ba1b67`; su commit de código probado en CI fue `507b1f3`. VIS-02 parte exactamente de ese merge en `feature/vis-02-auth-profile-ui`. El tag `v0.1.0` es ancestro de `origin/develop`; CTR-02 está integrado por PR #43. No se modificó `main` ni el tag.
 
-| Tarea  | Estado                                                   | Rama                                               | Siguiente acción                                                                                             |
-| ------ | -------------------------------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| VIS-01 | Implementación y CI aprobados; revisión humana pendiente | `feature/vis-01-design-system`                     | P5 revisa uso, zoom, teclado y lector; P1 revisa contrato/privacidad. Integrar PR solo tras esas revisiones. |
-| VIS-02 | Bloqueada por dependencia                                | `feature/vis-02-auth-profile-ui` aún no creada     | Partir de `origin/develop` después de integrar VIS-01.                                                       |
-| VIS-03 | Bloqueada por dependencia                                | `feature/vis-03-analysis-history-ui` aún no creada | Partir de `origin/develop` después de integrar VIS-02. ANL-04 ya está integrado.                             |
-| VIS-04 | Bloqueada por dependencia                                | `docs/vis-04-m1-ui-acceptance` aún no creada       | P5 ejecuta la matriz real después de integrar VIS-03; no atribuir aceptación humana sin ejecución.           |
+| Tarea  | Estado                                                            | Rama                                               | Siguiente acción                                                                                   |
+| ------ | ----------------------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| VIS-01 | Integrada en `develop`; revisión humana global continúa pendiente | `feature/vis-01-design-system`                     | Conservar pendientes humanos para la matriz VIS-04.                                                |
+| VIS-02 | Implementación local completa; checks automáticos aprobados       | `feature/vis-02-auth-profile-ui`                   | Commit, CI con E2E real y revisiones P5/P1 antes de integrar.                                      |
+| VIS-03 | Bloqueada por dependencia                                         | `feature/vis-03-analysis-history-ui` aún no creada | Partir de `origin/develop` después de integrar VIS-02. ANL-04 ya está integrado.                   |
+| VIS-04 | Bloqueada por dependencia                                         | `docs/vis-04-m1-ui-acceptance` aún no creada       | P5 ejecuta la matriz real después de integrar VIS-03; no atribuir aceptación humana sin ejecución. |
+
+## VIS-02
+
+Se aplicó el sistema visual de VIS-01 a login, registro, perfil y selección de habilidades sin modificar rutas, DTO, sesión, refresh, logout ni reglas de negocio. El trabajo continúa local y sin commit sobre `feature/vis-02-auth-profile-ui`, cuya base es `origin/develop` `0ba1b67`.
+
+Cambios principales:
+
+- Login y registro usan una tarjeta de acceso con propósito, jerarquía y acciones claras; el registro anuncia el requisito de contraseña mediante `aria-describedby`.
+- Perfil separa datos personales y habilidades, presenta estado de cuenta y siguiente paso solo cuando existen datos, y mantiene errores/confirmaciones independientes por operación.
+- El catálogo adapta densidad y columnas a escritorio, 640 px y 320 px; conserva checkbox nativo de 24 px y objetivos principales de al menos 44 px.
+- La marca “Cambios sin guardar” compara la selección como conjunto contra las habilidades persistidas; guardar queda deshabilitado cuando no hay diferencias reales.
+- `scripts/vis-02-capture.mjs` genera evidencia sintética de login, registro y perfil en escritorio, móvil y reflujo a 640 px. Intercepta `/api/v1` exclusivamente para capturas y no acredita backend, persistencia ni E2E.
+
+Validación local ejecutada tras los cambios:
+
+- Plan reproducible `.tsupgrader/runtime-validation/eval-plan.json`: 6/6 aserciones aprobadas; formato, ESLint con exclusión de `.worktrees`, typecheck, build, respuesta HTTP de preview y `pnpm test`.
+- `pnpm test`: pasó en el monorepo. La salida incluye web 97, engine 51, API 64 con las integraciones dependientes de entorno omitidas y soporte E2E 2.
+- `node scripts/vis-02-capture.mjs`: pasó y regeneró siete capturas sin datos personales reales; verificó ausencia de desbordamiento, targets principales, checkbox, banner de siguiente paso y estado de cuenta.
+- `pnpm test:e2e`: bloqueado antes de iniciar porque `E2E_DATABASE_URL` no está configurada. No se transforma este bloqueo de entorno en aprobación del recorrido real.
+- La evidencia histórica y el script de VIS-01 se restauraron a `HEAD`; VIS-02 no reescribe las capturas de la tarea anterior.
+
+Pendiente antes de integrar: CI con PostgreSQL y recorrido real registro/login/perfil/skills/recarga/logout, errores y dos pestañas; zoom real 200%, teclado, foco, lector y contraste revisados por P5; revisión P1 de contrato/privacidad. La captura `profile-reflow-640` demuestra reflujo de viewport, no zoom real.
 
 ## VIS-01
 
