@@ -1,0 +1,136 @@
+{
+  "recordedAtUtc": "2026-11-03T04:48:10.953Z",
+  "productCommit": "023cc64bfa848747b9b1b1be3f8c9a83f57e8b8a",
+  "release": "0.1.0 candidate; unpublished",
+  "runtime": {
+    "node": "22.23.4",
+    "pnpm": "11.22.0",
+    "postgresLocal": "18.3",
+    "postgres16Candidate": "pending CI",
+    "dockerCandidate": "pending workflow_dispatch on release/0.1.0"
+  },
+  "results": {
+    "lint": "passed",
+    "format": "passed",
+    "typecheck": "passed",
+    "build": "passed",
+    "setupTests": 3,
+    "web": 97,
+    "api": 118,
+    "engine": 51,
+    "privacy": 2,
+    "e2e": 8,
+    "e2eSeconds": 14.5,
+    "a11yScreens": 10,
+    "a11yViolations": 0,
+    "a11yHorizontalOverflows320px": 0,
+    "axeIncompleteColorContrast": "preserved in normal/503; not relabeled",
+    "contrastRatios": [
+      18.526740961784572,
+      18.526740961784572
+    ],
+    "upgrade": "passed:0000-0002->0003 with data and idempotent rerun",
+    "backupRestore": "passed: new isolated DB, data/journal identical",
+    "openapiDocuments": 2,
+    "openapiExamples": 19,
+    "catalogCases": 30,
+    "cleanFrozenInstall": "exit0 in independent checkout of same SHA with cached package store; node_modules not reused",
+    "cleanBuild": "exit0 in independent checkout",
+    "productionAudit": {
+      "before": {
+        "moderate": 6,
+        "high": 9
+      },
+      "after": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 0,
+        "critical": 0
+      }
+    },
+    "secretPatternScan": {
+      "hits": 0,
+      "scope": "tracked file extensions, private-key blocks and common credential patterns; not exhaustive security proof",
+      "trackedAndProposedFiles": 437
+    }
+  },
+  "fixes": {
+    "reactRouter": "7.6.2->7.18.2",
+    "drizzle": "0.43.1->0.45.2",
+    "zod": "3.25.67->4.6.6",
+    "cursor": "prefault preserves input default20 through string-to-number transform"
+  },
+  "initialAttempts": [
+    {
+      "result": "E2E preflight rejected invalid DB input assembled by local harness; no product assertion failed",
+      "resolution": "corrected harness; created distinct new DB names and reran"
+    },
+    {
+      "result": "parallel Vitest startup EPERM on shared cache in Windows",
+      "resolution": "all workspace tests executed sequentially; no tests or assertions disabled"
+    },
+    {
+      "result": "Zod4 typecheck exposed string default incompatibility",
+      "resolution": "prefault migration preserves default20; full suite passed"
+    },
+    {
+      "result": "package cache copy failed; install reported Done but combined command did not confirm exit",
+      "resolution": "independent clean checkout installed frozen, explicit exit0 verified; clean build exit0"
+    }
+  ],
+  "acceptance": "Emanuel delegated acceptance recorded in docs/acceptance/evidence/M1-delegated-acceptance.json; independent PR review pending",
+  "published": false,
+  "tagCreated": false,
+  "ctr02Started": false,
+  "files": [
+    {
+      "file": "docs/release/evidence/release01-tests.txt",
+      "sha256": "335f9232083c2c3a4e674b29d468f4feabe6d14f0667a9af6c2677774258f9b4"
+    },
+    {
+      "file": "docs/release/evidence/release01-e2e.txt",
+      "sha256": "1771fd5b645d44f89eb72e5ae45a958a3d74ac668f3505ca8aac3c4c9c269387"
+    },
+    {
+      "file": "docs/release/evidence/release01-a11y.txt",
+      "sha256": "250a35d3d9478f2f161f341a2cb96bc6d56c320492ed582bec505c3dc6b627c1"
+    },
+    {
+      "file": "docs/release/evidence/release01-contrast.txt",
+      "sha256": "0561ccf4c61a0adab70cfda59875584aed639f4238673db5b9e51c8a10726110"
+    },
+    {
+      "file": "docs/release/evidence/release01-upgrade.txt",
+      "sha256": "5bff921a8e9bcf88bcc35552b3e7d9ba7bbc64bc58f312e5503a2f4513166ba5"
+    },
+    {
+      "file": "docs/release/evidence/release01-backup.txt",
+      "sha256": "2332474cf31d4e1d0da7594480317e917757e71eaf1be93d29a49a6ee55d0f15"
+    },
+    {
+      "file": "docs/release/evidence/release01-ui-metrics.json",
+      "sha256": "fa5ea45119ff8e118d2baaaeb9bb4bd0f94ea2af7fdca748893f262740ef4553"
+    },
+    {
+      "file": "docs/release/evidence/release01-accessibility.json",
+      "sha256": "22b2fe82bf128ef317e5773ef7ad88f092e3a329f243cd7d757ca18fa4da72b8"
+    },
+    {
+      "file": "docs/release/evidence/release01-contrast.json",
+      "sha256": "708d30738c2bfc3613dcce1cb6846c32c7e7fd215018698d2af2110149ec0a5e"
+    },
+    {
+      "file": "docs/release/evidence/release01-audit-before.json",
+      "sha256": "4e3aded0fc572f44135856579cb4039dc8ff229b15a58c43b40564d9c58628ee"
+    },
+    {
+      "file": "docs/release/evidence/release01-audit-final.json",
+      "sha256": "f0ec8e21ad39357f592bfd3a33ee0b41fb72cea7ab02a556103b0a39219f8643"
+    }
+  ],
+  "artifactLabels": {
+    "uiMetrics": "sourceCommit in UI metrics is a historical hardcoded probe label b84255e, not the execution SHA; raw output retained. Actual execution is productCommit023cc64 in this manifest.",
+    "readinessAndContrast": "QA_PRODUCT_COMMIT set to actual023cc64 execution SHA"
+  }
+}

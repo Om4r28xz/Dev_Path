@@ -1,5 +1,10 @@
 # Resultados de aceptación M1 — QA-02
 
+## Candidato REL-01 validado localmente
+
+Aceptación delegada recibida. SHA 023cc64bfa848747b9b1b1be3f8c9a83f57e8b8a con versiones0.1.0 y correcciones de dependencias pasó pruebas y verificaciones locales; ver [manifest](../release/evidence/release01-manifest.json). No se modificó matriz histórica ni esperados. CI PG16/Compose del candidato y revisión independiente pendientes; no hay publicación ni tag.
+
+
 ## Aceptación M1 delegada para candidato
 
 Emanuel confirmó «Acepto ese alcance para preparar el candidato» tras revisar el alcance manual UI-01/EVID-06 y resumen OPS-01 verificado. [Decisión y límites](evidence/M1-delegated-acceptance.json), [formulario actualizado](P5-review-form.md). Omar delegó las revisiones restantes según comunicación de Emanuel. Sin firmas ficticias P1/P2/P5. Permite preparar candidato, no declarar publicación. Matriz/evidencias históricas27/3 se preservan como resultados de sus ejecuciones originales; la decisión nueva se registra separadamente. Pendientes: validación del SHA candidato, revisión independiente del PR y merge/tag/smoke/sincronización humanos.
