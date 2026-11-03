@@ -4,6 +4,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
 import assert from 'node:assert/strict';
 import { chromium } from '@playwright/test';
+import { expectRestoredProfile } from '../../../tests/e2e/support/profile-readiness.mjs';
 
 const docker = process.env.OPS_DOCKER_PATH || 'docker';
 const project = 'devpath-m1-ops-' + randomUUID().slice(0, 8);
@@ -191,13 +192,15 @@ try {
   await page.goto(base + '/login');
   await page.getByLabel('Correo electrónico').fill(email);
   await page.getByLabel(/^Contraseña/).fill(password);
+  const restoredSkills = page.waitForResponse(
+    (r) => r.url().endsWith('/me/skills') && r.request().method() === 'GET',
+  );
   await page.getByRole('button', { name: 'Entrar', exact: true }).click();
   await page.waitForURL('**/profile');
-  assert.equal(await page.getByLabel('Nombre', { exact: true }).inputValue(), 'Compose Updated');
-  assert.equal(
-    await page.getByRole('checkbox', { name: 'JavaScript', exact: true }).isChecked(),
-    true,
-  );
+  const savedSkills = await restoredSkills;
+  assert.equal(savedSkills.status(), 200, 'Saved skills must reload successfully after restart.');
+  assert.deepEqual((await savedSkills.json()).skillIds, ['javascript', 'react']);
+  await expectRestoredProfile(page, 'Compose Updated');
   await page.goto(detail);
   await page.getByText('67%', { exact: true }).waitFor();
   await page.getByRole('link', { name: 'Volver al historial', exact: true }).click();

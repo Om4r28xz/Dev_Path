@@ -1,0 +1,21 @@
+$ node scripts/run-e2e.mjs
+Running migrations from: C:\Users\auror\OneDrive\Escritorio\ramses\Dev_Path\.worktrees\ops-artifact-review\packages\db\migrations
+Migrations applied successfully.
+Seeding skill catalog…
+✓ app.skills — 10 row(s) upserted.
+
+Running 9 tests using 1 worker
+
+(node:15252) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [chromium] › tests\e2e\acceptance.spec.ts:5:5 › QA-02: two Chromium tabs recover sessions and propagate logout (1.2s)
+  ok 2 [chromium] › tests\e2e\acceptance.spec.ts:52:5 › QA-02: keyboard form order, labels, focus style and measured text contrast (750ms)
+  ok 3 [chromium] › tests\e2e\acceptance.spec.ts:137:5 › QA-02: exact 50% acceptance example and canonical corpus through real API/engine (1.2s)
+  ok 4 [chromium] › tests\e2e\m1.spec.ts:4:5 › M1: registration, login, profile, skills, real 67% analysis, persistence and deletion (2.1s)
+  ok 5 [chromium] › tests\e2e\m1.spec.ts:87:5 › M1: two real accounts cannot list, read or delete each other’s analyses (1.3s)
+  ok 6 [chromium] › tests\e2e\m1.spec.ts:115:5 › M1: real engine outage retains the draft and idempotency key, retry saves once (1.4s)
+  ok 7 [chromium] › tests\e2e\m1.spec.ts:164:5 › M1: legacy evidence, 0 versus null, and hostile HTML remain safe (832ms)
+  ok 8 [chromium] › tests\e2e\profile-skills-readiness.spec.ts:4:5 › saved skills remain in PostgreSQL while a fresh login waits for their real API response (744ms)
+  ok 9 [chromium] › tests\e2e\profile-target-size.spec.ts:3:5 › profile skill checkboxes have usable targets and retain keyboard/save behavior (655ms)
+
+  9 passed (12.6s)

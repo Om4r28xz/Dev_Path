@@ -1,5 +1,15 @@
 # Puerta de REL-01 — todavía no habilitada
 
+## Puerta de preparación satisfecha por aceptación delegada
+
+[Registro](evidence/M1-delegated-acceptance.json): Emanuel aceptó alcance y límites de UI-01/EVID-06/OPS-01 para preparar candidato bajo delegación comunicada de Omar. Rama release/0.1.0 creada desde6cfdd2f. Se aplican versiones/changelog y se validará el SHA candidato. Revisión independiente del PR pendiente antes de merge; no se publica tag ni release. Secciones inferiores son históricas donde indiquen espera de esa decisión.
+
+
+## Puerta actual tras PR39 y lectura del artefacto
+
+Develop6cfdd2f incluye la revisión manual. [OPS-01](OPS-01-dossier.md) cuenta ahora con lectura real de JSON y digest cotejado, seis checks aprobados. Pendientes: registro de aceptación del responsable técnico y del revisor UI/EVID autorizado, requisitos de reproducción/revisión según asignación original o reasignación explícita. No se ha hallado una firma al inspeccionar los formularios. Preparación de versiones/changelog/smoke/rollback ya existente; candidato final requiere sus propias verificaciones después de satisfacer puertas. No crear release/tag ni iniciar CTR-02 todavía.
+
+
 ## Estado vigente tras PR34
 
 Base integrada 5061185183a2f4b6201cc8f73f29a2d59f0899cb. QAA-01/QA-02/DOC-02 y fixes target-size/UID de llave integrados. Dos ejecuciones reales Compose sobre44b0301 aprobadas (push41568936504 y PR41568942398); expediente [OPS-01](OPS-01-dossier.md). Ejecución técnica acreditada por jobs/pasos GitHub, contenidos de artefactos pendientes de revisión autenticada P1/P2. No confundir el fallo local por Docker ausente con el resultado remoto aprobado.

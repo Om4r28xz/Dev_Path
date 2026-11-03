@@ -19,7 +19,7 @@ export const historyQuerySchema = z
       .regex(/^[1-9]\d*$/u)
       .transform(Number)
       .pipe(z.number().int().min(1).max(50))
-      .default('20'),
+      .prefault('20'),
     cursor: z
       .string()
       .min(16)

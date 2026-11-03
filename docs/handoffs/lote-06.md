@@ -1,5 +1,20 @@
 # Handoff lote 06 — estado vigente y registro histórico
 
+## Entrega del candidato REL-01
+
+release/0.1.0 preparada desde6cfdd2f; producto probado 023cc64bfa848747b9b1b1be3f8c9a83f57e8b8a. Versiones/changelog y aceptación delegada reales; dependencias corregidas y auditoría producción0. Validaciones locales aprobadas, evidencia en [manifest](../release/evidence/release01-manifest.json). Solo CI PG16/Compose de esta rama, revisión independiente y pasos humanos de merge/tag/smoke/sincronización habilitan cierre. CTR-02 no iniciada.
+
+
+## REL-01 — candidato en preparación
+
+Emanuel aceptó explícitamente el alcance bajo delegación de Omar; [decisión](../acceptance/evidence/M1-delegated-acceptance.json). Rama release/0.1.0 desde develop6cfdd2f, sin cambios funcionales posteriores a M1. Versiones/changelog y validaciones de candidato en curso. Pendientes revisión independiente, merge humano, tag exacto, smoke y sincronización. CTR-02 bloqueada hasta verificarlos. No se fabrican firmas ni publicación.
+
+
+## Evidencia OPS inspeccionada y PR39 integrado
+
+Develop6cfdd2f contiene PR34/35 y revisión Emanuel por PR39; PR38 sigue siendo merge hacia main. Artefacto PR41568942398 verificado por digest ZIP; productCommit a2002e3, merge temporal con padre44b0301 y árbol idéntico. Seis checks passed y volumen conservado. [Expediente](../acceptance/OPS-01-dossier.md) actualizado; faltan decisiones humanas reales, no más planificación ni repetición de suites. Release/CTR siguen condicionadas. Cambios de esta inspección preparados en worktree detached ops-artifact-review, sin modificar ramas existentes.
+
+
 ## Primera revisión manual de Emanuel
 
 Emanuel confirmó recorrido funcional/visual inicial sin fallos que impidan uso principal; ejemplo33% coherente (C# y Git frente Git/JavaScript/React). Mejoras estéticas opcionales registradas, sin rediseño. [Informe y pendientes](../acceptance/Emanuel-visual-review.md). No constituye firma P5/P1/P2/Omar ni aceptación global. Zoom/lector/estados completos y decisiones humanas siguen pendientes; REL-01 conserva sus puertas y CTR-02 sigue bloqueada.

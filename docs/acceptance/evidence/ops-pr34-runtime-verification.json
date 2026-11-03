@@ -1,0 +1,21 @@
+{
+  "runId": 41568942398,
+  "event": "pull_request",
+  "runHead": "44b03015d982369b2de15c1b9629669bab73231d",
+  "executedCommit": "a2002e345363d4aec848232a3df8f4a7464af266",
+  "executedParents": [
+    "f700cf2a9fdda8c88cef245a65a53988278c2b43",
+    "44b03015d982369b2de15c1b9629669bab73231d"
+  ],
+  "headAndExecutedTree": "dde2ff71d034d2891c2408e662e9ea2e5301f203",
+  "artifactId": 13200486709,
+  "archiveSha256": "0f9e6085a38f1785bf023d883225b04cdbc928119987fcd7b3331d27ae573703",
+  "archiveDigestMatchesGitHub": true,
+  "runtimeSha256": "15a075676f4cf99ca3e1a0a10f44af6c16d26f52c0cc39032803d7c34b35efde",
+  "contentsReviewed": true,
+  "reviewType": "AI technical evidence inspection; no human sign-off",
+  "humanApprovals": [],
+  "currentDevelop": "6cfdd2ff4898b7a2ec5e4143aedb84292e9e06a6",
+  "productDiff44b0301ToDevelop": [],
+  "reviewDocumentationIntegratedByPr": 39
+}

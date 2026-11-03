@@ -1,0 +1,43 @@
+{
+  "productCommit": "a2002e345363d4aec848232a3df8f4a7464af266",
+  "project": "devpath-m1-ops-d0271571",
+  "status": "passed",
+  "stage": "complete",
+  "checks": [
+    {
+      "name": "official Compose build/migrations/seed/readiness",
+      "observed": true,
+      "result": "passed"
+    },
+    {
+      "name": "only web published on loopback",
+      "observed": true,
+      "result": "passed"
+    },
+    {
+      "name": "SPA direct reload and internal route blocked",
+      "observed": true,
+      "result": "passed"
+    },
+    {
+      "name": "register/profile/skills/real analysis67/evidence",
+      "observed": true,
+      "result": "passed"
+    },
+    {
+      "name": "login/profile/history/snapshot persist after real restart",
+      "observed": true,
+      "result": "passed"
+    },
+    {
+      "name": "real engine503 -> retry same key -> success",
+      "observed": true,
+      "result": "passed"
+    }
+  ],
+  "cleanup": "own containers/network stopped/removed; volume retained (no -v)",
+  "volumesRemoved": false,
+  "dockerVersion": "28.0.4",
+  "composeVersion": "2.38.2",
+  "postgresVersion": "postgres (PostgreSQL) 16.15"
+}

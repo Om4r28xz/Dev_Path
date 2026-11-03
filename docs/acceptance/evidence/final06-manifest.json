@@ -121,7 +121,8 @@
       "sha256": "e0a4894b4d074b8698f63e60675b2b36c0a9b78e998dbc2c024eb95419d23e81"
     },
     {
-      "file": "docs/acceptance/probes/ops-compose.mjs",
+      "file": "docs/acceptance/evidence/final06-ops-compose-source.txt",
+      "originalPath": "docs/acceptance/probes/ops-compose.mjs",
       "sha256": "8017a9a21733604f3abbb59dc3efd55a1da2f4eb50c951039f463d646a986dea"
     },
     {

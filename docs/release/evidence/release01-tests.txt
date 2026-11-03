@@ -1,0 +1,45 @@
+Scope: 7 of 8 workspace projects
+$ vitest run --passWithNoTests
+
+ RUN  v5.0.5 <repository>/apps/api
+
+
+ Test Files  12 passed (12)
+      Tests  118 passed (118)
+   Start at  22:44:19
+   Duration  4.04s (import 60%, tests 29%, transform 9%, worker 2%)
+
+$ vitest run --passWithNoTests
+
+ RUN  v5.0.5 <repository>/apps/skill-engine
+
+
+ Test Files  4 passed (4)
+      Tests  51 passed (51)
+   Start at  22:44:23
+   Duration  1.28s (import 44%, transform 34%, tests 19%, worker 4%)
+
+$ vitest run --passWithNoTests
+
+ RUN  v5.0.5 <repository>/apps/web
+
+
+ Test Files  9 passed (9)
+      Tests  97 passed (97)
+   Start at  22:44:25
+   Duration  915ms (import 65%, transform 15%, tests 12%, worker 7%)
+
+$ node scripts/validate-catalog.mjs && node scripts/validate-corpus.mjs
+Validated catalog 1.0.0: 10 technologies and 18 unambiguous aliases.
+Validated 30 synthetic ES/EN cases; catalog 1.0.0.
+$ node scripts/validate-contracts.mjs
+Validated 2 OpenAPI documents and 19 JSON examples.
+$ vitest run --config tests/e2e/vitest.config.mts
+
+ RUN  v5.0.5 <repository>
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  22:44:29
+   Duration  442ms (transform 43%, import 39%, tests 11%, worker 7%)

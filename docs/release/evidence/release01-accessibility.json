@@ -1,0 +1,156 @@
+{
+  "productCommit": "023cc64bfa848747b9b1b1be3f8c9a83f57e8b8a",
+  "scope": "Automated axe checks and320CSS-px overflow measurement; not human acceptance, real browser200% zoom, or full WCAG certification",
+  "results": [
+    {
+      "screen": "login",
+      "axeVersion": "4.11.0",
+      "violations": [],
+      "incomplete": [],
+      "passedRules": 22,
+      "narrowViewport": {
+        "width": 320,
+        "scrollWidth": 320,
+        "clientWidth": 320
+      }
+    },
+    {
+      "screen": "register",
+      "axeVersion": "4.11.0",
+      "violations": [],
+      "incomplete": [],
+      "passedRules": 22,
+      "narrowViewport": {
+        "width": 320,
+        "scrollWidth": 320,
+        "clientWidth": 320
+      }
+    },
+    {
+      "screen": "profile",
+      "axeVersion": "4.11.0",
+      "violations": [],
+      "incomplete": [],
+      "passedRules": 25,
+      "narrowViewport": {
+        "width": 320,
+        "scrollWidth": 320,
+        "clientWidth": 320
+      }
+    },
+    {
+      "screen": "analysis-form",
+      "axeVersion": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": [
+                "#analysis-text"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ]
+        }
+      ],
+      "passedRules": 20,
+      "narrowViewport": {
+        "width": 320,
+        "scrollWidth": 320,
+        "clientWidth": 320
+      }
+    },
+    {
+      "screen": "analysis-detail-evidence",
+      "axeVersion": "4.11.0",
+      "violations": [],
+      "incomplete": [],
+      "passedRules": 19,
+      "narrowViewport": {
+        "width": 320,
+        "scrollWidth": 320,
+        "clientWidth": 320
+      }
+    },
+    {
+      "screen": "history",
+      "axeVersion": "4.11.0",
+      "violations": [],
+      "incomplete": [],
+      "passedRules": 21,
+      "narrowViewport": {
+        "width": 320,
+        "scrollWidth": 320,
+        "clientWidth": 320
+      }
+    },
+    {
+      "screen": "delete-dialog",
+      "axeVersion": "4.11.0",
+      "violations": [],
+      "incomplete": [],
+      "passedRules": 12,
+      "narrowViewport": {
+        "width": 320,
+        "scrollWidth": 320,
+        "clientWidth": 320
+      }
+    },
+    {
+      "screen": "legacy-evidence-absent",
+      "axeVersion": "4.11.0",
+      "violations": [],
+      "incomplete": [],
+      "passedRules": 19,
+      "narrowViewport": {
+        "width": 320,
+        "scrollWidth": 320,
+        "clientWidth": 320
+      }
+    },
+    {
+      "screen": "detail-404",
+      "axeVersion": "4.11.0",
+      "violations": [],
+      "incomplete": [],
+      "passedRules": 19,
+      "narrowViewport": {
+        "width": 320,
+        "scrollWidth": 320,
+        "clientWidth": 320
+      }
+    },
+    {
+      "screen": "engine-503",
+      "axeVersion": "4.11.0",
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "help": "Elements must meet minimum color contrast ratio thresholds",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "target": [
+                "#analysis-text"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element"
+            }
+          ]
+        }
+      ],
+      "passedRules": 23,
+      "narrowViewport": {
+        "width": 320,
+        "scrollWidth": 320,
+        "clientWidth": 320
+      }
+    }
+  ]
+}
