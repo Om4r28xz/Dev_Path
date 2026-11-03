@@ -1,0 +1,11 @@
+{
+  "id": "5e9220ea-e5b7-42bb-8a88-adf08763837f",
+  "title": "Practicar Git",
+  "activity": "Crear commits pequeños en un proyecto sintético.",
+  "reason": "Git está entre las habilidades faltantes del análisis guardado.",
+  "skillIds": ["git"],
+  "projectId": "5e9220ea-e5b7-42bb-8a88-adf08763837f",
+  "resourceUrl": "https://example.org/learning/git",
+  "status": "pending",
+  "completedAt": "2026-11-02T12:00:00Z"
+}

@@ -1,0 +1,438 @@
+openapi: 3.1.0
+info:
+  title: DevPath M2 — Projects and private CV
+  version: 0.1.0
+  description: Defined contract for future M2 implementation, NOT endpoints
+    available in v0.1.0. All resources belong to the authenticated JWT subject;
+    owner/userId inputs are forbidden. Another owner and missing resource both
+    return 404 NOT_FOUND. Projects do not change personal skills or historical
+    analyses. See EXTENDED-CONTRACTS.md for transactional and file cleanup
+    requirements.
+x-contract-status: defined-for-M2
+servers:
+  - url: /api/v1
+security:
+  - bearerAuth: []
+paths:
+  /projects:
+    get:
+      operationId: listOwnProjects
+      summary: List only own projects, createdAt/id descending
+      x-implementation-status: not-implemented
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectList'
+              example:
+                items:
+                  - id: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                    title: Portfolio sintético
+                    description: Proyecto de práctica con React y Git.
+                    url: https://example.org/portfolio
+                    skillIds:
+                      - git
+                      - react
+                    createdAt: 2026-11-02T12:00:00Z
+                    updatedAt: 2026-11-02T12:00:00Z
+                nextCursor: null
+        '400': &a1
+          $ref: ./public.yaml#/components/responses/ValidationError
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '500': &a2
+          description: Internal error; sanitized, no implementation details.
+          content:
+            application/json:
+              schema:
+                $ref: ./public.yaml#/components/schemas/ErrorResponse
+      parameters:
+        - $ref: ./public.yaml#/components/parameters/Limit
+        - $ref: ./public.yaml#/components/parameters/Cursor
+    post:
+      operationId: createOwnProject
+      summary: Create own project and skill relations atomically
+      x-implementation-status: not-implemented
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+              example:
+                id: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                title: Portfolio sintético
+                description: Proyecto de práctica con React y Git.
+                url: https://example.org/portfolio
+                skillIds:
+                  - git
+                  - react
+                createdAt: 2026-11-02T12:00:00Z
+                updatedAt: 2026-11-02T12:00:00Z
+          headers:
+            Location:
+              required: true
+              schema:
+                type: string
+              description: /api/v1/projects/{id}
+        '400': *a1
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '413':
+          $ref: ./public.yaml#/components/responses/PayloadTooLarge
+        '500': *a2
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProjectRequest'
+            example:
+              title: Portfolio sintético
+              description: Proyecto de práctica con React y Git.
+              url: https://example.org/portfolio
+              skillIds:
+                - git
+                - react
+  '/projects/{id}':
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema: &a5
+          type: string
+          format: uuid
+    get:
+      operationId: getOwnProject
+      summary: Read own project
+      x-implementation-status: not-implemented
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+              example:
+                id: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                title: Portfolio sintético
+                description: Proyecto de práctica con React y Git.
+                url: https://example.org/portfolio
+                skillIds:
+                  - git
+                  - react
+                createdAt: 2026-11-02T12:00:00Z
+                updatedAt: 2026-11-02T12:00:00Z
+        '400': *a1
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: ./public.yaml#/components/responses/NotFound
+        '500': *a2
+    patch:
+      operationId: updateOwnProject
+      summary: Patch only supplied fields; bump projects_revision atomically
+      x-implementation-status: not-implemented
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+              example:
+                id: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                title: Portfolio sintético
+                description: Proyecto de práctica con React y Git.
+                url: https://example.org/portfolio
+                skillIds:
+                  - git
+                  - react
+                createdAt: 2026-11-02T12:00:00Z
+                updatedAt: 2026-11-02T12:00:00Z
+        '400': *a1
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: ./public.yaml#/components/responses/NotFound
+        '413':
+          $ref: ./public.yaml#/components/responses/PayloadTooLarge
+        '500': *a2
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProjectRequest'
+            example:
+              url: null
+              skillIds:
+                - javascript
+    delete:
+      operationId: deleteOwnProject
+      summary: Delete own project and relations; preserve historical activity snapshots
+      x-implementation-status: not-implemented
+      responses:
+        '204':
+          description: Deleted; no body.
+        '400': *a1
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: ./public.yaml#/components/responses/NotFound
+        '500': *a2
+  /me/cv:
+    get:
+      operationId: getOwnCvMetadata
+      summary: Read active CV metadata without storage paths
+      x-implementation-status: not-implemented
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CvMetadata'
+              example:
+                id: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                originalName: cv-sintetico.pdf
+                mimeType: application/pdf
+                sizeBytes: 5242880
+                createdAt: 2026-11-02T12:00:00Z
+        '400': *a1
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: ./public.yaml#/components/responses/NotFound
+        '500': *a2
+    put:
+      operationId: replaceOwnCv
+      summary: Upload or atomically replace the single active PDF CV
+      x-implementation-status: not-implemented
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CvMetadata'
+              example:
+                id: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                originalName: cv-sintetico.pdf
+                mimeType: application/pdf
+                sizeBytes: 5242880
+                createdAt: 2026-11-02T12:00:00Z
+          headers: &a3
+            X-File-Cleanup-Pending:
+              required: true
+              description: true when obsolete private file deletion is queued for retry;
+                active database state is already committed.
+              schema:
+                type: string
+                enum:
+                  - 'true'
+                  - 'false'
+        '400': *a1
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '413':
+          $ref: ./public.yaml#/components/responses/PayloadTooLarge
+        '415':
+          $ref: ./public.yaml#/components/responses/UnsupportedMediaType
+        '500': *a2
+        '503':
+          $ref: ./public.yaml#/components/responses/DependencyUnavailable
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CvUpload'
+            encoding:
+              file:
+                contentType: application/pdf
+    delete:
+      operationId: deleteOwnCv
+      summary: Idempotently detach active CV, then clean up private file
+      x-implementation-status: not-implemented
+      responses:
+        '204':
+          description: No active CV, including already absent. No body; cleanup may be
+            queued.
+          headers: *a3
+        '400': *a1
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '500': *a2
+        '503':
+          $ref: ./public.yaml#/components/responses/DependencyUnavailable
+  /me/cv/download:
+    get:
+      operationId: downloadOwnCv
+      summary: Authenticated private binary download, never a public URL
+      x-implementation-status: not-implemented
+      responses:
+        '200':
+          description: Fetch with bearer token, then Blob. No token in URL. Never render
+            inline.
+          headers:
+            Content-Disposition:
+              required: true
+              schema:
+                type: string
+                const: attachment; filename="cv.pdf"
+            Cache-Control:
+              required: true
+              schema:
+                type: string
+                const: no-store
+            X-Content-Type-Options:
+              required: true
+              schema:
+                type: string
+                const: nosniff
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '400': *a1
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: ./public.yaml#/components/responses/NotFound
+        '500': *a2
+        '503':
+          $ref: ./public.yaml#/components/responses/DependencyUnavailable
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: ./public.yaml#/components/securitySchemes/bearerAuth
+  schemas:
+    CreateProjectRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - title
+        - description
+        - skillIds
+      properties: &a4
+        title: &a6
+          type: string
+          minLength: 1
+          maxLength: 120
+          pattern: \S
+        description: &a7
+          type: string
+          minLength: 1
+          maxLength: 5000
+          pattern: \S
+        url: &a8
+          type:
+            - string
+            - 'null'
+          format: uri
+          pattern: ^https?://
+          maxLength: 2048
+        skillIds: &a9
+          $ref: ./public.yaml#/components/schemas/UniqueSkillIds
+    UpdateProjectRequest:
+      type: object
+      additionalProperties: false
+      required: []
+      properties: *a4
+      minProperties: 1
+    Project:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - title
+        - description
+        - url
+        - skillIds
+        - createdAt
+        - updatedAt
+      properties:
+        id: *a5
+        title: *a6
+        description: *a7
+        url: *a8
+        skillIds: *a9
+        createdAt: &a10
+          type: string
+          format: date-time
+        updatedAt: *a10
+    ProjectList:
+      type: object
+      additionalProperties: false
+      required:
+        - items
+        - nextCursor
+      properties:
+        items:
+          type: array
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/Project'
+        nextCursor:
+          type:
+            - string
+            - 'null'
+          minLength: 16
+          maxLength: 512
+    CvUpload:
+      type: object
+      additionalProperties: false
+      required:
+        - file
+      properties:
+        file:
+          type: string
+          format: binary
+          x-maxBytes: 5242880
+          description: Exactly one PDF file. Enforce actual streamed bytes <= 5 MiB, .pdf
+            extension (case-insensitive), application/pdf and PDF magic bytes.
+            MIME/extension alone are insufficient. Reject extra multipart parts.
+            No extraction or skills inference.
+    CvMetadata:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - originalName
+        - mimeType
+        - sizeBytes
+        - createdAt
+      properties:
+        id: *a5
+        originalName:
+          type: string
+          minLength: 1
+          maxLength: 255
+          pattern: ^[^\r\n/\\]+$
+        mimeType:
+          type: string
+          const: application/pdf
+        sizeBytes:
+          type: integer
+          minimum: 1
+          maximum: 5242880
+        createdAt: *a10
+    SharedError:
+      $ref: ./public.yaml#/components/schemas/ErrorResponse
+  responses:
+    Unauthenticated:
+      description: Missing, expired or invalid bearer token; same envelope as M1.
+      content:
+        application/json:
+          schema:
+            $ref: ./public.yaml#/components/schemas/ErrorResponse
+          example:
+            error:
+              code: UNAUTHENTICATED
+              message: Se requiere autenticación.
+              requestId: 5e9220ea-e5b7-42bb-8a88-adf08763837f

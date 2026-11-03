@@ -1,14 +1,30 @@
 {
   "examples": [
-    { "document": "public", "schema": "RegisterRequest", "file": "public/register-request.json" },
-    { "document": "public", "schema": "SessionResponse", "file": "public/session-response.json" },
+    {
+      "document": "public",
+      "schema": "RegisterRequest",
+      "file": "public/register-request.json"
+    },
+    {
+      "document": "public",
+      "schema": "SessionResponse",
+      "file": "public/session-response.json"
+    },
     {
       "document": "public",
       "schema": "ErrorResponse",
       "file": "public/invalid-credentials-error.json"
     },
-    { "document": "public", "schema": "UserProfile", "file": "public/me-response.json" },
-    { "document": "public", "schema": "SkillListResponse", "file": "public/skills-response.json" },
+    {
+      "document": "public",
+      "schema": "UserProfile",
+      "file": "public/me-response.json"
+    },
+    {
+      "document": "public",
+      "schema": "SkillListResponse",
+      "file": "public/skills-response.json"
+    },
     {
       "document": "public",
       "schema": "ReplaceUserSkillsRequest",
@@ -24,13 +40,21 @@
       "schema": "CreateAnalysisRequest",
       "file": "public/create-analysis-request.json"
     },
-    { "document": "public", "schema": "Analysis", "file": "public/analysis-response.json" },
+    {
+      "document": "public",
+      "schema": "Analysis",
+      "file": "public/analysis-response.json"
+    },
     {
       "document": "public",
       "schema": "AnalysisListResponse",
       "file": "public/analyses-response.json"
     },
-    { "document": "public", "schema": "ErrorResponse", "file": "public/validation-error.json" },
+    {
+      "document": "public",
+      "schema": "ErrorResponse",
+      "file": "public/validation-error.json"
+    },
     {
       "document": "public",
       "schema": "ErrorResponse",
@@ -41,8 +65,16 @@
       "schema": "ErrorResponse",
       "file": "public/dependency-unavailable-error.json"
     },
-    { "document": "engine", "schema": "AnalyzeRequest", "file": "internal/analyze-request.json" },
-    { "document": "engine", "schema": "AnalyzeResponse", "file": "internal/analyze-response.json" },
+    {
+      "document": "engine",
+      "schema": "AnalyzeRequest",
+      "file": "internal/analyze-request.json"
+    },
+    {
+      "document": "engine",
+      "schema": "AnalyzeResponse",
+      "file": "internal/analyze-response.json"
+    },
     {
       "document": "engine",
       "schema": "AnalyzeResponse",
@@ -62,6 +94,197 @@
       "document": "public",
       "schema": "Analysis",
       "file": "public/analysis-no-technologies-response.json"
+    },
+    {
+      "document": "m2",
+      "schema": "CreateProjectRequest",
+      "file": "m2/create-project.json"
+    },
+    {
+      "document": "m2",
+      "schema": "UpdateProjectRequest",
+      "file": "m2/update-project.json"
+    },
+    {
+      "document": "m2",
+      "schema": "Project",
+      "file": "m2/project.json"
+    },
+    {
+      "document": "m2",
+      "schema": "ProjectList",
+      "file": "m2/projects.json"
+    },
+    {
+      "document": "m2",
+      "schema": "ProjectList",
+      "file": "m2/projects-empty.json"
+    },
+    {
+      "document": "m2",
+      "schema": "CvMetadata",
+      "file": "m2/cv-at-limit.json"
+    },
+    {
+      "document": "m2",
+      "schema": "CvMetadata",
+      "file": "m2/cv-too-large.json",
+      "valid": false
+    },
+    {
+      "document": "m2",
+      "schema": "CvMetadata",
+      "file": "m2/cv-wrong-mime.json",
+      "valid": false
+    },
+    {
+      "document": "m2",
+      "schema": "CvMetadata",
+      "file": "m2/cv-leaks-path.json",
+      "valid": false
+    },
+    {
+      "document": "m2",
+      "schema": "CvMetadata",
+      "file": "m2/cv-unsafe-name.json",
+      "valid": false
+    },
+    {
+      "document": "m2",
+      "schema": "CreateProjectRequest",
+      "file": "m2/project-owner-overpost.json",
+      "valid": false
+    },
+    {
+      "document": "m2",
+      "schema": "UpdateProjectRequest",
+      "file": "m2/project-empty-patch.json",
+      "valid": false
+    },
+    {
+      "document": "m2",
+      "schema": "CreateProjectRequest",
+      "file": "m2/project-unsafe-url.json",
+      "valid": false
+    },
+    {
+      "document": "m2",
+      "schema": "CreateProjectRequest",
+      "file": "m2/project-duplicate-skills.json",
+      "valid": false
+    },
+    {
+      "document": "m2",
+      "schema": "CreateProjectRequest",
+      "file": "m2/project-long-title.json",
+      "valid": false
+    },
+    {
+      "document": "m3-proposed",
+      "schema": "JobSearch",
+      "file": "m3-proposed/jobs.json"
+    },
+    {
+      "document": "m3-proposed",
+      "schema": "JobDetails",
+      "file": "m3-proposed/job-details.json"
+    },
+    {
+      "document": "m3-proposed",
+      "schema": "CreateJSearchAnalysisRequest",
+      "file": "m3-proposed/create-analysis.json"
+    },
+    {
+      "document": "m3-proposed",
+      "schema": "ProposedJSearchAnalysis",
+      "file": "m3-proposed/analysis.json"
+    },
+    {
+      "document": "m3-proposed",
+      "schema": "CreateJSearchAnalysisRequest",
+      "file": "m3-proposed/analysis-arbitrary-url.json",
+      "valid": false
+    },
+    {
+      "document": "m3-proposed",
+      "schema": "JobSearch",
+      "file": "m3-proposed/jobs-unknown-mode.json",
+      "valid": false
+    },
+    {
+      "document": "m4-proposed",
+      "schema": "CreateLearningPathRequest",
+      "file": "m4-proposed/create-path.json"
+    },
+    {
+      "document": "m4-proposed",
+      "schema": "UpdateLearningStepRequest",
+      "file": "m4-proposed/update-step.json"
+    },
+    {
+      "document": "m4-proposed",
+      "schema": "LearningPath",
+      "file": "m4-proposed/path.json"
+    },
+    {
+      "document": "m4-proposed",
+      "schema": "LearningPathList",
+      "file": "m4-proposed/paths.json"
+    },
+    {
+      "document": "m4-proposed",
+      "schema": "LearningPath",
+      "file": "m4-proposed/path-completed.json"
+    },
+    {
+      "document": "m4-proposed",
+      "schema": "LearningPath",
+      "file": "m4-proposed/path-no-gaps.json"
+    },
+    {
+      "document": "m4-proposed",
+      "schema": "LearningStep",
+      "file": "m4-proposed/completed-without-date.json",
+      "valid": false
+    },
+    {
+      "document": "m4-proposed",
+      "schema": "LearningStep",
+      "file": "m4-proposed/pending-with-date.json",
+      "valid": false
+    },
+    {
+      "document": "m4-proposed",
+      "schema": "UpdateLearningStepRequest",
+      "file": "m4-proposed/unknown-status.json",
+      "valid": false
+    },
+    {
+      "document": "m4-proposed",
+      "schema": "LearningProgress",
+      "file": "m4-proposed/empty-fake-progress.json",
+      "valid": false
+    },
+    {
+      "document": "m4-proposed",
+      "schema": "CreateLearningPathRequest",
+      "file": "m4-proposed/path-owner-overpost.json",
+      "valid": false
+    },
+    {
+      "document": "m2",
+      "schema": "SharedError",
+      "file": "m2/unauthenticated.json"
+    },
+    {
+      "document": "m3-proposed",
+      "schema": "SharedError",
+      "file": "m3-proposed/unauthenticated.json"
+    },
+    {
+      "document": "m4-proposed",
+      "schema": "SharedError",
+      "file": "m4-proposed/unauthenticated.json"
     }
   ]
 }

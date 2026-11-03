@@ -1,0 +1,17 @@
+{
+  "items": [
+    {
+      "provider": "jsearch",
+      "providerId": "synthetic-job-001",
+      "title": "Frontend junior (sintético)",
+      "company": "Empresa de ejemplo",
+      "location": "Remoto",
+      "description": "Buscamos JavaScript, React y Git.",
+      "applyUrl": "https://example.org/jobs/001",
+      "fetchedAt": "2026-11-02T12:00:00Z"
+    }
+  ],
+  "page": 1,
+  "hasNextPage": null,
+  "mode": "fixture"
+}

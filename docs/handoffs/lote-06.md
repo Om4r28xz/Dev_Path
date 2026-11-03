@@ -1,24 +1,40 @@
 # Handoff lote 06 — estado vigente y registro histórico
 
+## Estado vigente — CTR-02 preparada desde la release sincronizada
+
+Fetch verificó tag anotado v0.1.0 sobre `1f9e721a320270a415d0825e75a92f10f0d0b35d`, GitHub Release pública (no draft/prerelease) y PR #42 integrado en develop mediante `fc9f41b7e16b836bb37558634661a3419457a6b3`. El commit publicado es ancestro de develop y ambos árboles eran idénticos antes de CTR-02. Los ocho checks de esa base están aprobados, incluyendo E2E Chromium/PostgreSQL16 y Compose real ([CI](https://github.com/Om4r28xz/Dev_Path/actions/runs/41584160827), [Compose](https://github.com/Om4r28xz/Dev_Path/actions/runs/41584160805)). No se infiere una ejecución nueva de contenedores por cambios de contrato.
+
+| Tarea  | Estado verificado                                          | Evidencia / siguiente acción                                                                                          |
+| ------ | ---------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| QAA-01 | Integrada                                                  | PR #27, merge b84255e, ancestro de develop; suite real M1 y checks conservados                                        |
+| QA-02  | Integrada                                                  | Resultados y aceptación delegada incluidos en release/develop; historial y límites humanos preservados en acceptance/ |
+| DOC-02 | Integrada                                                  | PR #28, merge 34a2242; ARCHITECTURE.md vigente con referencia a contratos futuros                                     |
+| REL-01 | Publicada y sincronizada                                   | Release/tag v0.1.0, merge PR #41 y sincronización PR #42; no se altera tag ni se inventan firmas P1/P2/P5             |
+| CTR-02 | Implementada localmente, pendiente de revisión/integración | Rama docs/ctr-02-extended-contracts desde fc9f41b; P4 con revisión P1/P2 y merge humano a develop                     |
+
+CTR-02 añade OpenAPI M2 definido (CRUD propio de proyectos y CV PDF privado ≤5MiB) y propuestas M3/M4, fixtures positivos/negativos, generación separada y validación de referencias/ejemplos. [Contrato y decisiones](../../packages/contracts/EXTENDED-CONTRACTS.md). Public/engine y tipos M1 se mantienen idénticos al tag publicado. Sin implementación de futuros servicios/pantallas ni acceso a proveedor. Versiones de paquetes conservadas 0.1.0. No hay nuevas migraciones ni cambios de CI.
+
+Validación local CTR-02 con Node22.23.4/pnpm11.22.0: cinco OpenAPI 3.1 validados también con swagger-parser instalado; 54 fixtures (38 positivos/16 rechazos esperados), referencias cruzadas y ejemplos inline correctos; generación, lint, formato, typecheck y build aprobados. Regresión: API118, web97, engine51, soporte/privacidad2; catálogo10 tecnologías/18 alias y corpus30. API usó PostgreSQL18.3 en una nueva DB local aislada, migrada/sembrada; no se borraron DB previas. No se repitieron E2E/Compose en esta rama contractual: el verde PG16/Chromium/Compose citado arriba pertenece a fc9f41b; los checks remotos de CTR-02 requieren publicar su rama. Comparación contra v0.1.0 confirmó cero cambios de specs/tipos/huella de M1.
+
+P1/P2 deben revisar propiedad/404, transacciones de proyectos, reemplazo/compensación de CV y límites. JSR-01 confirma permisos/cuotas/proveedor y coordina futura unión source; LRN-01/P3 confirma contenido/reglas. Los tests de contrato no acreditan SQL, streaming PDF ni llamadas live de M2/M3/M4. Tras checks y revisión, Omar integra el PR de CTR-02; **el lote 06 aún no se declara terminado sin ese merge**. Las secciones inferiores son registros históricos; sus bloqueos anteriores quedan subordinados a este estado, sin borrar evidencia de pruebas pasadas.
+
+### Registro histórico previo a publicación
+
 ## Entrega del candidato REL-01
 
 release/0.1.0 preparada desde6cfdd2f; producto probado 023cc64bfa848747b9b1b1be3f8c9a83f57e8b8a. Versiones/changelog y aceptación delegada reales; dependencias corregidas y auditoría producción0. Validaciones locales aprobadas, evidencia en [manifest](../release/evidence/release01-manifest.json). Solo CI PG16/Compose de esta rama, revisión independiente y pasos humanos de merge/tag/smoke/sincronización habilitan cierre. CTR-02 no iniciada.
-
 
 ## REL-01 — candidato en preparación
 
 Emanuel aceptó explícitamente el alcance bajo delegación de Omar; [decisión](../acceptance/evidence/M1-delegated-acceptance.json). Rama release/0.1.0 desde develop6cfdd2f, sin cambios funcionales posteriores a M1. Versiones/changelog y validaciones de candidato en curso. Pendientes revisión independiente, merge humano, tag exacto, smoke y sincronización. CTR-02 bloqueada hasta verificarlos. No se fabrican firmas ni publicación.
 
-
 ## Evidencia OPS inspeccionada y PR39 integrado
 
 Develop6cfdd2f contiene PR34/35 y revisión Emanuel por PR39; PR38 sigue siendo merge hacia main. Artefacto PR41568942398 verificado por digest ZIP; productCommit a2002e3, merge temporal con padre44b0301 y árbol idéntico. Seis checks passed y volumen conservado. [Expediente](../acceptance/OPS-01-dossier.md) actualizado; faltan decisiones humanas reales, no más planificación ni repetición de suites. Release/CTR siguen condicionadas. Cambios de esta inspección preparados en worktree detached ops-artifact-review, sin modificar ramas existentes.
 
-
 ## Primera revisión manual de Emanuel
 
 Emanuel confirmó recorrido funcional/visual inicial sin fallos que impidan uso principal; ejemplo33% coherente (C# y Git frente Git/JavaScript/React). Mejoras estéticas opcionales registradas, sin rediseño. [Informe y pendientes](../acceptance/Emanuel-visual-review.md). No constituye firma P5/P1/P2/Omar ni aceptación global. Zoom/lector/estados completos y decisiones humanas siguen pendientes; REL-01 conserva sus puertas y CTR-02 sigue bloqueada.
-
 
 ## Vigente tras merge PR34
 

@@ -1,0 +1,396 @@
+openapi: 3.1.0
+info:
+  title: DevPath M3 — PROPOSED JSearch contracts
+  version: 0.1.0
+  description: PROPOSED until JSR-01 verifies real provider API, quotas, pricing,
+    attribution, caching/retention and permission to store derived text. No
+    provider calls performed by CTR-02. Disabled provider flow must not affect
+    manual M1 analyses. API owns fixed allowlisted provider host and
+    credentials; browser never calls provider directly. Pagination and
+    fixture/live provenance are explicit.
+x-contract-status: proposed
+servers:
+  - url: /api/v1
+security:
+  - bearerAuth: []
+paths:
+  /jobs:
+    get:
+      operationId: proposedSearchJobs
+      summary: 'PROPOSED E3: search via server-side JSearch adapter'
+      x-implementation-status: not-implemented
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobSearch'
+              example:
+                items:
+                  - provider: jsearch
+                    providerId: synthetic-job-001
+                    title: Frontend junior (sintético)
+                    company: Empresa de ejemplo
+                    location: Remoto
+                    description: Buscamos JavaScript, React y Git.
+                    applyUrl: https://example.org/jobs/001
+                    fetchedAt: 2026-11-02T12:00:00Z
+                page: 1
+                hasNextPage: null
+                mode: fixture
+        '400': &a1
+          $ref: ./public.yaml#/components/responses/ValidationError
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '429':
+          $ref: ./public.yaml#/components/responses/RateLimited
+        '500': &a2
+          description: Internal error; sanitized, no implementation details.
+          content:
+            application/json:
+              schema:
+                $ref: ./public.yaml#/components/schemas/ErrorResponse
+        '502':
+          $ref: ./public.yaml#/components/responses/DependencyUnavailable
+        '503':
+          $ref: ./public.yaml#/components/responses/DependencyUnavailable
+        '504':
+          $ref: ./public.yaml#/components/responses/DependencyTimeout
+      parameters:
+        - $ref: ./public.yaml#/components/parameters/SearchQuery
+        - name: location
+          in: query
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 120
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+  /jobs/details:
+    get:
+      operationId: proposedGetJobDetails
+      summary: 'PROPOSED E3: normalize a job identified by opaque providerId'
+      x-implementation-status: not-implemented
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobDetails'
+              example:
+                job:
+                  provider: jsearch
+                  providerId: synthetic-job-001
+                  title: Frontend junior (sintético)
+                  company: Empresa de ejemplo
+                  location: Remoto
+                  description: Buscamos JavaScript, React y Git.
+                  applyUrl: https://example.org/jobs/001
+                  fetchedAt: 2026-11-02T12:00:00Z
+                mode: fixture
+        '400': *a1
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: ./public.yaml#/components/responses/NotFound
+        '429':
+          $ref: ./public.yaml#/components/responses/RateLimited
+        '500': *a2
+        '503':
+          $ref: ./public.yaml#/components/responses/DependencyUnavailable
+        '504':
+          $ref: ./public.yaml#/components/responses/DependencyTimeout
+      parameters:
+        - name: providerId
+          in: query
+          required: true
+          schema: &a3
+            type: string
+            minLength: 1
+            maxLength: 512
+            pattern: ^[^\r\n]+$
+            description: Opaque provider identifier, not a URL to fetch.
+  /analyses:
+    post:
+      operationId: proposedCreateJSearchAnalysis
+      summary: 'PROPOSED E3: create/replay an owned saved analysis from permitted
+        provider text'
+      x-implementation-status: not-implemented
+      responses:
+        '200':
+          description: Replay of original persisted snapshot, even if provider data changed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProposedJSearchAnalysis'
+              example:
+                id: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                source:
+                  type: jsearch
+                  title: Frontend junior
+                  providerId: synthetic-job-001
+                candidateSkillsRevision: 3
+                requiredSkillIds:
+                  - git
+                  - javascript
+                  - react
+                matchedSkillIds:
+                  - javascript
+                  - react
+                missingSkillIds:
+                  - git
+                compatibilityPercentage: 67
+                versions:
+                  catalog: 1.0.0
+                  extractor: 1.0.0
+                  scoring: 1.0.0
+                warnings: []
+                skillsOutdated: false
+                createdAt: 2026-10-31T13:00:00Z
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProposedJSearchAnalysis'
+              example:
+                id: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                source:
+                  type: jsearch
+                  title: Frontend junior
+                  providerId: synthetic-job-001
+                candidateSkillsRevision: 3
+                requiredSkillIds:
+                  - git
+                  - javascript
+                  - react
+                matchedSkillIds:
+                  - javascript
+                  - react
+                missingSkillIds:
+                  - git
+                compatibilityPercentage: 67
+                versions:
+                  catalog: 1.0.0
+                  extractor: 1.0.0
+                  scoring: 1.0.0
+                warnings: []
+                skillsOutdated: false
+                createdAt: 2026-10-31T13:00:00Z
+        '400': *a1
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: ./public.yaml#/components/responses/NotFound
+        '409':
+          $ref: ./public.yaml#/components/responses/IdempotencyConflict
+        '429':
+          $ref: ./public.yaml#/components/responses/RateLimited
+        '500': *a2
+        '503':
+          $ref: ./public.yaml#/components/responses/DependencyUnavailable
+        '504':
+          $ref: ./public.yaml#/components/responses/DependencyTimeout
+      parameters:
+        - $ref: ./public.yaml#/components/parameters/IdempotencyKey
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateJSearchAnalysisRequest'
+            example:
+              source:
+                type: jsearch
+                providerId: synthetic-job-001
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: ./public.yaml#/components/securitySchemes/bearerAuth
+  schemas:
+    Job:
+      type: object
+      additionalProperties: false
+      required:
+        - provider
+        - providerId
+        - title
+        - company
+        - location
+        - description
+        - applyUrl
+        - fetchedAt
+      properties:
+        provider:
+          type: string
+          const: jsearch
+        providerId: *a3
+        title:
+          type: string
+          minLength: 1
+          maxLength: 200
+        company:
+          type:
+            - string
+            - 'null'
+          maxLength: 200
+        location:
+          type:
+            - string
+            - 'null'
+          maxLength: 200
+        description:
+          type: string
+          minLength: 1
+          maxLength: 20000
+        applyUrl:
+          type:
+            - string
+            - 'null'
+          format: uri
+          pattern: ^https?://
+          maxLength: 2048
+        fetchedAt:
+          type: string
+          format: date-time
+    JobSearch:
+      type: object
+      additionalProperties: false
+      required:
+        - items
+        - page
+        - hasNextPage
+        - mode
+      properties:
+        items:
+          type: array
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/Job'
+        page:
+          type: integer
+          minimum: 1
+        hasNextPage:
+          type:
+            - boolean
+            - 'null'
+          description: null when upstream provides insufficient information; never invent
+            totals.
+        mode:
+          type: string
+          enum:
+            - fixture
+            - live
+    JobDetails:
+      type: object
+      additionalProperties: false
+      required:
+        - job
+        - mode
+      properties:
+        job:
+          $ref: '#/components/schemas/Job'
+        mode:
+          type: string
+          enum:
+            - fixture
+            - live
+    CreateJSearchAnalysisRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - source
+      properties:
+        source:
+          type: object
+          additionalProperties: false
+          required:
+            - type
+            - providerId
+          properties:
+            type:
+              type: string
+              const: jsearch
+            providerId: *a3
+    ProposedJSearchSourceSummary:
+      type: object
+      additionalProperties: false
+      required:
+        - type
+        - title
+        - providerId
+      properties:
+        type:
+          type: string
+          const: jsearch
+        title:
+          type:
+            - string
+            - 'null'
+          minLength: 1
+          maxLength: 120
+        providerId: *a3
+    ProposedJSearchAnalysis:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - source
+        - candidateSkillsRevision
+        - requiredSkillIds
+        - matchedSkillIds
+        - missingSkillIds
+        - compatibilityPercentage
+        - versions
+        - warnings
+        - skillsOutdated
+        - createdAt
+      properties:
+        id:
+          $ref: ./public.yaml#/components/schemas/Analysis/properties/id
+        source:
+          $ref: '#/components/schemas/ProposedJSearchSourceSummary'
+        candidateSkillsRevision:
+          $ref: ./public.yaml#/components/schemas/Analysis/properties/candidateSkillsRevision
+        requiredSkillIds:
+          $ref: ./public.yaml#/components/schemas/Analysis/properties/requiredSkillIds
+        matchedSkillIds:
+          $ref: ./public.yaml#/components/schemas/Analysis/properties/matchedSkillIds
+        missingSkillIds:
+          $ref: ./public.yaml#/components/schemas/Analysis/properties/missingSkillIds
+        compatibilityPercentage:
+          $ref: ./public.yaml#/components/schemas/Analysis/properties/compatibilityPercentage
+        evidence:
+          $ref: ./public.yaml#/components/schemas/Analysis/properties/evidence
+        versions:
+          $ref: ./public.yaml#/components/schemas/Analysis/properties/versions
+        warnings:
+          $ref: ./public.yaml#/components/schemas/Analysis/properties/warnings
+        skillsOutdated:
+          $ref: ./public.yaml#/components/schemas/Analysis/properties/skillsOutdated
+        createdAt:
+          $ref: ./public.yaml#/components/schemas/Analysis/properties/createdAt
+      description: PROPOSED projection of the existing Analysis DTO with a jsearch
+        source. Not accepted by current M1 validators. JSR-01 must coordinate
+        the source union in public.yaml and all consumers before implementation;
+        all other properties reference M1 unchanged.
+    SharedError:
+      $ref: ./public.yaml#/components/schemas/ErrorResponse
+  responses:
+    Unauthenticated:
+      description: Missing, expired or invalid bearer token; same envelope as M1.
+      content:
+        application/json:
+          schema:
+            $ref: ./public.yaml#/components/schemas/ErrorResponse
+          example:
+            error:
+              code: UNAUTHENTICATED
+              message: Se requiere autenticación.
+              requestId: 5e9220ea-e5b7-42bb-8a88-adf08763837f
