@@ -1,6 +1,6 @@
 # Lote 06.5 — handoff de implementación
 
-Estado verificado el 3 de noviembre de 2026 desde Git, no desde handoffs antiguos. Base de VIS-01: `origin/develop` 47f2af0. El tag `v0.1.0` es ancestro de `origin/develop`; CTR-02 está integrado por PR #43. No se modificó `main` ni el tag.
+Estado verificado el 3 de noviembre de 2026 desde Git, no desde handoffs antiguos. Base de VIS-01: `origin/develop` 47f2af0. Commit de implementación probado: `ffd3584`. Issue [#44](https://github.com/Om4r28xz/Dev_Path/issues/44); PR borrador [#45](https://github.com/Om4r28xz/Dev_Path/pull/45) hacia `develop`. El tag `v0.1.0` es ancestro de `origin/develop`; CTR-02 está integrado por PR #43. No se modificó `main` ni el tag.
 
 | Tarea  | Estado                                                                          | Rama                                               | Siguiente acción                                                                                             |
 | ------ | ------------------------------------------------------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
@@ -28,4 +28,4 @@ Validación local:
 
 Pendiente: CI del PR, axe, reflujo con zoom real al 200%, recorrido manual de teclado y lector de pantalla, y revisiones de P5/P1. VIS-02 aplicará el sistema a auth, perfil y selección de habilidades; VIS-03 migrará los estilos heredados de historial y el diálogo.
 
-La creación de la issue por la integración GitHub devolvió 403 (`Resource not accessible by integration`). No se creó issue ni se inventó número.
+La integración GitHub devolvió 403 al intentar crear la issue y el PR. Ambos se crearon después mediante la credencial Git ya autorizada para publicar la rama, sin guardar el token ni incluirlo en el repositorio.
