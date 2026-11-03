@@ -1,0 +1,19 @@
+{
+  "id": "5e9220ea-e5b7-42bb-8a88-adf08763837f",
+  "analysisId": "5e9220ea-e5b7-42bb-8a88-adf08763837f",
+  "projectsRevision": 2,
+  "versions": {
+    "catalog": "1.0.0",
+    "content": "proposed-1",
+    "generator": "rules-1"
+  },
+  "steps": [],
+  "progress": {
+    "completed": 0,
+    "total": 0,
+    "percentage": null
+  },
+  "message": "No hay brechas que cubrir en este análisis.",
+  "createdAt": "2026-11-02T12:00:00Z",
+  "updatedAt": "2026-11-02T12:00:00Z"
+}

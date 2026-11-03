@@ -1,0 +1,6 @@
+{
+  "title": "Portfolio sintético",
+  "description": "Proyecto de práctica con React y Git.",
+  "url": "https://example.org/portfolio",
+  "skillIds": ["git", "react"]
+}

@@ -7,6 +7,8 @@ import { fileURLToPath } from 'node:url';
 
 import { format, resolveConfig } from 'prettier';
 
+import { contractDocuments } from './contract-documents.mjs';
+
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const prettierConfig = (await resolveConfig(packageRoot)) ?? {};
 const require = createRequire(import.meta.url);
@@ -17,8 +19,8 @@ const cliPath = path.resolve(
   generatorPackage.bin['swagger-typescript-api'],
 );
 
-for (const name of ['public', 'engine']) {
-  const outputDirectory = path.join(packageRoot, 'src', name === 'public' ? 'public' : 'internal');
+for (const { name, output } of contractDocuments) {
+  const outputDirectory = path.join(packageRoot, 'src', output);
   const result = spawnSync(
     process.execPath,
     [
@@ -52,4 +54,11 @@ const hash = createHash('sha256');
 for (const name of ['public', 'engine'])
   hash.update(await readFile(path.join(packageRoot, 'openapi', `${name}.yaml`)));
 await writeFile(path.join(packageRoot, 'src', '.openapi.sha256'), `${hash.digest('hex')}\n`);
-console.log('Generated public and internal TypeScript contracts from OpenAPI.');
+const extendedHash = createHash('sha256');
+for (const { name } of contractDocuments)
+  extendedHash.update(await readFile(path.join(packageRoot, 'openapi', `${name}.yaml`)));
+await writeFile(
+  path.join(packageRoot, 'src', '.extended-openapi.sha256'),
+  `${extendedHash.digest('hex')}\n`,
+);
+console.log('Generated M1, M2 and proposed M3/M4 TypeScript contracts from OpenAPI.');
