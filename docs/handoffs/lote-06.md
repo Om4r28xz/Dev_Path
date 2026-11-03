@@ -1,5 +1,10 @@
 # Handoff lote 06 — estado vigente y registro histórico
 
+## Primera revisión manual de Emanuel
+
+Emanuel confirmó recorrido funcional/visual inicial sin fallos que impidan uso principal; ejemplo33% coherente (C# y Git frente Git/JavaScript/React). Mejoras estéticas opcionales registradas, sin rediseño. [Informe y pendientes](../acceptance/Emanuel-visual-review.md). No constituye firma P5/P1/P2/Omar ni aceptación global. Zoom/lector/estados completos y decisiones humanas siguen pendientes; REL-01 conserva sus puertas y CTR-02 sigue bloqueada.
+
+
 ## Vigente tras merge PR34
 
 Develop5061185 contiene44b0301, QAA-01, QA-02, DOC-02 y target-size (ascendencia verificada). Dos jobs Compose reales aprobados; [expediente OPS](../acceptance/OPS-01-dossier.md). OPS ejecutada técnicamente, pendiente aceptación P1/P2. UI-01/EVID-06 pendientes P5, autorización REL pendiente Omar. Rama documental docs/m1-acceptance-closeout; no crear release/0.1.0 sin firmas, no aplicar versiones ni iniciar CTR. [Candidato](../release/M1-CANDIDATE-CHECKLIST.md) reutiliza changelog/versiones/publicación/rollback. Registros anteriores son históricos.
