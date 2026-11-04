@@ -14,10 +14,11 @@ interface ErrorEnvelope {
   error?: { code?: string; message?: string; requestId?: string };
 }
 
-export async function requestJson<T>(path: string, init: RequestInit = {}): Promise<T> {
+export async function requestResponse(path: string, init: RequestInit = {}): Promise<Response> {
   if (!path.startsWith('/api/v1/')) throw new Error('Only same-origin API paths are supported.');
   const headers = new Headers(init.headers);
-  if (init.body !== undefined) headers.set('Content-Type', 'application/json');
+  if (init.body !== undefined && !(init.body instanceof FormData) && !headers.has('Content-Type'))
+    headers.set('Content-Type', 'application/json');
   const response = await fetch(path, { ...init, credentials: 'same-origin', headers });
   if (!response.ok) {
     let envelope: ErrorEnvelope = {};
@@ -33,6 +34,11 @@ export async function requestJson<T>(path: string, init: RequestInit = {}): Prom
       envelope.error?.requestId ?? '',
     );
   }
+  return response;
+}
+
+export async function requestJson<T>(path: string, init: RequestInit = {}): Promise<T> {
+  const response = await requestResponse(path, init);
   return (response.status === 204 ? undefined : await response.json()) as T;
 }
 

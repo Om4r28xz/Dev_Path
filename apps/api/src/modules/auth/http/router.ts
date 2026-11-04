@@ -7,6 +7,7 @@ export function authRouter(
   service: AuthService,
   origins: readonly string[],
   localHttp: boolean,
+  maxRequests = 60,
 ): Router {
   if (
     localHttp &&
@@ -26,7 +27,7 @@ export function authRouter(
     sameSite: 'lax' as const,
     path: '/api/v1/auth',
   };
-  router.use(createRateLimitMiddleware({ maxRequests: 60, windowMs: 60_000 }));
+  router.use(createRateLimitMiddleware({ maxRequests, windowMs: 60_000 }));
   router.use((req, res, next) => {
     res.set('Cache-Control', 'no-store');
     if (!req.is('application/json'))

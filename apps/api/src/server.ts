@@ -60,7 +60,15 @@ const app = createApp({
     }
   },
   configureRoutes: (app) => {
-    app.use('/api/v1/auth', authRouter(auth, config.http.allowedOrigins, localHttp));
+    app.use(
+      '/api/v1/auth',
+      authRouter(
+        auth,
+        config.http.allowedOrigins,
+        localHttp,
+        config.environment === 'test' ? config.http.rateLimit.maxRequests : 60,
+      ),
+    );
     app.use('/api/v1', profileRouter(pool, accessTokenMiddleware(auth)));
     app.use('/api/v1', cvRouter(cv, accessTokenMiddleware(auth)));
     app.use('/api/v1', projectsRouter(pool, accessTokenMiddleware(auth)));
