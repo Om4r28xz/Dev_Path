@@ -1,0 +1,129 @@
+.projects-page {
+  display: grid;
+  gap: var(--space-8);
+}
+.projects-header {
+  max-width: var(--reading-width);
+}
+.projects-header h1,
+.projects-header p,
+.project-form-panel h2,
+.project-form-panel p,
+.projects-list-section h2,
+.projects-list-section p {
+  margin-block: 0;
+}
+.page-eyebrow,
+.project-card__label {
+  color: var(--color-brand);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.project-form-panel,
+.project-card {
+  padding: var(--space-6);
+}
+.project-form-panel__header,
+.project-card__header,
+.projects-list-section__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+.project-form {
+  display: grid;
+  gap: var(--space-5);
+  max-width: 48rem;
+  margin-top: var(--space-5);
+}
+.project-form__description {
+  min-height: 9rem;
+  resize: vertical;
+}
+.project-technologies {
+  min-width: 0;
+  margin: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+.project-technologies legend {
+  padding-inline: var(--space-2);
+  font-weight: 700;
+}
+.project-technologies__grid,
+.project-skills,
+.projects-list {
+  list-style: none;
+  padding: 0;
+}
+.project-technologies__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: var(--space-2);
+  margin-block: var(--space-4);
+}
+.projects-list-section {
+  display: grid;
+  gap: var(--space-4);
+}
+.projects-list {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+}
+.project-card {
+  display: grid;
+  gap: var(--space-4);
+}
+.project-card h2 {
+  margin: 0;
+}
+.project-card__description {
+  max-width: var(--reading-width);
+  white-space: pre-wrap;
+}
+.project-card__link {
+  min-height: var(--control-height);
+  display: inline-flex;
+  align-items: center;
+}
+.project-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+}
+.project-skills li {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-soft);
+  color: var(--color-text-muted);
+}
+.project-card__meta {
+  color: var(--color-text-muted);
+}
+.project-card__actions,
+.projects-more,
+.projects-retry {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+.project-delete-dialog {
+  max-width: 34rem;
+}
+@media (max-width: 40rem) {
+  .project-form-panel__header,
+  .project-card__header,
+  .projects-list-section__header {
+    flex-direction: column;
+  }
+  .project-form-panel,
+  .project-card {
+    padding: var(--space-4);
+  }
+}

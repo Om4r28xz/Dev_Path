@@ -132,6 +132,10 @@ function ProfileEditor({ userId }: { userId: string }) {
             </p>
           )}
         </div>
+        <p>
+          También puedes <Link to="/profile/projects">gestionar tus proyectos autodeclarados</Link>{' '}
+          como parte de tu perfil.
+        </p>
       </header>
 
       <div className="profile-grid">
