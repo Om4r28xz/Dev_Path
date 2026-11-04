@@ -1,6 +1,6 @@
 # Resultados de aceptación visual M1 — VIS-04
 
-Fecha técnica: 3 de noviembre de 2026. Rama única autorizada para el cierre pendiente del lote: `feature/vis-03-04-analysis-acceptance-ui`. Base: VIS-02 `a2f5e5b`. El commit probado se añadirá al handoff después de confirmar los cambios.
+Fecha técnica: 3 de noviembre de 2026. Rama única autorizada para el cierre pendiente del lote: `feature/vis-03-04-analysis-acceptance-ui`. Base: VIS-02 `a2f5e5b`. Commit de implementación probado localmente: `4cb41ec`.
 
 Este documento separa comprobaciones automatizadas, inspección técnica y revisión humana. Las capturas usan respuestas sintéticas interceptadas para representar estados de UI; no prueban API, engine, PostgreSQL, propiedad ni persistencia.
 
