@@ -90,7 +90,7 @@ export const test = base.extend<{ app: App }>({
       await page.goto('/analysis/new');
       await page.getByLabel('Título del puesto (opcional)').fill(title);
       await page.getByLabel('Texto de la vacante', { exact: true }).fill(text);
-      await page.getByRole('button', { name: 'Analizar', exact: true }).click();
+      await page.getByRole('button', { name: 'Analizar tecnologías', exact: true }).click();
       await page.waitForURL(/\/analyses\/[a-f0-9-]+$/);
       await page.getByRole('heading', { name: 'Resultado del análisis', exact: true }).waitFor();
       return new URL(page.url()).pathname.split('/').at(-1)!;

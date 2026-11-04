@@ -92,7 +92,7 @@ test('M1 readiness: automated accessibility, narrow reflow and evidence/error st
     await app.create('Readiness Evidence', 'JavaScript, React y Git.');
     await expect(page.getByText('67%', { exact: true })).toBeVisible();
     await scan('analysis-detail-evidence');
-    await page.getByRole('link', { name: 'Volver al historial', exact: true }).click();
+    await page.getByRole('link', { name: /Volver al historial$/ }).click();
     await expect(page.getByRole('link', { name: 'Readiness Evidence', exact: true })).toBeVisible();
     await scan('history');
     const remove = page.getByRole('button', {
@@ -120,7 +120,7 @@ test('M1 readiness: automated accessibility, narrow reflow and evidence/error st
     await app.engine('stop');
     await page.goto('/analysis/new');
     await page.getByLabel('Texto de la vacante', { exact: true }).fill('JavaScript');
-    await page.getByRole('button', { name: 'Analizar', exact: true }).click();
+    await page.getByRole('button', { name: 'Analizar tecnologías', exact: true }).click();
     await expect(page.getByRole('alert')).toContainText('Conservamos la vacante');
     await scan('engine-503');
   } finally {

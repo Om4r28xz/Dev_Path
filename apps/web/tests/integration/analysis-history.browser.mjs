@@ -115,7 +115,7 @@ const { chromium } = ar(process.env.DEVPATH_PLAYWRIGHT_MODULE || 'playwright');
       await page.goto(base + '/analysis/new');
       await page.getByLabel('Título del puesto (opcional)').fill(title);
       await page.getByLabel('Texto de la vacante', { exact: true }).fill(text);
-      await page.getByRole('button', { name: 'Analizar', exact: true }).click();
+      await page.getByRole('button', { name: 'Analizar tecnologías', exact: true }).click();
       await page.waitForURL(/\/analyses\/[a-f0-9-]+$/);
       await page.getByRole('heading', { name: 'Resultado del análisis', exact: true }).waitFor();
       return new URL(page.url()).pathname.split('/').at(-1);
@@ -132,12 +132,12 @@ const { chromium } = ar(process.env.DEVPATH_PLAYWRIGHT_MODULE || 'playwright');
     await page.getByText('Habilidades guardadas.', { exact: true }).waitFor();
     const first = await create('Primero67', 'Buscamos JavaScript, React y Git.');
     await page.getByText('67%', { exact: true }).waitFor();
-    await page.getByRole('link', { name: 'Volver al historial', exact: true }).click();
+    await page.getByRole('link', { name: /Volver al historial$/ }).click();
     await page.getByRole('link', { name: 'Primero67', exact: true }).waitFor();
     assert.equal(await rows().count(), 1);
     const second = await create('Segundo0', 'Buscamos Java y SQL.');
     await page.getByText('0%', { exact: true }).waitFor();
-    await page.getByRole('link', { name: 'Volver al historial', exact: true }).click();
+    await page.getByRole('link', { name: /Volver al historial$/ }).click();
     await page.getByRole('link', { name: 'Segundo0', exact: true }).waitFor();
     assert.equal(await rows().count(), 2);
     assert.equal(await rows().locator('time').count(), 2);
@@ -171,10 +171,13 @@ const { chromium } = ar(process.env.DEVPATH_PLAYWRIGHT_MODULE || 'playwright');
     await page.getByRole('link', { name: 'Primero67', exact: true }).click();
     await page.getByText('67%', { exact: true }).waitFor();
     assert.equal(
-      await page.getByRole('region', { name: 'Evidencias', exact: true }).locator('q').count(),
+      await page
+        .getByRole('region', { name: 'Evidencias del texto', exact: true })
+        .locator('q')
+        .count(),
       3,
     );
-    await page.getByRole('link', { name: 'Volver al historial', exact: true }).click();
+    await page.getByRole('link', { name: /Volver al historial$/ }).click();
     const profileBefore = (
       await pool.query('SELECT skills_revision FROM app.profiles WHERE user_id=$1', [a.id])
     ).rows[0];
