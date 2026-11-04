@@ -1,0 +1,71 @@
+{
+  "generatedAt": "2026-11-03T19:45:00Z",
+  "generatedOnPlatform": "win32",
+  "projectType": "webapp",
+  "setup": [],
+  "assertions": [
+    {
+      "name": "format-check",
+      "kind": "process",
+      "command": "pnpm",
+      "args": ["format:check"],
+      "verificationMethod": "exit-code",
+      "expected": "0",
+      "timeoutSeconds": 180
+    },
+    {
+      "name": "lint-check",
+      "kind": "process",
+      "command": "pnpm",
+      "args": ["exec", "eslint", ".", "--ignore-pattern", ".worktrees/**"],
+      "verificationMethod": "exit-code",
+      "expected": "0",
+      "timeoutSeconds": 300
+    },
+    {
+      "name": "typecheck",
+      "kind": "process",
+      "command": "pnpm",
+      "args": ["typecheck"],
+      "verificationMethod": "exit-code",
+      "expected": "0",
+      "timeoutSeconds": 300
+    },
+    {
+      "name": "build",
+      "kind": "process",
+      "command": "pnpm",
+      "args": ["build"],
+      "verificationMethod": "exit-code",
+      "expected": "0",
+      "timeoutSeconds": 300
+    },
+    {
+      "name": "web-preview-serves-login",
+      "kind": "http-probe",
+      "startCommand": "pnpm",
+      "startArgs": [
+        "--filter",
+        "@devpath/web",
+        "preview",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "4173"
+      ],
+      "url": "http://127.0.0.1:4173/login",
+      "verificationMethod": "http-status",
+      "expected": "200",
+      "timeoutSeconds": 120
+    },
+    {
+      "name": "tests-pass",
+      "kind": "process",
+      "command": "pnpm",
+      "args": ["test"],
+      "verificationMethod": "test-results",
+      "expected": "0",
+      "timeoutSeconds": 600
+    }
+  ]
+}

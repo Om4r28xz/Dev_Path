@@ -1,5 +1,6 @@
 export type ErrorCode =
   | 'VALIDATION_ERROR'
+  | 'SKILL_IDS_UNKNOWN'
   | 'UNAUTHENTICATED'
   | 'INVALID_CREDENTIALS'
   | 'FORBIDDEN'

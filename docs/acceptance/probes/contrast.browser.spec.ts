@@ -106,7 +106,7 @@ test('rechecks textarea contrast in normal and503 states with visible geometry a
     await measure('normal');
     await textarea.fill('JavaScript');
     await app.engine('stop');
-    await page.getByRole('button', { name: 'Analizar', exact: true }).click();
+    await page.getByRole('button', { name: 'Analizar tecnologías', exact: true }).click();
     await expect(page.getByRole('alert')).toContainText('Conservamos la vacante');
     await measure('engine503');
   } finally {

@@ -43,6 +43,7 @@ export function AppLayout() {
           </Link>
           <nav className="layout-nav" aria-label="Navegación principal">
             <NavLink to="/profile">Mi perfil</NavLink>
+            <NavLink to="/profile/projects">Proyectos</NavLink>
             <NavLink to="/analysis/new">Nuevo análisis</NavLink>
             <NavLink to="/analyses">Historial</NavLink>
           </nav>

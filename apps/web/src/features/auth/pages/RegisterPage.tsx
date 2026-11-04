@@ -65,74 +65,87 @@ export function RegisterPage() {
   }
 
   return (
-    <main className="page-form">
-      <h1>Crear cuenta</h1>
-      {serverError && (
-        <div ref={errorFocus} tabIndex={-1}>
-          <Alert variant="error">{serverError}</Alert>
-        </div>
-      )}
-      <form onSubmit={(event) => void handleSubmit(event)} noValidate aria-busy={pending}>
-        <TextField
-          id="name"
-          label="Nombre completo"
-          required
-          autoComplete="name"
-          autoFocus
-          maxLength={100}
-          disabled={pending}
-          error={errors.name ?? ''}
-          value={fields.name}
-          onChange={(event) => {
-            setFields((old) => ({ ...old, name: event.target.value }));
-            setErrors((old) => ({ ...old, name: undefined }));
-          }}
-        />
-        <TextField
-          id="email"
-          label="Correo electrónico"
-          type="email"
-          required
-          autoComplete="email"
-          maxLength={254}
-          disabled={pending}
-          error={errors.email ?? ''}
-          value={fields.email}
-          onChange={(event) => {
-            setFields((old) => ({ ...old, email: event.target.value }));
-            setErrors((old) => ({ ...old, email: undefined }));
-          }}
-        />
-        <TextField
-          id="password"
-          label="Contraseña"
-          type="password"
-          required
-          autoComplete="new-password"
-          minLength={12}
-          maxLength={128}
-          disabled={pending}
-          error={errors.password ?? ''}
-          value={fields.password}
-          onChange={(event) => {
-            setFields((old) => ({ ...old, password: event.target.value }));
-            setErrors((old) => ({ ...old, password: undefined }));
-          }}
-        />
-        <Button type="submit" variant="primary" isLoading={pending}>
-          Registrarse
-        </Button>
-      </form>
-      <p>
-        ¿Ya tienes cuenta?{' '}
-        <Link
-          to={
-            returnTo === '/profile' ? '/login' : `/login?returnTo=${encodeURIComponent(returnTo)}`
-          }
-        >
-          Inicia sesión
-        </Link>
-      </p>
+    <main className="page-form auth-page" id="main-content">
+      <div className="auth-card surface">
+        <header className="auth-card__header">
+          <h1>Crear cuenta</h1>
+          <p className="auth-card__description">
+            Regístrate para guardar tus habilidades técnicas y evaluar la compatibilidad de tu
+            perfil con vacantes de desarrollo.
+          </p>
+        </header>
+        {serverError && (
+          <div ref={errorFocus} tabIndex={-1}>
+            <Alert variant="error">{serverError}</Alert>
+          </div>
+        )}
+        <form onSubmit={(event) => void handleSubmit(event)} noValidate aria-busy={pending}>
+          <TextField
+            id="name"
+            label="Nombre completo"
+            required
+            autoComplete="name"
+            autoFocus
+            maxLength={100}
+            disabled={pending}
+            error={errors.name ?? ''}
+            value={fields.name}
+            onChange={(event) => {
+              setFields((old) => ({ ...old, name: event.target.value }));
+              setErrors((old) => ({ ...old, name: undefined }));
+            }}
+          />
+          <TextField
+            id="email"
+            label="Correo electrónico"
+            type="email"
+            required
+            autoComplete="email"
+            maxLength={254}
+            disabled={pending}
+            error={errors.email ?? ''}
+            value={fields.email}
+            onChange={(event) => {
+              setFields((old) => ({ ...old, email: event.target.value }));
+              setErrors((old) => ({ ...old, email: undefined }));
+            }}
+          />
+          <TextField
+            id="password"
+            label="Contraseña"
+            type="password"
+            required
+            autoComplete="new-password"
+            hint="Mínimo 12 caracteres."
+            minLength={12}
+            maxLength={128}
+            disabled={pending}
+            error={errors.password ?? ''}
+            value={fields.password}
+            onChange={(event) => {
+              setFields((old) => ({ ...old, password: event.target.value }));
+              setErrors((old) => ({ ...old, password: undefined }));
+            }}
+          />
+          <Button type="submit" variant="primary" isLoading={pending}>
+            Registrarse
+          </Button>
+        </form>
+        <footer className="auth-card__footer">
+          <p>
+            ¿Ya tienes cuenta?{' '}
+            <Link
+              to={
+                returnTo === '/profile'
+                  ? '/login'
+                  : `/login?returnTo=${encodeURIComponent(returnTo)}`
+              }
+            >
+              Inicia sesión
+            </Link>
+          </p>
+        </footer>
+      </div>
     </main>
   );
 }
