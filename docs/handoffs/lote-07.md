@@ -8,7 +8,7 @@ Estado comprobado el 4 de noviembre de 2026. `origin/develop` está en `65cc14f`
 | PRJ-02 | Integrada en `develop` por PR #49                                              | Portafolio web y flujo E2E integrados en `60daedc`.                                                |
 | CV-01  | Integrada en `develop` por PR #50 (`ff5ceec`)                                  | API, almacenamiento, migración 0005, Compose y pruebas integrados.                                 |
 | CV-02  | Integrada en `develop` por PR #51 (`65cc14f`)                                  | Panel de CV en perfil, cliente Blob autenticado y pruebas Vitest/E2E integrados.                   |
-| QA-03  | Implementada sin merge en `docs/qa-03-profile-context-results`, base `65cc14f` | Matriz `M2-cases.md`, informe `M2-results.md` y E2E M2+regresión M1 validados. Pendiente PR/merge. |
+| QA-03  | Implementada en develop` | Matriz `M2-cases.md`, informe `M2-results.md` y E2E M2+regresión M1 validados. |
 
 ## CV-01
 
