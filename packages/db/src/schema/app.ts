@@ -5,6 +5,8 @@ export {
   userSkills,
   cvFiles,
   cvCleanup,
+  projects,
+  projectSkills,
   analyses,
   type Profile,
   type NewProfile,
@@ -12,6 +14,9 @@ export {
   type NewSkill,
   type UserSkill,
   type NewUserSkill,
+  type Project,
+  type NewProject,
+  type ProjectSkill,
   type Analysis,
   type NewAnalysis,
 } from './index.js';

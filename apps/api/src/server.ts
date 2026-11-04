@@ -8,6 +8,7 @@ import { profileRouter } from './modules/profile/http/router.js';
 import { cvRouter } from './modules/cv/router.js';
 import { CvService } from './modules/cv/service.js';
 import { LocalCvStorage } from './modules/cv/storage.js';
+import { projectsRouter } from './modules/projects/router.js';
 import { createApp } from './app.js';
 import { loadConfig } from './platform/config/env.js';
 import { installGracefulShutdown } from './platform/lifecycle/graceful-shutdown.js';
@@ -62,6 +63,7 @@ const app = createApp({
     app.use('/api/v1/auth', authRouter(auth, config.http.allowedOrigins, localHttp));
     app.use('/api/v1', profileRouter(pool, accessTokenMiddleware(auth)));
     app.use('/api/v1', cvRouter(cv, accessTokenMiddleware(auth)));
+    app.use('/api/v1', projectsRouter(pool, accessTokenMiddleware(auth)));
     app.use('/api/v1', analysesRouter(pool, accessTokenMiddleware(auth), engine));
   },
 });
