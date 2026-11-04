@@ -7,16 +7,23 @@ test('CV-02: upload, reload, authenticated download, replace and delete a privat
   page,
   app,
 }) => {
-  await app.register('CV Synthetic');
-  await page.goto('/profile');
+  const user = await app.register('CV Synthetic');
   const panel = page.getByRole('region', { name: 'CV privado' });
   await expect(
     panel.getByText('DevPath no analiza ni extrae habilidades', { exact: false }),
   ).toBeVisible();
+
+  await panel.getByLabel('Seleccionar PDF').setInputFiles({
+    name: 'notas.txt',
+    mimeType: 'text/plain',
+    buffer: Buffer.from('not a pdf'),
+  });
+  await expect(panel.getByText('Selecciona un archivo PDF.', { exact: true })).toBeVisible();
+
   await panel.getByLabel('Seleccionar PDF').setInputFiles({
     name: 'cv-inicial.pdf',
     mimeType: 'application/pdf',
-    buffer: pdf('initial'),
+    buffer: pdf('React TypeScript Docker Kubernetes'),
   });
   let uploads = 0;
   page.on('request', (request) => {
@@ -26,12 +33,15 @@ test('CV-02: upload, reload, authenticated download, replace and delete a privat
   await panel.getByRole('button', { name: 'Subir CV', exact: true }).dblclick();
   await expect(panel.getByText('CV guardado correctamente.', { exact: true })).toBeVisible();
   expect(uploads).toBe(1);
+  expect((await (await app.call(user, '/me/skills')).json()).skillIds).toEqual([]);
+
   await page.reload();
   await expect(panel.getByText('cv-inicial.pdf', { exact: true })).toBeVisible();
 
   const download = page.waitForEvent('download');
   await panel.getByRole('button', { name: 'Descargar CV', exact: true }).click();
   expect((await download).suggestedFilename()).toBe('cv.pdf');
+  expect(page.url()).not.toContain('accessToken');
 
   await panel.getByLabel('Seleccionar PDF').setInputFiles({
     name: 'cv-actualizado.pdf',
@@ -47,4 +57,7 @@ test('CV-02: upload, reload, authenticated download, replace and delete a privat
   await panel.getByRole('button', { name: 'Eliminar CV', exact: true }).dblclick();
   await expect(panel.getByText('CV eliminado.', { exact: true })).toBeVisible();
   await expect(panel.getByText('Todavía no has guardado un CV.', { exact: true })).toBeVisible();
+
+  const analysisId = await app.create('QA-03 Regresión M1', 'Se solicita React y TypeScript.');
+  expect(analysisId).toMatch(/^[a-f0-9-]+$/);
 });
