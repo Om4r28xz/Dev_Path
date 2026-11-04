@@ -173,12 +173,15 @@ try {
   await page.goto(base + '/analysis/new');
   await page.getByLabel('Título del puesto (opcional)').fill('Compose 67');
   await page.getByLabel('Texto de la vacante', { exact: true }).fill('JavaScript, React y Git');
-  await page.getByRole('button', { name: 'Analizar', exact: true }).click();
+  await page.getByRole('button', { name: 'Analizar tecnologías', exact: true }).click();
   await page.waitForURL(/\/analyses\/[a-f0-9-]+$/);
   const detail = page.url();
   await page.getByText('67%', { exact: true }).waitFor();
   assert.equal(
-    await page.getByRole('region', { name: 'Evidencias', exact: true }).locator('q').count(),
+    await page
+      .getByRole('region', { name: 'Evidencias del texto', exact: true })
+      .locator('q')
+      .count(),
     3,
   );
   check('register/profile/skills/real analysis67/evidence', true);
@@ -203,7 +206,7 @@ try {
   await expectRestoredProfile(page, 'Compose Updated');
   await page.goto(detail);
   await page.getByText('67%', { exact: true }).waitFor();
-  await page.getByRole('link', { name: 'Volver al historial', exact: true }).click();
+  await page.getByRole('link', { name: /Volver al historial$/ }).click();
   await page.getByRole('link', { name: 'Compose 67', exact: true }).waitFor();
   check('login/profile/history/snapshot persist after real restart', true);
   report.stage = 'engine outage and retry';
@@ -218,7 +221,7 @@ try {
   const failure = page.waitForResponse(
     (r) => r.url().endsWith('/analyses') && r.request().method() === 'POST',
   );
-  await page.getByRole('button', { name: 'Analizar', exact: true }).click();
+  await page.getByRole('button', { name: 'Analizar tecnologías', exact: true }).click();
   assert.equal((await failure).status(), 503);
   await page
     .getByRole('alert')
@@ -230,12 +233,12 @@ try {
   assert.equal(await profile.getByLabel('Nombre', { exact: true }).inputValue(), 'Compose Updated');
   await profile.close();
   compose('up', '-d', '--wait', 'engine');
-  await page.getByRole('button', { name: 'Analizar', exact: true }).click();
+  await page.getByRole('button', { name: 'Analizar tecnologías', exact: true }).click();
   await page.waitForURL(/\/analyses\/[a-f0-9-]+$/);
   assert.equal(keys.length, 2);
   assert(keys[0] && keys[0] === keys[1]);
   await page.getByText('67%', { exact: true }).waitFor();
-  await page.getByRole('link', { name: 'Volver al historial', exact: true }).click();
+  await page.getByRole('link', { name: /Volver al historial$/ }).click();
   const items = page
     .getByRole('list', { name: 'Análisis guardados', exact: true })
     .getByRole('listitem');

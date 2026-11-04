@@ -159,6 +159,30 @@ export const userSkills = appSchema.table(
   ],
 );
 
+export const cvFiles = appSchema.table('cv_files', {
+  id: uuid('id')
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  userId: uuid('user_id')
+    .notNull()
+    .unique()
+    .references(() => users.id, { onDelete: 'cascade' }),
+  storageKey: text('storage_key').notNull().unique(),
+  originalName: text('original_name').notNull(),
+  mimeType: text('mime_type').notNull(),
+  sizeBytes: integer('size_bytes').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' })
+    .notNull()
+    .default(sql`now()`),
+});
+
+export const cvCleanup = appSchema.table('cv_cleanup', {
+  storageKey: text('storage_key').primaryKey(),
+  createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' })
+    .notNull()
+    .default(sql`now()`),
+});
+
 export const projects = appSchema.table(
   'projects',
   {

@@ -41,7 +41,7 @@ docker compose --env-file infra/.env -f infra/compose.yaml ps
 
 No iniciar la API antes de migrar. Abrir http://localhost:8080/login; recargar la URL comprueba fallback SPA. Registro, login, sesión, perfil, habilidades, análisis e historial ya están conectados a la API. La aceptación integral de M1 corresponde al lote 06. Health solo certifica disponibilidad, no exactitud del matching.
 
-Solo se publica 127.0.0.1:8080; DB5432, API3000 y engine3001 quedan internos. Proxy solo envía `/api/v1/` y `/health/` a API, nunca `/internal/` al engine. La API accede a DB y llama al engine para los análisis manuales. El volumen `database` conserva datos. Claves privadas solo montadas en API; engine no recibe datos personales ni DB.
+Solo se publica 127.0.0.1:8080; DB5432, API3000 y engine3001 quedan internos. Proxy solo envía `/api/v1/` y `/health/` a API, nunca `/internal/` al engine. La API accede a DB y llama al engine para los análisis manuales. Los volúmenes `database` y `cv_files` conservan datos y PDFs privados; `cv-storage-init` asigna el propietario del volumen antes de iniciar API. No publicar ni montar `cv_files` en web/proxy/engine. Claves privadas solo montadas en API; engine no recibe datos personales ni DB.
 
 Detener, iniciar y reiniciar SIN borrar datos:
 
