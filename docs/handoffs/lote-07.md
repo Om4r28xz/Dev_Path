@@ -1,14 +1,14 @@
 # Lote 07 — Proyectos y CV privado
 
-Estado comprobado el 4 de noviembre de 2026. `origin/develop` está en `e5247ca` (con `CV-01` integrada en `ff5ceec` mediante PR #50 y `PRJ-01`/`PRJ-02` mediante PR #48 y #49). REL-01, CTR-02, AUTH-03 y VIS-04 también están integradas. Contratos consumidos: `packages/contracts/openapi/m2.yaml` versión 0.1.0, `packages/contracts/EXTENDED-CONTRACTS.md`; catálogo 1.0.0. No se cambiaron contratos ni catálogos.
+Estado comprobado el 4 de noviembre de 2026. `origin/develop` está en `65cc14f` (con `PRJ-01`, `PRJ-02`, `CV-01` y `CV-02` integradas mediante PR #48, #49, #50 y #51). REL-01, CTR-02, AUTH-03 y VIS-04 también están integradas. Contratos consumidos: `packages/contracts/openapi/m2.yaml` versión 0.1.0, `packages/contracts/EXTENDED-CONTRACTS.md`; catálogo 1.0.0. No se cambiaron contratos ni catálogos.
 
-| Tarea  | Estado                                                                  | Evidencia y siguiente acción                                                                       |
-| ------ | ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| PRJ-01 | Integrada en `develop` por PR #48                                       | CRUD, migración y pruebas integrados.                                                              |
-| PRJ-02 | Integrada en `develop` por PR #49                                       | Portafolio web y flujo E2E integrados en `60daedc`.                                                |
-| CV-01  | Integrada en `develop` por PR #50 (`ff5ceec`)                           | API, almacenamiento, migración 0005, Compose y pruebas integrados.                                 |
-| CV-02  | Implementada sin merge en `feature/cv-02-profile-cv-ui`, base `e5247ca` | Panel de CV en perfil, cliente Blob autenticado y pruebas Vitest/E2E. Revisión P2/P5 y PR/merge.   |
-| QA-03  | Bloqueada                                                               | PRJ-02 y CV-01 están integradas; espera CV-02 integrada en `develop` para abrir su rama de cierre. |
+| Tarea  | Estado                                                                         | Evidencia y siguiente acción                                                                       |
+| ------ | ------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------- |
+| PRJ-01 | Integrada en `develop` por PR #48                                              | CRUD, migración y pruebas integrados.                                                              |
+| PRJ-02 | Integrada en `develop` por PR #49                                              | Portafolio web y flujo E2E integrados en `60daedc`.                                                |
+| CV-01  | Integrada en `develop` por PR #50 (`ff5ceec`)                                  | API, almacenamiento, migración 0005, Compose y pruebas integrados.                                 |
+| CV-02  | Integrada en `develop` por PR #51 (`65cc14f`)                                  | Panel de CV en perfil, cliente Blob autenticado y pruebas Vitest/E2E integrados.                   |
+| QA-03  | Implementada sin merge en `docs/qa-03-profile-context-results`, base `65cc14f` | Matriz `M2-cases.md`, informe `M2-results.md` y E2E M2+regresión M1 validados. Pendiente PR/merge. |
 
 ## CV-01
 
@@ -31,3 +31,13 @@ Se añadió la sección `CvPanel` dentro de la página de perfil reutilizando `A
 Validación local: `pnpm --filter @devpath/web test` (incluyendo `apps/web/src/features/cv/api.test.ts`), `pnpm lint`, `pnpm format:check`, `pnpm typecheck`, `pnpm build` y `pnpm test:e2e` sobre PostgreSQL 18 aislado (11/11 pruebas E2E aprobadas, incluyendo `CV-02: upload, reload, authenticated download, replace and delete a private PDF`). No se atribuye CI remoto ni aceptación humana P5.
 
 PR sugerido: **feat(web): add private CV panel in profile (CV-02)**. Cuerpo: “Implementa la sección de CV privado en perfil: subida y sustitución multipart sin boundary manual, metadatos, descarga autenticada vía Blob con liberación de ObjectURL, borrado con confirmación, avisos de limpieza pendiente y pruebas unitarias/E2E.” Destino: `develop`. Sin merge automático.
+
+## QA-03
+
+Archivos: `docs/acceptance/M2-cases.md`, `docs/acceptance/M2-results.md`, `tests/e2e/cv.spec.ts`, `docs/handoffs/lote-07.md`.
+
+Se documentaron los casos de aceptación M2 (`PRJ-ACC-01`, `PRJ-ACC-02`, `CV-ACC-01`, `CV-ACC-02`, `CV-ACC-03`) y regresión M1 (`REG-M1-ACC-01`) sobre el commit integrado `65cc14f`, verificando explícitamente en `tests/e2e/cv.spec.ts` el rechazo de archivo no PDF en UI, la invariabilidad de `/api/v1/me/skills` tras subir un CV con nombres de tecnologías del catálogo, la ausencia de token en la URL durante la descarga autenticada vía Blob y el regreso operativo al flujo de análisis manual M1 (`/analysis/new` → `/analyses/:id`).
+
+Validación local: `pnpm install --frozen-lockfile --offline`, `pnpm lint`, `pnpm format:check`, `pnpm typecheck`, `pnpm build` y `pnpm test:e2e` sobre PostgreSQL 18 aislado (11/11 pruebas E2E aprobadas). No se atribuye aprobación humana P5 ni cierre de release `v0.2.0` (`REL-02`).
+
+PR sugerido: **docs(qa): record M2 acceptance and M1 regression results (QA-03)**. Cuerpo: “Registra la matriz de casos y resultados de aceptación M2 (`M2-cases.md`, `M2-results.md`), amplía la verificación E2E de CV con invariabilidad de skills y regreso al flujo M1, y actualiza el handoff del Lote 07.” Destino: `develop`. Sin merge automático.
