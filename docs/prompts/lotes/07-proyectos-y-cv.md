@@ -13,8 +13,9 @@ DevPath ayuda a estudiantes y desarrolladores junior a comparar habilidades con 
 Arquitectura: React + Vite + TypeScript → API Express → PostgreSQL y Skill Engine REST interno. Auth es un módulo de la API. El navegador solo consume /api/v1; no accede a DB, engine ni JSearch. El engine no usa DB ni recibe datos personales.
 Herramientas propuestas: pnpm workspaces, Zod/contratos OpenAPI, Drizzle + pg, React Router, TanStack Query, Vitest y Playwright. Reutiliza versiones fijadas por FND-01; si aún no existen, FND-01 las fija y valida.
 
-Lee antes de trabajar:
-- AGENTS.md aplicables y las instrucciones del usuario de esta sesión.
+Antes de trabajar:
+- Lee primero el archivo raíz [AGENTS.md](../../../AGENTS.md) y las instrucciones del usuario de esta sesión. Aplica su política de lectura mínima antes de abrir cualquier otro documento.
+- La lista siguiente es un mapa de contexto condicional, no una orden de precargar todos los documentos. Consulta únicamente lo necesario para la tarea activa, según `AGENTS.md`.
 - DevPath_Project_Description.md como contexto; no interpretes sus ejemplos como código existente.
 - docs/PLAN_DE_IMPLEMENTACION.md, especialmente secciones 4–11.
 - docs/TAREAS_PARA_IAS.md y docs/FLUJO_GITHUB.md.
