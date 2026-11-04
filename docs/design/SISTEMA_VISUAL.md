@@ -1,6 +1,6 @@
 # Sistema visual de DevPath
 
-Estado: VIS-01, propuesta implementada en `feature/vis-01-design-system`. VIS-02 y VIS-03 deben aplicar estos patrones a sus pantallas; VIS-04 registra la aceptación del conjunto. Este documento describe la UI, no cambia el contrato de `/api/v1`.
+Estado: VIS-01 define los fundamentos; VIS-02 los aplica a acceso y perfil; VIS-03 los aplica a análisis e historial. VIS-04 registra la aceptación técnica y mantiene separadas las comprobaciones humanas pendientes. Este documento describe la UI, no cambia el contrato de `/api/v1`.
 
 ## Principios
 
@@ -43,11 +43,13 @@ La escala tipográfica es 14/16/18/20/24 px para ayuda, cuerpo, destacado, subt�
 - Checkbox: `.checkbox-option` y entrada nativa; el texto completo es etiqueta clicable. El estado seleccionado se comunica por `checked`, no solo por color. La variante heredada `.profile-skill-option` conserva el mismo tamaño hasta VIS-02.
 - [Alert](../../apps/web/src/components/feedback/Alert.tsx): `info`, `success`, `warning`, `error`. Errores y avisos usan `role=alert`; información y éxito usan `role=status`. No mostrar el mismo mensaje de error en dos regiones vivas.
 - [StatePanel](../../apps/web/src/components/feedback/StatePanel.tsx): carga, vacío y error con título, explicación y acción opcional. Usar un verbo útil en la acción de reintento. Mantener el contenido del formulario al fallar.
-- Diálogo: `.dialog-surface` viste un `<dialog>` nativo con título y descripción asociados. La confirmación de borrado conserva cancelación con Escape, retorno de foco y bloqueo mientras está pendiente. VIS-03 migrará el diálogo de historial al patrón compartido junto con la revisión de la pantalla.
-- Listas: usar `<ul>/<li>` para colecciones, `.surface` si necesitan separación visual. La lista de historial conserva su estilo heredado hasta VIS-03; entonces deberá reemplazar sus literales visuales por tokens.
+- Diálogo: `.dialog-surface` viste un `<dialog>` nativo con título y descripción asociados. La confirmación de borrado conserva cancelación con Escape, retorno de foco y bloqueo mientras está pendiente. El historial combina este patrón con `.analysis-delete-dialog` sin colores ni tamaños aislados.
+- Resultados: `.analysis-score` destaca cobertura tecnológica y nunca se presenta sin la explicación “no es una probabilidad de contratación”. `0%` usa el mismo patrón numérico; `null` usa raya, etiqueta “Sin porcentaje” y explicación textual. Coincidencias, faltantes y detectadas son listas semánticas, no solo color.
+- Evidencia: `.analysis-evidence` agrupa menciones literales escapadas. El texto fuente completo no se reconstruye ni se interpreta como HTML. Snapshot antiguo, lista vacía y fallo de carga conservan mensajes distintos.
+- Listas: usar `<ul>/<li>` para colecciones. `.analysis-history` presenta título, fecha, score original, aviso desactualizado y acciones sin reescribir el snapshot. Las confirmaciones destructivas permanecen fuera de la tarjeta en un diálogo nativo.
 
 Todos los controles tienen foco visible de 3 px. El target mínimo para navegación y botones es 44 px. Hover no sustituye foco; errores incluyen texto. Las animaciones se limitan a cambios sobrios y respetan `prefers-reduced-motion`.
 
 ## Extensión para M2–M4
 
-PRJ-02, CV-02, JSR-04 y LRN-04 consumen los tokens y componentes anteriores. Un patrón nuevo se añade primero a `apps/web/src/components` o `apps/web/src/styles` dentro del PR de su pantalla y se documenta aquí. Mantener componentes React para estructura, semántica y estado; CSS solo define presentación. Reutilizar `/api/v1` y los DTO existentes, sin inferir nuevos campos de la apariencia visual. VIS-04 debe revisar móvil, zoom real, teclado, lector y lenguaje antes de considerar completa la guía.
+PRJ-02, CV-02, JSR-04 y LRN-04 consumen los tokens y componentes anteriores. Proyectos y CV reutilizan tarjetas de datos, estados y diálogo; JSearch reutiliza formulario, score y evidencia sin prometer exactitud externa; rutas de aprendizaje reutilizan listas de estado y siguiente paso. Un patrón nuevo se añade primero a `apps/web/src/components` o `apps/web/src/styles` dentro del PR de su pantalla y se documenta aquí. Mantener componentes React para estructura, semántica y estado; CSS solo define presentación. Reutilizar `/api/v1` y los DTO existentes, sin inferir nuevos campos de la apariencia visual. La matriz [M1-UI-results.md](../acceptance/M1-UI-results.md) conserva zoom real, teclado, lector y lenguaje como pendientes humanos hasta que se ejecuten.

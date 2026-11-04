@@ -9,6 +9,7 @@ import { browserSession } from '../../../lib/session/session.js';
 import { useSession } from '../../auth/SessionProvider.js';
 import { createAnalysis } from '../api.js';
 import { AnalysisAttempt, validateAnalysisDraft, type DraftErrors } from '../draft.js';
+import './history.css';
 
 function failureMessage(error: unknown): string {
   if (error instanceof AnalysisResponseError)
@@ -85,17 +86,33 @@ function AnalysisForm({ owner }: { owner: string }) {
     }
   }
   return (
-    <div className="page-form">
-      <h1>Nuevo análisis</h1>
-      <p>
-        Pega una vacante y compárala con <Link to="/profile">tus habilidades guardadas</Link>.
-      </p>
+    <div className="analysis-page analysis-page--form">
+      <header className="analysis-page__header">
+        <p className="analysis-page__eyebrow">Comparación tecnológica</p>
+        <h1>Analizar una vacante</h1>
+        <p className="analysis-page__lead">
+          Pega el texto de una vacante y compáralo con{' '}
+          <Link to="/profile">tus habilidades guardadas</Link>. El resultado muestra tecnologías
+          coincidentes y faltantes; no predice si conseguirás el empleo.
+        </p>
+      </header>
       {message && (
         <div ref={errorRegion} tabIndex={-1}>
           <Alert variant="error">{message}</Alert>
         </div>
       )}
-      <form onSubmit={(event) => void submit(event)} noValidate aria-busy={pending}>
+      <form
+        className="analysis-form surface"
+        onSubmit={(event) => void submit(event)}
+        noValidate
+        aria-busy={pending}
+      >
+        <div className="analysis-form__intro">
+          <h2>Datos de la vacante</h2>
+          <p>
+            Solo necesitas el texto publicado. El título es opcional y te ayuda a identificarla.
+          </p>
+        </div>
         <div className="field">
           <label className="field__label" htmlFor="analysis-title">
             Título del puesto (opcional)
@@ -149,11 +166,18 @@ function AnalysisForm({ owner }: { owner: string }) {
             </span>
           )}
         </div>
-        <Button type="submit" isLoading={pending}>
-          Analizar
-        </Button>
+        <div className="analysis-form__actions">
+          <Button type="submit" isLoading={pending}>
+            Analizar tecnologías
+          </Button>
+          <span className="field__hint">El análisis quedará guardado en tu historial.</span>
+        </div>
       </form>
-      {pending && <p role="status">Analizando vacante…</p>}
+      {pending && (
+        <p className="analysis-progress" role="status">
+          Analizando la vacante sin modificar el texto…
+        </p>
+      )}
     </div>
   );
 }
