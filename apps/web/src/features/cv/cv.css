@@ -1,0 +1,49 @@
+.cv-panel {
+  display: grid;
+  gap: var(--space-4);
+}
+.cv-panel__header,
+.cv-panel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.cv-panel__header h2,
+.cv-panel__header p,
+.cv-panel__empty,
+.cv-upload p {
+  margin-block: 0;
+}
+.cv-metadata {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-4);
+  background: var(--color-surface-soft);
+  border-radius: var(--radius-md);
+}
+.cv-metadata div {
+  display: grid;
+  grid-template-columns: minmax(5rem, 0.35fr) 1fr;
+  gap: var(--space-3);
+}
+.cv-metadata dt {
+  color: var(--color-text-muted);
+  font-weight: 700;
+}
+.cv-metadata dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.cv-upload {
+  display: grid;
+  gap: var(--space-4);
+}
+@media (max-width: 40rem) {
+  .cv-metadata div {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+  }
+}

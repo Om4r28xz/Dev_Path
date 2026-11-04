@@ -6,6 +6,7 @@ import { Button } from '../../../components/ui/Button.js';
 import { useSession } from '../../auth/SessionProvider.js';
 import { ApiError } from '../../../lib/http/client.js';
 import { browserSession } from '../../../lib/session/session.js';
+import { CvPanel } from '../../cv/CvPanel.js';
 import { loadProfile, profileDraft, saveProfile, type ProfileDraft } from '../api.js';
 import { loadSkills, saveSkills, searchSkills, toggleSkill } from '../../skills/api.js';
 
@@ -242,6 +243,8 @@ function ProfileEditor({ userId }: { userId: string }) {
             </form>
           )}
         </section>
+
+        <CvPanel userId={userId} />
 
         {/* Sección: Habilidades técnicas */}
         <section className="profile-card surface" aria-labelledby="skills-title">
