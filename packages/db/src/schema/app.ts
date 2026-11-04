@@ -3,6 +3,8 @@ export {
   profiles,
   skills,
   userSkills,
+  cvFiles,
+  cvCleanup,
   analyses,
   type Profile,
   type NewProfile,
