@@ -37,7 +37,7 @@ test('M1: registration, login, profile, skills, real 67% analysis, persistence a
   ])
     await expect(result.getByRole('heading', { name: heading, exact: true })).toBeVisible();
   await expect(
-    page.getByRole('region', { name: 'Evidencias', exact: true }).locator('q'),
+    page.getByRole('region', { name: 'Evidencias del texto', exact: true }).locator('q'),
   ).toHaveCount(3);
   const dto = await (await app.call(user, `/analyses/${id}`)).json();
   expect(dto.requiredSkillIds).toEqual(['git', 'javascript', 'react']);
@@ -55,10 +55,10 @@ test('M1: registration, login, profile, skills, real 67% analysis, persistence a
   expect(stored.evidence).toHaveLength(3);
   await page.reload();
   await expect(page.getByText('67%', { exact: true })).toBeVisible();
-  await page.getByRole('link', { name: 'Volver al historial', exact: true }).click();
+  await page.getByRole('link', { name: /Volver al historial$/ }).click();
   await page.getByRole('link', { name: 'Synthetic 67', exact: true }).click();
   await expect(page).toHaveURL(new RegExp(`/analyses/${id}$`));
-  await page.getByRole('link', { name: 'Volver al historial', exact: true }).click();
+  await page.getByRole('link', { name: /Volver al historial$/ }).click();
   await page.getByRole('button', { name: 'Eliminar análisis: Synthetic 67', exact: true }).click();
   const dialog = page.getByRole('dialog', { name: '¿Eliminar este análisis?', exact: true });
   await expect(dialog.getByRole('button', { name: 'Cancelar', exact: true })).toBeFocused();
@@ -109,7 +109,7 @@ test('M1: two real accounts cannot list, read or delete each other’s analyses'
   await logout(page);
   await app.login(a);
   await page.goto(`/analyses/${id}`);
-  await expect(page.getByRole('heading', { name: 'Private A', exact: true })).toBeVisible();
+  await expect(page.getByText('Private A', { exact: true })).toBeVisible();
 });
 
 test('M1: real engine outage retains the draft and idempotency key, retry saves once', async ({
@@ -129,7 +129,7 @@ test('M1: real engine outage retains the draft and idempotency key, retry saves 
   const failed = page.waitForResponse(
     (r) => r.url().endsWith('/analyses') && r.request().method() === 'POST',
   );
-  await page.getByRole('button', { name: 'Analizar', exact: true }).click();
+  await page.getByRole('button', { name: 'Analizar tecnologías', exact: true }).click();
   expect((await failed).status()).toBe(503);
   await expect(page.getByRole('alert')).toContainText('Conservamos la vacante');
   await expect(page.getByLabel('Texto de la vacante', { exact: true })).toHaveValue(
@@ -140,7 +140,7 @@ test('M1: real engine outage retains the draft and idempotency key, retry saves 
     (await app.pool.query('SELECT id FROM app.analyses WHERE user_id=$1', [user.id])).rowCount,
   ).toBe(0);
   await app.engine('start');
-  await page.getByRole('button', { name: 'Analizar', exact: true }).click();
+  await page.getByRole('button', { name: 'Analizar tecnologías', exact: true }).click();
   await page.waitForURL(/\/analyses\/[a-f0-9-]+$/);
   expect(keys).toHaveLength(2);
   expect(keys[0]).toBeTruthy();
@@ -166,9 +166,9 @@ test('M1: legacy evidence, 0 versus null, and hostile HTML remain safe', async (
   const hostile = '<img src=x onerror="window.__e2eXss=1"> JavaScript';
   const id = await app.create(hostile, hostile);
   await expect(page.getByText('0%', { exact: true })).toBeVisible();
-  await expect(page.getByRole('heading', { name: hostile, exact: true })).toBeVisible();
+  await expect(page.getByText(hostile, { exact: true })).toBeVisible();
   await expect(
-    page.getByRole('region', { name: 'Evidencias', exact: true }).locator('q'),
+    page.getByRole('region', { name: 'Evidencias del texto', exact: true }).locator('q'),
   ).toHaveText(['JavaScript']);
   expect(await page.locator('main img, main script').count()).toBe(0);
   expect(await page.evaluate(() => Reflect.get(window, '__e2eXss'))).toBeUndefined();

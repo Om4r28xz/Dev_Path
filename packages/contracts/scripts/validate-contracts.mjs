@@ -8,10 +8,13 @@ import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import YAML from 'yaml';
 
+import { contractDocuments } from './contract-documents.mjs';
+import { validateExtendedContracts } from './validate-extended-contracts.mjs';
+
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const documents = {};
 
-for (const name of ['public', 'engine']) {
+for (const { name } of contractDocuments) {
   const sourcePath = path.join(packageRoot, 'openapi', `${name}.yaml`);
   const source = await readFile(sourcePath, 'utf8');
   const document = YAML.parse(source);
@@ -38,6 +41,14 @@ for (const name of ['public', 'engine']) {
 
 const ajv = new Ajv2020({ allErrors: true, strict: false });
 addFormats(ajv);
+// OpenAPI transport annotation, not PDF content validation. Actual streaming,
+// byte limits and file signatures belong to the future M2 implementation.
+ajv.addFormat('binary', { type: 'string', validate: (value) => typeof value === 'string' });
+for (const [name, { document }] of Object.entries(documents))
+  ajv.addSchema(
+    { components: { schemas: document.components.schemas } },
+    `https://contracts.devpath.test/${name}.yaml`,
+  );
 const manifest = JSON.parse(
   await readFile(path.join(packageRoot, 'examples', 'manifest.json'), 'utf8'),
 );
@@ -50,15 +61,15 @@ for (const entry of manifest.examples) {
   const examplePath = path.join(packageRoot, 'examples', entry.file);
   const example = JSON.parse(await readFile(examplePath, 'utf8'));
   const schema = {
-    $ref: `#/components/schemas/${entry.schema}`,
-    components: { schemas: document.components.schemas },
+    $ref: `https://contracts.devpath.test/${entry.document}.yaml#/components/schemas/${entry.schema}`,
   };
   const validate = ajv.compile(schema);
-  assert.ok(
+  assert.equal(
     validate(example),
+    entry.valid !== false,
     `${entry.file} failed ${entry.schema}: ${ajv.errorsText(validate.errors)}`,
   );
-  validatedExamples.set(entry.file, example);
+  if (entry.valid !== false) validatedExamples.set(entry.file, example);
 }
 
 for (const file of [
@@ -180,4 +191,7 @@ assert.ok(
   'SessionResponse must not expose a refresh token',
 );
 
-console.log(`Validated 2 OpenAPI documents and ${manifest.examples.length} JSON examples.`);
+await validateExtendedContracts({ packageRoot, documents, ajv, validatedExamples });
+console.log(
+  `Validated ${contractDocuments.length} OpenAPI documents and ${manifest.examples.length} JSON examples (including expected rejections).`,
+);

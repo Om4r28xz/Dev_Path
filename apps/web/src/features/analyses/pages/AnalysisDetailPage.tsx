@@ -7,6 +7,7 @@ import { loadAnalysis } from '../api.js';
 import { AnalysisResult } from '../components/AnalysisResult.js';
 import { AnalysisDetailState } from '../components/AnalysisDetailState.js';
 import { useAnalysisSkillNames } from '../use-skill-names.js';
+import './history.css';
 
 export function AnalysisDetailPage() {
   const { id = '' } = useParams<{ id: string }>();
@@ -45,19 +46,19 @@ function OwnedAnalysisDetail({ owner, id }: { owner: string; id: string }) {
   }, [analysis.data, analysis.isError]);
   if (missing)
     return (
-      <div className="page-form" ref={errorRegion} tabIndex={-1}>
+      <div className="analysis-page analysis-page--form" ref={errorRegion} tabIndex={-1}>
         <AnalysisDetailState kind="not-found" />
       </div>
     );
   if (analysis.isPending)
     return (
-      <div className="page-form">
+      <div className="analysis-page analysis-page--form">
         <AnalysisDetailState kind="loading" />
       </div>
     );
   if (analysis.isError)
     return (
-      <div className="page-form" ref={errorRegion} tabIndex={-1}>
+      <div className="analysis-page analysis-page--form" ref={errorRegion} tabIndex={-1}>
         <AnalysisDetailState
           kind="error"
           retry={() => void analysis.refetch()}
@@ -66,17 +67,19 @@ function OwnedAnalysisDetail({ owner, id }: { owner: string; id: string }) {
       </div>
     );
   return (
-    <div className="page-form" ref={resultRegion} tabIndex={-1} aria-busy={analysis.isFetching}>
-      <h1>Detalle del análisis</h1>
-      <p>
-        <Link to="/analyses">Volver al historial</Link>
-      </p>
+    <div className="analysis-page" ref={resultRegion} tabIndex={-1} aria-busy={analysis.isFetching}>
+      <nav className="analysis-breadcrumb" aria-label="Navegación del análisis">
+        <Link to="/analyses">← Volver al historial</Link>
+      </nav>
       {analysis.isFetching && <p role="status">Actualizando análisis…</p>}
       <AnalysisResult analysis={analysis.data} skillNames={names} />
-      <p>
-        <Link to="/analysis/new">Analizar otra vacante</Link> o{' '}
-        <Link to="/profile">revisar mis habilidades</Link>.
-      </p>
+      <div className="analysis-next-actions surface-soft">
+        <h2>Siguiente paso</h2>
+        <p>
+          Puedes <Link to="/analysis/new">analizar otra vacante</Link> o{' '}
+          <Link to="/profile">revisar tus habilidades</Link> antes de una nueva comparación.
+        </p>
+      </div>
     </div>
   );
 }

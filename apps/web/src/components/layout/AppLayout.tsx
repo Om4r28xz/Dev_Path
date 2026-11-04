@@ -33,23 +33,29 @@ export function AppLayout() {
 
   return (
     <>
+      <a className="skip-link" href="#main-content">
+        Saltar al contenido
+      </a>
       <header className="layout-header">
-        <Link to="/profile" className="layout-header__brand">
-          DevPath
-        </Link>
-        <nav className="layout-nav" aria-label="Navegación principal">
-          <NavLink to="/profile">Mi perfil</NavLink>
-          <NavLink to="/analysis/new">Nuevo análisis</NavLink>
-          <NavLink to="/analyses">Historial</NavLink>
-        </nav>
-        <div className="layout-actions">
-          <span>{session?.user.name}</span>
-          <Button variant="secondary" isLoading={pending} onClick={() => void handleLogout()}>
-            Cerrar sesión
-          </Button>
+        <div className="layout-header__inner">
+          <Link to="/profile" className="layout-header__brand">
+            DevPath
+          </Link>
+          <nav className="layout-nav" aria-label="Navegación principal">
+            <NavLink to="/profile">Mi perfil</NavLink>
+            <NavLink to="/profile/projects">Proyectos</NavLink>
+            <NavLink to="/analysis/new">Nuevo análisis</NavLink>
+            <NavLink to="/analyses">Historial</NavLink>
+          </nav>
+          <div className="layout-actions">
+            <span className="layout-actions__name">{session?.user.name}</span>
+            <Button variant="secondary" isLoading={pending} onClick={() => void handleLogout()}>
+              Cerrar sesión
+            </Button>
+          </div>
         </div>
       </header>
-      <main className="layout-main">
+      <main id="main-content" className="layout-main" tabIndex={-1}>
         {error && <Alert variant="error">{error}</Alert>}
         <Outlet />
       </main>

@@ -1,0 +1,493 @@
+openapi: 3.1.0
+info:
+  title: DevPath M4 — PROPOSED learning paths
+  version: 0.1.0
+  description: PROPOSED until LRN-01 confirms curated content/templates.
+    Rule-based, no generative AI. Create from own saved analysis snapshot and
+    own current project snapshot/revision; persist generator/content/catalog
+    versions and activity text. Never recalculate historical match percentage or
+    update personal skills on completion. See EXTENDED-CONTRACTS.md for
+    idempotency, progress and deletion semantics.
+x-contract-status: proposed
+servers:
+  - url: /api/v1
+security:
+  - bearerAuth: []
+paths:
+  /learning-paths:
+    get:
+      operationId: proposedListOwnLearningPaths
+      summary: PROPOSED list only own paths, createdAt/id descending
+      x-implementation-status: not-implemented
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LearningPathList'
+              example:
+                items:
+                  - id: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                    analysisId: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                    projectsRevision: 2
+                    versions:
+                      catalog: 1.0.0
+                      content: proposed-1
+                      generator: rules-1
+                    steps:
+                      - id: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                        title: Practicar Git
+                        activity: Crear commits pequeños en un proyecto sintético.
+                        reason: Git está entre las habilidades faltantes del análisis guardado.
+                        skillIds:
+                          - git
+                        projectId: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                        resourceUrl: https://example.org/learning/git
+                        status: pending
+                        completedAt: null
+                    progress:
+                      completed: 0
+                      total: 1
+                      percentage: 0
+                    message: null
+                    createdAt: 2026-11-02T12:00:00Z
+                    updatedAt: 2026-11-02T12:00:00Z
+                nextCursor: null
+        '400': &a1
+          $ref: ./public.yaml#/components/responses/ValidationError
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '500': &a2
+          description: Internal error; sanitized, no implementation details.
+          content:
+            application/json:
+              schema:
+                $ref: ./public.yaml#/components/schemas/ErrorResponse
+      parameters:
+        - $ref: ./public.yaml#/components/parameters/Limit
+        - $ref: ./public.yaml#/components/parameters/Cursor
+    post:
+      operationId: proposedCreateLearningPath
+      summary: PROPOSED deterministic snapshot creation with safe retries
+      x-implementation-status: not-implemented
+      responses:
+        '200':
+          description: Replay original snapshot, not regenerated from new project/content
+            revisions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LearningPath'
+              example:
+                id: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                analysisId: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                projectsRevision: 2
+                versions:
+                  catalog: 1.0.0
+                  content: proposed-1
+                  generator: rules-1
+                steps:
+                  - id: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                    title: Practicar Git
+                    activity: Crear commits pequeños en un proyecto sintético.
+                    reason: Git está entre las habilidades faltantes del análisis guardado.
+                    skillIds:
+                      - git
+                    projectId: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                    resourceUrl: https://example.org/learning/git
+                    status: pending
+                    completedAt: null
+                progress:
+                  completed: 0
+                  total: 1
+                  percentage: 0
+                message: null
+                createdAt: 2026-11-02T12:00:00Z
+                updatedAt: 2026-11-02T12:00:00Z
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LearningPath'
+              example:
+                id: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                analysisId: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                projectsRevision: 2
+                versions:
+                  catalog: 1.0.0
+                  content: proposed-1
+                  generator: rules-1
+                steps:
+                  - id: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                    title: Practicar Git
+                    activity: Crear commits pequeños en un proyecto sintético.
+                    reason: Git está entre las habilidades faltantes del análisis guardado.
+                    skillIds:
+                      - git
+                    projectId: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                    resourceUrl: https://example.org/learning/git
+                    status: pending
+                    completedAt: null
+                progress:
+                  completed: 0
+                  total: 1
+                  percentage: 0
+                message: null
+                createdAt: 2026-11-02T12:00:00Z
+                updatedAt: 2026-11-02T12:00:00Z
+        '400': *a1
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: ./public.yaml#/components/responses/NotFound
+        '409':
+          $ref: ./public.yaml#/components/responses/IdempotencyConflict
+        '500': *a2
+      parameters:
+        - $ref: ./public.yaml#/components/parameters/IdempotencyKey
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateLearningPathRequest'
+            example:
+              analysisId: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+  '/learning-paths/{id}':
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema: &a3
+          type: string
+          format: uuid
+    get:
+      operationId: proposedGetOwnLearningPath
+      summary: PROPOSED read own path snapshot
+      x-implementation-status: not-implemented
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LearningPath'
+              example:
+                id: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                analysisId: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                projectsRevision: 2
+                versions:
+                  catalog: 1.0.0
+                  content: proposed-1
+                  generator: rules-1
+                steps:
+                  - id: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                    title: Practicar Git
+                    activity: Crear commits pequeños en un proyecto sintético.
+                    reason: Git está entre las habilidades faltantes del análisis guardado.
+                    skillIds:
+                      - git
+                    projectId: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                    resourceUrl: https://example.org/learning/git
+                    status: pending
+                    completedAt: null
+                progress:
+                  completed: 0
+                  total: 1
+                  percentage: 0
+                message: null
+                createdAt: 2026-11-02T12:00:00Z
+                updatedAt: 2026-11-02T12:00:00Z
+        '400': *a1
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: ./public.yaml#/components/responses/NotFound
+        '500': *a2
+    delete:
+      operationId: proposedDeleteOwnLearningPath
+      summary: PROPOSED delete own path and steps
+      x-implementation-status: not-implemented
+      responses:
+        '204':
+          description: Deleted; no body.
+        '400': *a1
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: ./public.yaml#/components/responses/NotFound
+        '500': *a2
+  '/learning-paths/{id}/steps/{stepId}':
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema: *a3
+      - name: stepId
+        in: path
+        required: true
+        schema: *a3
+    patch:
+      operationId: proposedUpdateOwnLearningStep
+      summary: PROPOSED update status idempotently and return derived progress
+      x-implementation-status: not-implemented
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LearningPath'
+              example:
+                id: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                analysisId: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                projectsRevision: 2
+                versions:
+                  catalog: 1.0.0
+                  content: proposed-1
+                  generator: rules-1
+                steps:
+                  - id: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                    title: Practicar Git
+                    activity: Crear commits pequeños en un proyecto sintético.
+                    reason: Git está entre las habilidades faltantes del análisis guardado.
+                    skillIds:
+                      - git
+                    projectId: 5e9220ea-e5b7-42bb-8a88-adf08763837f
+                    resourceUrl: https://example.org/learning/git
+                    status: pending
+                    completedAt: null
+                progress:
+                  completed: 0
+                  total: 1
+                  percentage: 0
+                message: null
+                createdAt: 2026-11-02T12:00:00Z
+                updatedAt: 2026-11-02T12:00:00Z
+        '400': *a1
+        '401':
+          $ref: '#/components/responses/Unauthenticated'
+        '404':
+          $ref: ./public.yaml#/components/responses/NotFound
+        '500': *a2
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateLearningStepRequest'
+            example:
+              status: completed
+components:
+  securitySchemes:
+    bearerAuth:
+      $ref: ./public.yaml#/components/securitySchemes/bearerAuth
+  schemas:
+    CreateLearningPathRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - analysisId
+      properties:
+        analysisId: *a3
+    UpdateLearningStepRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - status
+      properties:
+        status: &a4
+          type: string
+          enum:
+            - pending
+            - in_progress
+            - completed
+    LearningStep:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - title
+        - activity
+        - reason
+        - skillIds
+        - projectId
+        - resourceUrl
+        - status
+        - completedAt
+      properties:
+        id: *a3
+        title:
+          type: string
+          minLength: 1
+          maxLength: 120
+        activity:
+          type: string
+          minLength: 1
+          maxLength: 5000
+        reason:
+          type: string
+          minLength: 1
+          maxLength: 1000
+        skillIds:
+          $ref: ./public.yaml#/components/schemas/UniqueSkillIds
+        projectId:
+          type:
+            - string
+            - 'null'
+          format: uuid
+        resourceUrl:
+          type:
+            - string
+            - 'null'
+          format: uri
+          pattern: ^https?://
+          maxLength: 2048
+        status: *a4
+        completedAt:
+          type:
+            - string
+            - 'null'
+          format: date-time
+      allOf:
+        - if:
+            properties:
+              status:
+                const: completed
+            required:
+              - status
+          then:
+            properties:
+              completedAt: &a5
+                type: string
+                format: date-time
+          else:
+            properties:
+              completedAt:
+                type: 'null'
+    LearningProgress:
+      type: object
+      additionalProperties: false
+      required:
+        - completed
+        - total
+        - percentage
+      properties:
+        completed:
+          type: integer
+          minimum: 0
+          maximum: 200
+        total:
+          type: integer
+          minimum: 0
+          maximum: 200
+        percentage:
+          type:
+            - integer
+            - 'null'
+          minimum: 0
+          maximum: 100
+      allOf:
+        - if:
+            properties:
+              total:
+                const: 0
+            required:
+              - total
+          then:
+            properties:
+              completed:
+                const: 0
+              percentage:
+                type: 'null'
+          else:
+            properties:
+              percentage:
+                type: integer
+    LearningPath:
+      type: object
+      additionalProperties: false
+      required:
+        - id
+        - analysisId
+        - projectsRevision
+        - versions
+        - steps
+        - progress
+        - message
+        - createdAt
+        - updatedAt
+      properties:
+        id: *a3
+        analysisId: *a3
+        projectsRevision:
+          type: integer
+          minimum: 0
+        versions:
+          type: object
+          additionalProperties: false
+          required:
+            - catalog
+            - content
+            - generator
+          properties:
+            catalog:
+              type: string
+              minLength: 1
+              maxLength: 40
+            content:
+              type: string
+              minLength: 1
+              maxLength: 40
+            generator:
+              type: string
+              minLength: 1
+              maxLength: 40
+        steps:
+          type: array
+          maxItems: 200
+          items:
+            $ref: '#/components/schemas/LearningStep'
+        progress:
+          $ref: '#/components/schemas/LearningProgress'
+        message:
+          type:
+            - string
+            - 'null'
+          maxLength: 500
+        createdAt: *a5
+        updatedAt: *a5
+    LearningPathList:
+      type: object
+      additionalProperties: false
+      required:
+        - items
+        - nextCursor
+      properties:
+        items:
+          type: array
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/LearningPath'
+        nextCursor:
+          type:
+            - string
+            - 'null'
+          minLength: 16
+          maxLength: 512
+    SharedError:
+      $ref: ./public.yaml#/components/schemas/ErrorResponse
+  responses:
+    Unauthenticated:
+      description: Missing, expired or invalid bearer token; same envelope as M1.
+      content:
+        application/json:
+          schema:
+            $ref: ./public.yaml#/components/schemas/ErrorResponse
+          example:
+            error:
+              code: UNAUTHENTICATED
+              message: Se requiere autenticación.
+              requestId: 5e9220ea-e5b7-42bb-8a88-adf08763837f

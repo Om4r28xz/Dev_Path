@@ -1,5 +1,7 @@
 # Arquitectura implementada de DevPath M1
 
+Actualización CTR-02: M1 se publicó como [v0.1.0](https://github.com/Om4r28xz/Dev_Path/releases/tag/v0.1.0) en `1f9e721a320270a415d0825e75a92f10f0d0b35d`, sincronizado a develop por PR #42 (`fc9f41b`). La descripción histórica siguiente corresponde al desarrollo de M1. Los [contratos posteriores](../packages/contracts/EXTENDED-CONTRACTS.md) definen proyectos/CV de M2 y propuestas jobs/rutas de M3/M4; no incorporan endpoints, pantallas ni migraciones a la aplicación publicada.
+
 Referencia: `develop` **c564a57**, 2 de noviembre de 2026. Describe código integrado,
 incluidos ANL-01/02/03/04 y el contrato público de evidence. La disponibilidad del código
 no equivale a aceptación humana ni a publicación de `v0.1.0`.

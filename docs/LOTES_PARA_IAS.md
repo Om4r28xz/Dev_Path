@@ -1,8 +1,8 @@
 # DevPath: lotes de trabajo y prompts para IAs
 
-Actualizado: 2 de noviembre de 2026.
+Actualizado: 3 de noviembre de 2026.
 
-Se han preparado **11 prompts completos**: un lote 00 para la IA de estructura y diez lotes de hasta cinco tareas para las 49 tareas originales. Se agrega STR-01 al backlog: **50 tareas en total**, incluida DEP-01 opcional.
+Se han preparado **12 prompts completos**: un lote 00 para la IA de estructura, los diez lotes originales y el lote intermedio 06.5. Las 49 tareas originales, STR-01 y cuatro tareas VIS suman **54 tareas en total**, incluida DEP-01 opcional. No se renumeran los lotes 07–10.
 
 Cada prompt contiene contexto, arquitectura, dependencias, responsables humanos, archivos, contratos relevantes, orden, pruebas, límites de Git y entrega. Copiar el archivo completo a la IA; no es necesario reconstruir el encargo a partir de un título.
 
@@ -17,16 +17,17 @@ Cada prompt contiene contexto, arquitectura, dependencias, responsables humanos,
 | 04 | Sesión, habilidades y matching real | AUTH-02, PRO-01, ENG-02, AUTH-03, AUTH-04 | [Copiar prompt 04](prompts/lotes/04-sesion-skills-y-matching.md) |
 | 05 | Integración vertical de perfil y análisis manual | PRO-02, ANL-01, ANL-03, ANL-02, ANL-04 | [Copiar prompt 05](prompts/lotes/05-integracion-perfil-y-analisis.md) |
 | 06 | Pruebas, aceptación, release M1 y contratos M2 | QAA-01, QA-02, DOC-02, REL-01, CTR-02 | [Copiar prompt 06](prompts/lotes/06-validacion-release-m1.md) |
+| 06.5 | Sistema visual profesional y rediseño M1 | VIS-01, VIS-02, VIS-03, VIS-04 | [Copiar prompt 06.5](prompts/lotes/06.5-sistema-visual-m1.md) |
 | 07 | Proyectos y CV privado | PRJ-01, PRJ-02, CV-01, CV-02, QA-03 | [Copiar prompt 07](prompts/lotes/07-proyectos-y-cv.md) |
 | 08 | Release M2 e integración JSearch | REL-02, JSR-01, JSR-02, JSR-03, JSR-04 | [Copiar prompt 08](prompts/lotes/08-release-m2-y-jsearch.md) |
 | 09 | Aceptación del proveedor y backend de aprendizaje | QA-04, REL-03, LRN-01, LRN-02, LRN-03 | [Copiar prompt 09](prompts/lotes/09-proveedor-y-aprendizaje-api.md) |
 | 10 | Interfaz de rutas, aceptación final y opción de hosting | LRN-04, QA-05, REL-04, DEP-01 (DEP-01 opcional) | [Copiar prompt 10](prompts/lotes/10-rutas-y-cierre.md) |
 
-El inventario legible por herramientas está en [lotes.json](lotes.json); su `status` resume la integración de tareas por lote al 2 de noviembre de 2026, no reemplaza la verificación de Git por tarea. Las tareas detalladas siguen en [TAREAS_PARA_IAS.md](TAREAS_PARA_IAS.md); arquitectura en [PLAN_DE_IMPLEMENTACION.md](PLAN_DE_IMPLEMENTACION.md); colaboración en [FLUJO_GITHUB.md](FLUJO_GITHUB.md).
+El inventario legible por herramientas está en [lotes.json](lotes.json); su `status` es orientativo y no reemplaza la verificación de Git por tarea. Las tareas detalladas siguen en [TAREAS_PARA_IAS.md](TAREAS_PARA_IAS.md); la dirección de interfaz en [DIRECCION_UI.md](design/DIRECCION_UI.md); arquitectura en [PLAN_DE_IMPLEMENTACION.md](PLAN_DE_IMPLEMENTACION.md); colaboración en [FLUJO_GITHUB.md](FLUJO_GITHUB.md).
 
-**Rúbrica E3 incorporada sin agregar tareas ni cambiar los 11 lotes:** CTR-02 (lote 06) deja propuestos los contratos de las tres operaciones de vacantes; JSR-01/02/03 (lote 08) verifican el proveedor, implementan JSearch en la API y completan README, pruebas y colección; QA-04 y REL-03 (lote 09) verifican evidencia live y preparan el tag `e3-microservice`. El proceso evaluado es la API Express consumida por la web, no el Skill Engine. El lote 05 ya está integrado y sus tareas no se reabren.
+**Rúbrica E3 incorporada sin agregar tareas de proveedor:** CTR-02 (lote 06) deja propuestos los contratos de las tres operaciones de vacantes; JSR-01/02/03 (lote 08) verifican el proveedor, implementan JSearch en la API y completan README, pruebas y colección; QA-04 y REL-03 (lote 09) verifican evidencia live y preparan el tag `e3-microservice`. El proceso evaluado es la API Express consumida por la web, no el Skill Engine. El lote 06.5 añade trabajo visual sin cambiar esos criterios.
 
-Estado comprobado el 2 de noviembre de 2026: `origin/develop` contiene PRO-02, ANL-01/02/03/04 y el contrato de evidencia; el lote 05 está integrado. El lote 06 sigue en preparación, validación y release. Los handoffs antiguos pueden conservar estados históricos; comprobar Git antes de reanudar cualquier tarea. La incorporación de E3 es planificación, no implementación de sus endpoints ni publicación del tag.
+Estado comprobado el 3 de noviembre de 2026: `origin/develop` contiene el merge de CTR-02 por PR #43 y `main` contiene `v0.1.0`; las cinco tareas del lote 06 están integradas, aunque su handoff conserva un estado previo al PR #43. El lote 06.5 se planifica ahora; no se ha implementado ni integrado. Comprobar Git antes de reanudar cualquier tarea. La incorporación de E3 sigue siendo planificación de sus endpoints, no implementación live ni publicación del tag `e3-microservice`.
 
 ## 2. Cómo usar un lote
 
@@ -62,6 +63,7 @@ Ejemplos:
 - ENG-02 del lote 04 necesita ENG-01 y CAT-02; no depende de pantallas de login.
 - ANL-02 necesita ANL-01, ANL-03 y PRO-02. Por eso el lote 05 coloca ANL-03 antes de la UI de detalle.
 - CTR-02 del lote 06 espera a REL-01, incluida sincronización main → develop.
+- VIS-01–04 del lote 06.5 se preparan tras M1; PRJ-02/CV-02, JSR-04 y LRN-04 esperan VIS-04 integrada para construir sus pantallas con el sistema visual. PRJ-01/CV-01, JSR-01/02/03 y LRN-01/02/03 no se bloquean por esta dependencia de UI.
 - JSR-01 puede investigarse desde REL-01 aunque no esté publicado M2; implementar JSR-02 requiere REL-02.
 - Si falta acceso permitido a JSearch, LRN-01/LRN-02/LRN-03 pueden avanzar con análisis manuales. No dependen de REL-03.
 - DEP-01 es opcional y no bloquea M1–M4.
@@ -81,6 +83,7 @@ Un lote puede contener tareas de varias especialidades. La IA sirve de asistente
 | 04 | P1: AUTH-02/PRO-01. P2: ENG-02/AUTH-03/AUTH-04. |
 | 05 | P1: ANL-01/ANL-03. P2: PRO-02/ANL-02/ANL-04. |
 | 06 | P2: QAA-01. P5: QA-02. P4: DOC-02/CTR-02. P1 integra REL-01 con revisión P2. |
+| 06.5 | P2: VIS-01/02/03. P5: VIS-04 y revisión de uso. P1 revisa que no cambien contratos ni lógica. |
 | 07 | P1: PRJ-01/CV-01. P2: PRJ-02/CV-02. P5: QA-03. |
 | 08 | P1: REL-02/JSR-02/JSR-03. P4: JSR-01. P2: JSR-04. |
 | 09 | P5: QA-04. P1: REL-03/LRN-02/LRN-03. P3: LRN-01. |

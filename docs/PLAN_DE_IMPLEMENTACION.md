@@ -42,6 +42,8 @@ Son decisiones recomendadas para que las tareas tengan una base común. Pueden c
 | Ejecución | Desarrollo con Vite y servicios locales; Docker Compose para la demostración completa | No depende de contratar hosting. |
 | Versiones | Versiones estables compatibles, fijadas durante FND-01 en manifiestos y lockfile | No usar etiquetas flotantes como `latest` en la configuración entregada. |
 
+**Actualización de interfaz tras M1 (lote 06.5):** la decisión anterior describe el arranque de la aplicación. Para las pantallas siguientes, el equipo adoptará la [dirección UI](design/DIRECCION_UI.md): interfaz profesional y minimalista, identidad cálida con rosa como acento discreto y componentes compartidos. El lote 06.5 definirá el sistema implementado antes de PRJ-02/CV-02; JSR-04 y LRN-04 lo extenderán sin crear estilos separados. Esto no modifica contratos ni el tag `v0.1.0`.
+
 **Entrega E3 — microservicio REST:** para esta rúbrica, el proceso independiente `apps/api` alimenta el módulo de vacantes del proyecto DevPath (el proyecto referido como aprobado en la Actividad 3); `apps/skill-engine` conserva su responsabilidad de matching y no es el servicio que se presenta como consumidor de terceros. La API se consume desde la web, protege las rutas de negocio con JWT y, en M3, consume JSearch desde el servidor. Se conserva la topología aceptada y los componentes de M1 que ya están integrados. La rúbrica no exige que el módulo de vacantes haya sido aprobado por separado.
 
 La fuente deja abierta la separación física de auth. Aquí se recomienda integrarlo como módulo por el tamaño del equipo. Esto es una simplificación propuesta, no una afirmación de que el documento exigía esa topología. Si se exige un microservicio de auth independiente, resolverlo en GOV-01 antes de FND-01: conservar las rutas, separar credenciales y sesiones, y rediseñar el alta de perfil y el borrado de cuentas sin transacciones entre procesos.
@@ -50,7 +52,9 @@ Referencias de las herramientas propuestas: [pnpm workspaces](https://pnpm.io/wo
 
 ### 1.3 Estado real del repositorio
 
-Actualización comprobada el 2 de noviembre de 2026: `origin/develop` apunta a `18f37ed`; PRO-02, ANL-01/02/03/04 y la extensión de evidencia ya están integradas. El lote 05 terminó; el lote 06 sigue en preparación, validación y release. Los párrafos siguientes conservan la inspección histórica del arranque y no describen las ramas actuales.
+Actualización comprobada el 3 de noviembre de 2026: `origin/develop` contiene CTR-02 mediante PR #43 y `main` contiene la release `v0.1.0`. Se incorpora el lote 06.5 para mejorar la interfaz antes de las pantallas M2. El estado del 2 de noviembre que sigue es histórico y no describe las ramas actuales.
+
+Estado histórico del 2 de noviembre de 2026: `origin/develop` apuntaba a `18f37ed`; PRO-02, ANL-01/02/03/04 y la extensión de evidencia ya estaban integradas. El lote 05 había terminado y el lote 06 seguía en preparación, validación y release. Los párrafos siguientes conservan la inspección histórica del arranque.
 
 La inspección inicial del 30 de octubre encontró solo la descripción y ningún commit. La revisión del 31 de octubre ya encuentra el commit `c338a21` (`FIRTS STEPS`), con `main` y la referencia local `origin/main` apuntando a él, además de los tres documentos de planificación. No se encontró una rama `develop` local ni su referencia remota descargada. Esto no verifica por sí solo el estado actual del servidor remoto. No se verificó el tag `e3-microservice`.
 

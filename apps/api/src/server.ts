@@ -5,6 +5,10 @@ import { authRouter } from './modules/auth/http/router.js';
 import { accessTokenMiddleware } from './modules/auth/http/access-token.js';
 import { createAuthService } from './modules/auth/services/auth-service.js';
 import { profileRouter } from './modules/profile/http/router.js';
+import { cvRouter } from './modules/cv/router.js';
+import { CvService } from './modules/cv/service.js';
+import { LocalCvStorage } from './modules/cv/storage.js';
+import { projectsRouter } from './modules/projects/router.js';
 import { createApp } from './app.js';
 import { loadConfig } from './platform/config/env.js';
 import { installGracefulShutdown } from './platform/lifecycle/graceful-shutdown.js';
@@ -34,6 +38,16 @@ const engine = new EngineClient({
   secret:
     process.env.ENGINE_SERVICE_SECRET ?? (config.environment === 'production' ? '' : 'dev-secret'),
 });
+if (config.environment === 'production' && !process.env.CV_STORAGE_DIR)
+  throw new Error('CV_STORAGE_DIR is required in production.');
+const cvStorage = new LocalCvStorage(process.env.CV_STORAGE_DIR ?? '.local-data/cv');
+await cvStorage.prepare();
+const cv = new CvService(pool, cvStorage);
+await cv.reconcile().catch(() => logger.warn('CV cleanup reconciliation deferred.'));
+const cvReconcileTimer = setInterval(() => {
+  void cv.reconcile().catch(() => logger.warn('CV cleanup reconciliation deferred.'));
+}, 10 * 60_000);
+cvReconcileTimer.unref();
 const app = createApp({
   config,
   logger,
@@ -46,8 +60,18 @@ const app = createApp({
     }
   },
   configureRoutes: (app) => {
-    app.use('/api/v1/auth', authRouter(auth, config.http.allowedOrigins, localHttp));
+    app.use(
+      '/api/v1/auth',
+      authRouter(
+        auth,
+        config.http.allowedOrigins,
+        localHttp,
+        config.environment === 'test' ? config.http.rateLimit.maxRequests : 60,
+      ),
+    );
     app.use('/api/v1', profileRouter(pool, accessTokenMiddleware(auth)));
+    app.use('/api/v1', cvRouter(cv, accessTokenMiddleware(auth)));
+    app.use('/api/v1', projectsRouter(pool, accessTokenMiddleware(auth)));
     app.use('/api/v1', analysesRouter(pool, accessTokenMiddleware(auth), engine));
   },
 });
@@ -63,5 +87,13 @@ installGracefulShutdown(server, {
   logger,
   timeoutMs: config.server.shutdownTimeoutMs,
   // Close the auth database pool after active HTTP requests finish.
-  resources: [{ name: 'postgres', close: () => pool.end() }],
+  resources: [
+    {
+      name: 'cv-reconciliation',
+      close: async () => {
+        clearInterval(cvReconcileTimer);
+      },
+    },
+    { name: 'postgres', close: () => pool.end() },
+  ],
 });

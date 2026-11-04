@@ -1,6 +1,6 @@
 # DevPath: backlog para cinco personas y tareas delegables a IAs
 
-Este documento convierte el [plan técnico](PLAN_DE_IMPLEMENTACION.md) en encargos con entregables comprobables. Se ejecuta por entregas, sin fechas. El [índice de lotes](LOTES_PARA_IAS.md) contiene once prompts completos: uno de estructura y diez de hasta cinco tareas. El [flujo GitHub](FLUJO_GITHUB.md) explica cómo crear, revisar e integrar las ramas.
+Este documento convierte el [plan técnico](PLAN_DE_IMPLEMENTACION.md) en encargos con entregables comprobables. Se ejecuta por entregas, sin fechas. El [índice de lotes](LOTES_PARA_IAS.md) contiene doce prompts completos: uno de estructura, diez originales y el lote 06.5 de sistema visual. El [flujo GitHub](FLUJO_GITHUB.md) explica cómo crear, revisar e integrar las ramas.
 
 ## 1. Reglas de uso del backlog
 
@@ -28,6 +28,7 @@ La asignación operativa se encuentra en [LOTES_PARA_IAS.md](LOTES_PARA_IAS.md);
 | 3 | ANL-01, ANL-03 | AUTH-03, AUTH-04, PRO-02, ANL-02, ANL-04 | Resolver casos del corpus | DOC-02 | Validar cortes integrados |
 | 4 | Revisar y corregir defectos | QAA-01 | Revisar explicación del score | Cerrar docs de M1 | QA-02 |
 | 5 | REL-01 | Revisar release | Contenido siguiente etapa | CTR-02 y posible JSR-01 | Evidencias de release |
+| 5.5 / UI | Revisar contratos/flujo | VIS-01, VIS-02, VIS-03 | — | Dirección de interfaz | VIS-04 |
 | 6 / M2 | PRJ-01, CV-01 | PRJ-02, CV-02 | Preparar plantillas | Actualizar setup/contratos | QA-03 |
 | 7 | REL-02 | Revisar release | LRN-01 en rama propia | JSR-01 si falta | Validar tag local |
 | 8 / M3 | JSR-02, JSR-03 | JSR-04 | Revisar nomenclatura | Registrar permisos | QA-04 |
@@ -345,6 +346,42 @@ La disponibilidad exacta la determina el DAG de cada tarea; la tabla no autoriza
 - **Aceptación:** main representa M1 funcional, tag `v0.1.0` apunta al commit publicado y develop incluye la release; no hay features posteriores coladas.
 - **Validación:** smoke test desde el tag y instalación documentada. No despliega ni contrata servicios.
 
+## 4.5. Sistema visual profesional de M1
+
+La [dirección UI](design/DIRECCION_UI.md) y el [prompt 06.5](prompts/lotes/06.5-sistema-visual-m1.md) fijan el alcance. Son cuatro tareas nuevas en ramas propias, después de la release M1. El resultado integrado en `docs/design/SISTEMA_VISUAL.md` será la referencia para las pantallas posteriores; no se cambia el tag `v0.1.0`.
+
+### VIS-01 — Fundamentos y componentes compartidos
+
+- **Responsable:** P2; P5 revisa legibilidad y P1 límites de integración.
+- **Dependencias:** REL-01 publicado/sincronizado y CTR-02 integrado.
+- **Rama:** `feature/vis-01-design-system`.
+- **Encargo:** tokens, layout, navegación, componentes/estados y guía `docs/design/SISTEMA_VISUAL.md`; identidad cálida con acento rosa discreto, jerarquía profesional y accesibilidad.
+- **Aceptación:** componentes reutilizables documentados y shell coherente; flujos/contratos M1 intactos.
+
+### VIS-02 — Acceso, perfil y habilidades
+
+- **Responsable:** P2; P5 revisa uso, teclado y zoom.
+- **Dependencias:** VIS-01.
+- **Rama:** `feature/vis-02-auth-profile-ui`.
+- **Encargo:** aplicar el sistema a login, registro, perfil y selección larga de habilidades, mejorando legibilidad y densidad sin perder estados ni funcionalidad.
+- **Aceptación:** registro/sesión/guardado/recarga operan con móvil, escritorio y teclado; errores conservan datos de formulario.
+
+### VIS-03 — Análisis, resultado e historial
+
+- **Responsable:** P2; P5 revisa comprensión y P1 significado del score.
+- **Dependencias:** VIS-02 y ANL-04.
+- **Rama:** `feature/vis-03-analysis-history-ui`.
+- **Encargo:** jerarquía del porcentaje/evidencia, formulario y listado/detalle; estados vacíos, error, retry, `0%` y `null` honestos.
+- **Aceptación:** matching y snapshots intactos; score nunca se muestra como probabilidad de empleo; regresión real y accesibilidad aprobadas.
+
+### VIS-04 — Aceptación visual M1 y guía M2–M4
+
+- **Responsable:** P5; P2 corrige defectos acotados, P1 revisa contrato.
+- **Dependencias:** VIS-03.
+- **Rama:** `docs/vis-04-m1-ui-acceptance`.
+- **Encargo:** matriz y evidencia de interfaz profesional, claridad, responsive, zoom, teclado, foco, contraste y estados; cerrar guía compartida para módulos futuros.
+- **Aceptación:** resultados por caso con commit probado y límites honestos; bloqueantes revalidados; VIS-01–04 integradas antes de cerrar lote.
+
 ## 5. M2: contexto profesional, CV y proyectos
 
 ### CTR-02 — Especificar contratos de las siguientes entregas
@@ -370,10 +407,10 @@ La disponibilidad exacta la determina el DAG de cada tarea; la tabla no autoriza
 ### PRJ-02 — Portafolio en perfil
 
 - **Responsable:** P2.
-- **Dependencias:** PRJ-01.
+- **Dependencias:** PRJ-01, VIS-04.
 - **Rama:** `feature/prj-02-projects-ui`.
 - **Archivos:** web/features/projects, navegación del perfil.
-- **Encargo:** lista, creación, edición y eliminación de proyectos con selector de tecnologías; enlaces seguros al salir.
+- **Encargo:** lista, creación, edición y eliminación de proyectos con selector de tecnologías; enlaces seguros al salir. Usar `docs/design/SISTEMA_VISUAL.md` y componentes integrados; si hace falta un patrón, incorporarlo al sistema compartido.
 - **Aceptación:** guardado real, errores conservan formulario, estado vacío útil y confirmación de borrado.
 - **Validación:** crear/editar/borrar tras recarga y teclado; P5 revisa claridad de la evidencia autodeclarada.
 
@@ -390,10 +427,10 @@ La disponibilidad exacta la determina el DAG de cada tarea; la tabla no autoriza
 ### CV-02 — Interfaz de CV
 
 - **Responsable:** P2.
-- **Dependencias:** CV-01, AUTH-03.
+- **Dependencias:** CV-01, AUTH-03, VIS-04.
 - **Rama:** `feature/cv-02-profile-cv-ui`.
 - **Archivos:** web/features/cv y sección de perfil.
-- **Encargo:** seleccionar PDF, subir/sustituir, metadata, descarga autenticada vía Blob y eliminar. Mensaje explícito: no se analiza automáticamente.
+- **Encargo:** seleccionar PDF, subir/sustituir, metadata, descarga autenticada vía Blob y eliminar. Mensaje explícito: no se analiza automáticamente. Reutilizar patrones del perfil y `docs/design/SISTEMA_VISUAL.md`.
 - **Aceptación:** errores claros para PDF inválido/tamaño; doble clic controlado; no aparece bearer en URL ni historial; Blob URL se libera.
 - **Validación:** flujo real, descarga tras recargar, sustitución y eliminación; P5 confirma accesibilidad.
 
@@ -451,10 +488,10 @@ La disponibilidad exacta la determina el DAG de cada tarea; la tabla no autoriza
 ### JSR-04 — Pantalla de búsqueda y selección
 
 - **Responsable:** P2.
-- **Dependencias:** JSR-02, JSR-03, ANL-02.
+- **Dependencias:** JSR-02, JSR-03, ANL-02, VIS-04.
 - **Rama:** `feature/jsr-04-jobs-ui`.
 - **Archivos:** web/features/jobs y navegación al resultado común.
-- **Encargo:** filtros, lista, detalle, atribución y analizar selección; evitar peticiones por cada tecla sin control.
+- **Encargo:** filtros, lista, detalle, atribución y analizar selección; evitar peticiones por cada tecla sin control. Reutilizar `docs/design/SISTEMA_VISUAL.md`, navegación, estados y resultado compartido.
 - **Aceptación:** modo demo visible, vacíos y cuota explicados, score renderizado con mismo componente de texto manual; HTML del proveedor no se inserta crudo.
 - **Validación:** fixture feliz y fallos; búsqueda live manual si está disponible; P5 revisa etiquetas y enlaces.
 
@@ -512,10 +549,10 @@ La disponibilidad exacta la determina el DAG de cada tarea; la tabla no autoriza
 ### LRN-04 — Pantallas de ruta y avance
 
 - **Responsable:** P2.
-- **Dependencias:** LRN-03, ANL-02.
+- **Dependencias:** LRN-03, ANL-02, VIS-04.
 - **Rama:** `feature/lrn-04-learning-path-ui`.
 - **Archivos:** web/features/learning-paths y CTA desde análisis.
-- **Encargo:** generar ruta, listar, mostrar pasos/motivos/proyecto/recurso y registrar progreso; aclarar avance autodeclarado.
+- **Encargo:** generar ruta, listar, mostrar pasos/motivos/proyecto/recurso y registrar progreso; aclarar avance autodeclarado. Usar `docs/design/SISTEMA_VISUAL.md` y componentes compartidos; progreso visible sin prometer empleabilidad.
 - **Aceptación:** no hay plan ficticio al cargar; doble clic no duplica; progreso persiste al recargar y fallo no confirma una actualización inexistente.
 - **Validación:** flujo desde análisis, cero faltantes, proyecto eliminado y navegación por teclado. P5 revisa utilidad de cada paso.
 
@@ -618,7 +655,7 @@ Una tarea pasa a Ready cuando tiene contrato suficiente y dependencias integrada
 
 Registrar por issue: ID, entrega, responsable, revisor, rama, dependencias, criterio, enlaces a PR/evidencia y estado. Avance se mide por criterios aceptados y recorridos funcionales, no por cantidad de commits o líneas.
 
-Este documento define 50 tareas: las 49 originales y STR-01 para estructura, incluida la evaluación opcional de despliegue. Se distribuyen en el lote 00 dedicado y diez lotes de hasta cinco tareas. GOV-01 prepara decisiones antes del bootstrap; los fixes descubiertos se convierten en issues adicionales del hito afectado, no se esconden dentro de tareas no relacionadas.
+Este documento define 54 tareas: las 49 originales, STR-01 para estructura y VIS-01–04 para la interfaz, incluida la evaluación opcional de despliegue. Se distribuyen en el lote 00, los diez lotes originales y el lote 06.5, todos de hasta cinco tareas. GOV-01 preparó decisiones antes del bootstrap; los fixes descubiertos se convierten en issues adicionales del hito afectado, no se esconden dentro de tareas no relacionadas.
 
 ## Aclaración aprobada de evidence para M1
 
