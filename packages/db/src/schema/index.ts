@@ -113,6 +113,7 @@ export const profiles = appSchema.table(
     headline: text('headline'),
     location: text('location'),
     skillsRevision: integer('skills_revision').notNull().default(0),
+    projectsRevision: integer('projects_revision').notNull().default(0),
     updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' })
       .notNull()
       .default(sql`now()`),
@@ -156,6 +157,41 @@ export const userSkills = appSchema.table(
     uniqueIndex('user_skills_user_skill_idx').on(t.userId, t.skillId),
     index('user_skills_user_id_idx').on(t.userId),
   ],
+);
+
+export const projects = appSchema.table(
+  'projects',
+  {
+    id: uuid('id')
+      .primaryKey()
+      .default(sql`gen_random_uuid()`),
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    title: text('title').notNull(),
+    description: text('description').notNull(),
+    url: text('url'),
+    createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' })
+      .notNull()
+      .default(sql`now()`),
+    updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' })
+      .notNull()
+      .default(sql`now()`),
+  },
+  (t) => [index('projects_user_created_id_idx').on(t.userId, t.createdAt.desc(), t.id.desc())],
+);
+
+export const projectSkills = appSchema.table(
+  'project_skills',
+  {
+    projectId: uuid('project_id')
+      .notNull()
+      .references(() => projects.id, { onDelete: 'cascade' }),
+    skillId: text('skill_id')
+      .notNull()
+      .references(() => skills.id),
+  },
+  (t) => [uniqueIndex('project_skills_project_skill_idx').on(t.projectId, t.skillId)],
 );
 
 // ============================================================================
@@ -229,5 +265,8 @@ export type Skill = typeof skills.$inferSelect;
 export type NewSkill = typeof skills.$inferInsert;
 export type UserSkill = typeof userSkills.$inferSelect;
 export type NewUserSkill = typeof userSkills.$inferInsert;
+export type Project = typeof projects.$inferSelect;
+export type NewProject = typeof projects.$inferInsert;
+export type ProjectSkill = typeof projectSkills.$inferSelect;
 export type Analysis = typeof analyses.$inferSelect;
 export type NewAnalysis = typeof analyses.$inferInsert;
