@@ -124,6 +124,7 @@ describe.skipIf(!databaseUrl)('PRJ-01 projects with PostgreSQL', () => {
     for (const body of [
       { ...valid, skillIds: ['git', 'git'] },
       { ...valid, url: 'javascript:alert(1)' },
+      { ...valid, url: 'https://example.org/line\nbreak' },
       { ...valid, userId: secondId },
       { ...valid, title: '  ' },
     ])

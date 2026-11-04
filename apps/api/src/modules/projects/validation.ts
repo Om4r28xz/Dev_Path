@@ -24,7 +24,11 @@ const projectUrl = z.union([
     .trim()
     .max(2048)
     .refine((value) => {
-      if (!/^https?:\/\//u.test(value) || /[\u0000-\u0020\u007f]/u.test(value)) return false;
+      const containsUnsafeCharacter = [...value].some((character) => {
+        const codePoint = character.codePointAt(0);
+        return codePoint !== undefined && (codePoint <= 0x20 || codePoint === 0x7f);
+      });
+      if (!/^https?:\/\//u.test(value) || containsUnsafeCharacter) return false;
       try {
         const parsed = new URL(value);
         return (parsed.protocol === 'http:' || parsed.protocol === 'https:') && !!parsed.hostname;
