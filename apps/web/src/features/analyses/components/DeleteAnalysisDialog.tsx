@@ -31,7 +31,7 @@ export function DeleteAnalysisDialog({
   }
   return (
     <dialog
-      className="analysis-delete-dialog"
+      className="dialog-surface analysis-delete-dialog"
       ref={dialog}
       aria-labelledby="delete-analysis-title"
       aria-describedby="delete-analysis-description"

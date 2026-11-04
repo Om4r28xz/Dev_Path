@@ -128,21 +128,26 @@ function OwnedHistory({ owner }: { owner: string }) {
   }
   const pageError = history.isFetchNextPageError;
   return (
-    <div className="page-form">
-      <h1 ref={heading} tabIndex={-1}>
-        Historial de análisis
-      </h1>
-      <p>
-        <Link to="/analysis/new">Crear un nuevo análisis</Link>
-      </p>
-      <p>
-        Los porcentajes conservan la comparación original. Abre un detalle para consultar
-        tecnologías y evidencias.
-      </p>
+    <div className="analysis-page analysis-page--wide">
+      <header className="analysis-history-header">
+        <div>
+          <p className="analysis-page__eyebrow">Comparaciones guardadas</p>
+          <h1 ref={heading} tabIndex={-1}>
+            Historial de análisis
+          </h1>
+          <p className="analysis-page__lead">
+            Cada resultado conserva la comparación original. Abre un detalle para consultar las
+            tecnologías y las menciones que justificaron la detección.
+          </p>
+        </div>
+        <Link className="analysis-primary-link" to="/analysis/new">
+          Analizar otra vacante
+        </Link>
+      </header>
       {notice && (
-        <p ref={message} role="status" tabIndex={-1}>
-          {notice}
-        </p>
+        <div ref={message} role="status" tabIndex={-1}>
+          <Alert variant="success">{notice}</Alert>
+        </div>
       )}
       {history.isPending && <p role="status">Cargando historial…</p>}
       {history.isFetching && !history.isPending && !history.isFetchingNextPage && (
@@ -166,41 +171,49 @@ function OwnedHistory({ owner }: { owner: string }) {
         </div>
       )}
       {!history.isPending && !history.isError && items.length === 0 && (
-        <section aria-labelledby="empty-history-title">
+        <section className="state-panel analysis-empty" aria-labelledby="empty-history-title">
           <h2 id="empty-history-title">Todavía no tienes análisis guardados</h2>
           <p>Pega tu primera vacante y compárala con tus habilidades.</p>
+          <Link className="analysis-primary-link" to="/analysis/new">
+            Crear el primer análisis
+          </Link>
         </section>
       )}
       {items.length > 0 && (
-        <>
-          <p role="status">Mostrando {items.length} análisis cargados.</p>
+        <section className="analysis-history-section" aria-labelledby="saved-analyses-title">
+          <div className="analysis-history-section__header">
+            <h2 id="saved-analyses-title">Análisis guardados</h2>
+            <p role="status">{items.length} cargados</p>
+          </div>
           <AnalysisHistoryList items={items} onDelete={ask} listRef={list} />
-        </>
+        </section>
       )}
-      {history.hasNextPage && (
-        <Button
-          disabled={history.isFetching || removal.isPending || (history.isError && !pageError)}
-          onClick={() => {
-            nextFocus.current = items.length;
-            void history.fetchNextPage();
-          }}
-        >
-          {history.isFetchingNextPage
-            ? 'Cargando más análisis…'
-            : pageError
-              ? 'Reintentar más análisis'
-              : 'Cargar más análisis'}
-        </Button>
-      )}
-      {history.data && !history.isError && (
-        <Button
-          variant="secondary"
-          disabled={history.isFetching || removal.isPending}
-          onClick={() => void history.refetch()}
-        >
-          Actualizar historial
-        </Button>
-      )}
+      <div className="analysis-history-controls">
+        {history.hasNextPage && (
+          <Button
+            disabled={history.isFetching || removal.isPending || (history.isError && !pageError)}
+            onClick={() => {
+              nextFocus.current = items.length;
+              void history.fetchNextPage();
+            }}
+          >
+            {history.isFetchingNextPage
+              ? 'Cargando más análisis…'
+              : pageError
+                ? 'Reintentar más análisis'
+                : 'Cargar más análisis'}
+          </Button>
+        )}
+        {history.data && !history.isError && (
+          <Button
+            variant="secondary"
+            disabled={history.isFetching || removal.isPending}
+            onClick={() => void history.refetch()}
+          >
+            Actualizar historial
+          </Button>
+        )}
+      </div>
       {selected && (
         <DeleteAnalysisDialog
           item={selected}

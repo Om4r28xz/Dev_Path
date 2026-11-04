@@ -1,13 +1,37 @@
 # Lote 06.5 — handoff de implementación
 
-Estado verificado el 3 de noviembre de 2026 desde Git, no desde handoffs antiguos. VIS-01 quedó integrado en `origin/develop` mediante PR [#45](https://github.com/Om4r28xz/Dev_Path/pull/45), merge `0ba1b67`; su commit de código probado en CI fue `507b1f3`. VIS-02 parte exactamente de ese merge en `feature/vis-02-auth-profile-ui`. El tag `v0.1.0` es ancestro de `origin/develop`; CTR-02 está integrado por PR #43. No se modificó `main` ni el tag.
+Estado verificado el 3 de noviembre de 2026 desde Git, no desde handoffs antiguos. VIS-01 quedó integrado en `origin/develop` mediante PR [#45](https://github.com/Om4r28xz/Dev_Path/pull/45), merge `0ba1b67`; su commit de código probado en CI fue `507b1f3`. VIS-02 está en `feature/vis-02-auth-profile-ui`, commit `a2f5e5b`. Por instrucción del usuario, VIS-03 y VIS-04 se ejecutan juntas en una sola rama nueva, `feature/vis-03-04-analysis-acceptance-ui`, basada en `a2f5e5b`; el commit de implementación probado localmente es `4cb41ec`. Esta excepción sustituye las dos ramas sugeridas por el prompt. El tag `v0.1.0` y `main` no se modificaron.
 
-| Tarea  | Estado                                                            | Rama                                               | Siguiente acción                                                                                   |
-| ------ | ----------------------------------------------------------------- | -------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| VIS-01 | Integrada en `develop`; revisión humana global continúa pendiente | `feature/vis-01-design-system`                     | Conservar pendientes humanos para la matriz VIS-04.                                                |
-| VIS-02 | Implementación local completa; checks automáticos aprobados       | `feature/vis-02-auth-profile-ui`                   | Commit, CI con E2E real y revisiones P5/P1 antes de integrar.                                      |
-| VIS-03 | Bloqueada por dependencia                                         | `feature/vis-03-analysis-history-ui` aún no creada | Partir de `origin/develop` después de integrar VIS-02. ANL-04 ya está integrado.                   |
-| VIS-04 | Bloqueada por dependencia                                         | `docs/vis-04-m1-ui-acceptance` aún no creada       | P5 ejecuta la matriz real después de integrar VIS-03; no atribuir aceptación humana sin ejecución. |
+| Tarea  | Estado                                                             | Rama                                       | Siguiente acción                                                                 |
+| ------ | ------------------------------------------------------------------ | ------------------------------------------ | -------------------------------------------------------------------------------- |
+| VIS-01 | Integrada en `develop`; revisión humana global continúa pendiente  | `feature/vis-01-design-system`             | Conservar pendientes humanos para la matriz VIS-04.                              |
+| VIS-02 | Implementación publicada en su rama; checks automáticos aprobados  | `feature/vis-02-auth-profile-ui`           | CI con E2E real y revisiones P5/P1 antes de integrar.                            |
+| VIS-03 | Implementación completa; validación automática local aprobada      | `feature/vis-03-04-analysis-acceptance-ui` | Confirmar cambios, ejecutar CI/E2E real y revisión P5/P1.                        |
+| VIS-04 | Matriz técnica y guía actualizadas; aceptación humana no ejecutada | `feature/vis-03-04-analysis-acceptance-ui` | P5 ejecuta zoom, teclado, lector y comprensión; P1 reproduce contrato/propiedad. |
+
+## VIS-03 y VIS-04 — rama única autorizada
+
+Se rediseñaron formulario, resultado, historial, detalle, estados y confirmación de borrado alrededor de las tareas principales. El porcentaje conserva su significado de cobertura tecnológica; `0%`, `null`, evidencia ausente, evidencia vacía y fallo de carga mantienen textos y estados distintos. Las menciones continúan renderizadas como texto inerte. No se modificaron API, OpenAPI, DB, engine, sesión, propiedad, idempotencia ni endpoints.
+
+Cambios principales:
+
+- Formulario de nueva vacante con propósito, alcance, jerarquía de campos, contador y estado pendiente claros.
+- Resultado con score destacado, explicación no laboral, listas semánticas de coincidencias/faltantes/detectadas y evidencia literal agrupada.
+- Historial con tarjetas neutrales, score original, aviso de habilidades desactualizadas, estados vacío/error y acciones diferenciadas.
+- Diálogo de borrado migrado a `.dialog-surface`, conservando Escape, bloqueo pendiente y retorno de foco.
+- Estilos heredados con colores literales reemplazados por tokens del sistema visual.
+- `docs/acceptance/M1-UI-results.md` registra cada caso como aprobado automatizado, no ejecutado o pendiente; no atribuye revisión humana.
+- `docs/design/SISTEMA_VISUAL.md` documenta score, evidencia, historial y extensión para PRJ-02, CV-02, JSR-04 y LRN-04.
+
+Validación local:
+
+- Plan standalone de runtime: 6/6 aserciones aprobadas — formato, lint, typecheck, build, preview HTTP y `pnpm test`.
+- Web: 97/97 pruebas aprobadas, incluidas separación `0%`/`null`, HTML inerte, evidencia, snapshot y borrado.
+- `node scripts/vis-03-capture.mjs`: aprobado en 1280 px, 640 px y 320 px; sin overflow, targets principales de al menos 44 px, Escape y retorno de foco del diálogo.
+- Ocho capturas sintéticas saneadas: nueva vacante, resultado, historial y diálogo. No prueban backend ni persistencia.
+- `pnpm test:e2e`: bloqueado antes de iniciar por ausencia de `E2E_DATABASE_URL`; no cuenta como aprobado.
+
+Pendiente para cerrar el lote: E2E real con web/API/engine/PostgreSQL; zoom real 200%; recorrido humano de teclado y lector; contraste/axe integral; revisión P5 de comprensión y P1 de contrato, propiedad y significado del score. La matriz técnica está en `docs/acceptance/M1-UI-results.md` y mantiene esas puertas como no ejecutadas.
 
 ## VIS-02
 

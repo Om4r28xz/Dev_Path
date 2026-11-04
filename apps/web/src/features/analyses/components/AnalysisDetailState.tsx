@@ -8,15 +8,16 @@ type Props =
 export function AnalysisDetailState(props: Props) {
   if (props.kind === 'loading')
     return (
-      <>
-        <h1>Detalle del análisis</h1>
-        <p role="status">Cargando análisis…</p>
-      </>
+      <section className="state-panel analysis-detail-state" aria-labelledby="detail-loading-title">
+        <p className="analysis-page__eyebrow">Resultado guardado</p>
+        <h1 id="detail-loading-title">Detalle del análisis</h1>
+        <p role="status">Cargando análisis y evidencias…</p>
+      </section>
     );
   if (props.kind === 'not-found')
     return (
-      <>
-        <h1>Análisis no encontrado</h1>
+      <section className="state-panel analysis-detail-state" aria-labelledby="detail-missing-title">
+        <h1 id="detail-missing-title">Análisis no encontrado</h1>
         <Alert variant="warning">
           No encontramos ese análisis en tu cuenta. Puede haberse eliminado o no estar disponible.
         </Alert>
@@ -25,11 +26,11 @@ export function AnalysisDetailState(props: Props) {
           <Link to="/profile">volver a mi perfil</Link>.{' '}
           <Link to="/analyses">Volver al historial</Link>.
         </p>
-      </>
+      </section>
     );
   return (
-    <>
-      <h1>Detalle del análisis</h1>
+    <section className="state-panel analysis-detail-state" aria-labelledby="detail-error-title">
+      <h1 id="detail-error-title">Detalle del análisis</h1>
       <Alert variant="error">
         No se pudo cargar el análisis. Puedes reintentar sin crear otro resultado.
       </Alert>
@@ -40,6 +41,6 @@ export function AnalysisDetailState(props: Props) {
         <Link to="/profile">Volver a mi perfil</Link> o{' '}
         <Link to="/analyses">Volver al historial</Link>
       </p>
-    </>
+    </section>
   );
 }
