@@ -1,0 +1,123 @@
+.learning-page {
+  display: grid;
+  gap: var(--space-6);
+}
+.learning-header,
+.learning-detail-header {
+  max-width: var(--reading-width);
+}
+.learning-header h1,
+.learning-header p,
+.learning-detail-header h1,
+.learning-detail-header p,
+.learning-card h2,
+.learning-card p,
+.learning-step h3,
+.learning-step h4,
+.learning-step p,
+.learning-progress h2,
+.learning-progress p {
+  margin-block: 0;
+}
+.learning-list,
+.learning-steps {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.learning-list {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+}
+.learning-card,
+.learning-step,
+.learning-progress {
+  display: grid;
+  gap: var(--space-4);
+}
+.learning-card__label {
+  color: var(--color-brand);
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.learning-card__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-height);
+  font-weight: 650;
+}
+.learning-meta,
+.learning-disclaimer,
+.learning-project-note {
+  color: var(--color-text-muted);
+}
+.learning-create {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  border-inline-start: 4px solid var(--color-brand);
+}
+.learning-create h2,
+.learning-create p {
+  margin: 0;
+}
+.learning-progress progress,
+.learning-card progress {
+  width: 100%;
+  height: var(--space-3);
+  accent-color: var(--color-brand);
+}
+.learning-step__heading {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+.learning-step__number {
+  display: inline-grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 2rem;
+  border-radius: 50%;
+  color: var(--color-surface);
+  background: var(--color-brand);
+  font-weight: 700;
+}
+.learning-step__select {
+  max-width: 18rem;
+}
+.learning-snapshot {
+  padding: var(--space-5);
+}
+.learning-snapshot summary {
+  min-height: var(--control-height);
+  cursor: pointer;
+  font-weight: 700;
+}
+.learning-snapshot dl {
+  display: grid;
+  gap: var(--space-2);
+}
+.learning-snapshot dl div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.learning-snapshot dt {
+  font-weight: 650;
+}
+.learning-snapshot dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 40rem) {
+  .learning-card,
+  .learning-step,
+  .learning-progress {
+    padding: var(--space-4);
+  }
+}

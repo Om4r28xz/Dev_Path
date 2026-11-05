@@ -47,6 +47,7 @@ export function AppLayout() {
             <NavLink to="/jobs">Vacantes</NavLink>
             <NavLink to="/analysis/new">Nuevo análisis</NavLink>
             <NavLink to="/analyses">Historial</NavLink>
+            <NavLink to="/learning-paths">Rutas</NavLink>
           </nav>
           <div className="layout-actions">
             <span className="layout-actions__name">{session?.user.name}</span>

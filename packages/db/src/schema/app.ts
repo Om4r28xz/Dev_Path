@@ -8,6 +8,8 @@ export {
   projects,
   projectSkills,
   analyses,
+  learningPaths,
+  learningPathSteps,
   type Profile,
   type NewProfile,
   type Skill,
@@ -19,4 +21,8 @@ export {
   type ProjectSkill,
   type Analysis,
   type NewAnalysis,
+  type LearningPathRow,
+  type NewLearningPathRow,
+  type LearningPathStepRow,
+  type NewLearningPathStepRow,
 } from './index.js';
