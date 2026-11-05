@@ -8,6 +8,7 @@ import { ProfilePage } from '../features/profile/pages/ProfilePage.js';
 import { NewAnalysisPage } from '../features/analyses/pages/NewAnalysisPage.js';
 import { AnalysesListPage } from '../features/analyses/pages/AnalysesListPage.js';
 import { AnalysisDetailPage } from '../features/analyses/pages/AnalysisDetailPage.js';
+import { JobsPage } from '../features/jobs/pages/JobsPage.js';
 import { ProjectsPage } from '../features/projects/pages/ProjectsPage.js';
 import { NotFoundPage } from './NotFoundPage.js';
 
@@ -24,6 +25,7 @@ export const AppRouter: React.FC = () => {
           <Route element={<AppLayout />}>
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/profile/projects" element={<ProjectsPage />} />
+            <Route path="/jobs" element={<JobsPage />} />
             <Route path="/analysis/new" element={<NewAnalysisPage />} />
             <Route path="/analyses" element={<AnalysesListPage />} />
             <Route path="/analyses/:id" element={<AnalysisDetailPage />} />
