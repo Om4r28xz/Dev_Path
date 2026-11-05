@@ -8,6 +8,9 @@ import { profileRouter } from './modules/profile/http/router.js';
 import { cvRouter } from './modules/cv/router.js';
 import { CvService } from './modules/cv/service.js';
 import { LocalCvStorage } from './modules/cv/storage.js';
+import { jobsRouter } from './modules/jobs/http/router.js';
+import { resolveCursorKey } from './modules/jobs/services/cursor.js';
+import { createJobsProviderFromEnv } from './modules/jobs/services/provider.js';
 import { projectsRouter } from './modules/projects/router.js';
 import { createApp } from './app.js';
 import { loadConfig } from './platform/config/env.js';
@@ -48,6 +51,8 @@ const cvReconcileTimer = setInterval(() => {
   void cv.reconcile().catch(() => logger.warn('CV cleanup reconciliation deferred.'));
 }, 10 * 60_000);
 cvReconcileTimer.unref();
+const jobsProvider = createJobsProviderFromEnv(process.env);
+const jobsCursorKey = resolveCursorKey(process.env.JOBS_CURSOR_KEY, config.environment);
 const app = createApp({
   config,
   logger,
@@ -72,7 +77,17 @@ const app = createApp({
     app.use('/api/v1', profileRouter(pool, accessTokenMiddleware(auth)));
     app.use('/api/v1', cvRouter(cv, accessTokenMiddleware(auth)));
     app.use('/api/v1', projectsRouter(pool, accessTokenMiddleware(auth)));
-    app.use('/api/v1', analysesRouter(pool, accessTokenMiddleware(auth), engine));
+    app.use(
+      '/api/v1',
+      jobsRouter(jobsProvider, accessTokenMiddleware(auth), { cursorKey: jobsCursorKey }),
+    );
+    app.use(
+      '/api/v1',
+      analysesRouter(pool, accessTokenMiddleware(auth), engine, {
+        jobsProvider,
+        liveRetentionPermitted: process.env.JOBS_LIVE_RETENTION_ALLOWED === 'true',
+      }),
+    );
   },
 });
 

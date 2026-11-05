@@ -143,11 +143,18 @@ export interface JobDetails {
 }
 
 export interface JobSearch {
-  /** null when upstream provides insufficient information; never invent totals. */
+  /** Equivalent to nextCursor !== null; never invent totals. */
   hasNextPage: boolean | null;
   /** @maxItems 50 */
   items: Job[];
   mode: 'fixture' | 'live';
+  /**
+   * Opaque token to request the next page, or null when no next page is available.
+   * @minLength 16
+   * @maxLength 2048
+   * @pattern ^j1\.[A-Za-z0-9_-]+$
+   */
+  nextCursor?: string | null;
   /** @min 1 */
   page: number;
 }

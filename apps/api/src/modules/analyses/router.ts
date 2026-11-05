@@ -5,7 +5,7 @@ import { HttpError } from '../../platform/errors/http-error.js';
 import { getRequestId } from '../../platform/http/request-context.js';
 import { authenticatedUserId } from '../auth/http/access-token.js';
 import type { AnalysisEngine } from './engine-client.js';
-import { AnalysesRepository } from './repository.js';
+import { AnalysesRepository, type AnalysesRepositoryOptions } from './repository.js';
 import { createAnalysisSchema } from './schemas.js';
 import { AnalysisHistoryRepository } from './history-repository.js';
 import {
@@ -18,9 +18,10 @@ export function analysesRouter(
   pool: Pool,
   authenticate: RequestHandler,
   engine: AnalysisEngine,
+  options?: AnalysesRepositoryOptions,
 ): Router {
   const router = Router();
-  const repository = new AnalysesRepository(pool, engine);
+  const repository = new AnalysesRepository(pool, engine, 5000, options);
   router.post('/analyses', authenticate, async (request, response) => {
     const parsed = createAnalysisSchema.safeParse(request.body);
     const key = z.string().uuid().safeParse(request.get('Idempotency-Key'));
