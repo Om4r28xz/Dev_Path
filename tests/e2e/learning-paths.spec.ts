@@ -29,7 +29,7 @@ test('LRN-04: generate once, persist progress and survive a deleted linked proje
   await page.waitForURL(/\/learning-paths\/[a-f0-9-]+$/);
   expect(creates).toBe(1);
   await expect(page.locator('.learning-page')).toBeFocused();
-  await expect(page.getByText(/progreso es autodeclarado/i)).toBeVisible();
+  await expect(page.getByText(/avance es autodeclarado/i)).toBeVisible();
   await expect(page.getByText(/se vinculó con un proyecto existente/i)).toBeVisible();
 
   const status = page.getByLabel('Estado autodeclarado').first();
