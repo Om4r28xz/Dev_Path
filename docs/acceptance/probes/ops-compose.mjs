@@ -7,7 +7,7 @@ import { chromium } from '@playwright/test';
 import { expectRestoredProfile } from '../../../tests/e2e/support/profile-readiness.mjs';
 
 const docker = process.env.OPS_DOCKER_PATH || 'docker';
-const project = 'devpath-m1-ops-' + randomUUID().slice(0, 8);
+const project = 'devpath-m2-release-' + randomUUID().slice(0, 8);
 const base = 'http://localhost:8080';
 const secrets = new Set();
 const redact = (text) => {
@@ -158,7 +158,9 @@ try {
   await page.getByRole('button', { name: 'Registrarse', exact: true }).click();
   const registered = await registration;
   assert.equal(registered.status(), 201);
-  secrets.add((await registered.json()).accessToken);
+  const registeredBody = await registered.json();
+  const accessToken = registeredBody.accessToken;
+  secrets.add(accessToken);
   await page.waitForURL('**/profile');
   const cookie = (await context.cookies()).find((c) => c.name === 'devpath_refresh');
   assert(cookie?.httpOnly && cookie.sameSite === 'Lax' && cookie.path === '/api/v1/auth');
@@ -185,6 +187,33 @@ try {
     3,
   );
   check('register/profile/skills/real analysis67/evidence', true);
+  report.stage = 'M2 project and private CV';
+  const auth = { Authorization: `Bearer ${accessToken}` };
+  const createdProject = await fetch(base + '/api/v1/projects', {
+    method: 'POST',
+    headers: { ...auth, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      title: 'Compose M2 project',
+      description: 'Synthetic project persisted by the release probe.',
+      url: 'https://example.test/devpath-m2',
+      skillIds: ['javascript', 'react'],
+    }),
+  });
+  assert.equal(createdProject.status, 201);
+  const projectId = (await createdProject.json()).id;
+  const cvBytes = Buffer.from(
+    '%PDF-1.4\n1 0 obj\n<< /Type /Catalog >>\nendobj\ntrailer\n<< /Root 1 0 R >>\n%%EOF\n',
+  );
+  const form = new FormData();
+  form.append('file', new Blob([cvBytes], { type: 'application/pdf' }), 'compose-synthetic.pdf');
+  const uploadedCv = await fetch(base + '/api/v1/me/cv', {
+    method: 'PUT',
+    headers: auth,
+    body: form,
+  });
+  assert.equal(uploadedCv.status, 200);
+  assert.equal((await uploadedCv.json()).originalName, 'compose-synthetic.pdf');
+  check('own project and private PDF upload through proxy', true);
   await page.getByRole('button', { name: 'Cerrar sesión', exact: true }).click();
   await page.waitForURL('**/login');
   report.stage = 'persistent restart';
@@ -198,8 +227,15 @@ try {
   const restoredSkills = page.waitForResponse(
     (r) => r.url().endsWith('/me/skills') && r.request().method() === 'GET',
   );
+  const login = page.waitForResponse(
+    (r) => r.url().endsWith('/auth/login') && r.request().method() === 'POST',
+  );
   await page.getByRole('button', { name: 'Entrar', exact: true }).click();
   await page.waitForURL('**/profile');
+  const loginResponse = await login;
+  assert.equal(loginResponse.status(), 200);
+  const restoredAccessToken = (await loginResponse.json()).accessToken;
+  secrets.add(restoredAccessToken);
   const savedSkills = await restoredSkills;
   assert.equal(savedSkills.status(), 200, 'Saved skills must reload successfully after restart.');
   assert.deepEqual((await savedSkills.json()).skillIds, ['javascript', 'react']);
@@ -208,7 +244,25 @@ try {
   await page.getByText('67%', { exact: true }).waitFor();
   await page.getByRole('link', { name: /Volver al historial$/ }).click();
   await page.getByRole('link', { name: 'Compose 67', exact: true }).waitFor();
-  check('login/profile/history/snapshot persist after real restart', true);
+  const restoredAuth = { Authorization: `Bearer ${restoredAccessToken}` };
+  const restoredProjectsResponse = await fetch(base + '/api/v1/projects', {
+    headers: restoredAuth,
+  });
+  assert.equal(restoredProjectsResponse.status, 200);
+  const restoredProjects = await restoredProjectsResponse.json();
+  assert.equal(restoredProjects.items.length, 1);
+  assert.equal(restoredProjects.items[0].id, projectId);
+  const restoredMetadata = await fetch(base + '/api/v1/me/cv', { headers: restoredAuth });
+  assert.equal(restoredMetadata.status, 200);
+  assert.equal((await restoredMetadata.json()).originalName, 'compose-synthetic.pdf');
+  const restoredDownload = await fetch(base + '/api/v1/me/cv/download', {
+    headers: restoredAuth,
+  });
+  assert.equal(restoredDownload.status, 200);
+  assert.equal(restoredDownload.headers.get('cache-control'), 'no-store');
+  assert.equal(restoredDownload.headers.get('x-content-type-options'), 'nosniff');
+  assert.deepEqual(Buffer.from(await restoredDownload.arrayBuffer()), cvBytes);
+  check('M1 snapshots, project and private CV volume persist after restart', true);
   report.stage = 'engine outage and retry';
   compose('stop', 'engine');
   await page.goto(base + '/analysis/new');
