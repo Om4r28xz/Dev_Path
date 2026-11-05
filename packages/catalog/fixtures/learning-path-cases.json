@@ -1,0 +1,79 @@
+{
+  "schemaVersion": "1.0.0",
+  "catalogVersion": "1.0.0",
+  "templateVersion": "1.0.0",
+  "cases": [
+    {
+      "id": "LRN-CASE-001",
+      "description": "Cero habilidades faltantes: no inventa pasos correctivos y devuelve mensaje explicable con percentage null.",
+      "input": {
+        "matchedSkillIds": ["git", "javascript", "react"],
+        "missingSkillIds": [],
+        "projects": []
+      },
+      "expected": {
+        "orderedSkillIds": [],
+        "projectIdsBySkill": {},
+        "progress": {
+          "completed": 0,
+          "total": 0,
+          "percentage": null
+        },
+        "hasMessage": true
+      }
+    },
+    {
+      "id": "LRN-CASE-002",
+      "description": "Varios faltantes con expansión de prerequisitos no cubiertos: falta react-native y docker sin tener javascript, react ni git.",
+      "input": {
+        "matchedSkillIds": [],
+        "missingSkillIds": ["docker", "react-native"],
+        "projects": []
+      },
+      "expected": {
+        "orderedSkillIds": ["git", "javascript", "docker", "react", "react-native"],
+        "projectIdsBySkill": {
+          "git": null,
+          "javascript": null,
+          "docker": null,
+          "react": null,
+          "react-native": null
+        },
+        "progress": {
+          "completed": 0,
+          "total": 5,
+          "percentage": 0
+        },
+        "hasMessage": false
+      }
+    },
+    {
+      "id": "LRN-CASE-003",
+      "description": "Prerequisito ya cubierto y proyecto compatible existente: el candidato domina javascript, le falta react y nodejs, y tiene un proyecto con javascript.",
+      "input": {
+        "matchedSkillIds": ["javascript"],
+        "missingSkillIds": ["nodejs", "react"],
+        "projects": [
+          {
+            "id": "5e9220ea-e5b7-42bb-8a88-adf08763837f",
+            "title": "Dashboard sintético JS",
+            "skillIds": ["javascript"]
+          }
+        ]
+      },
+      "expected": {
+        "orderedSkillIds": ["nodejs", "react"],
+        "projectIdsBySkill": {
+          "nodejs": "5e9220ea-e5b7-42bb-8a88-adf08763837f",
+          "react": "5e9220ea-e5b7-42bb-8a88-adf08763837f"
+        },
+        "progress": {
+          "completed": 0,
+          "total": 2,
+          "percentage": 0
+        },
+        "hasMessage": false
+      }
+    }
+  ]
+}

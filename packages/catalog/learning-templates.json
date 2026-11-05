@@ -1,0 +1,128 @@
+{
+  "version": "1.0.0",
+  "catalogVersion": "1.0.0",
+  "zeroGapsMessage": "El análisis seleccionado no registra habilidades faltantes del catálogo frente a tu perfil actual; no se requieren pasos correctivos en esta ruta.",
+  "templates": [
+    {
+      "skillId": "cplusplus",
+      "title": "Practicar gestión de recursos y tipos en C++",
+      "objective": "Escribir un módulo pequeño en C++ moderno aplicando RAII, contenedores estándar y compilación sin advertencias.",
+      "prerequisiteSkillIds": [],
+      "compatibleProjectSkillIds": ["cplusplus"],
+      "standaloneActivity": "Implementa una utilidad de línea de comandos en C++17/20 que procese una colección de registros en memoria usando std::vector y algoritmos de <algorithm>. Evidencia sugerida: código fuente compilable con -Wall -Wextra y casos de prueba básicos.",
+      "projectExtensionActivity": "Extiende tu proyecto «{projectTitle}» añadiendo un módulo o prueba aislada en C++ que encapsule una operación con RAII y contenedores estándar, documentando en el README cómo compilarlo y verificarlo.",
+      "suggestedEvidence": "Repositorio o nota técnica con comandos de compilación (-Wall -Wextra) y salida de pruebas.",
+      "resourceUrl": "https://en.cppreference.com/w/cpp"
+    },
+    {
+      "skillId": "csharp",
+      "title": "Practicar tipos, colecciones y pruebas en C#",
+      "objective": "Desarrollar una biblioteca o servicio pequeño en C# aplicando tipado fuerte, LINQ básico y pruebas automatizadas.",
+      "prerequisiteSkillIds": [],
+      "compatibleProjectSkillIds": ["csharp", "sql", "git"],
+      "standaloneActivity": "Construye una biblioteca de dominio pequeña en C# con validación de entradas, consultas sobre colecciones con LINQ y pruebas unitarias reproducibles. Evidencia sugerida: proyecto .NET con pruebas pasando localmente.",
+      "projectExtensionActivity": "Extiende tu proyecto «{projectTitle}» incorporando un componente o caso de prueba en C# que valide reglas de entrada y documenta los pasos de ejecución local.",
+      "suggestedEvidence": "Proyecto .NET ejecutable con dotnet test y descripción breve de las decisiones tomadas.",
+      "resourceUrl": "https://learn.microsoft.com/es-es/dotnet/csharp/"
+    },
+    {
+      "skillId": "docker",
+      "title": "Empaquetar una aplicación reproducible con Docker",
+      "objective": "Definir un Dockerfile multietapa no-root y verificar la ejecución aislada de un servicio local.",
+      "prerequisiteSkillIds": ["git"],
+      "compatibleProjectSkillIds": ["docker", "nodejs", "java", "csharp", "sql", "git"],
+      "standaloneActivity": "Crea un Dockerfile multietapa con usuario sin privilegios (non-root) y archivo .dockerignore para un servicio HTTP mínimo, verificando su arranque y comprobación de salud. Evidencia sugerida: Dockerfile documentado y comandos de construcción/ejecución.",
+      "projectExtensionActivity": "Extiende tu proyecto «{projectTitle}» añadiendo un Dockerfile multietapa con usuario no-root y un archivo .dockerignore para ejecutarlo de forma reproducible en local.",
+      "suggestedEvidence": "Dockerfile, .dockerignore y registro de comandos docker build / docker run verificados localmente.",
+      "resourceUrl": "https://docs.docker.com/get-started/"
+    },
+    {
+      "skillId": "git",
+      "title": "Practicar flujo de ramas y commits atómicos con Git",
+      "objective": "Organizar cambios en ramas temáticas, commits pequeños con mensajes descriptivos e inspección del historial.",
+      "prerequisiteSkillIds": [],
+      "compatibleProjectSkillIds": [
+        "git",
+        "javascript",
+        "react",
+        "react-native",
+        "nodejs",
+        "sql",
+        "docker",
+        "java",
+        "csharp",
+        "cplusplus"
+      ],
+      "standaloneActivity": "En un repositorio local de práctica, crea una rama de trabajo, divide un cambio en al menos dos commits atómicos, inspecciona git diff / git log y resuelve una integración limpia. Evidencia sugerida: salida de git log --oneline --graph.",
+      "projectExtensionActivity": "Extiende tu proyecto «{projectTitle}» aplicando una mejora acotada en una rama dedicada con commits atómicos y documenta el flujo de verificación en el historial del repositorio.",
+      "suggestedEvidence": "Historial de commits atómicos verificable con git log y descripción del cambio integrado.",
+      "resourceUrl": "https://git-scm.com/doc"
+    },
+    {
+      "skillId": "java",
+      "title": "Practicar programación orientada a objetos y pruebas en Java",
+      "objective": "Modelar clases inmutables, colecciones y manejo explícito de errores en Java con pruebas unitarias.",
+      "prerequisiteSkillIds": [],
+      "compatibleProjectSkillIds": ["java", "sql", "git"],
+      "standaloneActivity": "Implementa un módulo en Java que procese y valide registros usando colecciones estándar y excepciones controladas, acompañado de pruebas JUnit. Evidencia sugerida: código fuente y ejecución limpia de pruebas.",
+      "projectExtensionActivity": "Extiende tu proyecto «{projectTitle}» agregando una clase de servicio o validación en Java con sus pruebas unitarias correspondientes.",
+      "suggestedEvidence": "Clases Java y suite JUnit ejecutable localmente sin errores.",
+      "resourceUrl": "https://docs.oracle.com/en/java/"
+    },
+    {
+      "skillId": "javascript",
+      "title": "Practicar fundamentos asíncronos y transformación de datos en JavaScript",
+      "objective": "Resolver transformaciones de colecciones, módulos ES y operaciones asíncronas con manejo explícito de errores en JavaScript.",
+      "prerequisiteSkillIds": [],
+      "compatibleProjectSkillIds": ["javascript", "react", "react-native", "nodejs", "git"],
+      "standaloneActivity": "Escribe un módulo en JavaScript moderno (ES Modules) que filtre, agrupe y valide datos de entrada usando funciones puras y async/await con pruebas automatizadas. Evidencia sugerida: script reproducible y casos borde cubiertos.",
+      "projectExtensionActivity": "Extiende tu proyecto «{projectTitle}» extrayendo una función pura en JavaScript para validar o transformar datos e incorpora pruebas para entradas válidas e inválidas.",
+      "suggestedEvidence": "Módulo JavaScript con funciones puras y pruebas automatizadas para casos nominales y de error.",
+      "resourceUrl": "https://developer.mozilla.org/es/docs/Web/JavaScript"
+    },
+    {
+      "skillId": "nodejs",
+      "title": "Construir un endpoint HTTP validado con Node.js",
+      "objective": "Implementar un servicio en Node.js con validación de entrada, manejo de errores HTTP y pruebas de integración.",
+      "prerequisiteSkillIds": ["javascript"],
+      "compatibleProjectSkillIds": ["nodejs", "javascript", "sql", "docker", "git"],
+      "standaloneActivity": "Desarrolla un pequeño servidor HTTP en Node.js con al menos una ruta de lectura y otra de escritura validada, códigos de estado claros (200/201/400) y pruebas automatizadas. Evidencia sugerida: colección de peticiones y suite de pruebas.",
+      "projectExtensionActivity": "Extiende tu proyecto «{projectTitle}» añadiendo o reforzando un endpoint en Node.js con validación explícita de parámetros y una prueba automatizada de error 400 y éxito 200.",
+      "suggestedEvidence": "Código del endpoint en Node.js y prueba automatizada verificando respuestas 200 y 400.",
+      "resourceUrl": "https://nodejs.org/docs/latest/api/"
+    },
+    {
+      "skillId": "react",
+      "title": "Construir interfaz con estado controlado y accesibilidad en React",
+      "objective": "Crear componentes React con formularios controlados, estados de carga/error/vacío y navegación accesible por teclado.",
+      "prerequisiteSkillIds": ["javascript"],
+      "compatibleProjectSkillIds": ["react", "javascript", "nodejs", "git"],
+      "standaloneActivity": "Implementa una vista en React con un formulario controlado, filtro de lista y estados explícitos de carga, vacío y error accesibles por teclado. Evidencia sugerida: componente funcional y prueba de renderizado/interacción.",
+      "projectExtensionActivity": "Extiende tu proyecto «{projectTitle}» añadiendo a un componente React existente estados explícitos de carga/error y etiquetas accesibles verificables con teclado.",
+      "suggestedEvidence": "Componente React con estados de interfaz completos y prueba de interacción.",
+      "resourceUrl": "https://es.react.dev/learn"
+    },
+    {
+      "skillId": "react-native",
+      "title": "Construir una pantalla móvil con listas y estado en React Native",
+      "objective": "Desarrollar una pantalla en React Native con FlatList, controles accesibles y manejo de estado local.",
+      "prerequisiteSkillIds": ["javascript", "react"],
+      "compatibleProjectSkillIds": ["react-native", "react", "javascript", "git"],
+      "standaloneActivity": "Construye una pantalla en React Native que muestre una lista con FlatList, un formulario de filtrado y retroalimentación visual ante lista vacía o error. Evidencia sugerida: componente de pantalla y nota de pruebas.",
+      "projectExtensionActivity": "Extiende tu proyecto «{projectTitle}» incorporando una vista o componente compatible con React Native con controles táctiles accesibles y estado vacío explícito.",
+      "suggestedEvidence": "Componente React Native documentado con captura o prueba de renderizado de sus estados.",
+      "resourceUrl": "https://reactnative.dev/docs/getting-started"
+    },
+    {
+      "skillId": "sql",
+      "title": "Practicar modelado relacional y consultas parametrizadas en SQL",
+      "objective": "Diseñar tablas con claves foráneas e índices básicos y escribir consultas SQL con JOIN, agregación y filtros seguros.",
+      "prerequisiteSkillIds": [],
+      "compatibleProjectSkillIds": ["sql", "nodejs", "java", "csharp", "git"],
+      "standaloneActivity": "Escribe un script SQL reproducible que cree dos tablas relacionadas con claves primarias/foráneas, inserte datos sintéticos y ejecute consultas con JOIN, GROUP BY y filtros. Evidencia sugerida: archivo .sql con esquema y consultas comentadas.",
+      "projectExtensionActivity": "Extiende tu proyecto «{projectTitle}» añadiendo una consulta SQL parametrizada o migración con restricción de integridad e índice justificado.",
+      "suggestedEvidence": "Script .sql con definición de tablas, restricciones y consultas verificadas sobre datos sintéticos.",
+      "resourceUrl": "https://www.postgresql.org/docs/current/tutorial-sql.html"
+    }
+  ]
+}
