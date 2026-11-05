@@ -14,6 +14,6 @@ Base verificada: `origin/develop e1a5b10` el 4 de noviembre de 2026. REL-01, CTR
 
 Archivos: `docs/provider/JSEARCH.md`, dos fixtures JSON sintéticos y este handoff. Fuentes oficiales consultadas con fecha; headers, endpoints, cursor, cuota pública y errores documentados. Plan de cuenta, cero costo total, atribución, caché, texto y derivados permanecen pendientes; por eso no se activa live.
 
-Hallazgo contractual: la documentación vigente usa cursor opaco, mientras el M3 propuesto de CTR-02 expone page numérico. `docs/provider/JSR-02-PAGINATION-PROPOSAL.md` conserva `page=1` para compatibilidad y propone continuación con cursor emitido por DevPath. P4+P1/P2 deben aprobarla antes de modificar OpenAPI. No se realizó ninguna llamada ni suscripción.
+Hallazgo contractual: la documentación vigente usa cursor opaco, mientras el M3 propuesto de CTR-02 expone page numérico. `docs/provider/JSR-02-PAGINATION-PROPOSAL.md` conserva `page=1` para compatibilidad y propone continuación con cursor emitido por DevPath. ADR 0005 recomienda AES-256-GCM stateless porque no existe un almacén efímero compartido y una firma HMAC no oculta el cursor. P4+P1/P2 deben aprobar la propuesta antes de modificar OpenAPI. No se realizó ninguna llamada ni suscripción.
 
 Validación: JSON parseable, enlaces revisados y diff documental sin secretos. No hay prueba live ni cuota de cuenta atribuida.
