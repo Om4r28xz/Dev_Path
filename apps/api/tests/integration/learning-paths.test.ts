@@ -370,5 +370,178 @@ describe.skipIf(!databaseUrl)(
       );
       expect(afterCount).toBe(beforeCount);
     });
+
+    it('LRN-03: lists, reads detail, updates step progress coherently, enforces ownership and step membership, preserves activity on project delete, and cascades on analysis delete', async () => {
+      const lrn03AnalysisId = randomUUID();
+      await pool.query(
+        `INSERT INTO app.analyses (
+           id, user_id, idempotency_key, request_hash, candidate_skill_ids,
+           job_title, job_text, required_skill_ids, matched_skill_ids, missing_skill_ids,
+           compatibility_percentage, candidate_skills_revision, catalog_version, extractor_version, scoring_version
+         )
+         VALUES ($1, $2, $3, 'hash-lrn03', ARRAY['javascript'], 'Vacante LRN-03', 'React y Node.js',
+                 ARRAY['javascript', 'nodejs', 'react'], ARRAY['javascript'], ARRAY['nodejs', 'react'],
+                 33, 1, '1.0.0', '1.0.0', '1.0.0')`,
+        [lrn03AnalysisId, ownerA, randomUUID()],
+      );
+
+      const projRes = await call('/projects', {
+        method: 'POST',
+        body: {
+          title: 'API & UI Base',
+          description: 'Proyecto para conectar pasos.',
+          skillIds: ['javascript'],
+        },
+      });
+      expect(projRes.status).toBe(201);
+      const project = (await projRes.json()) as { id: string };
+
+      const createRes = await call('/learning-paths', {
+        method: 'POST',
+        headers: { 'Idempotency-Key': randomUUID() },
+        body: { analysisId: lrn03AnalysisId },
+      });
+      expect(createRes.status).toBe(201);
+      const pathDto = await createRes.json();
+      expect(pathDto.steps).toHaveLength(2);
+      const [step1, step2] = pathDto.steps as Array<{
+        id: string;
+        activity: string;
+        projectId: string | null;
+      }>;
+      expect(step1!.projectId).toBe(project.id);
+      expect(step1!.activity).toContain('API & UI Base');
+
+      // GET /learning-paths paginated list (limit=1 + cursor)
+      const page1Res = await call('/learning-paths?limit=1');
+      expect(page1Res.status).toBe(200);
+      const page1 = await page1Res.json();
+      expect(page1.items).toHaveLength(1);
+      expect(page1.items[0].id).toBe(pathDto.id);
+      expect(typeof page1.nextCursor).toBe('string');
+
+      // Account B cannot use Account A's cursor (400 VALIDATION_ERROR)
+      const foreignCursorRes = await call(
+        `/learning-paths?cursor=${encodeURIComponent(page1.nextCursor)}`,
+        { token: 'owner-b' },
+      );
+      expect(foreignCursorRes.status).toBe(400);
+
+      const page2Res = await call(
+        `/learning-paths?limit=1&cursor=${encodeURIComponent(page1.nextCursor)}`,
+      );
+      expect(page2Res.status).toBe(200);
+      const page2 = await page2Res.json();
+      expect(page2.items).toHaveLength(1);
+      expect(page2.items[0].id).not.toBe(pathDto.id);
+
+      // GET /learning-paths/:id detail and cross-account 404
+      const detailRes = await call(`/learning-paths/${pathDto.id}`);
+      expect(detailRes.status).toBe(200);
+      expect(await detailRes.json()).toEqual(pathDto);
+
+      const foreignDetailRes = await call(`/learning-paths/${pathDto.id}`, { token: 'owner-b' });
+      expect(foreignDetailRes.status).toBe(404);
+
+      // Step transitions: pending -> in_progress -> completed -> completed (idempotent timestamp) -> pending (reopened)
+      const inProgressRes = await call(`/learning-paths/${pathDto.id}/steps/${step1!.id}`, {
+        method: 'PATCH',
+        body: { status: 'in_progress' },
+      });
+      expect(inProgressRes.status).toBe(200);
+      const inProgressDto = await inProgressRes.json();
+      expect(inProgressDto.steps[0].status).toBe('in_progress');
+      expect(inProgressDto.steps[0].completedAt).toBeNull();
+      expect(inProgressDto.progress).toEqual({ completed: 0, total: 2, percentage: 0 });
+
+      const completedRes = await call(`/learning-paths/${pathDto.id}/steps/${step1!.id}`, {
+        method: 'PATCH',
+        body: { status: 'completed' },
+      });
+      expect(completedRes.status).toBe(200);
+      const completedDto = await completedRes.json();
+      expect(completedDto.steps[0].status).toBe('completed');
+      const firstCompletedAt = completedDto.steps[0].completedAt;
+      expect(typeof firstCompletedAt).toBe('string');
+      expect(completedDto.progress).toEqual({ completed: 1, total: 2, percentage: 50 });
+
+      // Repeating 'completed' keeps the exact same completedAt timestamp
+      const repeatCompletedRes = await call(`/learning-paths/${pathDto.id}/steps/${step1!.id}`, {
+        method: 'PATCH',
+        body: { status: 'completed' },
+      });
+      expect(repeatCompletedRes.status).toBe(200);
+      const repeatCompletedDto = await repeatCompletedRes.json();
+      expect(repeatCompletedDto.steps[0].completedAt).toBe(firstCompletedAt);
+
+      // Completing a step must NEVER add skills to app.user_skills or alter analysis score
+      const userSkillsRows = (
+        await pool.query(
+          'SELECT skill_id FROM app.user_skills WHERE user_id = $1 ORDER BY skill_id ASC',
+          [ownerA],
+        )
+      ).rows;
+      expect(userSkillsRows.map((r) => r.skill_id)).toEqual(['javascript']);
+
+      // Reopening a completed step clears completedAt and updates derived progress
+      const reopenRes = await call(`/learning-paths/${pathDto.id}/steps/${step1!.id}`, {
+        method: 'PATCH',
+        body: { status: 'pending' },
+      });
+      expect(reopenRes.status).toBe(200);
+      const reopenedDto = await reopenRes.json();
+      expect(reopenedDto.steps[0].status).toBe('pending');
+      expect(reopenedDto.steps[0].completedAt).toBeNull();
+      expect(reopenedDto.progress).toEqual({ completed: 0, total: 2, percentage: 0 });
+
+      // Step from another path or foreign account returns 404
+      const otherPathId = page2.items[0].id as string;
+      const wrongPathStepRes = await call(`/learning-paths/${otherPathId}/steps/${step2!.id}`, {
+        method: 'PATCH',
+        body: { status: 'completed' },
+      });
+      expect(wrongPathStepRes.status).toBe(404);
+
+      const foreignPatchRes = await call(`/learning-paths/${pathDto.id}/steps/${step1!.id}`, {
+        token: 'owner-b',
+        method: 'PATCH',
+        body: { status: 'completed' },
+      });
+      expect(foreignPatchRes.status).toBe(404);
+
+      // Deleting the linked project sets projectId to null while keeping historical activity text
+      const delProjRes = await call(`/projects/${project.id}`, { method: 'DELETE' });
+      expect(delProjRes.status).toBe(204);
+
+      const afterProjDeleteRes = await call(`/learning-paths/${pathDto.id}`);
+      expect(afterProjDeleteRes.status).toBe(200);
+      const afterProjDeleteDto = await afterProjDeleteRes.json();
+      expect(afterProjDeleteDto.steps[0].projectId).toBeNull();
+      expect(afterProjDeleteDto.steps[0].activity).toBe(step1!.activity);
+      expect(afterProjDeleteDto.steps[0].activity).toContain('API & UI Base');
+
+      // Deleting the analysis cascades and removes dependent learning paths
+      await pool.query('DELETE FROM app.analyses WHERE user_id = $1 AND id = $2', [
+        ownerA,
+        lrn03AnalysisId,
+      ]);
+      const afterAnalysisDeleteRes = await call(`/learning-paths/${pathDto.id}`);
+      expect(afterAnalysisDeleteRes.status).toBe(404);
+
+      // Explicit DELETE /learning-paths/:id on remaining path (and 404 for foreign owner)
+      const foreignDeleteRes = await call(`/learning-paths/${otherPathId}`, {
+        token: 'owner-b',
+        method: 'DELETE',
+      });
+      expect(foreignDeleteRes.status).toBe(404);
+
+      const deletePathRes = await call(`/learning-paths/${otherPathId}`, {
+        method: 'DELETE',
+      });
+      expect(deletePathRes.status).toBe(204);
+
+      const afterPathDeleteRes = await call(`/learning-paths/${otherPathId}`);
+      expect(afterPathDeleteRes.status).toBe(404);
+    });
   },
 );
