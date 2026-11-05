@@ -81,7 +81,13 @@ const app = createApp({
       '/api/v1',
       jobsRouter(jobsProvider, accessTokenMiddleware(auth), { cursorKey: jobsCursorKey }),
     );
-    app.use('/api/v1', analysesRouter(pool, accessTokenMiddleware(auth), engine));
+    app.use(
+      '/api/v1',
+      analysesRouter(pool, accessTokenMiddleware(auth), engine, {
+        jobsProvider,
+        liveRetentionPermitted: process.env.JOBS_LIVE_RETENTION_ALLOWED === 'true',
+      }),
+    );
   },
 });
 

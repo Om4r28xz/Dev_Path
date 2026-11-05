@@ -1,22 +1,38 @@
 import { z } from 'zod';
+
+const textSourceSchema = z
+  .object({
+    type: z.literal('text'),
+    title: z
+      .string()
+      .min(1)
+      .max(120)
+      .refine((value) => value.trim().length > 0)
+      .optional(),
+    text: z
+      .string()
+      .min(1)
+      .max(20000)
+      .refine((value) => value.trim().length > 0),
+  })
+  .strict();
+
+const jsearchSourceSchema = z
+  .object({
+    type: z.literal('jsearch'),
+    providerId: z
+      .string()
+      .trim()
+      .min(1)
+      .max(512)
+      .regex(/^[^\r\n]+$/u)
+      .refine((value) => !/^[a-z][a-z0-9+.-]*:\/\//iu.test(value)),
+  })
+  .strict();
+
 export const createAnalysisSchema = z
   .object({
-    source: z
-      .object({
-        type: z.literal('text'),
-        title: z
-          .string()
-          .min(1)
-          .max(120)
-          .refine((value) => value.trim().length > 0)
-          .optional(),
-        text: z
-          .string()
-          .min(1)
-          .max(20000)
-          .refine((value) => value.trim().length > 0),
-      })
-      .strict(),
+    source: z.discriminatedUnion('type', [textSourceSchema, jsearchSourceSchema]),
   })
   .strict();
 export type AnalysisCommand = z.infer<typeof createAnalysisSchema>;
