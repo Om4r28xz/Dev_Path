@@ -7,6 +7,7 @@ import {
   type LearningTemplatesDocument,
   type ProjectSummaryForPath,
 } from './generator.js';
+import { encodeLearningPathCursor, type LearningPathCursor } from './schemas.js';
 
 export type LearningStepStatus = 'pending' | 'in_progress' | 'completed';
 
@@ -73,6 +74,11 @@ export interface LearningPathDto {
   message: string | null;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface LearningPathListDto {
+  items: LearningPathDto[];
+  nextCursor: string | null;
 }
 
 export function deriveLearningProgress(
@@ -181,6 +187,14 @@ export class LearningPathsRepository {
     private readonly pool: Pool,
     private readonly options?: LearningPathsRepositoryOptions,
   ) {}
+
+  private async query<T extends QueryResultRow>(text: string, values: unknown[]): Promise<T[]> {
+    try {
+      return (await this.pool.query<T>(text, values)).rows;
+    } catch {
+      throw dependencyUnavailable();
+    }
+  }
 
   private async transaction<T>(run: (client: PoolClient) => Promise<T>): Promise<T> {
     let client: PoolClient;
@@ -382,5 +396,156 @@ export class LearningPathsRepository {
         body: learningPathDto(insertedHeader, insertedSteps),
       };
     });
+  }
+
+  async list(
+    owner: string,
+    limit: number,
+    after: LearningPathCursor | undefined,
+  ): Promise<LearningPathListDto> {
+    const headerRows = await this.query<LearningPathHeaderRow>(
+      `SELECT lp.*,
+              to_char(lp.created_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS cursor_created_at
+       FROM app.learning_paths lp
+       WHERE lp.user_id = $1
+         AND ($2::timestamptz IS NULL OR (lp.created_at, lp.id) < ($2::timestamptz, $3::uuid))
+       ORDER BY lp.created_at DESC NULLS LAST, lp.id DESC NULLS LAST
+       LIMIT $4`,
+      [owner, after?.createdAt ?? null, after?.id ?? null, limit + 1],
+    );
+
+    const pageHeaders = headerRows.slice(0, limit);
+    if (pageHeaders.length === 0) {
+      return { items: [], nextCursor: null };
+    }
+
+    const pathIds = pageHeaders.map((h) => h.id);
+    const stepRows = await this.query<LearningPathStepDbRow>(
+      `SELECT * FROM app.learning_path_steps
+       WHERE learning_path_id = ANY($1::uuid[])
+       ORDER BY learning_path_id ASC, step_order ASC, id ASC`,
+      [pathIds],
+    );
+
+    const stepsByPath = new Map<string, LearningPathStepDbRow[]>();
+    for (const step of stepRows) {
+      let group = stepsByPath.get(step.learning_path_id);
+      if (!group) {
+        group = [];
+        stepsByPath.set(step.learning_path_id, group);
+      }
+      group.push(step);
+    }
+
+    const items = pageHeaders.map((header) =>
+      learningPathDto(header, stepsByPath.get(header.id) ?? []),
+    );
+    const last = pageHeaders.at(-1);
+
+    return {
+      items,
+      nextCursor:
+        headerRows.length > limit && last && last.cursor_created_at
+          ? encodeLearningPathCursor(owner, last.cursor_created_at, last.id)
+          : null,
+    };
+  }
+
+  async get(owner: string, id: string): Promise<LearningPathDto> {
+    const headers = await this.query<LearningPathHeaderRow>(
+      `SELECT * FROM app.learning_paths WHERE user_id = $1 AND id = $2`,
+      [owner, id],
+    );
+    const header = headers[0];
+    if (!header) throw learningPathNotFound();
+
+    const stepRows = await this.query<LearningPathStepDbRow>(
+      `SELECT * FROM app.learning_path_steps
+       WHERE learning_path_id = $1
+       ORDER BY step_order ASC, id ASC`,
+      [header.id],
+    );
+    return learningPathDto(header, stepRows);
+  }
+
+  async updateStepStatus(
+    owner: string,
+    pathId: string,
+    stepId: string,
+    status: LearningStepStatus,
+  ): Promise<LearningPathDto> {
+    return this.transaction(async (client) => {
+      // Lock the owned learning path row first; return 404 if absent or owned by another user
+      const headerResult = await client.query<LearningPathHeaderRow>(
+        `SELECT * FROM app.learning_paths WHERE user_id = $1 AND id = $2 FOR UPDATE`,
+        [owner, pathId],
+      );
+      const header = headerResult.rows[0];
+      if (!header) {
+        throw learningPathNotFound();
+      }
+
+      // Verify step belongs to this exact learning path
+      const existingStepResult = await client.query<LearningPathStepDbRow>(
+        `SELECT * FROM app.learning_path_steps
+         WHERE learning_path_id = $1 AND id = $2
+         FOR UPDATE`,
+        [pathId, stepId],
+      );
+      const existingStep = existingStepResult.rows[0];
+      if (!existingStep) {
+        throw learningPathNotFound();
+      }
+
+      // If status changed, update step and path updated_at; if repeated, preserve completed_at
+      let updatedHeader = header;
+      if (existingStep.status !== status) {
+        if (status === 'completed') {
+          await client.query(
+            `UPDATE app.learning_path_steps
+             SET status = 'completed',
+                 completed_at = COALESCE(completed_at, now())
+             WHERE learning_path_id = $1 AND id = $2`,
+            [pathId, stepId],
+          );
+        } else {
+          await client.query(
+            `UPDATE app.learning_path_steps
+             SET status = $3,
+                 completed_at = NULL
+             WHERE learning_path_id = $1 AND id = $2`,
+            [pathId, stepId, status],
+          );
+        }
+
+        const refreshedHeader = await client.query<LearningPathHeaderRow>(
+          `UPDATE app.learning_paths
+           SET updated_at = now()
+           WHERE user_id = $1 AND id = $2
+           RETURNING *`,
+          [owner, pathId],
+        );
+        updatedHeader = refreshedHeader.rows[0]!;
+      }
+
+      const stepsResult = await client.query<LearningPathStepDbRow>(
+        `SELECT * FROM app.learning_path_steps
+         WHERE learning_path_id = $1
+         ORDER BY step_order ASC, id ASC`,
+        [pathId],
+      );
+
+      return learningPathDto(updatedHeader, stepsResult.rows);
+    });
+  }
+
+  async delete(owner: string, id: string): Promise<void> {
+    const rows = await this.query<{ id: string }>(
+      `DELETE FROM app.learning_paths WHERE user_id = $1 AND id = $2 RETURNING id`,
+      [owner, id],
+    );
+    if (rows.length === 0) {
+      throw learningPathNotFound();
+    }
   }
 }

@@ -6,23 +6,26 @@ The Express/TypeScript API (`apps/api`) is the browser's public backend and the 
 
 Routes below are mounted under `/api/v1`. The API also exposes `GET /health/live` and `GET /health/ready` outside that prefix (health checks do not count as business operations for E3).
 
-| Method             | Path                    | Authentication  | Purpose                                                                |
-| ------------------ | ----------------------- | --------------- | ---------------------------------------------------------------------- |
-| POST               | `/auth/register`        | No bearer token | Create an account and session                                          |
-| POST               | `/auth/login`           | No bearer token | Start a session                                                        |
-| POST               | `/auth/refresh`         | Refresh cookie  | Rotate the session and return a new access token                       |
-| POST               | `/auth/logout`          | Refresh cookie  | End the session                                                        |
-| GET, PATCH         | `/me`                   | Bearer JWT      | Read or update the current profile                                     |
-| GET                | `/skills`               | Bearer JWT      | List catalog skills                                                    |
-| GET, PUT           | `/me/skills`            | Bearer JWT      | Read or replace the user's skills                                      |
-| GET, POST          | `/projects`             | Bearer JWT      | List or create owned portfolio projects                                |
-| GET, PATCH, DELETE | `/projects/:id`         | Bearer JWT      | Read, update, or delete one owned project                              |
-| GET, PUT, DELETE   | `/me/cv`                | Bearer JWT      | Read metadata, upload/replace, or delete one private PDF               |
-| GET                | `/me/cv/download`       | Bearer JWT      | Stream the owner's PDF as an attachment                                |
-| GET                | `/jobs`                 | Bearer JWT      | Search normalized job listings (`q`, `location`, `cursor`)             |
-| GET                | `/jobs/details`         | Bearer JWT      | Fetch one normalized job by opaque `providerId`                        |
-| POST, GET          | `/analyses`             | Bearer JWT      | Create a manual (`text`) or provider (`jsearch`) analysis, or list own |
-| GET, DELETE        | `/analyses/:analysisId` | Bearer JWT      | Read or delete one owned analysis                                      |
+| Method             | Path                                | Authentication  | Purpose                                                                |
+| ------------------ | ----------------------------------- | --------------- | ---------------------------------------------------------------------- |
+| POST               | `/auth/register`                    | No bearer token | Create an account and session                                          |
+| POST               | `/auth/login`                       | No bearer token | Start a session                                                        |
+| POST               | `/auth/refresh`                     | Refresh cookie  | Rotate the session and return a new access token                       |
+| POST               | `/auth/logout`                      | Refresh cookie  | End the session                                                        |
+| GET, PATCH         | `/me`                               | Bearer JWT      | Read or update the current profile                                     |
+| GET                | `/skills`                           | Bearer JWT      | List catalog skills                                                    |
+| GET, PUT           | `/me/skills`                        | Bearer JWT      | Read or replace the user's skills                                      |
+| GET, POST          | `/projects`                         | Bearer JWT      | List or create owned portfolio projects                                |
+| GET, PATCH, DELETE | `/projects/:id`                     | Bearer JWT      | Read, update, or delete one owned project                              |
+| GET, PUT, DELETE   | `/me/cv`                            | Bearer JWT      | Read metadata, upload/replace, or delete one private PDF               |
+| GET                | `/me/cv/download`                   | Bearer JWT      | Stream the owner's PDF as an attachment                                |
+| GET                | `/jobs`                             | Bearer JWT      | Search normalized job listings (`q`, `location`, `cursor`)             |
+| GET                | `/jobs/details`                     | Bearer JWT      | Fetch one normalized job by opaque `providerId`                        |
+| POST, GET          | `/analyses`                         | Bearer JWT      | Create a manual (`text`) or provider (`jsearch`) analysis, or list own |
+| GET, DELETE        | `/analyses/:analysisId`             | Bearer JWT      | Read or delete one owned analysis                                      |
+| GET, POST          | `/learning-paths`                   | Bearer JWT      | List own learning paths or generate a deterministic path from analysis |
+| GET, DELETE        | `/learning-paths/:id`               | Bearer JWT      | Read or delete one owned learning path and its steps                   |
+| PATCH              | `/learning-paths/:id/steps/:stepId` | Bearer JWT      | Update one step status (`pending`, `in_progress`, `completed`)         |
 
 ### E3 business endpoints (JSR-02 & JSR-03)
 
