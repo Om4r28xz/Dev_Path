@@ -6,12 +6,12 @@ Contratos y versiones consumidos: `packages/contracts/openapi/public.yaml` (`1.1
 `packages/contracts/openapi/m4-proposed.yaml` (`0.1.0`), catálogo `1.0.0`, contenido de
 aprendizaje `1.0.0` y generador `rules-1`.
 
-| Tarea  | Estado                                                                     | Evidencia / siguiente acción                                                                                                                                                                                                    |
-| ------ | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| LRN-04 | Implementada en `feature/lrn-04-learning-path-ui`; pendiente de PR y merge | Rutas `/learning-paths` y `/learning-paths/:id`, CTA desde análisis, progreso real, estados de error/vacío/cero brechas y E2E en `tests/e2e/learning-paths.spec.ts`. P1/P5 deben revisar el PR y su utilidad antes de integrar. |
-| QA-05  | Bloqueada por el merge de LRN-04                                           | Crear `docs/qa-05-learning-path-results` desde `develop` actualizado únicamente cuando LRN-04 esté integrada.                                                                                                                   |
-| REL-04 | Bloqueada por el merge y aceptación de QA-05                               | Preparar `release/0.4.0` desde `develop` actualizado; la integración, etiqueta y publicación son humanas.                                                                                                                       |
-| DEP-01 | Preparada de forma independiente para contribución de Zaid                 | ZIP `DevPath_DEP-01_Zaid.zip` fuera del repositorio. Zaid debe revisar, aportar una contribución verificable, ejecutar los controles y publicar su propio PR. No bloquea M4.                                                    |
+| Tarea  | Estado                                                                          | Evidencia / siguiente acción                                                                                                                                                 |
+| ------ | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| LRN-04 | Integrada en `develop` mediante PR #59 (`b4724e7`)                              | Checks de la cabeza `9d0dcd0` aprobados, incluido Chromium con PostgreSQL 16 y `CI gate (required)`.                                                                         |
+| QA-05  | Implementada en `docs/qa-05-learning-path-results`; aceptación humana pendiente | Matriz `docs/acceptance/M4-results.md` y recorrido completo `tests/e2e/m4-acceptance.spec.ts`. Falta CI de la rama y revisión P5 de utilidad, zoom, contraste y teclado.     |
+| REL-04 | Bloqueada por el merge y aceptación de QA-05                                    | Preparar `release/0.4.0` desde `develop` actualizado; la integración, etiqueta y publicación son humanas.                                                                    |
+| DEP-01 | Preparada de forma independiente para contribución de Zaid                      | ZIP `DevPath_DEP-01_Zaid.zip` fuera del repositorio. Zaid debe revisar, aportar una contribución verificable, ejecutar los controles y publicar su propio PR. No bloquea M4. |
 
 ## LRN-04 — pantallas de ruta y avance
 
@@ -37,8 +37,8 @@ Archivos de LRN-04:
 
 ## Condición exacta de continuación
 
-1. Revisar, validar e integrar el PR de LRN-04 hacia `develop`.
-2. Verificar el merge real mediante Git antes de crear QA-05.
-3. Ejecutar QA-05 y registrar revisión manual P5 sin inventar resultados.
+1. Ejecutar en CI el recorrido nuevo de QA-05 con PostgreSQL 16 y corregir únicamente fallos reales.
+2. Registrar la revisión manual P5 indicada en `docs/acceptance/M4-results.md`.
+3. Revisar e integrar el PR de QA-05 hacia `develop`.
 4. Solo después de integrar QA-05, preparar REL-04. El integrador humano decide el merge hacia
    `main`, publica `v0.4.0` y sincroniza `main` hacia `develop`.

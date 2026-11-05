@@ -97,7 +97,7 @@
       "sha256": "ec165583c07330968f9d904307aa0838d0a49e1fc1973060b85d7dfd8d5493aa"
     },
     {
-      "file": "docs/acceptance/probes/contrast.browser.spec.ts",
+      "file": "docs/acceptance/evidence/contrast.browser.spec.snapshot.ts",
       "sha256": "2322cfb0983f9290ad598f51bce3a805ad1da522cfc13f9af242ec58ddb02741"
     },
     {
