@@ -11,6 +11,7 @@ import { LocalCvStorage } from './modules/cv/storage.js';
 import { jobsRouter } from './modules/jobs/http/router.js';
 import { resolveCursorKey } from './modules/jobs/services/cursor.js';
 import { createJobsProviderFromEnv } from './modules/jobs/services/provider.js';
+import { learningPathsRouter } from './modules/learning-paths/router.js';
 import { projectsRouter } from './modules/projects/router.js';
 import { createApp } from './app.js';
 import { loadConfig } from './platform/config/env.js';
@@ -88,6 +89,7 @@ const app = createApp({
         liveRetentionPermitted: process.env.JOBS_LIVE_RETENTION_ALLOWED === 'true',
       }),
     );
+    app.use('/api/v1', learningPathsRouter(pool, accessTokenMiddleware(auth)));
   },
 });
 
