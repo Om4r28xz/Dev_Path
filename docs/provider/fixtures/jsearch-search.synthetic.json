@@ -1,0 +1,16 @@
+{
+  "status": "OK",
+  "request_id": "synthetic-request-search-001",
+  "data": [
+    {
+      "job_id": "synthetic-job-001",
+      "job_title": "Frontend junior (sintético)",
+      "employer_name": "Empresa de ejemplo",
+      "job_location": "Remoto",
+      "job_description": "Vacante sintética: JavaScript, React y Git.",
+      "job_apply_link": "https://example.test/jobs/synthetic-job-001",
+      "job_publisher": "Fixture DevPath"
+    }
+  ],
+  "cursor": "synthetic-next-cursor"
+}
