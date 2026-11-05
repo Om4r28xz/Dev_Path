@@ -18,7 +18,7 @@ const FALLBACK_DEV_KEY_MATERIAL = 'devpath-local-jobs-cursor-key-v1';
 const cursorPayloadSchema = z
   .object({
     v: z.literal(1),
-    c: z.string().min(1).max(512),
+    c: z.string().min(1).max(1500),
     u: z.string().uuid(),
     h: z.string().regex(/^[0-9a-f]{64}$/u),
     p: z.number().int().min(2).max(1000),
