@@ -1,0 +1,142 @@
+# Colección HTTP reproducible — Entrega E3 (JSR-02 / JSR-03)
+# Proceso evaluado: apps/api (Express REST en /api/v1)
+# Nota: Los health checks (/health/live y /health/ready) no cuentan como operaciones de negocio.
+# Todos los datos y respuestas esperadas a continuación son sintéticos (modo fixture por defecto).
+
+@baseUrl = http://127.0.0.1:3000/api/v1
+@accessToken = REPLACE_WITH_VALID_JWT_ACCESS_TOKEN
+@idempotencyKey = 5e9220ea-e5b7-42bb-8a88-adf08763837f
+
+### ---------------------------------------------------------------------------
+### 0. Control de seguridad: las 3 operaciones E3 exigen Bearer JWT (401 sin él)
+### ---------------------------------------------------------------------------
+
+GET {{baseUrl}}/jobs?q=react
+Accept: application/json
+
+# Respuesta esperada: HTTP/1.1 401 Unauthorized
+# {
+#   "error": {
+#     "code": "UNAUTHENTICATED",
+#     "message": "Se requiere autenticación.",
+#     "requestId": "<uuid>"
+#   }
+# }
+
+###
+
+GET {{baseUrl}}/jobs/details?providerId=synthetic-job-001
+Accept: application/json
+
+# Respuesta esperada: HTTP/1.1 401 Unauthorized
+
+###
+
+POST {{baseUrl}}/analyses
+Content-Type: application/json
+Idempotency-Key: {{idempotencyKey}}
+
+{
+  "source": {
+    "type": "jsearch",
+    "providerId": "synthetic-job-001"
+  }
+}
+
+# Respuesta esperada: HTTP/1.1 401 Unauthorized
+
+### ---------------------------------------------------------------------------
+### 1. Operación E3 #1 — Búsqueda de vacantes normalizadas (GET /api/v1/jobs)
+### ---------------------------------------------------------------------------
+
+GET {{baseUrl}}/jobs?q=react&location=Remoto&page=1
+Authorization: Bearer {{accessToken}}
+Accept: application/json
+
+# Respuesta esperada (HTTP/1.1 200 OK):
+# {
+#   "items": [
+#     {
+#       "provider": "jsearch",
+#       "providerId": "synthetic-job-001",
+#       "title": "Frontend junior (sintético)",
+#       "company": "Empresa de ejemplo",
+#       "location": "Remoto",
+#       "description": "Vacante sintética: JavaScript, React y Git.",
+#       "applyUrl": "https://example.test/jobs/synthetic-job-001",
+#       "fetchedAt": "2026-11-04T12:00:00.000Z"
+#     }
+#   ],
+#   "page": 1,
+#   "hasNextPage": false,
+#   "nextCursor": null,
+#   "mode": "fixture"
+# }
+
+### ---------------------------------------------------------------------------
+### 2. Operación E3 #2 — Detalle normalizado por providerId (GET /api/v1/jobs/details)
+### ---------------------------------------------------------------------------
+
+GET {{baseUrl}}/jobs/details?providerId=synthetic-job-001
+Authorization: Bearer {{accessToken}}
+Accept: application/json
+
+# Respuesta esperada (HTTP/1.1 200 OK):
+# {
+#   "job": {
+#     "provider": "jsearch",
+#     "providerId": "synthetic-job-001",
+#     "title": "Frontend junior (sintético)",
+#     "company": "Empresa de ejemplo",
+#     "location": "Remoto",
+#     "description": "Vacante sintética: JavaScript, React y Git.",
+#     "applyUrl": "https://example.test/jobs/synthetic-job-001",
+#     "fetchedAt": "2026-11-04T12:00:00.000Z"
+#   },
+#   "mode": "fixture"
+# }
+
+### ---------------------------------------------------------------------------
+### 3. Operación E3 #3 — Analizar vacante del proveedor (POST /api/v1/analyses)
+### Resuelve providerId en servidor y reutiliza el Skill Engine de M1.
+### ---------------------------------------------------------------------------
+
+POST {{baseUrl}}/analyses
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+Idempotency-Key: {{idempotencyKey}}
+
+{
+  "source": {
+    "type": "jsearch",
+    "providerId": "synthetic-job-001"
+  }
+}
+
+# Respuesta esperada (HTTP/1.1 201 Created en primera ejecución; 200 OK en replay idempotente):
+# {
+#   "id": "<uuid>",
+#   "source": {
+#     "type": "jsearch",
+#     "title": "Frontend junior (sintético)",
+#     "providerId": "synthetic-job-001"
+#   },
+#   "candidateSkillsRevision": 1,
+#   "requiredSkillIds": ["git", "javascript", "react"],
+#   "matchedSkillIds": ["javascript", "react"],
+#   "missingSkillIds": ["git"],
+#   "compatibilityPercentage": 67,
+#   "evidence": [
+#     { "skillId": "git", "matches": [{ "text": "Git", "start": 39, "end": 42 }] },
+#     { "skillId": "javascript", "matches": [{ "text": "JavaScript", "start": 19, "end": 29 }] },
+#     { "skillId": "react", "matches": [{ "text": "React", "start": 31, "end": 36 }] }
+#   ],
+#   "versions": {
+#     "catalog": "1.0.0",
+#     "extractor": "1.0.0",
+#     "scoring": "1.0.0"
+#   },
+#   "warnings": [],
+#   "skillsOutdated": false,
+#   "createdAt": "2026-11-05T12:00:00.000Z"
+# }

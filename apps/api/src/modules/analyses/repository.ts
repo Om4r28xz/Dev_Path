@@ -2,6 +2,7 @@ import { withStoredEvidence } from './evidence.js';
 import { createHash, randomUUID } from 'node:crypto';
 import type { Pool, PoolClient, QueryConfig, QueryResultRow } from 'pg';
 import { HttpError } from '../../platform/errors/http-error.js';
+import type { JobsProvider } from '../jobs/services/provider.js';
 import { deadlineFailure, dependencyFailure, type AnalysisEngine } from './engine-client.js';
 import { CATALOG_VERSION, type AnalysisCommand } from './schemas.js';
 
@@ -23,11 +24,13 @@ export interface AnalysisRow extends QueryResultRow {
   warnings: string[];
   created_at: Date;
 }
-export function analysisDto(row: AnalysisRow, currentRevision: number) {
+export function analysisDto(row: AnalysisRow, currentRevision: number, jsearchProviderId?: string) {
   return withStoredEvidence(
     {
       id: row.id,
-      source: { type: 'text' as const, title: row.job_title },
+      source: jsearchProviderId
+        ? { type: 'jsearch' as const, title: row.job_title, providerId: jsearchProviderId }
+        : { type: 'text' as const, title: row.job_title },
       candidateSkillsRevision: row.candidate_skills_revision,
       requiredSkillIds: row.required_skill_ids,
       matchedSkillIds: row.matched_skill_ids,
@@ -53,22 +56,46 @@ function conflict(): HttpError {
     message: 'La clave ya se usó para una solicitud diferente.',
   });
 }
+function retentionNotPermitted(): HttpError {
+  return new HttpError({
+    status: 503,
+    code: 'DEPENDENCY_UNAVAILABLE',
+    message:
+      'El almacenamiento de análisis para vacantes live de JSearch permanece deshabilitado hasta confirmar permisos de retención del proveedor.',
+  });
+}
+export interface AnalysesRepositoryOptions {
+  readonly jobsProvider?: JobsProvider | undefined;
+  readonly liveRetentionPermitted?: boolean | undefined;
+}
 export class AnalysesRepository {
   constructor(
     private readonly pool: Pool,
     private readonly engine: AnalysisEngine,
     private readonly budgetMs = 5000,
+    private readonly options?: AnalysesRepositoryOptions,
   ) {}
   async create(owner: string, key: string, command: AnalysisCommand, requestId: string) {
     const deadline = Date.now() + this.budgetMs;
     const signal = AbortSignal.timeout(this.budgetMs);
-    const hash = createHash('sha256')
-      .update(
-        JSON.stringify({
-          source: { type: 'text', title: command.source.title ?? null, text: command.source.text },
-        }),
-      )
-      .digest('hex');
+    const hashPayload =
+      command.source.type === 'text'
+        ? {
+            source: {
+              type: 'text',
+              title: command.source.title ?? null,
+              text: command.source.text,
+            },
+          }
+        : {
+            source: {
+              type: 'jsearch',
+              providerId: command.source.providerId,
+            },
+          };
+    const hash = createHash('sha256').update(JSON.stringify(hashPayload)).digest('hex');
+    const jsearchProviderId =
+      command.source.type === 'jsearch' ? command.source.providerId : undefined;
     let client: PoolClient | undefined;
     let acquired = false;
     const pending = this.pool.connect();
@@ -145,7 +172,28 @@ export class AnalysesRepository {
       if (existing) {
         if (existing.request_hash !== hash) throw conflict();
         await query('COMMIT');
-        return { created: false, analysis: analysisDto(existing, profile.skills_revision) };
+        return {
+          created: false,
+          analysis: analysisDto(existing, profile.skills_revision, jsearchProviderId),
+        };
+      }
+      let resolvedTitle: string | null;
+      let resolvedText: string;
+      if (command.source.type === 'text') {
+        resolvedTitle = command.source.title ?? null;
+        resolvedText = command.source.text;
+      } else {
+        const provider = this.options?.jobsProvider;
+        if (!provider) throw dependencyFailure();
+        if (provider.mode === 'live' && this.options?.liveRetentionPermitted !== true) {
+          throw retentionNotPermitted();
+        }
+        const detailsResult = await provider.details({
+          providerId: command.source.providerId,
+          signal,
+        });
+        resolvedTitle = detailsResult.job.title.trim().slice(0, 120) || null;
+        resolvedText = detailsResult.job.description;
       }
       const skills = await query<{ skill_id: string }>(
         'SELECT skill_id FROM app.user_skills WHERE user_id=$1 ORDER BY skill_id',
@@ -155,7 +203,7 @@ export class AnalysesRepository {
       const ids = skills.map((row) => row.skill_id);
       if (ids.length > 100) throw dependencyFailure();
       const result = await this.engine.analyze(
-        { catalogVersion: CATALOG_VERSION, jobText: command.source.text, candidateSkillIds: ids },
+        { catalogVersion: CATALOG_VERSION, jobText: resolvedText, candidateSkillIds: ids },
         new Set(known.map((row) => row.id)),
         requestId,
         signal,
@@ -168,8 +216,8 @@ export class AnalysesRepository {
           owner,
           key,
           hash,
-          command.source.title ?? null,
-          command.source.text,
+          resolvedTitle,
+          resolvedText,
           ids,
           result.requiredSkillIds,
           result.matchedSkillIds,
@@ -184,7 +232,10 @@ export class AnalysesRepository {
         ],
       );
       await query('COMMIT');
-      return { created: true, analysis: analysisDto(rows[0]!, profile.skills_revision) };
+      return {
+        created: true,
+        analysis: analysisDto(rows[0]!, profile.skills_revision, jsearchProviderId),
+      };
     } catch (error) {
       if (client) await client.query('ROLLBACK').catch(() => undefined);
       if (error instanceof HttpError) throw error;
