@@ -90,9 +90,26 @@ export function parseAnalysis(value: unknown): Analysis {
   const id = text(raw.id, 36);
   if (!/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/iu.test(id))
     return invalid();
-  const source = object(raw.source, ['type', 'title']);
-  if (source.type !== 'text') return invalid();
-  const title = source.title === null ? null : text(source.title, 120);
+  const rawSource =
+    typeof raw.source === 'object' && raw.source !== null && !Array.isArray(raw.source)
+      ? (raw.source as Record<string, unknown>)
+      : invalid();
+  let parsedSource: Analysis['source'];
+  if (rawSource.type === 'text') {
+    const source = object(raw.source, ['type', 'title']);
+    const title = source.title === null ? null : text(source.title, 120);
+    parsedSource = { type: 'text', title };
+  } else if (rawSource.type === 'jsearch') {
+    const source = object(raw.source, ['type', 'title', 'providerId']);
+    const title = source.title === null ? null : text(source.title, 120);
+    const providerId = text(source.providerId, 512);
+    if (/[\r\n]/u.test(providerId) || /^[a-z][a-z0-9+.-]*:\/\//iu.test(providerId)) {
+      return invalid();
+    }
+    parsedSource = { type: 'jsearch', title, providerId };
+  } else {
+    return invalid();
+  }
   const required = ids(raw.requiredSkillIds),
     matched = ids(raw.matchedSkillIds),
     missing = ids(raw.missingSkillIds);
@@ -123,7 +140,7 @@ export function parseAnalysis(value: unknown): Analysis {
     return invalid();
   const result: Analysis = {
     id,
-    source: { type: 'text', title },
+    source: parsedSource,
     candidateSkillsRevision: integer(raw.candidateSkillsRevision, 0, Number.MAX_SAFE_INTEGER),
     requiredSkillIds: required,
     matchedSkillIds: matched,
