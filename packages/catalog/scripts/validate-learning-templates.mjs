@@ -167,35 +167,27 @@ function planCase(input) {
     collect(skillId);
   }
 
-  // Kahn's topological sort with deterministic alphabetical tie-breaking by skillId
-  const inDegree = new Map();
-  const dependents = new Map();
-  for (const skillId of needed) {
-    inDegree.set(skillId, 0);
-    dependents.set(skillId, []);
-  }
-  for (const skillId of needed) {
+  // Topological sort by depth (root prerequisites first) with alphabetical tie-breaking by skillId
+  const depthBySkill = new Map();
+  const computeDepth = (skillId) => {
+    if (depthBySkill.has(skillId)) return depthBySkill.get(skillId);
     const tpl = bySkillId.get(skillId);
+    let depth = 0;
     for (const prereq of tpl.prerequisiteSkillIds) {
       if (needed.has(prereq)) {
-        inDegree.set(skillId, inDegree.get(skillId) + 1);
-        dependents.get(prereq).push(skillId);
+        depth = Math.max(depth, computeDepth(prereq) + 1);
       }
     }
+    depthBySkill.set(skillId, depth);
+    return depth;
+  };
+  for (const skillId of needed) {
+    computeDepth(skillId);
   }
-  const orderedSkillIds = [];
-  while (orderedSkillIds.length < needed.size) {
-    const ready = [...inDegree.entries()]
-      .filter(([id, deg]) => deg === 0 && !orderedSkillIds.includes(id))
-      .map(([id]) => id)
-      .sort();
-    assert.ok(ready.length > 0, 'Topological sort stalled');
-    const next = ready[0];
-    orderedSkillIds.push(next);
-    for (const dep of dependents.get(next)) {
-      inDegree.set(dep, inDegree.get(dep) - 1);
-    }
-  }
+  const orderedSkillIds = [...needed].sort((a, b) => {
+    const depthDiff = depthBySkill.get(a) - depthBySkill.get(b);
+    return depthDiff !== 0 ? depthDiff : a.localeCompare(b);
+  });
 
   const projectIdsBySkill = {};
   for (const skillId of orderedSkillIds) {
