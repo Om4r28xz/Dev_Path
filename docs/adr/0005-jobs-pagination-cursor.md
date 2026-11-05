@@ -1,8 +1,8 @@
 # ADR 0005 — Cursor confidencial para búsqueda de empleos
 
 - Fecha: 2026-11-04.
-- Estado: propuesta concreta; pendiente de aprobación P1, P2 y P4.
-- Alcance: contrato M3 propuesto y futura implementación JSR-02. No modifica M1 ni habilita JSearch live.
+- Estado: aprobado por delegación de Omar (P1, P2 y P4) el 2026-11-05.
+- Alcance: contrato M3 propuesto e implementación JSR-02. No modifica M1 ni habilita JSearch live.
 
 ## Contexto
 

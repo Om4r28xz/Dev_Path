@@ -12,6 +12,7 @@
     }
   ],
   "page": 1,
-  "hasNextPage": null,
+  "hasNextPage": true,
+  "nextCursor": "j1.synthetic_cursor_token",
   "mode": "fixture"
 }

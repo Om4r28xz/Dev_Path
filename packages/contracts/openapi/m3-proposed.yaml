@@ -37,7 +37,8 @@ paths:
                     applyUrl: https://example.org/jobs/001
                     fetchedAt: 2026-11-02T12:00:00Z
                 page: 1
-                hasNextPage: null
+                hasNextPage: true
+                nextCursor: j1.synthetic_cursor_token
                 mode: fixture
         '400': &a1
           $ref: ./public.yaml#/components/responses/ValidationError
@@ -67,10 +68,20 @@ paths:
             maxLength: 120
         - name: page
           in: query
+          deprecated: true
+          description: Deprecated compatibility parameter; only page=1 is accepted. Use cursor to continue pagination.
           schema:
             type: integer
             minimum: 1
             default: 1
+        - name: cursor
+          in: query
+          description: Opaque AES-256-GCM pagination cursor issued by DevPath (nextCursor). Bound to user and query; expires after 15 minutes.
+          schema:
+            type: string
+            minLength: 16
+            maxLength: 2048
+            pattern: ^j1\.[A-Za-z0-9_-]+$
   /jobs/details:
     get:
       operationId: proposedGetJobDetails
@@ -280,8 +291,15 @@ components:
           type:
             - boolean
             - 'null'
-          description: null when upstream provides insufficient information; never invent
-            totals.
+          description: Equivalent to nextCursor !== null; never invent totals.
+        nextCursor:
+          type:
+            - string
+            - 'null'
+          minLength: 16
+          maxLength: 2048
+          pattern: ^j1\.[A-Za-z0-9_-]+$
+          description: Opaque token to request the next page, or null when no next page is available.
         mode:
           type: string
           enum:
