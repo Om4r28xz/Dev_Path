@@ -274,6 +274,76 @@ export const analyses = appSchema.table(
   ],
 );
 
+// ============================================================================
+// app.learning_paths
+// ============================================================================
+export const learningPaths = appSchema.table(
+  'learning_paths',
+  {
+    id: uuid('id')
+      .primaryKey()
+      .default(sql`gen_random_uuid()`),
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    analysisId: uuid('analysis_id')
+      .notNull()
+      .references(() => analyses.id, { onDelete: 'cascade' }),
+    idempotencyKey: uuid('idempotency_key').notNull(),
+    requestHash: text('request_hash').notNull(),
+    projectsRevision: integer('projects_revision').notNull().default(0),
+    catalogVersion: text('catalog_version').notNull(),
+    contentVersion: text('content_version').notNull(),
+    generatorVersion: text('generator_version').notNull(),
+    inputSnapshot: jsonb('input_snapshot')
+      .notNull()
+      .default(sql`'{}'::jsonb`),
+    message: text('message'),
+    createdAt: timestamp('created_at', { withTimezone: true, mode: 'string' })
+      .notNull()
+      .default(sql`now()`),
+    updatedAt: timestamp('updated_at', { withTimezone: true, mode: 'string' })
+      .notNull()
+      .default(sql`now()`),
+  },
+  (t) => [
+    uniqueIndex('learning_paths_user_idempotency_idx').on(t.userId, t.idempotencyKey),
+    index('learning_paths_user_created_id_idx').on(t.userId, t.createdAt.desc(), t.id.desc()),
+    index('learning_paths_analysis_id_idx').on(t.analysisId),
+  ],
+);
+
+// ============================================================================
+// app.learning_path_steps
+// ============================================================================
+export const learningPathSteps = appSchema.table(
+  'learning_path_steps',
+  {
+    id: uuid('id')
+      .primaryKey()
+      .default(sql`gen_random_uuid()`),
+    learningPathId: uuid('learning_path_id')
+      .notNull()
+      .references(() => learningPaths.id, { onDelete: 'cascade' }),
+    stepOrder: integer('step_order').notNull(),
+    title: text('title').notNull(),
+    activity: text('activity').notNull(),
+    reason: text('reason').notNull(),
+    skillIds: text('skill_ids')
+      .array()
+      .notNull()
+      .default(sql`'{}'`),
+    projectId: uuid('project_id').references(() => projects.id, { onDelete: 'set null' }),
+    resourceUrl: text('resource_url'),
+    status: text('status').notNull().default('pending'),
+    completedAt: timestamp('completed_at', { withTimezone: true, mode: 'string' }),
+  },
+  (t) => [
+    uniqueIndex('learning_path_steps_path_order_idx').on(t.learningPathId, t.stepOrder),
+    index('learning_path_steps_project_id_idx').on(t.projectId),
+  ],
+);
+
 // Type exports
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
@@ -294,3 +364,7 @@ export type NewProject = typeof projects.$inferInsert;
 export type ProjectSkill = typeof projectSkills.$inferSelect;
 export type Analysis = typeof analyses.$inferSelect;
 export type NewAnalysis = typeof analyses.$inferInsert;
+export type LearningPathRow = typeof learningPaths.$inferSelect;
+export type NewLearningPathRow = typeof learningPaths.$inferInsert;
+export type LearningPathStepRow = typeof learningPathSteps.$inferSelect;
+export type NewLearningPathStepRow = typeof learningPathSteps.$inferInsert;
