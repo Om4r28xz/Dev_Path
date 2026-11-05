@@ -1,6 +1,6 @@
 # Resultados de aceptación M2 y regresión M1 — QA-03
 
-Fecha: 4 de noviembre de 2026. **Aceptación técnica de M2 documentada; aceptación humana formal P5 y publicación `v0.2.0` (`REL-02`) pendientes.**
+Fecha: 4 de noviembre de 2026. **Aceptación técnica y revisión manual delegada de M2 documentadas; revisión P2 independiente y publicación `v0.2.0` (`REL-02`) pendientes.**
 
 ## Base y trazabilidad
 
@@ -31,4 +31,22 @@ Fecha: 4 de noviembre de 2026. **Aceptación técnica de M2 documentada; aceptac
 ## Alcance y pendientes
 
 - Este informe registra la validación técnica automatizada sobre archivos sintéticos seguros y sin secretos ni datos personales.
-- No sustituye la revisión humana de P5 ni autoriza publicar `v0.2.0` sin ejecutar `REL-02` en el Lote 08.
+- No autoriza por sí solo publicar `v0.2.0`; REL-02 conserva las puertas humanas y de publicación del lote 08.
+
+## Revisión manual delegada del candidato REL-02
+
+Omar delegó expresamente en Emanuel la coordinación del trabajo restante del lote 08. Emanuel realizó personalmente la revisión manual sobre el candidato exacto `1ebce21381fb5f32613a3ea54ed0fe9fea343e25`. Este registro identifica a Emanuel como revisor delegado; no atribuye una firma o identidad de P2/P5 que esas personas no hayan emitido.
+
+Entorno de revisión: Node 22.23.4, pnpm 11.22.0, web/API/Skill Engine reales y PostgreSQL 18.3 nativo en datos aislados. La prueba local complementa, pero no reemplaza, el check Compose con PostgreSQL 16 ejecutado satisfactoriamente por GitHub Actions sobre el mismo SHA (`41950101474`).
+
+Emanuel confirmó sin defectos observados:
+
+- crear, recargar, editar, volver a recargar y eliminar un proyecto;
+- subir, persistir tras recarga, descargar, sustituir y eliminar un PDF sintético;
+- rechazo de archivo no PDF y de PDF de 5 242 881 bytes;
+- conservación exacta de las habilidades personales aunque el PDF mencione tecnologías;
+- navegación completa por teclado, foco operable, ancho de 320 px y zoom al 200 %;
+- regresión M1 con C# y Git frente a una vacante con Git, JavaScript y React: 33 %, coincidencia Git, faltantes JavaScript/React, evidencia, historial y detalle persistente;
+- cierre de sesión mediante teclado.
+
+Resultado del revisor delegado: funcionalidades revisadas operables y sin defecto bloqueante observado. Limitaciones: no se ejecutó Docker localmente, no es certificación WCAG completa y sigue pendiente la revisión P2 de migraciones, volumen privado, privacidad y diff de release antes de autorizar el tag.

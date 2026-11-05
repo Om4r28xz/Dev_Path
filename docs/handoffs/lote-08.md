@@ -1,14 +1,14 @@
 # Handoff lote 08 — estado vigente
 
-Base verificada: `origin/develop e1a5b10` el 4 de noviembre de 2026. REL-01, CTR-02, ANL-01/02, AUTH-03, VIS-04 y el lote 07 están integrados. El árbol principal con CAT-02 y todos los worktrees previos se conservaron.
+Base verificada: `origin/develop 8019274` el 4 de noviembre de 2026. REL-01, CTR-02, ANL-01/02, AUTH-03, VIS-04, el lote 07, JSR-01 y la propuesta de paginación están integrados. El árbol principal con CAT-02 y todos los worktrees previos se conservaron.
 
-| Tarea  | Estado                                                   | Dependencia / siguiente acción                                                                    |
-| ------ | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| REL-02 | PR #54 integrado en `main` (`1ebce21`); checks aprobados | Falta revisión/publicación humana de v0.2.0 y sincronizar `main` hacia `develop`.                 |
-| JSR-01 | PR #55 integrado en `develop` (`e1a5b10`); Docs aprobado | Permisos de cuenta/retención siguen pendientes; live permanece desactivado.                       |
-| JSR-02 | Bloqueada                                                | Requiere v0.2.0 publicada y sincronizada, y aprobación P1/P2/P4 de la propuesta de cursor.        |
-| JSR-03 | Bloqueada                                                | Requiere JSR-02 integrada y permiso de conservar texto/derivados; hoy ese permiso está pendiente. |
-| JSR-04 | Bloqueada                                                | Requiere JSR-02, JSR-03, ANL-02 y VIS-04 integradas; solo las dos últimas están satisfechas.      |
+| Tarea  | Estado                                                                    | Dependencia / siguiente acción                                                                    |
+| ------ | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| REL-02 | PR #54 en `main` (`1ebce21`); checks y revisión manual delegada aprobados | Falta revisión P2, publicar v0.2.0 y sincronizar `main` hacia `develop`.                          |
+| JSR-01 | PR #55 integrado en `develop` (`e1a5b10`); Docs aprobado                  | Permisos de cuenta/retención siguen pendientes; live permanece desactivado.                       |
+| JSR-02 | Bloqueada                                                                 | Requiere v0.2.0 publicada y sincronizada, y aprobación P1/P2/P4 de la propuesta de cursor.        |
+| JSR-03 | Bloqueada                                                                 | Requiere JSR-02 integrada y permiso de conservar texto/derivados; hoy ese permiso está pendiente. |
+| JSR-04 | Bloqueada                                                                 | Requiere JSR-02, JSR-03, ANL-02 y VIS-04 integradas; solo las dos últimas están satisfechas.      |
 
 ## JSR-01
 
