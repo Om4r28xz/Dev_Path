@@ -1,6 +1,23 @@
 # Changelog
 
-## 0.2.0 — candidato M2, pendiente de publicación
+## 0.3.0 — candidato M3 (demo de adaptador fixture), pendiente de publicación
+
+### Funcionalidad
+
+- Adaptador de vacantes JSearch en API (`JobsProvider` con implementaciones `FixtureJobsProvider` y `LiveJSearchProvider`), búsqueda `GET /api/v1/jobs` con paginación por cursor confidencial AES-256-GCM (`j1.<base64url>`, ADR 0005) y detalle `GET /api/v1/jobs/details` por `providerId` opaco.
+- Análisis de vacantes del proveedor en `POST /api/v1/analyses` con `source: { type: "jsearch", providerId }`: resolución exclusiva en servidor, reutilización del Skill Engine de M1, idempotencia y compuerta de retención `JOBS_LIVE_RETENTION_ALLOWED`.
+- Pantalla `/jobs` (`JobsPage`) con búsqueda controlada por submit, insignia explícita de procedencia (`fixture` / `live`), descripción escapada como texto plano, atribución con enlace externo seguro (`target="_blank"`, `rel="noopener noreferrer"`), análisis con `AnalysisResult` compartido y preservación íntegra del análisis manual (`/analysis/new`).
+
+### Límites del proveedor, permisos y estado E3
+
+- Conforme a `docs/provider/JSEARCH.md` (`JSR-01`) y `docs/acceptance/M3-results.md` (`QA-04`), el modo por defecto es `JOBS_PROVIDER_MODE=fixture` (`JOBS_LIVE_ENABLED=false`, `JOBS_LIVE_RETENTION_ALLOWED=false`).
+- **Alcance declarado del candidato:** demostración completa del adaptador y flujo M3 sobre fixtures sintéticos verificados. No se cierran las issues de integración real (`live`) ni se etiqueta `e3-microservice` mientras sigan pendientes la confirmación de hard cap sin cargo en cuenta RapidAPI, los permisos de retención del proveedor y la prueba `live` acotada autorizada.
+- La configuración sin `RAPIDAPI_KEY` mantiene M1 y M2 100 % operativos.
+- Ocho manifiestos privados del monorepo pasan a `0.3.0`. Las rutas de aprendizaje (M4) quedan fuera de `v0.3.0`.
+
+Pendiente del candidato: decisión humana de alcance/publicación, revisión P2, PR con merge commit `release/0.3.0 → main`, tag anotado `v0.3.0` (y tag adicional `e3-microservice` únicamente cuando se verifiquen todos los criterios E3 incluyendo llamada externa real) y sincronización `main → develop`.
+
+## 0.2.0 — M2 publicada
 
 ### Funcionalidad
 
@@ -22,7 +39,7 @@
 - Versiones privadas del workspace pasan a 0.2.0. OpenAPI, catálogo y versiones de snapshots mantienen sus ciclos independientes.
 - JSearch y rutas de aprendizaje no forman parte de v0.2.0. La integración live permanece desactivada hasta completar JSR-01 y las tareas dependientes.
 
-Pendiente del candidato: validación final del commit de release, revisión humana P2/P5, PR con merge commit hacia main, tag anotado `v0.2.0`, smoke del tag y sincronización main → develop. Este texto no afirma que esas acciones protegidas ya ocurrieron.
+Publicada mediante el tag anotado `v0.2.0` sobre `1ebce21381fb5f32613a3ea54ed0fe9fea343e25` y sincronizada en `develop` (`40360a5`).
 
 ## 0.1.0 — M1 publicada
 
