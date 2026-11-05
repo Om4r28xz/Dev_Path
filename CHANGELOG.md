@@ -1,6 +1,30 @@
 # Changelog
 
-## 0.1.0 — candidato M1, pendiente de publicación
+## 0.2.0 — candidato M2, pendiente de publicación
+
+### Funcionalidad
+
+- Portafolio propio con CRUD de proyectos, tecnologías del catálogo, enlaces tratados como datos y aislamiento entre cuentas mediante 404.
+- CV privado PDF: carga y sustitución multipart de hasta 5 MiB, metadatos, descarga autenticada como attachment y borrado idempotente.
+- Interfaz responsive de proyectos y panel de CV en perfil, con estados de carga/error, confirmaciones y flujo de análisis manual M1 conservado.
+
+### Datos, privacidad e infraestructura
+
+- Migraciones 0004 y 0005 añaden proyectos, relaciones, revisión de proyectos, CV activo y cola de limpieza sin modificar migraciones publicadas de M1.
+- El archivo se valida por extensión, MIME, firma y bytes reales; se guarda con clave generada fuera del webroot. No se analiza, no modifica habilidades y no llega al Skill Engine.
+- Compose monta el volumen privado `cv_files` solo en el inicializador de permisos y la API. DB, engine, claves y archivos continúan sin exposición pública.
+- Reemplazo concurrente, compensación ante fallos de DB/disco y reconciliación de temporales/huérfanos están cubiertos por pruebas.
+
+### Compatibilidad y aceptación
+
+- Upgrade desde v0.1.0 conserva usuarios, perfil, habilidades y análisis existentes; las nuevas estructuras empiezan vacías y aceptan migración idempotente.
+- QA-03 técnica integrada: 129 pruebas API, 106 web y 11 E2E M1/M2 sobre datos sintéticos; sin defectos bloqueantes registrados.
+- Versiones privadas del workspace pasan a 0.2.0. OpenAPI, catálogo y versiones de snapshots mantienen sus ciclos independientes.
+- JSearch y rutas de aprendizaje no forman parte de v0.2.0. La integración live permanece desactivada hasta completar JSR-01 y las tareas dependientes.
+
+Pendiente del candidato: validación final del commit de release, revisión humana P2/P5, PR con merge commit hacia main, tag anotado `v0.2.0`, smoke del tag y sincronización main → develop. Este texto no afirma que esas acciones protegidas ya ocurrieron.
+
+## 0.1.0 — M1 publicada
 
 ### Funcionalidad
 
@@ -27,4 +51,4 @@
 - HTTP loopback es demo local, no despliegue HTTPS productivo; sin revocación inmediata de access JWT ya emitidos ni rate limit distribuido.
 - No incluye proyectos/CV, proveedor JSearch ni rutas de aprendizaje; CTR-02 y futuras funcionalidades conservan sus dependencias.
 
-La fecha y el SHA de publicación se registran tras el merge/tag humano exacto. Este changelog versiona el candidato; no afirma release/tag ya publicados. Ver docs/release/M1-CANDIDATE-CHECKLIST.md y M1-ROLLBACK-PLAN.md.
+Publicada mediante el tag anotado `v0.1.0` sobre `1f9e721a320270a415d0825e75a92f10f0d0b35d`. El expediente histórico permanece en docs/release.
