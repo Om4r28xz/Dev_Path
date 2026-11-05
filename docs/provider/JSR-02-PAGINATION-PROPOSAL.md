@@ -1,6 +1,6 @@
 # JSR-02 — propuesta de paginación por cursor
 
-Estado: **pendiente de aprobación P1/P2/P4**. Este documento no modifica el contrato OpenAPI vigente ni habilita el proveedor live.
+Estado: **pendiente de aprobación P1/P2/P4**. Este documento no modifica el contrato OpenAPI vigente ni habilita el proveedor live. ADR 0005 compara las alternativas y recomienda un token AES-256-GCM con decisiones concretas de expiración, límites y errores.
 
 ## Problema comprobado
 
