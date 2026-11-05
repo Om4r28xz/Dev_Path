@@ -7,6 +7,7 @@ import { loadAnalysis } from '../api.js';
 import { AnalysisResult } from '../components/AnalysisResult.js';
 import { AnalysisDetailState } from '../components/AnalysisDetailState.js';
 import { useAnalysisSkillNames } from '../use-skill-names.js';
+import { CreateLearningPathAction } from '../../learning-paths/components/CreateLearningPathAction.js';
 import './history.css';
 
 export function AnalysisDetailPage() {
@@ -73,6 +74,10 @@ function OwnedAnalysisDetail({ owner, id }: { owner: string; id: string }) {
       </nav>
       {analysis.isFetching && <p role="status">Actualizando análisis…</p>}
       <AnalysisResult analysis={analysis.data} skillNames={names} />
+      <CreateLearningPathAction
+        analysisId={analysis.data.id}
+        hasGaps={analysis.data.missingSkillIds.length > 0}
+      />
       <div className="analysis-next-actions surface-soft">
         <h2>Siguiente paso</h2>
         <p>

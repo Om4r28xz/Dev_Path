@@ -10,6 +10,8 @@ import { AnalysesListPage } from '../features/analyses/pages/AnalysesListPage.js
 import { AnalysisDetailPage } from '../features/analyses/pages/AnalysisDetailPage.js';
 import { JobsPage } from '../features/jobs/pages/JobsPage.js';
 import { ProjectsPage } from '../features/projects/pages/ProjectsPage.js';
+import { LearningPathsPage } from '../features/learning-paths/pages/LearningPathsPage.js';
+import { LearningPathDetailPage } from '../features/learning-paths/pages/LearningPathDetailPage.js';
 import { NotFoundPage } from './NotFoundPage.js';
 
 export const AppRouter: React.FC = () => {
@@ -29,6 +31,8 @@ export const AppRouter: React.FC = () => {
             <Route path="/analysis/new" element={<NewAnalysisPage />} />
             <Route path="/analyses" element={<AnalysesListPage />} />
             <Route path="/analyses/:id" element={<AnalysisDetailPage />} />
+            <Route path="/learning-paths" element={<LearningPathsPage />} />
+            <Route path="/learning-paths/:id" element={<LearningPathDetailPage />} />
           </Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />
