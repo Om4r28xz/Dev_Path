@@ -185,11 +185,20 @@ const upstreamJobSchema = z
   })
   .passthrough();
 
+const upstreamCursorSchema = z.string().trim().min(1).max(1500).nullable().optional();
+
+const upstreamSearchV2DataSchema = z
+  .object({
+    jobs: z.array(upstreamJobSchema).max(50),
+    cursor: upstreamCursorSchema,
+  })
+  .passthrough();
+
 const upstreamSearchEnvelopeSchema = z
   .object({
     status: z.string(),
-    data: z.array(upstreamJobSchema).max(50),
-    cursor: z.string().trim().min(1).max(512).nullable().optional(),
+    data: z.union([upstreamSearchV2DataSchema, z.array(upstreamJobSchema).max(50)]),
+    cursor: upstreamCursorSchema,
   })
   .passthrough();
 
@@ -241,7 +250,7 @@ export class LiveJSearchProvider implements JobsProvider {
 
   async search(input: JobsProviderSearchInput): Promise<JobsProviderSearchOutput> {
     this.assertLiveReady();
-    const url = new URL('/search', JSEARCH_BASE_URL);
+    const url = new URL('/search-v2', JSEARCH_BASE_URL);
     const composedQuery = input.location
       ? `${input.q.trim()} in ${input.location.trim()}`
       : input.q.trim();
@@ -259,11 +268,14 @@ export class LiveJSearchProvider implements JobsProvider {
       throw providerUnavailable();
     }
 
+    const rawJobs = Array.isArray(parsed.data.data) ? parsed.data.data : parsed.data.data.jobs;
+    const rawCursor = Array.isArray(parsed.data.data)
+      ? parsed.data.cursor
+      : (parsed.data.data.cursor ?? parsed.data.cursor);
+
     const fetchedAt = this.nowIso();
-    const items = parsed.data.data
-      .slice(0, 10)
-      .map((item) => normalizeUpstreamJob(item, fetchedAt));
-    const nextCursor = items.length > 0 && parsed.data.cursor ? parsed.data.cursor : null;
+    const items = rawJobs.slice(0, 10).map((item) => normalizeUpstreamJob(item, fetchedAt));
+    const nextCursor = items.length > 0 && rawCursor ? rawCursor : null;
 
     return {
       items,

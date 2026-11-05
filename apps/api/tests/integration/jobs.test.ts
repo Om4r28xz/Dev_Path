@@ -185,17 +185,19 @@ describe('JSR-02 jobs provider API (fixture & live adapter contracts)', () => {
             JSON.stringify({
               status: 'OK',
               request_id: 'req-1',
-              data: [
-                {
-                  job_id: 'live-job-101',
-                  job_title: 'React Developer',
-                  employer_name: 'Acme Corp',
-                  job_location: 'Remote',
-                  job_description: 'Looking for React, TypeScript and Git.',
-                  job_apply_link: 'https://example.org/apply/101',
-                },
-              ],
-              cursor: 'upstream-cursor-page-2',
+              data: {
+                jobs: [
+                  {
+                    job_id: 'live-job-101',
+                    job_title: 'React Developer',
+                    employer_name: 'Acme Corp',
+                    job_location: 'Remote',
+                    job_description: 'Looking for React, TypeScript and Git.',
+                    job_apply_link: 'https://example.org/apply/101',
+                  },
+                ],
+                cursor: 'upstream-cursor-page-2',
+              },
             }),
             { status: 200, headers: { 'content-type': 'application/json' } },
           );
@@ -206,8 +208,10 @@ describe('JSR-02 jobs provider API (fixture & live adapter contracts)', () => {
             JSON.stringify({
               status: 'OK',
               request_id: 'req-2',
-              data: [],
-              cursor: null,
+              data: {
+                jobs: [],
+                cursor: null,
+              },
             }),
             { status: 200, headers: { 'content-type': 'application/json' } },
           );
@@ -254,7 +258,7 @@ describe('JSR-02 jobs provider API (fixture & live adapter contracts)', () => {
     expect(okBody.items[0].providerId).toBe('live-job-101');
     expect(okBody.hasNextPage).toBe(true);
     expect(capturedUrl?.origin).toBe('https://jsearch.p.rapidapi.com');
-    expect(capturedUrl?.pathname).toBe('/search');
+    expect(capturedUrl?.pathname).toBe('/search-v2');
     expect(capturedUrl?.searchParams.get('num_pages')).toBe('1');
     expect(capturedHeaders?.get('X-RapidAPI-Key')).toBe(secretKey);
     expect(capturedHeaders?.get('X-RapidAPI-Host')).toBe('jsearch.p.rapidapi.com');

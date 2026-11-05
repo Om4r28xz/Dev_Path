@@ -14,16 +14,16 @@ La documentación pública permite consultar vacantes para casos como job boards
 
 ## Acceso técnico confirmado
 
-| Tema               | Estado                                      | Evidencia / decisión para DevPath                                                                                                                                                                               |
-| ------------------ | ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Marketplace        | Confirmado                                  | JSearch es ofrecida por OpenWeb Ninja en RapidAPI; API version v5 mostrada como vigente.                                                                                                                        |
-| Host RapidAPI      | Confirmado                                  | `https://jsearch.p.rapidapi.com`; el servidor de DevPath debe fijarlo, nunca aceptar host/URL del usuario.                                                                                                      |
-| Autenticación      | Confirmado                                  | Headers `X-RapidAPI-Key` y `X-RapidAPI-Host: jsearch.p.rapidapi.com`. La key vive solo en API y se redacta de logs/errores.                                                                                     |
-| Búsqueda           | Confirmado                                  | GET `/search`; `query` requerido. Filtros publicados: cursor, num_pages, country, language, location, date_posted, work_from_home, employment_types, job_requirements, radius, exclude_job_publishers y fields. |
-| Detalle            | Confirmado con verificación final pendiente | GET `/job-details` recupera una oferta por ID. Antes de la primera llamada autorizada, cotejar el nombre exacto `job_id` en el playground de la cuenta; el contrato interno nunca acepta una URL.               |
-| Respuesta          | Confirmado                                  | Envelope del proveedor: `status`, `request_id` y `data`, o `error {message,code}`. El gateway puede devolver otra forma. Normalizar y no reenviar cuerpos crudos.                                               |
-| Errores            | Confirmado                                  | 400 inválido, 403 sin suscripción/key, 404, 429 y 5xx documentados. DevPath los mapea a su ErrorResponse sin filtrar request/key.                                                                               |
-| Rate-limit headers | Confirmado                                  | `x-ratelimit-requests-limit`, `-remaining`, `-reset`; son observaciones de la cuenta, no valores que deban exponerse completos al navegador.                                                                    |
+| Tema               | Estado                         | Evidencia / decisión para DevPath                                                                                                                                     |
+| ------------------ | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Marketplace        | Confirmado                     | JSearch es ofrecida por OpenWeb Ninja en RapidAPI; API version v5 mostrada como vigente.                                                                              |
+| Host RapidAPI      | Confirmado                     | `https://jsearch.p.rapidapi.com`; el servidor de DevPath debe fijarlo, nunca aceptar host/URL del usuario.                                                            |
+| Autenticación      | Confirmado                     | Headers `X-RapidAPI-Key` y `X-RapidAPI-Host: jsearch.p.rapidapi.com`. La key vive solo en API y se redacta de logs/errores.                                           |
+| Búsqueda           | Confirmado en live (5-11-2026) | GET `/search-v2`; `query` requerido y `num_pages=1`. Devuelve `data: { jobs: [...], cursor: string }` (el adaptador también tolera `data: [...]` por compatibilidad). |
+| Detalle            | Confirmado en live (5-11-2026) | GET `/job-details?job_id=<id>` recupera la oferta en `data: [job]`. El contrato interno nunca acepta una URL.                                                         |
+| Respuesta          | Confirmado                     | Envelope del proveedor: `status`, `request_id` y `data`, o `error {message,code}`. El gateway puede devolver otra forma. Normalizar y no reenviar cuerpos crudos.     |
+| Errores            | Confirmado                     | 400 inválido, 403 sin suscripción/key, 404, 429 y 5xx documentados. DevPath los mapea a su ErrorResponse sin filtrar request/key.                                     |
+| Rate-limit headers | Confirmado                     | `x-ratelimit-requests-limit`, `-remaining`, `-reset`; son observaciones de la cuenta, no valores que deban exponerse completos al navegador.                          |
 
 ## Paginación y cambio de contrato requerido
 
@@ -75,17 +75,16 @@ RapidAPI indica que los derechos de cada API son entre proveedor y consumidor; s
 - Búsqueda/detalle exigen JWT de DevPath; la API no actúa como proxy público.
 - Sin caché persistente ni JSearch Analysis mientras los permisos sigan pendientes.
 
-## Verificación manual pendiente, sin efectuar llamadas
+## Verificación `live` ejecutada (5 de noviembre de 2026)
 
-Una persona autorizada entra al dashboard y registra, sin secretos:
+Con autorización expresa del usuario y credencial suministrada únicamente en memoria de proceso (sin escribirse en `.env`, logs ni Git):
 
-1. nombre del plan, cuota restante, fecha de reset, hard cap, transferencia incluida/overage y si hay método de pago;
-2. términos específicos del listing y atribución requerida;
-3. permiso o prohibición de guardar payload, descripción e información derivada;
-4. endpoint/param `job_id` y cursor observados en snippets vigentes;
-5. autorización expresa de Emanuel para una única llamada sintética sin costo.
-
-Solo entonces: una búsqueda estrecha, `num_pages=1`, y un detalle del ID devuelto. Registrar fecha, HTTP, mode=live, campos normalizados y headers de cuota **sin key ni payload completo**. No habilitar tráfico general desde esa prueba.
+- **Fecha/hora UTC:** `2026-11-05T18:38:45.523Z`.
+- **Hallazgo de ruta vigente en JSearch v5 (`jsearch.p.rapidapi.com`):** la ruta antigua `/search` responde `404 {"message":"Endpoint '/search' does not exist"}` en el gateway; el endpoint activo de búsqueda en v5 es `GET /search-v2` con sobre `{ status: "OK", request_id, parameters, data: { jobs: [...], cursor: string } }`. `LiveJSearchProvider` se actualizó para invocar `/search-v2` y aceptar cursores upstream de hasta 1500 caracteres.
+- **Búsqueda acotada (`num_pages=1`):** `GET https://jsearch.p.rapidapi.com/search-v2?query=developer+jobs+in+chicago&num_pages=1&country=us&language=en` → `HTTP 200 OK`, `mode="live"`, `10` ofertas normalizadas (`provider="jsearch"`, `providerId` de 402 caracteres, `title="Software Engineer Full Stack / Backend I (Full Time) - United States"`, `company="Cisco"`, `location="Chicago, IL"`, `applyUrl` presente, `description` de 8167 caracteres) y cursor upstream de 703 caracteres cifrado/descifrado limpiamente con AES-256-GCM (`j1.<base64url>` de 1179 caracteres, `page=2`).
+- **Detalle por `job_id`:** `GET https://jsearch.p.rapidapi.com/job-details?job_id=<id>` → `HTTP 200 OK`, `mode="live"`, oferta normalizada coincidente (`description` de 8161 caracteres).
+- **Headers de cuota observados en la cuenta (plan BASIC):** `x-ratelimit-requests-limit: 200`, `x-ratelimit-requests-remaining: 194`, `x-ratelimit-requests-reset: 2591239`.
+- **Postura por defecto mantenida:** `JOBS_PROVIDER_MODE=fixture`, `JOBS_LIVE_ENABLED=false` y `JOBS_LIVE_RETENTION_ALLOWED=false` permanecen por defecto en el repositorio para no consumir cuota en desarrollo/CI ni retener descripciones `live` sin confirmación escrita de licencia.
 
 ## Fuentes oficiales consultadas
 
