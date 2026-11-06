@@ -87,7 +87,7 @@
       "sha256": "881a2fd4cb4defa2eecd17f0cc4efc79017d78ae0803ac5aa7dda442a930c6cf"
     },
     {
-      "file": "docs/acceptance/probes/readiness.browser.spec.ts",
+      "file": "docs/acceptance/evidence/readiness.browser.spec.snapshot.ts",
       "sha256": "b76a03a99faef3cb051db53f5aeabdc092bf82eabb98e5ace4063f029b930152"
     },
     {
