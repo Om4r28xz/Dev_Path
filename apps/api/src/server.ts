@@ -53,7 +53,10 @@ const cvReconcileTimer = setInterval(() => {
 }, 10 * 60_000);
 cvReconcileTimer.unref();
 const jobsProvider = createJobsProviderFromEnv(process.env);
-const jobsCursorKey = resolveCursorKey(process.env.JOBS_CURSOR_KEY, config.environment);
+const jobsCursorKey = resolveCursorKey(
+  process.env.JOBS_CURSOR_KEY ?? (localHttp ? process.env.ENGINE_SERVICE_SECRET : undefined),
+  localHttp ? 'development' : config.environment,
+);
 const app = createApp({
   config,
   logger,

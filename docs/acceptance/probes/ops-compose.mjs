@@ -223,13 +223,13 @@ try {
     },
     body: JSON.stringify({
       analysisId,
-      title: 'Compose M4 route',
     }),
   });
   assert.equal(createdLearningPath.status, 201);
   const learningPathBody = await createdLearningPath.json();
   const learningPathId = learningPathBody.id;
-  assert.equal(learningPathBody.totalSteps, 1);
+  assert.equal(learningPathBody.progress.total, 1);
+  assert.equal(learningPathBody.progress.percentage, 0);
   const firstStepId = learningPathBody.steps[0].id;
   const updatedStep = await fetch(
     `${base}/api/v1/learning-paths/${learningPathId}/steps/${firstStepId}`,
@@ -240,7 +240,7 @@ try {
     },
   );
   assert.equal(updatedStep.status, 200);
-  assert.equal((await updatedStep.json()).progressPercentage, 100);
+  assert.equal((await updatedStep.json()).progress.percentage, 100);
   check('own project, private PDF upload and M4 learning path through proxy', true);
   await page.getByRole('button', { name: 'Cerrar sesión', exact: true }).click();
   await page.waitForURL('**/login');
@@ -295,7 +295,7 @@ try {
   });
   assert.equal(restoredPathResponse.status, 200);
   const restoredPath = await restoredPathResponse.json();
-  assert.equal(restoredPath.progressPercentage, 100);
+  assert.equal(restoredPath.progress.percentage, 100);
   assert.equal(restoredPath.steps[0].status, 'completed');
   check(
     'M1 snapshots, project, private CV volume and M4 learning path persist after restart',
