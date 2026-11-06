@@ -1,6 +1,30 @@
 # Changelog
 
-## 0.3.0 — candidato M3 (demo de adaptador fixture), pendiente de publicación
+## 0.4.0 — candidato M4, pendiente de publicación
+
+### Funcionalidad
+
+- Plantillas curadas de aprendizaje sin IA generativa en `packages/catalog/learning-templates.json` (`1.0.0`): objetivos por tecnología del catálogo, grafo de prerequisitos acíclico verificado, actividades prácticas concretas, extensión sugerida de proyectos compatibles y recursos oficiales verificados.
+- Generación determinista y persistencia atómica de rutas de aprendizaje en `POST /api/v1/learning-paths` (`generatorVersion: "rules-1"`, `Idempotency-Key` obligatoria `201`/`200`/`409`), a partir de un análisis propio guardado, el snapshot de habilidades personales, proyectos existentes y contenido versionado.
+- Consulta paginada por cursor (`GET /api/v1/learning-paths`), detalle con pasos explicables (`GET /api/v1/learning-paths/:id`), actualización de estado por paso (`PATCH /api/v1/learning-paths/:id/steps/:stepId` para `pending`, `in_progress`, `completed` con `completedAt` coherente y porcentaje derivado) y eliminación (`DELETE /api/v1/learning-paths/:id`).
+- Pantallas `/learning-paths` y `/learning-paths/:id` y acción desde el detalle de análisis (`/analyses/:id`): creación idempotente resistente a doble clic, visualización de motivo (`missing_from_analysis` / `prerequisite`), actividad sugerida, proyecto vinculado o conservado en texto cuando fue eliminado, recurso externo seguro (`http`/`https`), estado positivo explícito cuando el análisis tiene cero brechas y aviso claro de que el progreso es autodeclarado, no agrega habilidades automáticamente al perfil y no representa probabilidad ni garantía de contratación.
+
+### Datos, privacidad, migración y despliegue
+
+- Migración `0006_empty_martin_li.sql` añade `app.learning_paths` y `app.learning_path_steps` sin alterar las migraciones publicadas `0000`–`0005`: cascada al eliminar el análisis origen y `ON DELETE SET NULL` sobre `suggested_project_id` al eliminar un proyecto vinculado, preservando la actividad instantánea del paso.
+- Verificación de propietario en todos los niveles (`404` ante cuentas ajenas o combinaciones ruta/paso inexistentes). El Skill Engine continúa aislado sin recibir datos personales ni participar en el seguimiento de progreso.
+- Evaluación documental de opciones de despliegue con presupuesto cero en `docs/DEPLOY_OPTIONS.md` (`DEP-01`): confirma que la ejecución local reproducible mediante Docker Compose continúa siendo la entrega oficial sin costo ni exposición de datos.
+
+### Compatibilidad y aceptación
+
+- Upgrade desde `v0.3.0` (`0000`–`0005` → `0006`) conserva íntegros usuarios, perfiles, habilidades, análisis, proyectos y metadatos de CV existentes; las tablas de rutas inician vacías y admiten reejecución idempotente.
+- `QA-05` integrada (`PR #61`, `87e5c6d`) con suite E2E completa (`tests/e2e/m4-acceptance.spec.ts`) aprobada en CI sobre PostgreSQL 16 y seis verificaciones manuales de M4 completadas y aprobadas personalmente por Emanuel sin defectos bloqueantes (`docs/acceptance/M4-results.md`).
+- Ocho manifiestos privados del monorepo pasan a `0.4.0`. Las versiones de contratos OpenAPI (`public.yaml` `1.1.0`, `m2.yaml` `0.1.0`, `m3-proposed.yaml` `0.1.0`, `m4-proposed.yaml` `0.1.0`), catálogo (`1.0.0`), plantillas (`1.0.0`) y snapshots mantienen sus ciclos independientes.
+- En M3 (`jobs`), `JOBS_PROVIDER_MODE=fixture`, `JOBS_LIVE_ENABLED=false` y `JOBS_LIVE_RETENTION_ALLOWED=false` se mantienen como valores seguros por defecto; la autorización contractual de retención `live` del proveedor sigue documentada como limitación abierta.
+
+Pendiente del candidato: validación final del commit de `release/0.4.0`, revisión del PR `release/0.4.0 → main`, merge commit autorizado hacia `main`, tag anotado `v0.4.0`, GitHub Release y sincronización `main → develop`. Este texto no afirma que esas acciones protegidas ya ocurrieron.
+
+## 0.3.0 — M3 publicada
 
 ### Funcionalidad
 
@@ -10,12 +34,11 @@
 
 ### Límites del proveedor, permisos y estado E3
 
-- Conforme a `docs/provider/JSEARCH.md` (`JSR-01`) y `docs/acceptance/M3-results.md` (`QA-04`), el modo por defecto es `JOBS_PROVIDER_MODE=fixture` (`JOBS_LIVE_ENABLED=false`, `JOBS_LIVE_RETENTION_ALLOWED=false`).
-- **Alcance declarado del candidato:** demostración completa del adaptador y flujo M3 sobre fixtures sintéticos verificados. No se cierran las issues de integración real (`live`) ni se etiqueta `e3-microservice` mientras sigan pendientes la confirmación de hard cap sin cargo en cuenta RapidAPI, los permisos de retención del proveedor y la prueba `live` acotada autorizada.
+- Conforme a `docs/provider/JSEARCH.md` (`JSR-01`) y `docs/acceptance/M3-results.md` (`QA-04`), el modo por defecto es `JOBS_PROVIDER_MODE=fixture` (`JOBS_LIVE_ENABLED=false`, `JOBS_LIVE_RETENTION_ALLOWED=false`), con consulta acotada `live` (`num_pages=1` contra `/search-v2` y `/job-details`) verificada en memoria (`200 OK`) sin almacenar credenciales en el repositorio.
 - La configuración sin `RAPIDAPI_KEY` mantiene M1 y M2 100 % operativos.
 - Ocho manifiestos privados del monorepo pasan a `0.3.0`. Las rutas de aprendizaje (M4) quedan fuera de `v0.3.0`.
 
-Pendiente del candidato: decisión humana de alcance/publicación, revisión P2, PR con merge commit `release/0.3.0 → main`, tag anotado `v0.3.0` (y tag adicional `e3-microservice` únicamente cuando se verifiquen todos los criterios E3 incluyendo llamada externa real) y sincronización `main → develop`.
+Publicada mediante los tags anotados `v0.3.0` y `e3-microservice` sobre `dae6c7519534d089393067ee151cbdcb478404c2` y sincronizada en `develop` (`ec66b9f`).
 
 ## 0.2.0 — M2 publicada
 

@@ -213,7 +213,35 @@ try {
   });
   assert.equal(uploadedCv.status, 200);
   assert.equal((await uploadedCv.json()).originalName, 'compose-synthetic.pdf');
-  check('own project and private PDF upload through proxy', true);
+  const analysisId = detail.split('/').pop();
+  const createdLearningPath = await fetch(base + '/api/v1/learning-paths', {
+    method: 'POST',
+    headers: {
+      ...auth,
+      'Content-Type': 'application/json',
+      'Idempotency-Key': randomUUID(),
+    },
+    body: JSON.stringify({
+      analysisId,
+    }),
+  });
+  assert.equal(createdLearningPath.status, 201);
+  const learningPathBody = await createdLearningPath.json();
+  const learningPathId = learningPathBody.id;
+  assert.equal(learningPathBody.progress.total, 1);
+  assert.equal(learningPathBody.progress.percentage, 0);
+  const firstStepId = learningPathBody.steps[0].id;
+  const updatedStep = await fetch(
+    `${base}/api/v1/learning-paths/${learningPathId}/steps/${firstStepId}`,
+    {
+      method: 'PATCH',
+      headers: { ...auth, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: 'completed' }),
+    },
+  );
+  assert.equal(updatedStep.status, 200);
+  assert.equal((await updatedStep.json()).progress.percentage, 100);
+  check('own project, private PDF upload and M4 learning path through proxy', true);
   await page.getByRole('button', { name: 'Cerrar sesión', exact: true }).click();
   await page.waitForURL('**/login');
   report.stage = 'persistent restart';
@@ -262,7 +290,17 @@ try {
   assert.equal(restoredDownload.headers.get('cache-control'), 'no-store');
   assert.equal(restoredDownload.headers.get('x-content-type-options'), 'nosniff');
   assert.deepEqual(Buffer.from(await restoredDownload.arrayBuffer()), cvBytes);
-  check('M1 snapshots, project and private CV volume persist after restart', true);
+  const restoredPathResponse = await fetch(`${base}/api/v1/learning-paths/${learningPathId}`, {
+    headers: restoredAuth,
+  });
+  assert.equal(restoredPathResponse.status, 200);
+  const restoredPath = await restoredPathResponse.json();
+  assert.equal(restoredPath.progress.percentage, 100);
+  assert.equal(restoredPath.steps[0].status, 'completed');
+  check(
+    'M1 snapshots, project, private CV volume and M4 learning path persist after restart',
+    true,
+  );
   report.stage = 'engine outage and retry';
   compose('stop', 'engine');
   await page.goto(base + '/analysis/new');
