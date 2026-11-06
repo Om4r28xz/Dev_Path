@@ -4,26 +4,27 @@ DevPath helps students and junior developers compare their skills with technolog
 
 ## Current status
 
-The repository is in active M1 development. Registration, login, session handling, profile, skills, manual job text analysis, and saved analysis history are connected to the web app and API. The five tasks in batch 05 are integrated; M1 validation and release tasks in batch 06 remain. M1 has not been released yet.
+DevPath `v0.4.0` is published and synchronized between `main` and `develop`. The released application includes the complete M1-M4 scope. JSearch fixture mode remains the safe default; a bounded live verification is documented, but live traffic and retention require explicit backend configuration and provider permission.
 
-| Milestone | Scope                                                           | Status                                        |
-| --------- | --------------------------------------------------------------- | --------------------------------------------- |
-| M0        | Workspace, contracts, catalog, database, infrastructure, and CI | Integrated                                    |
-| M1        | Authentication, profile, skills, manual analysis, and history   | In progress                                   |
-| M2        | Projects and private PDF résumé                                 | Planned                                       |
-| M3        | Job search and analysis through JSearch                         | Planned; subject to provider access and terms |
-| M4        | Deterministic learning paths and progress                       | Planned                                       |
+| Milestone | Scope                                                           | Status                                    |
+| --------- | --------------------------------------------------------------- | ----------------------------------------- |
+| M0        | Workspace, contracts, catalog, database, infrastructure, and CI | Integrated                                |
+| M1        | Authentication, profile, skills, manual analysis, and history   | Published in `v0.1.0`                     |
+| M2        | Projects and private PDF résumé                                 | Published in `v0.2.0`                     |
+| M3        | Job search and analysis through JSearch                         | Published in `v0.3.0`; fixture by default |
+| M4        | Deterministic learning paths and progress                       | Published in `v0.4.0`                     |
 
-The [implementation plan](docs/PLAN_DE_IMPLEMENTACION.md), [task batches](docs/LOTES_PARA_IAS.md), and [handoffs](docs/handoffs/) distinguish completed work from planned work. The E3 microservice requirements are assigned to pending tasks in batches 06, 08, and 09; the `e3-microservice` tag has not been created.
+The [v0.4.0 release](https://github.com/Om4r28xz/Dev_Path/releases/tag/v0.4.0), [implementation plan](docs/PLAN_DE_IMPLEMENTACION.md), [acceptance results](docs/acceptance/), and [handoffs](docs/handoffs/) provide the release and verification history. The `e3-microservice` tag records the independently verified external-integration milestone.
 
 ## Architecture
 
 ```text
 Browser → React/Vite → /api/v1 → Express API → PostgreSQL
-                                     └────────→ Skill Engine (internal REST)
+                                     ├────────→ Skill Engine (internal REST)
+                                     └────────→ JSearch (backend-only, explicitly gated)
 ```
 
-The API and Skill Engine run as separate processes. Authentication is a module of the API. The browser uses only the public API. In M3, the API is planned to call JSearch for the jobs module; the browser and Skill Engine will not call JSearch directly. See the [implemented M1 architecture](docs/ARCHITECTURE.md), [architecture decisions](docs/adr/) and [project responsibilities](docs/RESPONSABILIDADES.md).
+The API and Skill Engine run as separate processes. Authentication is a module of the API, not a standalone microservice. The browser uses only the public API. The API-owned JobsProvider is the only component that can call JSearch; the browser and Skill Engine never receive its credential. See the [implemented architecture](docs/ARCHITECTURE.md), [architecture decisions](docs/adr/) and [project responsibilities](docs/RESPONSABILIDADES.md).
 
 ## Run locally
 
@@ -31,6 +32,7 @@ Use Node.js `>=22.16 <23` and pnpm `11.22.0`. The full [local setup guide](docs/
 
 ```powershell
 pnpm install --frozen-lockfile
+node scripts/setup-local.mjs
 pnpm lint
 pnpm format:check
 pnpm typecheck
@@ -46,7 +48,7 @@ pnpm dev:api
 pnpm dev:web
 ```
 
-By default, the web app uses port 5173, the API uses port 3000, and the Skill Engine uses port 3001. The [API README](apps/api/README.md) describes the implemented routes; the [Skill Engine README](apps/skill-engine/README.md) describes its internal endpoint. The [public OpenAPI contract](packages/contracts/openapi/public.yaml) is the source of truth for API request and response shapes.
+By default, the web app uses port 5173, the API uses port 3000, and the Skill Engine uses port 3001. The [API README](apps/api/README.md) describes the implemented routes; the [Skill Engine README](apps/skill-engine/README.md) describes its internal endpoint. The [contract package](packages/contracts/README.md) links the validated public, M2, jobs, learning-path, and internal OpenAPI documents and their examples.
 
 ## Contributing
 

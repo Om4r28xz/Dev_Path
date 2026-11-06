@@ -2,6 +2,10 @@
 
 Esta guía prepara los pasos verificables del cierre de `v0.4.0`; no autoriza merge, tag ni release antes de confirmar las validaciones del candidato y la autorización correspondiente.
 
+Estado verificado el 5 de noviembre de 2026: procedimiento completado. PR #62 se integró a `main`
+en `cacec37bba40528cfc091888bd2a33290b414940`; tag y GitHub Release `v0.4.0` apuntan a ese commit;
+PR #63 sincronizó `main → develop` en `bc104f044a65f5102cbf0c8fb46c8c37649e58f9`.
+
 1. Publicar `release/0.4.0` y abrir PR hacia `main` usando **Create a merge commit** (nunca squash).
 2. Esperar y verificar que pasen todos los checks de GitHub Actions sobre la cabeza de `release/0.4.0`, incluidos:
    - `M1 E2E (Chromium + PostgreSQL 16)`
