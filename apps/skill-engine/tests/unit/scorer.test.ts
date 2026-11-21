@@ -31,4 +31,12 @@ describe('scoreAnalysis', () => {
       matchPercentage: 50,
     });
   });
+
+  it('returns 100 percent when all required skills match', () => {
+    expect(scoreAnalysis(['git', 'docker'], ['git', 'docker'])).toEqual({
+      matchedSkillIds: ['git', 'docker'],
+      missingSkillIds: [],
+      matchPercentage: 100,
+    });
+  });
 });
