@@ -1,11 +1,10 @@
 # Docs Workflow — DevPath Monorepo
 #
-# This workflow fires ONLY for docs-only changes (docs/** and *.md / README.md).
-# It posts a green check so that PRs touching only documentation are never left
-# with pending required checks on `develop` or `main`.
+# Runs documentation checks when Markdown or docs files change.
+# The main CI workflow runs on every pull request.
 #
-# The heavy CI workflow (.github/workflows/ci.yml) skips these paths via
-# `paths-ignore`, so exactly one workflow will run for any given PR.
+# This workflow is informational and does not replace CI.
+# Branch protection must require "CI gate (required)".
 
 name: Docs
 
@@ -31,5 +30,5 @@ jobs:
     name: Docs check
     runs-on: ubuntu-latest
     steps:
-      - name: Docs updated — no CI checks required
-        run: echo "Docs updated — no CI checks required."
+      - name: Documentation change detected
+        run: echo "Documentation workflow completed. Main CI is required separately."
