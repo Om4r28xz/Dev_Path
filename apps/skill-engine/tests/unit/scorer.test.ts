@@ -38,7 +38,7 @@ describe('scoreAnalysis', () => {
     expect(scoreAnalysis(['git', 'docker'], ['git', 'docker'])).toEqual({
       matchedSkillIds: ['git', 'docker'],
       missingSkillIds: [],
-      matchPercentage: 99,
+      matchPercentage: 100,
     });
   });
 
