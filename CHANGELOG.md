@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.4.0 — candidato M4, pendiente de publicación
+## 0.4.0 — M4 publicada
 
 ### Funcionalidad
 
@@ -22,7 +22,7 @@
 - Ocho manifiestos privados del monorepo pasan a `0.4.0`. Las versiones de contratos OpenAPI (`public.yaml` `1.1.0`, `m2.yaml` `0.1.0`, `m3-proposed.yaml` `0.1.0`, `m4-proposed.yaml` `0.1.0`), catálogo (`1.0.0`), plantillas (`1.0.0`) y snapshots mantienen sus ciclos independientes.
 - En M3 (`jobs`), `JOBS_PROVIDER_MODE=fixture`, `JOBS_LIVE_ENABLED=false` y `JOBS_LIVE_RETENTION_ALLOWED=false` se mantienen como valores seguros por defecto; la autorización contractual de retención `live` del proveedor sigue documentada como limitación abierta.
 
-Pendiente del candidato: validación final del commit de `release/0.4.0`, revisión del PR `release/0.4.0 → main`, merge commit autorizado hacia `main`, tag anotado `v0.4.0`, GitHub Release y sincronización `main → develop`. Este texto no afirma que esas acciones protegidas ya ocurrieron.
+Publicación completada: PR #62 integrado a `main` en `cacec37bba40528cfc091888bd2a33290b414940`; tag anotado y GitHub Release `v0.4.0` sobre ese commit; PR #63 sincronizó `main → develop` en `bc104f044a65f5102cbf0c8fb46c8c37649e58f9`. Los checks actuales de `develop` aprobaron CI, E2E con PostgreSQL 16, documentación y Compose.
 
 ## 0.3.0 — M3 publicada
 

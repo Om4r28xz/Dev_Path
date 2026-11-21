@@ -1,24 +1,27 @@
-# Arquitectura implementada de DevPath M1
+# Arquitectura implementada de DevPath v0.4.0
 
-Actualización CTR-02: M1 se publicó como [v0.1.0](https://github.com/Om4r28xz/Dev_Path/releases/tag/v0.1.0) en `1f9e721a320270a415d0825e75a92f10f0d0b35d`, sincronizado a develop por PR #42 (`fc9f41b`). La descripción histórica siguiente corresponde al desarrollo de M1. Los [contratos posteriores](../packages/contracts/EXTENDED-CONTRACTS.md) definen proyectos/CV de M2 y propuestas jobs/rutas de M3/M4; no incorporan endpoints, pantallas ni migraciones a la aplicación publicada.
-
-Referencia: `develop` **c564a57**, 2 de noviembre de 2026. Describe código integrado,
-incluidos ANL-01/02/03/04 y el contrato público de evidence. La disponibilidad del código
-no equivale a aceptación humana ni a publicación de `v0.1.0`.
+DevPath publicó M1-M4 mediante `v0.1.0`, `v0.2.0`, `v0.3.0` y
+[`v0.4.0`](https://github.com/Om4r28xz/Dev_Path/releases/tag/v0.4.0). La versión final apunta a
+`cacec37bba40528cfc091888bd2a33290b414940` y quedó sincronizada a `develop` mediante PR #63
+(`bc104f044a65f5102cbf0c8fb46c8c37649e58f9`). Esta página conserva el detalle de seguridad y
+análisis de M1 y lo complementa con los límites implementados de proyectos/CV, JobsProvider y rutas
+de aprendizaje.
 
 ## Alcance y componentes
 
-M1 permite crear una cuenta, mantener una sesión, editar perfil/habilidades, pegar una
-vacante, compararla con el catálogo, consultar resultados persistidos e historial y borrar
-análisis propios. La extracción y el scoring son deterministas: no se usa IA generativa.
+DevPath permite crear una cuenta, mantener una sesión, editar perfil/habilidades, analizar vacantes,
+gestionar proyectos y un CV PDF privado, buscar empleos mediante un JobsProvider y generar rutas de
+aprendizaje deterministas con progreso autodeclarado. La extracción, el scoring y las rutas usan
+reglas y contenido versionado: no se usa IA generativa.
 
 ```mermaid
 flowchart LR
     B["Navegador: React"] -->|"HTTP: / y /api"| P["Proxy web Nginx: 8080"]
     P -->|"/api/v1"| A["API Express: 3000"]
-    A --> U["Auth, perfil, habilidades, análisis e historial"]
+    A --> U["Auth, perfil, análisis, proyectos, CV, jobs y rutas"]
     U -->|"SQL parametrizado"| D[("PostgreSQL 16")]
     U -->|"POST /internal/v1/analyze, credencial de servicio"| E["Skill Engine: 3001"]
+    U -->|"HTTPS backend-only, modo live explícito"| J["JSearch / RapidAPI"]
     C["Catálogo versionado"] --> E
     C --> S["Seed app.skills"] --> D
     O["OpenAPI público e interno"] -.-> B
@@ -26,15 +29,15 @@ flowchart LR
     O -.-> E
 ```
 
-| Área            | Implementación y responsabilidad                                                                                                                                        |
-| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Web             | `apps/web`: React, Vite, React Router y TanStack Query. Solo llama rutas relativas `/api/v1`; no importa DB ni llama directamente al engine.                            |
-| API pública     | `apps/api`: Express, Zod, `pg`; módulos auth, profile y analyses. Único propietario de las conexiones PostgreSQL y de la identidad del usuario.                         |
-| Skill Engine    | `apps/skill-engine`: proceso Express separado, catálogo local, extracción y scoring. Recibe texto e IDs de skills; no recibe el JWT del usuario ni consulta PostgreSQL. |
-| Persistencia    | `packages/db`: esquemas y migraciones Drizzle, pool/seed. Repositorios de API usan SQL parametrizado mediante `pg`; Drizzle no sustituye todos esos repositorios.       |
-| Fronteras HTTP  | `packages/contracts`: OpenAPI, ejemplos, generación TypeScript y validación. Público 1.1.0; interno 1.0.0.                                                              |
-| Catálogo        | `packages/catalog/technologies.json`: versión 1.0.0, diez tecnologías; IDs canónicos, alias y corpus sintético.                                                         |
-| Ejecución local | `infra/compose.yaml`, Dockerfiles y `infra/proxy/default.conf`; scripts `setup-local.mjs` y `dev-local.mjs`.                                                            |
+| Área            | Implementación y responsabilidad                                                                                                                                          |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Web             | `apps/web`: React, Vite, React Router y TanStack Query. Solo llama rutas relativas `/api/v1`; no importa DB ni llama directamente al engine.                              |
+| API pública     | `apps/api`: Express, Zod, `pg`; módulos auth, profile, analyses, projects, CV, jobs y learning paths. Único propietario de PostgreSQL, identidad y credenciales externas. |
+| Skill Engine    | `apps/skill-engine`: proceso Express separado, catálogo local, extracción y scoring. Recibe texto e IDs de skills; no recibe el JWT del usuario ni consulta PostgreSQL.   |
+| Persistencia    | `packages/db`: esquemas y migraciones Drizzle, pool/seed. Repositorios de API usan SQL parametrizado mediante `pg`; Drizzle no sustituye todos esos repositorios.         |
+| Fronteras HTTP  | `packages/contracts`: cinco OpenAPI, 54 ejemplos, generación TypeScript y validación. Público 1.1.0; engine 1.0.0; contratos M2/M3/M4 0.1.0.                              |
+| Catálogo        | `packages/catalog/technologies.json`: versión 1.0.0, diez tecnologías; IDs canónicos, alias y corpus sintético.                                                           |
+| Ejecución local | `infra/compose.yaml`, Dockerfiles y `infra/proxy/default.conf`; scripts `setup-local.mjs` y `dev-local.mjs`.                                                              |
 
 Auth es un módulo de la API, **no** un tercer servicio. La API y el engine sí son procesos
 separados. ESLint restringe las importaciones de DB desde web y engine; las fronteras no
@@ -45,21 +48,26 @@ dependen únicamente de la organización de carpetas.
 Las rutas indicadas son relativas al mismo origen web. Los endpoints protegidos requieren
 `Authorization: Bearer <accessToken>`; el catálogo público no usa ese requisito.
 
-| Pantalla/uso                       | Operación HTTP                                   | Resultado                                                             |
-| ---------------------------------- | ------------------------------------------------ | --------------------------------------------------------------------- |
-| `/register`                        | `POST /api/v1/auth/register`                     | 201: sesión, usuario y refresh cookie.                                |
-| `/login`                           | `POST /api/v1/auth/login`                        | 200: sesión y refresh cookie.                                         |
-| Bootstrap/401                      | `POST /api/v1/auth/refresh`                      | 200: nueva sesión y cookie rotada; 401 si inválida.                   |
-| Cerrar sesión                      | `POST /api/v1/auth/logout`                       | 204: revoca familia y elimina cookie.                                 |
-| `/profile`                         | `GET /api/v1/me`, `PATCH /api/v1/me`             | Perfil propio; edición de nombre, titular y ubicación.                |
-| `/profile`                         | `GET /api/v1/skills?q=...&limit=...&cursor=...`  | Catálogo paginado con `catalogVersion`, `items`, `nextCursor`.        |
-| `/profile`                         | `GET /api/v1/me/skills`, `PUT /api/v1/me/skills` | Lectura/reemplazo completo de skills canónicas propias.               |
-| `/analysis/new`                    | `POST /api/v1/analyses`                          | 201 nuevo / 200 replay; exige `Idempotency-Key` UUID y fuente `text`. |
-| `/analyses`                        | `GET /api/v1/analyses?limit=20&cursor=...`       | `items: AnalysisSummary[]` y `nextCursor`.                            |
-| `/analyses/:id`                    | `GET /api/v1/analyses/:analysisId`               | Snapshot `Analysis` propio, evidence opcional.                        |
-| Historial, diálogo de confirmación | `DELETE /api/v1/analyses/:analysisId`            | 204 propio; 404 ajeno/inexistente.                                    |
-| Operación de servicios             | `GET /health/live`, `GET /health/ready`          | En API y engine, fuera del prefijo de negocio.                        |
-| Solo API → engine                  | `POST /internal/v1/analyze`                      | Contrato interno; Bearer de servicio, distinto del JWT público.       |
+| Pantalla/uso                       | Operación HTTP                                                       | Resultado                                                              |
+| ---------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `/register`                        | `POST /api/v1/auth/register`                                         | 201: sesión, usuario y refresh cookie.                                 |
+| `/login`                           | `POST /api/v1/auth/login`                                            | 200: sesión y refresh cookie.                                          |
+| Bootstrap/401                      | `POST /api/v1/auth/refresh`                                          | 200: nueva sesión y cookie rotada; 401 si inválida.                    |
+| Cerrar sesión                      | `POST /api/v1/auth/logout`                                           | 204: revoca familia y elimina cookie.                                  |
+| `/profile`                         | `GET /api/v1/me`, `PATCH /api/v1/me`                                 | Perfil propio; edición de nombre, titular y ubicación.                 |
+| `/profile`                         | `GET /api/v1/skills?q=...&limit=...&cursor=...`                      | Catálogo paginado con `catalogVersion`, `items`, `nextCursor`.         |
+| `/profile`                         | `GET /api/v1/me/skills`, `PUT /api/v1/me/skills`                     | Lectura/reemplazo completo de skills canónicas propias.                |
+| `/analysis/new`                    | `POST /api/v1/analyses`                                              | 201 nuevo / 200 replay; exige `Idempotency-Key` UUID y fuente `text`.  |
+| `/analyses`                        | `GET /api/v1/analyses?limit=20&cursor=...`                           | `items: AnalysisSummary[]` y `nextCursor`.                             |
+| `/analyses/:id`                    | `GET /api/v1/analyses/:analysisId`                                   | Snapshot `Analysis` propio, evidence opcional.                         |
+| Historial, diálogo de confirmación | `DELETE /api/v1/analyses/:analysisId`                                | 204 propio; 404 ajeno/inexistente.                                     |
+| `/projects`                        | `GET/POST /api/v1/projects`, `GET/PATCH/DELETE /api/v1/projects/:id` | CRUD propio, paginado y validado.                                      |
+| `/profile`                         | `GET/PUT/DELETE /api/v1/me/cv`, `GET /api/v1/me/cv/download`         | PDF privado, reemplazo y descarga autenticada.                         |
+| `/jobs`                            | `GET /api/v1/jobs`, `GET /api/v1/jobs/details`                       | Fixture/live explícito, cursor opaco, límites y errores del proveedor. |
+| `/learning-paths`                  | `GET/POST /api/v1/learning-paths`                                    | Listado y generación idempotente desde análisis propio.                |
+| `/learning-paths/:id`              | `GET/DELETE` y `PATCH .../steps/:stepId`                             | Detalle, progreso autodeclarado y borrado propios.                     |
+| Operación de servicios             | `GET /health/live`, `GET /health/ready`                              | En API y engine, fuera del prefijo de negocio.                         |
+| Solo API → engine                  | `POST /internal/v1/analyze`                                          | Contrato interno; Bearer de servicio, distinto del JWT público.        |
 
 El formulario de análisis admite título opcional de hasta 120 caracteres y texto de 1 a
 20 000 unidades UTF-16. No acepta `candidateSkillIds` ni `userId` desde el navegador:
@@ -289,34 +297,31 @@ Vite usa 127.0.0.1:5173 y API 3000; [setup](SETUP_LOCAL.md) describe variables y
 
 Validaciones de la base: `pnpm lint`, `pnpm format:check`, `pnpm typecheck`, `pnpm build`,
 `pnpm test` (integraciones DB requieren `TEST_DATABASE_URL` aislada, migrada y sembrada).
-El script de navegador existente en `apps/web/tests/integration` es un insumo de ANL-04.
-La suite QAA-01 y su job Playwright se entregan en otro PR: no son código integrado de
-esta base ni sustituyen aceptación P5. Los resultados concretos se registran en el handoff;
-esta documentación no afirma Docker, CI remoto o aceptación humana aprobados.
+La suite Playwright integrada cubre M1-M4 con API, Skill Engine y PostgreSQL aislado. GitHub Actions
+ejecuta PostgreSQL 16 y el probe Compose; los resultados humanos y técnicos se registran en
+`docs/acceptance/` y no se sustituyen por la mera presencia de scripts.
 
-## Límites de M1 y evidencia académica E3
+## Estado M1-M4 y evidencia académica E3
 
-| Etapa | Estado y frontera                                                                                                                                                                    |
-| ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| M1    | Registro/sesión, perfil/skills, análisis **manual**, evidence y CRUD limitado a crear/leer/borrar análisis. No edición de análisis. Código integrado; release/aceptación pendientes. |
-| M2    | Proyectos y CV PDF privados son futuros. Carpetas/esquemas reservados no prueban endpoints o pantallas implementadas. CTR-02 depende de REL-01 publicada y sincronizada.             |
-| M3    | JSearch, búsqueda/detalle y análisis desde proveedor son futuros y sujetos a permisos/cuotas. No hay llamadas live al proveedor en M1.                                               |
-| M4    | Rutas de aprendizaje deterministas y progreso manual son futuros. Sin LLM ni scraping propio.                                                                                        |
+| Etapa | Estado y frontera                                                                                                                                                        |
+| ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| M1    | Publicada: registro/sesión, perfil/skills, análisis manual, evidence e historial propio. No edición de análisis.                                                         |
+| M2    | Publicada: CRUD de proyectos y CV PDF privado con reemplazo, descarga autenticada, eliminación y recuperación.                                                           |
+| M3    | Publicada: búsqueda/detalle/análisis JSearch. Fixture es el modo seguro predeterminado; live fue verificado de forma acotada y requiere habilitación/permiso explícitos. |
+| M4    | Publicada: rutas deterministas explicables, actividades/recursos/proyectos sugeridos, progreso autodeclarado y persistencia. Sin LLM ni promesas de contratación.        |
 
-Para E3 se evaluará el **proceso API Express**. Las tres operaciones de negocio propuestas
-de M3 son `GET /api/v1/jobs`, `GET /api/v1/jobs/details` y `POST /api/v1/analyses`
-con fuente `jsearch`, todas protegidas con JWT. API será quien llame a JSearch y después
-al engine para comparar; el engine no sustituye esa evidencia de integración externa.
-Fixtures reproducibles de CI no demuestran una llamada live. README, ejemplos/colección
-HTTP y evidencia live/tag E3 corresponden a los lotes posteriores; no bloquean release M1
-ni autorizan implementar esos endpoints ahora. Ver [plan](PLAN_DE_IMPLEMENTACION.md).
+Para E3 se evaluó el **proceso API Express**. `GET /api/v1/jobs`,
+`GET /api/v1/jobs/details` y `POST /api/v1/analyses` con fuente `jsearch` están protegidos con JWT.
+La API llama a JSearch y después al engine para comparar; el Skill Engine no llama al proveedor ni
+recibe su credencial. Los fixtures de CI no se presentan como tráfico real: la verificación live
+acotada y sus límites están separados en `docs/acceptance/M3-results.md` y
+`docs/provider/JSEARCH.md`.
 
-Límites actuales: catálogo pequeño, reglas de negación acotadas, sin validación de experiencia
-o probabilidad laboral, sin OAuth/reset de contraseña/verificación de correo, sin rate limit
-distribuido ni despliegue productivo configurado, y sin garantía de exclusión entre pestañas
-en navegadores sin Web Locks. El borrado es definitivo; no hay papelera ni historial de versiones
-de perfil. Falta aprobación humana, reproducción oficial y publicación por el integrador para
-afirmar M1 estable.
+Límites actuales: catálogo pequeño, reglas de negación acotadas, sin validación de experiencia o
+probabilidad laboral, sin OAuth/reset de contraseña/verificación de correo, sin rate limit
+distribuido ni despliegue productivo público. La retención de descripciones JSearch live permanece
+deshabilitada hasta contar con permiso del proveedor. El borrado es definitivo; no hay papelera ni
+historial de versiones de perfil.
 
 ## Decisiones y revisión
 

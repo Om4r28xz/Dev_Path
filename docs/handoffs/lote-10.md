@@ -8,12 +8,12 @@ Contratos y versiones consumidos: `packages/contracts/openapi/public.yaml` (`1.1
 aprendizaje `1.0.0` y generador `rules-1`. Ocho manifiestos privados del monorepo actualizados a
 `0.4.0` en `release/0.4.0`.
 
-| Tarea  | Estado                                                                                                               | Evidencia / siguiente acción                                                                                                                                                                                                                                  |
-| ------ | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| LRN-04 | Integrada en `develop` mediante PR #59 (`b4724e7`)                                                                   | Cabeza `9d0dcd0` con todos los checks aprobados (`CI gate (required)`, `M1 E2E (Chromium + PostgreSQL 16)`, `Build`, `Type Check`, `Lint & Format`, `Test`, `Docs check`).                                                                                    |
-| QA-05  | Integrada en `develop` mediante PR #61 (`87e5c6d`) y aceptada manualmente por Emanuel                                | Cabeza `eba2740` con CI y `M1 E2E (Chromium + PostgreSQL 16)` aprobados (`127598195279`, `127598740391`). Seis verificaciones manuales de M4 completadas y aprobadas personalmente por Emanuel en `docs/acceptance/M4-results.md` sin atribuir firmas ajenas. |
-| REL-04 | Implementada sin merge en `release/0.4.0`; lista para PR hacia `main`, validación de CI/Compose y publicación humana | `CHANGELOG.md`, 8 manifiestos en `0.4.0`, `docs/release/M4-CANDIDATE-CHECKLIST.md`, `M4-PUBLICATION-PLAN.md`, `M4-ROLLBACK-PLAN.md`, `docs/acceptance/probes/m4-release-upgrade.mjs` y `ops-compose.mjs`. Pendiente merge a `main`, tag `v0.4.0` y sync.      |
-| DEP-01 | Integrada en `develop` (`0a5439c`) por Zaid (`DEPREMU`); opcional y no bloqueante                                    | `docs/DEPLOY_OPTIONS.md` (`0a5439cb5a0e9f55b227d082d647856118117f68`) recomienda mantener la ejecución local reproducible mediante Docker Compose como opción oficial de costo cero garantizado.                                                              |
+| Tarea  | Estado                                                                                | Evidencia / siguiente acción                                                                                                                                                                                                                                  |
+| ------ | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| LRN-04 | Integrada en `develop` mediante PR #59 (`b4724e7`)                                    | Cabeza `9d0dcd0` con todos los checks aprobados (`CI gate (required)`, `M1 E2E (Chromium + PostgreSQL 16)`, `Build`, `Type Check`, `Lint & Format`, `Test`, `Docs check`).                                                                                    |
+| QA-05  | Integrada en `develop` mediante PR #61 (`87e5c6d`) y aceptada manualmente por Emanuel | Cabeza `eba2740` con CI y `M1 E2E (Chromium + PostgreSQL 16)` aprobados (`127598195279`, `127598740391`). Seis verificaciones manuales de M4 completadas y aprobadas personalmente por Emanuel en `docs/acceptance/M4-results.md` sin atribuir firmas ajenas. |
+| REL-04 | Publicada e integrada                                                                 | PR #62 integrado a `main` en `cacec37b`; tag y GitHub Release `v0.4.0` sobre ese SHA; PR #63 sincronizó `main → develop` en `bc104f0`. CI, E2E PostgreSQL 16, Docs y Compose actuales en verde.                                                               |
+| DEP-01 | Integrada en `develop` (`0a5439c`) por Zaid (`DEPREMU`); opcional y no bloqueante     | `docs/DEPLOY_OPTIONS.md` (`0a5439cb5a0e9f55b227d082d647856118117f68`) recomienda mantener la ejecución local reproducible mediante Docker Compose como opción oficial de costo cero garantizado.                                                              |
 
 ## LRN-04 — pantallas de ruta y avance
 
@@ -62,6 +62,13 @@ aprendizaje `1.0.0` y generador `rules-1`. Ocho manifiestos privados del monorep
   - `node docs/acceptance/probes/m4-release-upgrade.mjs`: migración `0000`–`0005` (`v0.3.0`) → `0006` (`v0.4.0`) y reejecución idempotente aprobadas sobre base PostgreSQL aislada, preservando usuarios, perfiles, habilidades, proyectos, CV y análisis previos.
   - `pnpm test` con PostgreSQL aislado: 37 archivos y 313 pruebas aprobadas (incluyendo `apps/api` 18 archivos / 145 pruebas, `apps/web` 15 archivos / 115 pruebas, `apps/skill-engine` 3 archivos / 51 pruebas de dominio y privacidad, `tests/e2e/support/trace.test.ts` 2 pruebas, validación de 5 contratos OpenAPI / 54 ejemplos y validación de catálogo/plantillas `1.0.0`).
   - `pnpm test:e2e` con PostgreSQL aislado y servicios reales (`web`, `api`, `skill-engine`): 16/16 pruebas Playwright aprobadas (incluyendo `learning-paths.spec.ts`, `m4-acceptance.spec.ts` y regresión M1/M2/M3).
+- Publicación verificada:
+  - PR #62 (`release/0.4.0 → main`) integrado mediante merge commit
+    `cacec37bba40528cfc091888bd2a33290b414940`.
+  - tag anotado y GitHub Release `v0.4.0` apuntan a ese commit.
+  - PR #63 sincronizó `main → develop` en `bc104f044a65f5102cbf0c8fb46c8c37649e58f9`.
+  - sobre `bc104f0`, GitHub Actions aprobó CI (`42151380572`), Compose (`42151380600`) y
+    documentación (`42151380661`).
 
 ## DEP-01 — evaluar despliegue a cero pesos (opcional)
 
@@ -69,9 +76,8 @@ aprendizaje `1.0.0` y generador `rules-1`. Ocho manifiestos privados del monorep
   `docs/DEPLOY_OPTIONS.md`. Concluye que la ejecución local mediante Docker Compose es la opción
   recomendada de costo cero garantizado y sin exposición de datos.
 
-## Condición exacta de continuación para cierre definitivo de `v0.4.0`
+## Cierre definitivo de `v0.4.0`
 
-1. Publicar `release/0.4.0` en `origin` y abrir el PR `release/0.4.0 → main` usando **Create a merge commit**.
-2. Verificar en GitHub Actions que pasen `CI gate (required)` (incluyendo `M1 E2E (Chromium + PostgreSQL 16)`) y `OPS M1 Compose runtime` (`compose-runtime` con PostgreSQL 16) sobre el SHA candidato de `release/0.4.0`.
-3. Tras contar con la revisión y autorización humana, realizar el merge commit de `release/0.4.0 → main`.
-4. Verificar el SHA final de `main`, crear y empujar el tag anotado `v0.4.0`, publicar la GitHub Release `v0.4.0` y sincronizar `main → develop` mediante merge commit.
+Las cuatro acciones protegidas se completaron: PR de release revisado, merge commit hacia `main`,
+tag/GitHub Release `v0.4.0` y sincronización `main → develop`. El lote 10 obligatorio (LRN-04,
+QA-05 y REL-04) está integrado; DEP-01 también quedó integrada aunque era opcional.

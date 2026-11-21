@@ -21,7 +21,7 @@ Base: `origin/develop` en `0a5439c` tras integrar `LRN-01` (`d001943`), `LRN-02`
 ## Puertas humanas y publicación
 
 - [x] Emanuel (`cocotero64`) completó personalmente las seis verificaciones manuales de M4 con datos sintéticos y confirmó su aprobación sin defectos bloqueantes en `docs/acceptance/M4-results.md` (sin atribuir firmas a otros integrantes).
-- [ ] Revisión del PR `release/0.4.0 → main` y comprobación de checks requeridos en GitHub Actions (`CI gate (required)` y `OPS M1 Compose runtime`).
-- [ ] Merge commit autorizado de `release/0.4.0 → main`.
-- [ ] Creación y push del tag anotado `v0.4.0` sobre el SHA final de `main` y publicación de la GitHub Release `v0.4.0`.
-- [ ] Sincronización `main → develop` mediante PR con merge commit.
+- [x] PR #62 `release/0.4.0 → main` revisado con `CI gate (required)` y `OPS M1 Compose runtime` aprobados sobre la cabeza candidata.
+- [x] Merge commit autorizado hacia `main`: `cacec37bba40528cfc091888bd2a33290b414940`.
+- [x] Tag anotado y GitHub Release `v0.4.0` publicados sobre `cacec37bba40528cfc091888bd2a33290b414940`.
+- [x] PR #63 sincronizó `main → develop` mediante merge commit `bc104f044a65f5102cbf0c8fb46c8c37649e58f9`; sus checks CI, Docs y Compose aprobaron.
